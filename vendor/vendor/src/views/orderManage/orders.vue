@@ -1,0 +1,2036 @@
+<template>
+	<div class="contentpanel my-custom-page">
+		<div class="pagetitle" ref="pageHeader">
+			<div class="left">
+				<div class="title">
+					<i class="el-icon-s-order"></i>
+					<h2>{{$t('orders.title')}}</h2>
+				</div>
+			</div>
+			<div class="right"> 
+				<template v-if="status == 2 && (activeName == 3)">
+					<el-button type="primary" @click="openImport" :disabled="!$isRole('invoiceWaitDeliverEdit')">{{$t('orders.shippinginformation')}}</el-button>
+					<el-button type="primary" @click="openAuth" :disabled="!$isRole('invoiceWaitDeliverEdit')">{{$t('orders.authorize')}}</el-button>
+				</template>
+				<template v-if="status == 2 && (activeName == 1)">
+					<el-button type="primary" @click="openCreate" :disabled="!$isRole('invoiceWaitOfferEdit')">{{$t('orders.创建订单')}}</el-button>
+				</template>
+				<template v-if="!(status == 2 && activeName == 2)">
+					<el-button type="primary" @click="exportOrder">{{$t('orders.导出订单')}}</el-button>
+				</template>
+				<template v-if="status == 311">
+					<el-button type="primary" @click="splitOrder" :disabled="!$isRole('invoiceWaitPayEdit')">{{$t('orders.拆分订单')}}</el-button>
+				</template>
+			</div>
+		</div>
+		<div class="pagebody" v-loading="loading">
+			<el-row :gutter="15" class="mg-b-20">
+				<el-col :span="24">
+					<el-card>
+						<el-row :gutter="20">
+							<el-col :span="24">
+								<el-tabs v-model="activeName" @tab-click="handleClick">
+								<!-- <div class="mg-b-10" v-if="status == 2 && (activeName == 3)">
+										{{$t('package.当前版本支持每日拉取订单{num}单，今日剩余{num2}单',{num:$root.$children[0].vipNowDetail.orderCnt,num2:$root.$children[0].vipNowDetail.nowOrderCnt})}}
+										<span v-if="isVipUp">，{{$t('package.是否需要')}} <span style="color:#5c6ac4;cursor: pointer;" @click="goToUP">{{$t('package.升级套餐')}}</span>	
+										{{$t('package.增加每日订单拉取额度？')}}</span>
+									</div> -->
+									<div ref="pageFilter" class="page-filter">
+										<el-form :inline="true" size="mini">
+											<template v-if="status == 2 && (activeName == 2)">
+												<el-form-item>
+													<el-input :placeholder="$t('orders.paymentCode')" v-model="filterParams.sysCode"
+														clearable @keyup.enter.native="filterItem"
+														@clear="clearFilter('sysCode')"></el-input>
+												</el-form-item>
+												<el-form-item :label="$t('orders.paymentDate')">
+													<el-date-picker value-format="yyyy-MM-dd" key="date2"
+														v-model="filterParams.date2" @clear="clearFilter('date2')"
+														@change="dateChange2" type="daterange" align="right"
+														unlink-panels start-placeholder="Start" end-placeholder="End">
+													</el-date-picker>
+												</el-form-item>
+											</template>
+											<template v-else>
+												<el-form-item>
+													<el-input :placeholder="$t('orders.third')"
+														v-model="filterParams.codeName" clearable
+														@keyup.enter.native="filterItem"
+														@clear="clearFilter('codeName')"></el-input>
+												</el-form-item>
+												<el-form-item>
+													<el-input :placeholder="$t('orders.orderID')" v-model="filterParams.orderId"
+														clearable @keyup.enter.native="filterItem"
+														@clear="clearFilter('orderId')"></el-input>
+												</el-form-item>
+												<el-form-item>
+													<el-input :placeholder="$t('orders.receiver')" v-model="filterParams.receiverName"
+														clearable @keyup.enter.native="filterItem"
+														@clear="clearFilter('receiverName')"></el-input>
+												</el-form-item>
+												<el-form-item :label="$t('orders.verdorName') + ':' ">
+													<el-select filterable remote placeholder="all" clearable
+														v-model="filterParams.relationshipId" @change="filterItem"
+														@clear="clearFilter('relationshipId')">
+														<el-option v-for="opt in vendorList" :key="opt.id"
+															:label="opt.customerName" :value="opt.id"></el-option>
+													</el-select>
+												</el-form-item>
+												<el-form-item :label="$t('orders.storeName') + ':' ">
+													<el-select filterable remote placeholder="all" clearable
+														v-model="filterParams.accountIds" @change="filterItem"
+														@clear="clearFilter('accountIds')">
+														<el-option v-for="opt in storeList" :key="opt.id"
+															:label="opt.shopName" :value="opt.id"></el-option>
+													</el-select>
+												</el-form-item>
+												<template v-if="status == 6">
+													<el-form-item>
+														<el-input :placeholder="$t('orders.paymentCode')"
+															v-model="filterParams.sysCode" clearable
+															@keyup.enter.native="filterItem"
+															@clear="clearFilter('sysCode')"></el-input>
+													</el-form-item>
+													<el-form-item v-if="status != 6" :label="$t('orders.paymentDate')">
+														<el-date-picker value-format="yyyy-MM-dd" key="date2"
+															v-model="filterParams.date2" @clear="clearFilter('date2')"
+															@change="dateChange2" type="daterange" align="right"
+															unlink-panels start-placeholder="Start"
+															end-placeholder="End">
+														</el-date-picker>
+													</el-form-item>
+												</template>
+												<el-form-item :label="$t('orders.CreateDate')">
+													<el-date-picker value-format="yyyy-MM-dd"
+														v-model="filterParams.date" @clear="clearFilter('date')"
+														@change="dateChange" type="daterange" align="right"
+														unlink-panels start-placeholder="Start" end-placeholder="End">
+													</el-date-picker>
+												</el-form-item>
+											</template>
+											<el-form-item>
+												<el-button type="primary" @click="filterItem">{{$t('orders.filter')}}</el-button>
+												<el-button type="danger" @click="clearFilter">{{$t('orders.clear')}}</el-button>
+											</el-form-item>
+											<el-form-item style="width:200px;"></el-form-item>
+											<el-form-item class="btns-wrap">
+												<template v-if="status == 2 && activeName == 1">
+													<el-button type="primary" @click="quoteFn" :disabled="!$isRole('invoiceWaitOfferEdit')">{{$t('orders.Made')}}</el-button>
+													<el-button type="primary" @click="exportFn" :disabled="!$isRole('invoiceWaitOfferEdit')">{{$t('orders.导出未关联商品')}}</el-button>
+													<el-button type="primary" @click="importFn" :disabled="!$isRole('invoiceWaitOfferEdit')">{{$t('orders.导入关联')}}</el-button>
+													<!-- <el-button type="primary" @click="quoteCancelFn" :disabled="!$isRole($route.meta.roleWrite)">{{$t('orders.Giveup')}}</el-button> -->
+												</template>
+												<template v-if="status == 2 && activeName == 2">
+													<el-button type="primary" @click="payFn" :disabled="!$isRole('invoicePayCheckEdit')">{{$t('orders.receipt')}}</el-button>
+													<el-button type="primary" @click="payCancelFn" :disabled="!$isRole('invoicePayCheckEdit')">{{$t('orders.notreceived')}}</el-button>
+												</template>
+												<template v-if="status == 4 && activeName == 1">
+													<el-button type="primary" @click="syncFn" :disabled="!$isRole('invoiceAbnormalEdit')">{{$t('orders.synchronized')}}</el-button>
+												</template>
+												<template v-if="status == 4 && activeName == 2">
+													<el-button type="primary" @click="quoteFn" :disabled="!$isRole('invoiceAbnormalEdit')">{{$t('orders.重新报价')}}</el-button>
+												</template>
+											</el-form-item>
+										</el-form>
+									</div>
+									<el-tab-pane v-if="status != 2 && tabList.length" v-for="(item, index) in tabList" :key="index" :name="item.name+''">
+										<span slot="label">
+										  {{item.title}}
+										  <span class="tx-danger">({{vendorAllOrderCntText(item.id)}})</span>
+										</span>
+									</el-tab-pane>
+								</el-tabs>
+
+							</el-col>
+						</el-row>
+						<!-- table 待处理订单   待报价 待发货-->
+						<template v-if="isVipOrder">
+							<div class="noVip">
+								<i class="el-icon-info mg-r-10" ></i>
+								 <!-- {{$t('package.暂无数据，该条信息可能已超{num}天，是否',{num:vipOrderReserveDay})}}
+								 <span style="color:#5c6ac4;cursor: pointer;" @click="goToUP"> {{$t('package.升级套餐')}} </span>
+								 {{$t('package.以恢复历史数据？')}} -->
+								 {{$t('package.暂无数据，该条信息可能已超{num}天',{num:vipOrderReserveDay})}}
+							</div>
+						</template>
+						<template v-else>
+						<template v-if="(status == 2 && activeName != 2)  || (status == 4 && activeName == 1)">
+							<el-table key="gridTable" stripe style="width: 100%" ref="gridTable" :data="items"
+								tooltip-effect="dark" @selection-change="handleSelectionChange"
+								:row-key="(row) => row.id">
+								<el-table-column type="selection" width="55" :reserve-selection="true">
+								</el-table-column>
+								<el-table-column :label="$t('orders.third')" width="100">
+									<template slot-scope="scope">
+										<el-popover width="1000" trigger="hover" placement="top-start" :ref="'popover' + scope.row.codeName">
+											<div class="items">
+												<div v-for="(item,i) in scope.row.items" :key="scope.row.orderId + scope.row.codeName + i"
+													class="d-flex mg-b-15">
+													<img :src="item.imgUrl" width="80" height="80" />
+													<div class="mg-l-10">
+														<p style="width: 600px;" class="mg-b-10">
+															<span v-if="!item.vendorProductId">{{item.name}}</span>
+															<el-link v-else type="primary" :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${$store.state.userInfo.shop.id}.myourmall.com/item/${item.vendorProductId}/${item.vendorProductName}.html`" target="_blank">
+															  {{item.vendorProductName}}
+															</el-link>
+														</p>
+														<p class="mg-b-10">
+															<template v-if="item.isManage == 2">
+																<span style="width: 500px;display: inline-block;color: #F56C6C;">SKU:
+																	{{item.vendorSku + 'Unable to purchase'}}</span>
+															</template>
+															<template v-else>
+																<template v-if="item.status != 1">
+																	<span style="width: 500px;display: inline-block;color: #F56C6C;">SKU:
+																		{{item.vendorSku ? `${item.vendorSku} Products Off shelf` : 'null     Please make an offer'}}</span>
+																</template>
+																<template v-else>
+																	<span style="width: 500px;display: inline-block;">SKU:
+																		{{item.vendorSku || 'null     Please make an offer'}}</span>
+																</template>
+															</template>
+															<span style="width: 200px;display: inline-block;">
+																Weight：{{item.vendorProductWeight || '---'}} g
+															</span>
+														</p>
+														<p>
+															<span style="width: 200px;display: inline-block;">
+																Shop price：{{scope.row.currency}} {{Number(item.price).toFixed(2)}}</span>
+															<span style="width: 300px;display: inline-block;">
+																Supply unit price：
+																<span v-if="item.vendorSku">
+																	<template v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2">
+																		<span>$ {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
+																		<span style="color: red; text-decoration:line-through;">
+																			<span style="color: #606266;">$ {{Number(item.vendorPrice).toFixed(2)}}</span>
+																		</span>
+																	</template>
+																	<template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
+																</span>
+																<span style="color: #F56C6C;" v-else>Please make an offer</span>
+															</span>
+															<span
+																style="width: 50px;display: inline-block;text-align: left;">*
+																{{item.quantity}}</span>
+															<span style="width: 100px;display: inline-block;text-align: right;">
+																<template v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2">
+																	<span>$ {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
+																	<span style="color: red; text-decoration:line-through;">
+																		<span style="color: #606266;">$ {{Number(item.amount).toFixed(2)}}</span>
+																	</span>
+																</template>
+																<template v-else>$ {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
+															</span>
+															<span
+																v-if="item.isManage == 2"
+																style="width: 200px;display: inline-block;text-align: right;color: red;">
+																{{$t("orders.该商品已被剔除")}}</span>
+														</p>
+													</div>
+													<div class="d-flex" style="flex: 1;justify-content: flex-end;margin-right:5px" v-if="status == 2 && activeName == 1">
+														<el-link type="primary" v-if="item.isManage != 2 && !item.vendorPrice" :disabled="!$isRole($route.meta.roleWrite)" @click="unable(item)">{{$t('orders.tabBar5')}}</el-link>
+														
+													</div>
+												</div>
+											</div>
+											<div slot="reference" class="name-wrapper">
+												<span>{{scope.row.codeName}}</span>
+											</div>
+										</el-popover>
+										
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.orderID')" width="150">
+									<template slot-scope="scope">
+										<el-popover width="1000" trigger="hover" placement="top-start" :ref="'popover' + scope.row.orderId">
+											<div class="items">
+												<div v-for="(item,i) in scope.row.items" :key="scope.row.orderId + scope.row.codeName + i"
+													class="d-flex mg-b-15">
+													<img :src="item.imgUrl" width="80" height="80" />
+													<div class="mg-l-10">
+														<p style="width: 600px;" class="mg-b-10">
+															<span v-if="!item.vendorProductId">{{item.name}}</span>
+															<el-link v-else type="primary" :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${$store.state.userInfo.shop.id}.myourmall.com/item/${item.vendorProductId}/${item.vendorProductName}.html`" target="_blank">
+															  {{item.vendorProductName}}
+															</el-link>
+														</p>
+														<p class="mg-b-10">
+															<template v-if="item.isManage == 2">
+																<span style="width: 500px;display: inline-block;color: #F56C6C;">SKU:
+																	{{item.vendorSku + 'Unable to purchase'}}</span>
+															</template>
+															<template v-else>
+																<template v-if="item.status != 1">
+																	<span style="width: 500px;display: inline-block;color: #F56C6C;">SKU:
+																		{{item.vendorSku ? `${item.vendorSku} Products Off shelf` : 'null     Please make an offer'}}</span>
+																</template>
+																<template v-else>
+																	<span style="width: 500px;display: inline-block;">SKU:
+																		{{item.vendorSku || 'null     Please make an offer'}}</span>
+																</template>
+															</template>
+															<span style="width: 200px;display: inline-block;">
+																Weight：{{item.vendorProductWeight || '---'}} g
+															</span>
+														</p>
+														<p>
+															<span style="width: 200px;display: inline-block;">
+																Shop price：{{scope.row.currency}} {{Number(item.price).toFixed(2)}}</span>
+															<span style="width: 300px;display: inline-block;">
+																Supply unit price：
+																<span v-if="item.vendorSku">
+																	<template v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2">
+																		<span>$ {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
+																		<span style="color: red; text-decoration:line-through;">
+																			<span style="color: #606266;">$ {{Number(item.vendorPrice).toFixed(2)}}</span>
+																		</span>
+																	</template>
+																	<template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
+																</span>
+																<span style="color: #F56C6C;" v-else>Please make an offer</span>
+															</span>
+															<span
+																style="width: 50px;display: inline-block;text-align: left;">*
+																{{item.quantity}}</span>
+															<span style="width: 100px;display: inline-block;text-align: right;">
+																<template v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2">
+																	<span>$ {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
+																	<span style="color: red; text-decoration:line-through;">
+																		<span style="color: #606266;">$ {{Number(item.amount).toFixed(2)}}</span>
+																	</span>
+																</template>
+																<template v-else>$ {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
+															</span>
+															<span
+																v-if="item.isManage == 2"
+																style="width: 200px;display: inline-block;text-align: right;color: red;">
+																{{$t("orders.该商品已被剔除")}}</span>
+														</p>
+													</div>
+													<div class="d-flex" style="flex: 1;justify-content: flex-end;margin-right:5px" v-if="status == 2 && activeName == 1">
+														<el-link type="primary" v-if="item.isManage != 2 && !item.vendorPrice" :disabled="!$isRole($route.meta.roleWrite)" @click="unable(item)">{{$t('orders.tabBar5')}}</el-link>
+														
+													</div>
+												</div>
+											</div>
+											<div slot="reference" class="name-wrapper">
+												<span>{{scope.row.orderId || '---'}}</span>
+												<template v-if="!(status == 2 && (activeName == 2 || activeName == 1)) && scope.row.isSplit == 1">
+													<img v-if="$i18n.locale == 'zh'" style="margin-left: 10px;" src="../../../public/images/split.png" />
+													<img v-else style="margin-left: 10px;" src="../../../public/images/split2.png" />
+												</template>
+											</div>
+										</el-popover>
+										
+									</template>
+								</el-table-column>
+								<!-- <template v-if="!(status == 2 && (activeName == 2 || activeName == 1))">
+								<el-table-column :label="$t('orders.orNo')" width="100">
+									<template slot-scope="scope">
+										<div>{{ scope.row.isSplit == 1 ? $t('orders.yes') : $t('orders.no') }}</div>
+									</template>
+								</el-table-column>
+								</template> -->
+								<el-table-column :label="$t('orders.verdorName')" width="150">
+									<template slot-scope="scope">
+										<div>{{ scope.row.customer ? scope.row.customer.name : '---' }}</div>
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.storeName')" width="150">
+									<template slot-scope="scope">
+										<span>{{scope.row.store || '---'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.CreateDate')" width="200">
+									<template slot-scope="scope">
+										<span>{{$moment(scope.row.timeCreated).format("ll [at] LTS") || '---'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.address')" min-width="250">
+									<template slot-scope="scope">
+										<el-tooltip class="item" effect="dark" placement="right">
+											<div slot="content">
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.zip ? scope.row.shippingJsonInfo.zip : '---'}}
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.address1 ? scope.row.shippingJsonInfo.address1 : '---'}}
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.city ? scope.row.shippingJsonInfo.city : '---'}}
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.province ? scope.row.shippingJsonInfo.province : '---'}}
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.country ? scope.row.shippingJsonInfo.country : '---'}}
+											</div>
+											<span>{{scope.row.receiverAddress || '---'}}</span>
+										</el-tooltip>
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.receiver')" width="150">
+									<template slot-scope="scope">
+										<span>{{scope.row.receiverName || '---'}}</span>
+									</template>
+								</el-table-column>
+								<template v-if="status == 4">
+									<el-table-column :label="$t('orders.logistics')" width="150">
+										<template slot-scope="scope">
+											<template v-if="scope.row.shippingMethodArr && scope.row.shippingMethodArr.length">
+												<el-select v-model="scope.row.shippingMethodId" @change="filterShippingMethod($event,scope.row)" size="small">
+													<el-option v-for="shippingMethod in scope.row.shippingMethodArr" :key="shippingMethod.id"
+														:label="`${shippingMethod.name} [${shippingMethod.agingDaysBegin?shippingMethod.agingDaysBegin:0}-${shippingMethod.agingDaysEnd?shippingMethod.agingDaysEnd:0}${$t('logistics.天')}]`" :value="shippingMethod.id"></el-option>
+												</el-select>
+											</template>
+											<span v-else>---</span>
+										</template>
+									</el-table-column>
+									<el-table-column :label="$t('orders.logisticsFee')" width="150">
+										<template slot-scope="scope">
+											<span v-if="scope.row.discountType == 3">
+												<span>0&nbsp;</span>
+												<span style="color: red; text-decoration:line-through;">
+													<span style="color: #606266;">{{scope.row.shippingMethodItem ? scope.row.shippingMethodItem.fee : '---'}}</span>
+												</span>
+											</span>
+											<span v-else>{{scope.row.shippingMethodItem ? scope.row.shippingMethodItem.fee : '---'}}</span>
+										</template>
+									</el-table-column>
+									<el-table-column :label="$t('orders.tradeAmount')" width="100">
+										<template slot-scope="scope">
+											<span v-if="scope.row.discountType">
+												<span>{{scope.row.payAmount || '---'}}&nbsp;</span>
+												<span style="color: red; text-decoration:line-through;">
+													<span style="color: #606266;">{{scope.row.realAmount || '---'}}</span>
+												</span>
+											</span>
+											<span v-else>{{scope.row.realAmount || '---'}}</span>
+										</template>
+									</el-table-column>
+								</template>
+								<template v-if="status == 2 && activeName == 1">
+									<el-table-column :label="$t('orders.offerItem')" width="150">
+										<template slot-scope="scope">
+											<span>{{scope.row.unBindQuantity || '---'}}</span>
+										</template>
+									</el-table-column>
+								</template>
+								<template v-if="status == 2 && activeName == 3">
+									<el-table-column :label="$t('orders.logistics')" width="250">
+										<template slot-scope="scope">
+											<span>{{scope.row.trackCompany ? `${scope.row.trackCompany}${scope.row.trackNumber 
+											? `:${scope.row.trackNumber} [${scope.row.agingDaysBegin?scope.row.agingDaysBegin:0}-${scope.row.agingDaysEnd?scope.row.agingDaysEnd:0}${$t('logistics.天')}]` 
+											: `[${scope.row.agingDaysBegin?scope.row.agingDaysBegin:0}-${scope.row.agingDaysEnd?scope.row.agingDaysEnd:0}${$t('logistics.天')}]`}` : '---'}}</span>
+										</template>
+									</el-table-column>
+									<el-table-column :label="$t('orders.logisticsFee')" width="150">
+										<template slot-scope="scope">
+											<span v-if="scope.row.discountType == 3">
+												<span>0&nbsp;</span>
+												<span style="color: red; text-decoration:line-through;">
+													<span style="color: #606266;">{{scope.row.trackFee || '---'}}</span>
+												</span>
+											</span>
+											<span v-else>{{scope.row.trackFee || '---'}}</span>
+										</template>
+									</el-table-column>
+									<el-table-column :label="$t('orders.tradeAmount')" width="100">
+										<template slot-scope="scope">
+											<span v-if="scope.row.discountType">
+												<span>{{scope.row.payAmount || '---'}}&nbsp;</span>
+												<span style="color: red; text-decoration:line-through;">
+													<span style="color: #606266;">{{scope.row.realAmount || '---'}}</span>
+												</span>
+											</span>
+											<span v-else>{{scope.row.realAmount || '---'}}</span>
+										</template>
+									</el-table-column>
+								</template>
+								<el-table-column :label="$t('orders.operate')" width="150" fixed="right">
+									<template slot-scope="scope">
+										<div>
+											<el-link v-if="status == 2 && activeName == 1" class="mg-r-20" type="primary"
+												@click="quoteFn('row',scope.row)" :disabled="!$isRole('invoiceWaitOfferEdit')">
+												{{$t('orders.Made')}}
+											</el-link>
+											<el-link v-if="status == 2 && activeName == 3" class="mg-r-20" type="primary"
+												@click="markShippedOpen(scope.row)" :disabled="!$isRole('invoiceWaitDeliverEdit')">
+												{{$t('orders.mark')}}
+											</el-link>
+											<el-link v-if="status == 4" class="mg-r-20" type="primary"
+												@click="syncFn('row',scope.row)" :disabled="!$isRole('invoiceAbnormalEdit')">
+												{{$t('orders.synchronized')}}
+											</el-link>
+										</div>
+									</template>
+								</el-table-column>
+								<template v-if="!(status == 2 && (activeName == 2 || activeName == 1))">
+								<el-table-column :label="$t('quotation.备注')" width="150">
+									<template slot-scope="scope">
+										<div>{{ scope.row.remark || '---'}}</div>
+									</template>
+								</el-table-column>
+								</template>
+							</el-table>
+						</template>
+						<!-- 待确认收款 -->
+						<template v-else-if="status == 2 && activeName == 2">
+							<el-table key="gridTable" stripe style="width: 100%" ref="gridTable" :data="items"
+								tooltip-effect="dark" @selection-change="handleSelectionChange"
+								:row-key="(row) => row.id">
+								<!-- :selectable="selectable()" -->
+								<el-table-column type="selection" width="55" :reserve-selection="true">
+								</el-table-column>
+								<el-table-column label="pay code" width="300">
+									<template slot-scope="scope">
+										<span>{{scope.row.accountPayment && scope.row.accountPayment.sysCode ? scope.row.accountPayment.sysCode : '---'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column label="pay time" width="300">
+									<template slot-scope="scope">
+										<span>{{$moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss") || '---'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.tradeAmount')" width="200">
+									<template slot-scope="scope">
+										<span v-if="scope.row.discountType">
+												<span>{{scope.row.payAmount || '---'}}&nbsp;</span>
+												<span style="color: red; text-decoration:line-through;">
+													<span style="color: #606266;">{{scope.row.totalAmount || '---'}}</span>
+												</span>
+											</span>
+											<span v-else>{{scope.row.realAmount || '---'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column label="Quantity" width="200">
+									<template slot-scope="scope">
+										<el-link v-if="scope.row.shopifyOrderCnt" type="primary" @click="shopifyOrderCnt(scope.row)">
+											{{scope.row.shopifyOrderCnt}}
+										</el-link>
+										<span v-else>---</span>
+									</template>
+								</el-table-column>
+								<!-- <el-table-column label="Status">
+									<template slot-scope="scope">
+										<span v-if="scope.row.accountPayment&&scope.row.accountPayment.status">{{statusPayArr[scope.row.accountPayment.status] ? statusPayArr[scope.row.accountPayment.status].text : '---'}}</span>
+										<span v-else>---</span>
+									</template>
+								</el-table-column> -->
+								<el-table-column :label="$t('orders.voucherUrl')">
+									<template slot-scope="scope">
+										<div class="demo-image__preview" v-if="scope.row.voucherUrl">
+										  <el-image 
+										    style="width: 100px; height: 100px"
+										    :src="scope.row.voucherUrl" 
+										    :preview-src-list="scope.row.voucherUrlPreview">
+										  </el-image>
+										</div>
+										<span v-else>---</span>
+									</template>
+								</el-table-column>
+								<el-table-column v-if="activeName == 2" :label="$t('orders.operate')" width="120" fixed="right">
+									<template slot-scope="scope">
+										<div>
+											<el-link v-if="scope.row.paymentType == 1" class="mg-r-20" type="primary"
+												@click="payFn('row',scope.row)"  :disabled="!$isRole('invoicePayCheckEdit')">
+												{{$t('orders.receipt')}}
+											</el-link>
+											<el-link v-if="scope.row.paymentType == 1" class="mg-r-20" type="primary"
+												@click="payCancelFn('row',scope.row)"  :disabled="!$isRole('invoicePayCheckEdit')">
+												{{$t('orders.notreceived')}}
+											</el-link>
+										</div>
+									</template>
+								</el-table-column>
+							</el-table>
+						</template>
+						<template v-else>
+							<el-table :key="`gridTable3${activeName}`" stripe style="width: 100%" ref="gridTable" :data="items" @selection-change="handleSelectionChange"
+								tooltip-effect="dark" :row-key="(row) => row.id">
+								<el-table-column  type="selection" width="55" :reserve-selection="true">
+								</el-table-column>
+								<el-table-column :label="$t('orders.third')" width="100">
+									<template slot-scope="scope">
+										<el-popover width="1000" trigger="hover" placement="top-start" :ref="'popover' + scope.row.codeName">
+											<div class="items">
+												<div v-for="(item,i) in scope.row.items" :key="scope.row.orderId + scope.row.codeName + i"
+													class="d-flex mg-b-15">
+													<img :src="item.imgUrl" width="80" height="80" />
+													<div class="mg-l-10">
+														<p style="width: 600px;" class="mg-b-10">
+															<span v-if="!item.vendorProductId">{{item.name}}</span>
+															<el-link v-else type="primary" :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${$store.state.userInfo.shop.id}.myourmall.com/item/${item.vendorProductId}/${item.vendorProductName}.html`" target="_blank">
+															  {{item.vendorProductName}}
+															</el-link>
+														</p>
+														<p class="mg-b-10">
+															<template v-if="item.isManage == 2">
+																<span style="width: 500px;display: inline-block;color: #F56C6C;">SKU:
+																	{{item.vendorSku + 'Unable to purchase'}}</span>
+															</template>
+															<template v-else>
+																<template v-if="item.status != 1">
+																	<span style="width: 500px;display: inline-block;color: #F56C6C;">SKU:
+																		{{item.vendorSku ? `${item.vendorSku} Products Off shelf` : 'null     Please make an offer'}}</span>
+																</template>
+																<template v-else>
+																	<span style="width: 500px;display: inline-block;">SKU:
+																		{{item.vendorSku || 'null     Please make an offer'}}</span>
+																</template>
+															</template>
+															<span style="width: 200px;display: inline-block;">
+																Weight：{{item.vendorProductWeight || '---'}} g
+															</span>
+														</p>
+														<p>
+															<span style="width: 200px;display: inline-block;">
+																Shop price：{{scope.row.currency}} {{Number(item.price).toFixed(2)}}</span>
+															<span style="width: 300px;display: inline-block;">
+																Supply unit price：
+																<span v-if="item.vendorSku">
+																	<template v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2">
+																		<span>$ {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
+																		<span style="color: red; text-decoration:line-through;">
+																			<span style="color: #606266;">$ {{Number(item.vendorPrice).toFixed(2)}}</span>
+																		</span>
+																	</template>
+																	<template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
+																</span>
+																<span style="color: #F56C6C;" v-else>Please make an offer</span>
+															</span>
+															<span
+																style="width: 50px;display: inline-block;text-align: left;">*
+																{{item.quantity}}</span>
+															<span style="width: 100px;display: inline-block;text-align: right;">
+																<template v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2">
+																	<span>$ {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
+																	<span style="color: red; text-decoration:line-through;">
+																		<span style="color: #606266;">$ {{Number(item.amount).toFixed(2)}}</span>
+																	</span>
+																</template>
+																<template v-else>$ {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
+															</span>
+															<span
+																v-if="item.isManage == 2"
+																style="width: 200px;display: inline-block;text-align: right;color: red;">
+																{{$t("orders.该商品已被剔除")}}</span>
+														</p>
+													</div>
+													<div class="d-flex" style="flex: 1;justify-content: flex-end;margin-right:5px" v-if="status == 2 && activeName == 1">
+														<el-link type="primary" v-if="item.isManage != 2 && !item.vendorPrice" :disabled="!$isRole($route.meta.roleWrite)" @click="unable(item)">{{$t('orders.tabBar5')}}</el-link>
+														
+													</div>
+												</div>
+											</div>
+											<div slot="reference" class="name-wrapper">
+												<span>{{scope.row.codeName}}</span>
+											</div>
+										</el-popover>
+										
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.orderID')" width="150">
+									<template slot-scope="scope">
+										<el-popover width="1000" trigger="hover" placement="top-start" :ref="'popover' + scope.row.orderId">
+											<div class="items">
+												<div v-for="(item,i) in scope.row.items" :key="scope.row.orderId + scope.row.codeName + i"
+													class="d-flex mg-b-15">
+													<img :src="item.imgUrl" width="80" height="80" />
+													<div class="mg-l-10">
+														<p style="width: 600px;" class="mg-b-10">
+															<span v-if="!item.vendorProductId">{{item.name}}</span>
+															<el-link v-else type="primary" :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${$store.state.userInfo.shop.id}.myourmall.com/item/${item.vendorProductId}/${item.vendorProductName}.html`" target="_blank">
+															  {{item.vendorProductName}}
+															</el-link>
+														</p>
+														<p class="mg-b-10">
+															<template v-if="item.isManage == 2">
+																<span style="width: 500px;display: inline-block;color: #F56C6C;">SKU:
+																	{{item.vendorSku + 'Unable to purchase'}}</span>
+															</template>
+															<template v-else>
+																<template v-if="item.status != 1">
+																	<span style="width: 500px;display: inline-block;color: #F56C6C;">SKU:
+																		{{item.vendorSku ? `${item.vendorSku} Products Off shelf` : 'null     Please make an offer'}}</span>
+																</template>
+																<template v-else>
+																	<span style="width: 500px;display: inline-block;">SKU:
+																		{{item.vendorSku || 'null     Please make an offer'}}</span>
+																</template>
+															</template>
+															<span style="width: 200px;display: inline-block;">
+																Weight：{{item.vendorProductWeight || '---'}} g
+															</span>
+														</p>
+														<p>
+															<span style="width: 200px;display: inline-block;">
+																Shop price：{{scope.row.currency}} {{Number(item.price).toFixed(2)}}</span>
+															<span style="width: 300px;display: inline-block;">
+																Supply unit price：
+																<span v-if="item.vendorSku">
+																	<template v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2">
+																		<span>$ {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
+																		<span style="color: red; text-decoration:line-through;">
+																			<span style="color: #606266;">$ {{Number(item.vendorPrice).toFixed(2)}}</span>
+																		</span>
+																	</template>
+																	<template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
+																</span>
+																<span style="color: #F56C6C;" v-else>Please make an offer</span>
+															</span>
+															<span
+																style="width: 50px;display: inline-block;text-align: left;">*
+																{{item.quantity}}</span>
+															<span style="width: 100px;display: inline-block;text-align: right;">
+																<template v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2">
+																	<span>$ {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
+																	<span style="color: red; text-decoration:line-through;">
+																		<span style="color: #606266;">$ {{Number(item.amount).toFixed(2)}}</span>
+																	</span>
+																</template>
+																<template v-else>$ {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
+															</span>
+															<span
+																v-if="item.isManage == 2"
+																style="width: 200px;display: inline-block;text-align: right;color: red;">
+																{{$t("orders.该商品已被剔除")}}</span>
+														</p>
+													</div>
+													<div class="d-flex" style="flex: 1;justify-content: flex-end;margin-right:5px" v-if="status == 2 && activeName == 1">
+														<el-link type="primary" v-if="item.isManage != 2 && !item.vendorPrice" :disabled="!$isRole($route.meta.roleWrite)" @click="unable(item)">{{$t('orders.tabBar5')}}</el-link>
+														
+													</div>
+												</div>
+											</div>
+											<div slot="reference" class="name-wrapper">
+												<span>{{scope.row.orderId || '---'}}</span>
+												<template v-if="!(status == 2 && (activeName == 2 || activeName == 1)) && scope.row.isSplit == 1">
+													<img v-if="$i18n.locale == 'zh'" style="margin-left: 10px;" src="../../../public/images/split.png" />
+													<img v-else style="margin-left: 10px;" src="../../../public/images/split2.png" />
+												</template>
+											</div>
+										</el-popover>
+										
+									</template>
+								</el-table-column>
+								<!-- <template v-if="!(status == 2 && (activeName == 2 || activeName == 1))">
+								<el-table-column :label="$t('orders.orNo')" width="100">
+									<template slot-scope="scope">
+										<div>{{ scope.row.isSplit == 1 ? $t('orders.yes') : $t('orders.no') }}</div>
+									</template>
+								</el-table-column>
+								</template> -->
+								<el-table-column :label="$t('orders.verdorName')" width="150"> 
+									<template slot-scope="scope">
+										<div>{{ scope.row.customer ? scope.row.customer.name : '---'}}</div>
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.storeName')" width="150">
+									<template slot-scope="scope">
+										<span>{{scope.row.store || '---'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.CreateDate')" width="200">
+									<template slot-scope="scope">
+										<span>{{$moment(scope.row.timeCreated).format("ll [at] LTS") || '---'}}</span>
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.address')" min-width="250">
+									<template slot-scope="scope">
+										<el-tooltip class="item" effect="dark" placement="right">
+											<div slot="content">
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.zip ? scope.row.shippingJsonInfo.zip : '---'}}
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.address1 ? scope.row.shippingJsonInfo.address1 : '---'}}
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.city ? scope.row.shippingJsonInfo.city : '---'}}
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.province ? scope.row.shippingJsonInfo.province : '---'}}
+												{{scope.row.shippingJsonInfo && scope.row.shippingJsonInfo.country ? scope.row.shippingJsonInfo.country : '---'}}
+											</div>
+											<span>{{scope.row.receiverAddress || '---'}}</span>
+										</el-tooltip>
+									</template>
+								</el-table-column>
+								<el-table-column :label="$t('orders.receiver')" width="150">
+									<template slot-scope="scope">
+										<span>{{scope.row.receiverName || '---'}}</span>
+									</template>
+								</el-table-column>
+								<template v-if="activeName != 2 && activeName != 3">
+									 <el-table-column :label="$t('orders.logistics')" width="250">
+										 <template slot-scope="scope">
+											 <span v-if="scope.row.status == 3">
+												 <span v-if="scope.row.shippingMethodArr">
+														<div v-if="scope.row.shippingMethodArr.length && scope.row.shippingMethodArr[0]">{{  scope.row.shippingMethodArr[0].name }} [{{scope.row.shippingMethodArr[0].agingDaysBegin?scope.row.shippingMethodArr[0].agingDaysBegin:0}}-{{scope.row.shippingMethodArr[0].agingDaysEnd?scope.row.shippingMethodArr[0].agingDaysEnd:0}}{{$t('logistics.天')}}]</div>
+												 		<div class="tx-middle" v-else >--- <i @click="shippedFn(scope.row)" class="el-icon-warning mg-l-5" style="font-size: 20px;cursor:pointer;"></i></div>
+												 </span>
+											 </span>
+											 <span v-else>{{scope.row.trackCompany ? `${scope.row.trackCompany}${scope.row.trackNumber ? 
+											 `:${scope.row.trackNumber} [${scope.row.agingDaysBegin?scope.row.agingDaysBegin:0}-${scope.row.agingDaysEnd?scope.row.agingDaysEnd:0}${$t('logistics.天')}]` : 
+											 `[${scope.row.agingDaysBegin?scope.row.agingDaysBegin:0}-${scope.row.agingDaysEnd?scope.row.agingDaysEnd:0}${$t('logistics.天')}]`}` : '---'}}</span>
+										 </template>
+									 </el-table-column>
+									 <el-table-column :label="$t('orders.logisticsFee')" width="150">
+										 <template slot-scope="scope">
+											 <span v-if="scope.row.status == 3">
+												 <span v-if="scope.row.shippingMethodArr">
+													 {{scope.row.shippingMethodArr.length && scope.row.shippingMethodArr[0] ? scope.row.shippingMethodArr[0].fee : '---'}}
+												 </span>
+											 </span>
+											 <span v-else>
+												 <span v-if="scope.row.discountType == 3">
+													 <span>0&nbsp;</span>
+													 <span style="color: red; text-decoration:line-through;">
+														 <span style="color: #606266;">{{scope.row.trackFee || '---'}}</span>
+													 </span>
+												 </span>
+												 <span v-else>{{scope.row.trackFee || '---'}}</span>
+											 </span>
+										 </template>
+									</el-table-column>
+									<el-table-column :label="$t('orders.tradeAmount')" width="150">
+										<template slot-scope="scope">
+											<span v-if="scope.row.status == 3">
+												 <span v-if="scope.row.shippingMethodArr">
+													 <span v-if="scope.row.itemAmount">
+													 		{{scope.row.shippingMethodArr.length && scope.row.shippingMethodArr[0]  ? (Number(scope.row.shippingMethodArr[0].fee) + Number(scope.row.itemAmount)).toFixed(2) : '---'}}
+													 </span>
+													 <span v-else>
+													 		{{scope.row.shippingMethodArr.length && scope.row.shippingMethodArr[0]  ? Number(scope.row.shippingMethodArr[0].fee) : '---'}}
+													 </span>
+												 </span>
+												 <span v-else>
+													{{scope.row.itemAmount ? Number(scope.row.itemAmount).toFixed(2) : '---'}}
+												 </span>
+											</span>
+											<span v-else>
+												<span v-if="scope.row.discountType">
+													<span>{{scope.row.payAmount || '---'}}&nbsp;</span>
+													<span style="color: red; text-decoration:line-through;">
+														<span style="color: #606266;">{{scope.row.realAmount.toFixed(2) || '---'}}</span>
+													</span>
+												</span>
+												<span v-else>{{scope.row.realAmount.toFixed(2) || '---'}}</span>
+											</span>
+										</template>
+									</el-table-column>
+								</template>
+								<template v-if="status == 6">
+									<el-table-column :label="$t('orders.status')" width="100">
+										<template slot-scope="scope">
+											<span>{{statusArr[scope.row.status] ? statusArr[scope.row.status].text : '---'}}</span>
+										</template>
+									</el-table-column>
+								</template>
+								<template v-if="status == 311">
+									<el-table-column :label="$t('orders.payStatus')" width="250">
+										<template slot-scope="scope">
+											<div v-if="scope.row.status == 3">
+												<span>{{$t('orders.status1')}}</span>
+											</div>
+											<div v-else-if="scope.row.status == 11">
+												<span>{{$t('orders.status2')}}</span>
+											</div>
+											<div v-else>
+												<span>---</span>
+											</div>
+										</template>
+									</el-table-column>
+								</template>
+								<template v-if="status == 4 && activeName == 2">
+									<el-table-column label="操作" width="100">
+										<template slot-scope="scope">
+											<el-link class="mg-r-20" type="primary"
+												@click="quoteFn('row',scope.row)" :disabled="!$isRole('invoiceAbnormalEdit')">
+												{{$t('orders.重新报价')}}
+											</el-link>
+										</template>
+										
+									</el-table-column>
+								</template>
+								<template v-if="!(status == 2 && (activeName == 2 || activeName == 1))">
+								<el-table-column :label="$t('quotation.备注')" width="150">
+									<template slot-scope="scope">
+										<div>{{ scope.row.remark || '---'}}</div>
+									</template>
+								</el-table-column>
+								</template>
+							</el-table>
+						</template>
+						</template>
+					</el-card>
+				</el-col>
+			</el-row>
+			<el-row v-if="items.length" :gutter="20">
+				<el-col :span="24" class="d-flex justify-content-center">
+					<div>
+						<el-pagination :current-page="Number(page)" :background="true"
+							layout="sizes, total, prev, pager, next, jumper" :page-sizes="pageSizes"
+							:page-size="rowsPerPage" :total="Number(total)" @current-change="toPage"
+							@size-change="changePageSize">
+						</el-pagination>
+					</div>
+				</el-col>
+			</el-row>
+		</div>
+		<el-backtop class="goto-top" target=".main-scroll  .el-scrollbar__wrap" :right="20" :bottom="120">
+		</el-backtop>
+		<dialogQuote :quoteData="dialogQuoteInfo" @openRelate="openRelate"></dialogQuote>
+		<dialogRelate :relateData="dialogRelateInfo" @relateFn="relateFn"></dialogRelate>
+		<dialogImport :importData="dialoImportInfo" @submitUpload="submitUpload"></dialogImport>
+		<dialogCreateOrder :data="dialogCreateInfo" @createUpload="createUpload"></dialogCreateOrder>
+		<dialoAuth :authData="dialoAuthInfo" @openSecretKey="openSecretKey"></dialoAuth>
+		<dialogKey :keyData="dialoKeyInfo" @openAddComment="openAddComment"></dialogKey>
+		<dialogLogistic :dialogLogistic="dialogLogistic"></dialogLogistic>
+		<dialogAssociation :dialogAssociation="dialogAssociation"></dialogAssociation>
+		<DialogEditComment :DialogEditComment="DialogEditComment"></DialogEditComment>
+		<dialogMarkShipped :dialogMarkShipped="dialogMarkShipped" @saveMarkShipped="saveMarkShipped">
+		</dialogMarkShipped>
+		<orderCnt :data="dialogOrderCnt"></orderCnt>
+		<dialogSplit :keyData="dialogSplitInfo" @splitOrderFn="splitOrderFn"></dialogSplit>
+	</div>
+</template>
+
+<script>
+	import dialogLogistic from "./dialogLogistic.vue";
+	import dialogAssociation from "./dialogAssociation.vue";
+	import dialogQuote from "./dialogQuote.vue";
+	import dialogRelate from "./dialogRelate.vue";
+	import dialogImport from "./dialogImport.vue";
+	import dialogCreateOrder from "./dialogCreateOrder.vue";
+	import dialoAuth from "./dialoAuth.vue";
+	import dialogKey from "./dialogKey.vue";
+	import DialogEditComment from "./DialogEditComment.vue";
+	import dialogMarkShipped from "./dialogMarkShipped.vue";
+	import orderCnt from "./dialogOrderCnt.vue";
+	import dialogSplit from "./dialogSplit.vue";
+	export default {
+		data() {
+			return {
+				host: location.host,
+				vipOrderReserveDay:this.$root.$children[0].vipNowData.orderReserveDay,
+				isVipUp:false,
+				loading: false,
+				tableHeight: 400,
+				reSizeTime: 0,
+				pageSizes: [10, 20, 50, 100],
+				page: this.$route.query.page ? Number(this.$route.query.page) : 1,
+				rowsPerPage: localStorage.getItem("ordersRowsPerPage") ?
+					Number(localStorage.getItem("ordersRowsPerPage")) : 10,
+				items: [],
+				total: 0,
+				totalPage: 0,
+				status: this.$route.params.status ? Number(this.$route.params.status) : 1,
+				activeName: "1",
+				tabList: [],
+				storeList: [],
+				vendorList: [],
+				checkIds: [],
+				checkItems: [],
+				vendorAllOrderCnt:{},
+				filterParams: {
+					date: [],
+					dateFrom: "",
+					dateTo: "",
+					date2: [],
+					dateFrom2: "",
+					dateTo2: "",
+					accountIds: "",
+					relationshipId: "",
+					orderId: "",
+					codeName: "",
+					receiverName: "",
+					sysCode: "",
+				},
+				filterParamsDefault: "{}",
+				dialogAssociationDefault: "{}",
+				dialogAssociation: {
+					isShow: false,
+					hasProduct: false
+				},
+				dialogLogisticDefault: "{}",
+				dialogLogistic: {
+					isShow: false,
+					errorType: null,
+					items: [],
+					max: '',
+					min: ''
+				},
+				dialogQuoteInfo: {
+					isShow: false,
+					loading: false,
+					items: [],
+				},
+				dialogQuoteInfoDefault: "{}",
+				dialogRelateInfo: {
+					isShow: false,
+					loading: false,
+					items: [],
+					Pagination: {},
+					item: "",
+					list: [],
+				},
+				dialogRelateInfoDefault: "{}",
+				dialogSplitInfo: {
+					isShow: false,
+					loading: false,
+					items: [],
+				},
+				dialogSplitInfoDefault: "{}",
+				dialoImportInfo: {
+					isShow: false,
+					loading: false,
+				},
+				dialogImportInfoDefault: "{}",
+				dialoAuthInfo: {
+					isShow: false,
+					loading: false,
+					shopData: []
+				},
+				dialogAuthInfoDefault: "{}",
+				dialogCreateInfo:{
+				    isShow: false,
+					loading: false,	
+				},
+				dialogCreateInfoDefault: "{}",
+				dialoKeyInfo: {
+					isShow: false,
+					loading: false,
+				},
+				dialogKeyInfoDefault: "{}",
+				DialogEditComment: {
+					loading: false,
+					uploadLoading: false,
+					visible: false,
+					contents: "",
+					shopName: "",
+					attach: [],
+					commentId: "",
+					item: null,
+				},
+				DialogEditCommentDefault: "{}",
+				dialogMarkShipped: {
+					isShow: false,
+					loading: false,
+					trackNumber: "",
+					trackCompany: "",
+					realCompany: "",
+					item: null,
+					shopifyCompany: [],
+					trackKey: "",
+					trackUrl: "",
+				},
+				dialogMarkShippedDefault: "{}",
+				dialogOrderCnt: {
+					isShow: false,
+					items: []
+				},
+				statusArr: { //状态
+					1: { text: this.$t('orders.tabBar14'), type: 'warning', val: 1, },
+					2: { text: this.$t('orders.tabBar1'), type: 'warning', val: 2, },
+					3: { text: this.$t('orders.tabBar13'), type: 'warning', val: 3, },
+					4: { text: this.$t('orders.tabBar2'), type: 'warning', val: 4, },
+					5: { text: this.$t('orders.tabBar3'), type: 'warning', val: 5, },
+					6: { text: this.$t('orders.ordersMenu2'), type: 'success', val: 6, },
+					7: { text: this.$t('orders.ordersMenu4'), type: 'success', val: 7, },
+					8: { text: this.$t('orders.tabBar4'), type: 'info', val: 8, },
+					9: { text: this.$t('orders.tabBar5'), type: 'info', val: 9, },
+					10: { text: this.$t('orders.tabBar6'), type: 'info', val: 10, },
+					11: { text: this.$t('orders.tabBar11'), type: 'info', val: 11, },
+					12: { text: this.$t('orders.tabBar12'), type: 'info', val: 12, },
+					14: { text: this.$t('orders.tabBar144'), type: 'info', val: 14, },
+				},
+				statusPayArr: { //状态
+					1: { text: this.$t('orders.obligation'), type: 'danger', val: 1, },
+					4: { text: this.$t('orders.payFail'), type: 'warning', val: 4, },
+					5: { text: this.$t('orders.suppliernot'), type: 'warning', val: 5, },
+				},
+				checkIds: [],
+				checkItems: [],
+			};
+		},
+		computed: {
+			isVipOrder() {
+				let isVip = false;
+				if(this.filterParams.date[0] && this.GetDateStr(this.vipOrderReserveDay) >= new Date(this.filterParams.date[0]).getTime()){
+					if(this.vipOrderReserveDay == 0){
+				    	isVip = false;
+					}else{
+					    isVip = true;
+				}}
+				else{
+					isVip = false;
+				}
+				
+				return isVip;
+			},
+			
+		},
+		components: {
+			dialogAssociation,
+			dialogLogistic,
+			dialogQuote,
+			dialogRelate,
+			dialogImport,
+			dialogCreateOrder,
+			dialoAuth,
+			dialogKey,
+			DialogEditComment,
+			dialogMarkShipped,
+			orderCnt,
+			dialogSplit,
+		},
+		watch: {
+			status(){
+				this.$refs.gridTable.clearSelection();
+				this.filterParams = JSON.parse(this.filterParamsDefault);
+				this.activeName = this.$route.params.active;
+			},
+			$route(to, from) {
+				// 对路由变化作出响应...
+				
+				this.activeName = this.$route.params.active;
+				this.status = this.$route.params.status ? Number(this.$route.params.status) : 1;
+				if(to.params.status !== from.params.status){//切换左边菜单清空搜索条件
+					this.filterParams = JSON.parse(this.filterParamsDefault);
+				}
+		     	this.vipOrderReserveDay = this.$root.$children[0].vipNowData.orderReserveDay;
+			    this.changeRole();
+				this.gotoPage();
+			},
+			activeName(){
+				this.$refs.gridTable.clearSelection();
+				this.toPage(1);
+			},
+		},
+		mounted() {
+			this.isVip();
+			// if(this.$route.query.type){
+			// 	this.activeName =  String(this.$route.query.type)
+			// }
+			this.activeName = this.$route.params.active;
+			this.changeRole();
+			// this.getVipArray();
+			this.filterParamsDefault = JSON.stringify(this.filterParams);
+			this.dialogAssociationDefault = JSON.stringify(this.dialogAssociation);
+			this.dialogQuoteInfoDefault = JSON.stringify(this.dialogQuoteInfo);
+			this.dialogLogisticDefault = JSON.stringify(this.dialogLogistic);
+			this.dialogRelateInfoDefault = JSON.stringify(this.dialogRelateInfo);
+			this.dialogImportInfoDefault = JSON.stringify(this.dialoImportInfo);
+			this.dialogCreateInfoDefault = JSON.stringify(this.dialogCreateInfo);
+			this.dialogAuthInfoDefault = JSON.stringify(this.dialoAuthInfo);
+			this.dialogKeyInfoDefault = JSON.stringify(this.dialoKeyInfo);
+			this.DialogEditCommentDefault = JSON.stringify(this.DialogEditComment);
+			this.dialogMarkShippedDefault = JSON.stringify(this.dialogMarkShipped);
+			this.dialogSplitInfoDefault = JSON.stringify(this.dialogSplitInfo);
+			
+			this.getItem();
+		},
+		beforeDestroy() {},
+		methods: {
+			splitOrder(){
+				if(!this.checkIds.length) {
+					this.$elementMessage("Please select an order first", "error");
+					return;
+				};
+				this.dialogSplitInfo.isShow = true;
+				this.checkItems.forEach(item=>{
+					item.items.forEach(obj=>{
+						this.$set(obj,"qty",Number(obj.quantity));
+						this.$set(obj,"totalWe",(Number(obj.quantity) * Number(obj.vendorProductWeight)).toFixed(2));
+					})
+				})
+				this.dialogSplitInfo.items = this.checkItems;
+			},
+			splitOrderFn(params) {
+				this.$showLoading();
+				this.$apiCall("api.ShopifyOrder.splitShopifyOrder", params, (r) => {
+					if (r.ErrorCode == "9999") {
+						this.$elementMessage(this.$t("orders.success"), "success");
+						this.dialogSplitInfo = JSON.parse(this.dialogSplitInfoDefault);
+						this.$refs.gridTable.clearSelection();
+						this.getItem();
+					} else {
+						this.$elementMessage(r.Message, "error");
+						if (r.ErrorCode == "1002" || r.ErrorCode == "1003") {
+							this.$userFailure(this);
+						}
+					}
+					this.$hideLoading();
+				});
+			},
+			exportOrder() {
+				if(!this.checkIds.length) this.$elementMessage("Please select an order first", "error");
+				this.$showLoading();
+				if ($("#ifilePro").length == 0) {
+					$("body").append(
+						'<iframe id="ifilePro" style="display:none"></iframe>'
+					);
+				}
+				let openDownload = url => {
+					document.getElementById("ifilePro").src = url;
+				};
+				let apiUrl = "api.ShopifyOrder.exportShopifyOrder2";
+				this.$apiCall(apiUrl, {
+					idList: this.checkIds
+				}, r => {
+					if (r.ErrorCode == "9999") {
+						this.$elementMessage(this.$t('orders.success'), 'success');
+						openDownload(r.Data.Results);
+					} else {
+						this.$elementMessage(r.Message, 'error');
+						if (r.ErrorCode == "1002" || r.ErrorCode == "1003") {
+							this.$userFailure(this);
+						}
+					}
+					this.$hideLoading();
+				});
+			},
+			shippedFn (row) {
+				this.dialogLogistic.errorType = row.shippingMethodArr.errorType
+				if (row.shippingMethodArr.errorSkuList) {
+					this.dialogLogistic.items = row.shippingMethodArr.errorSkuList
+				}
+				this.dialogLogistic.max = row.shippingMethodArr.max
+				this.dialogLogistic.min = row.shippingMethodArr.min
+				this.dialogLogistic.isShow = true
+			},
+			importFn () {
+				this.$apiCall('api.ShopifyOrder.getWaitBindItem', {}, (r) => {
+					if (r.ErrorCode == 9999) {
+						if (r.Data.Results.length > 0) {
+							this.dialogAssociation.hasProduct = true
+						}
+						this.dialogAssociation.isShow = true
+					} else {
+						this.$elementMessage(r.Message, 'error')
+					}
+				})
+			},
+			exportFn () {
+				if(!this.checkIds.length){
+					this.$elementMessage(this.$t('orders.selectOrder'), 'error');
+					return;
+				}
+				this.$apiCall('api.ShopifyOrder.exportNotBindItem', {
+					ids: this.checkIds
+				}, (r) => {
+					if (r.ErrorCode== 9999) {
+						window.open(r.Data.Results)
+						this.$refs.gridTable.clearSelection();
+						this.checkIds = []
+					} else {
+						this.$elementMessage(r.Message, 'error')
+					}
+				})
+			},
+			unable(i){
+				this.$confirm(this.$t('orders.确定将该商品无法采购?'), 'Tips', {
+						confirmButtonText: this.$t('shop.确定'),
+						cancelButtonText: this.$t('shop.取消'),
+						type: "warning",
+					}).then(() => {
+					this.$apiCall('api.ShopifyOrder.setUnableToPurchase',{
+						itemId:i.id
+					},r=>{
+						if(r.ErrorCode == 9999){
+							this.getItem()
+							this.$elementMessage(this.$t('orders.已添加到无法采购'), "success");
+						}else{
+							this.$elementMessage(r.Message, "error");
+						}
+					 }) 
+					}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: this.$t('orders.已取消')
+					});          
+					});
+				
+			},
+			show(row){
+				this.$refs['popover'+row.orderId].showPopper = true
+				this.$nextTick(()=>{
+					this.$refs['popover'+row.orderId].updatePopper()
+				})
+			},
+			enter(row) {
+				this.show(row)
+			},
+			leave(row) {
+ 				this.$refs['popover'+row.orderId].showPopper = false
+			},
+			// getVipArray() {	
+			// 	this.$apiCall('api.Admin.getVipArray',{},r=>{
+			// 		if(r.ErrorCode == 9999){
+            //             let vipList = r.Data.Results;
+			// 			this.vipOrderReserveDay = vipList[this.$store.state.userInfo.vipType].orderReserveDay;
+			// 		}
+			// 	});
+			// },
+			changeRole(){
+                if(!this.$route.params.status || this.$route.params.status == 2){
+					this.$route.meta.roleWrite = 'invoiceWaitEdit'
+				}else if(this.$route.params.status == 3){
+					this.$route.meta.roleWrite = 'invoiceDeliverEdit'
+				}else if(this.$route.params.status == 4){
+					this.$route.meta.roleWrite = 'invoiceAbnormalEdit'
+				}else if(this.$route.params.status == 5){
+					this.$route.meta.roleWrite = 'invoiceCompleteEdit'
+				}else if(this.$route.params.status == 6){
+					this.$route.meta.roleWrite = 'invoiceAllEdit'
+				}
+			},
+			GetDateStr(AddDayCount) { 
+				var  dd =  new  Date();
+				dd.setDate(dd.getDate()-AddDayCount); //获取AddDayCount天后的日期
+				// var  y = dd.getFullYear(); 
+				// var  m = (dd.getMonth()+1)<10? "0" +(dd.getMonth()+1):(dd.getMonth()+1); //获取当前月份的日期，不足10补0
+				// var  d = dd.getDate()<10? "0" +dd.getDate():dd.getDate(); //获取当前几号，不足10补0
+				// return  y+ "-" +m+ "-" +d;
+				return dd.getTime()
+			},
+			isVip(){
+              this.$apiCall('api.Admin.getWaitShopifyOrder',{},r=>{
+				if(r.ErrorCode == 9999){
+					this.isVipUp = r.Data.Results;
+				}
+				})
+			},
+			goToUP(){
+				this.$router.push({
+					name: "pricingUp"
+				});
+				},
+			shopifyOrderCnt(item){
+				this.$showLoading();
+				this.$apiCall("api.ShopifyOrder.findByVendor", {
+					invoiceId: item.id
+				}, (r) => {
+					if (r.ErrorCode == "9999") {
+						if(r.Data.Results.length){
+							r.Data.Results.forEach(item=>{
+								this.$set(item,"shippingJsonInfo",item.shippingJson ? JSON.parse(item.shippingJson) : "");
+							})
+						}
+						this.dialogOrderCnt.items = r.Data.Results;
+						this.dialogOrderCnt.isShow = true;
+					} else {
+						this.$elementMessage(r.Message, "error");
+					}
+					this.$hideLoading();
+				})
+			},
+			selectable(row, index) {
+				setTimeout(() => {
+					if (!row || !row.paymentType || row.paymentType != 1) {
+						return false;
+					} else {
+						return true;
+					}
+				}, 1000)
+			},
+			async saveMarkShipped() {
+				this.dialogMarkShipped.loading = true;
+				let paramsList = [];
+				let resList = [];
+				let ids = this.dialogMarkShipped.item.items.map( item => {return { id: item.id, isManage: item.isManage }});
+				
+				for (let i = 0; i < ids.length; i++) {
+					if (ids[i].isManage == 1) {
+						paramsList.push(ids[i])
+						await this.saveMarkShippedItem(ids[i].id).then((res) => {
+							resList.push(res)
+						});
+					}
+				}
+				if (resList.length == paramsList.length) {
+					this.$elementMessage(this.$t('orders.success'), "success");
+					this.dialogMarkShipped.isShow = false;
+					this.getItem();
+				}
+			},
+			saveMarkShippedItem(id){
+				return new Promise((resolve, reject) => {
+					this.$apiCall("api.ShopifyOrder.changeDeliver", {
+						itemId: id,
+						trackNumber: this.dialogMarkShipped.trackNumber,
+						trackCompany: this.dialogMarkShipped.trackCompany,
+						//					realCompany: this.dialogMarkShipped.realCompany,
+						trackKey: this.dialogMarkShipped.trackKey,
+						trackUrl: this.dialogMarkShipped.trackUrl,
+					}, (r) => {
+						if (r.ErrorCode == "9999") {
+							resolve(id)
+						} else {
+							reject(id)
+						}
+					});
+				})
+			},
+			markShippedOpen(item) {
+				this.dialogMarkShipped = JSON.parse(this.dialogMarkShippedDefault);
+				this.$showLoading();
+				this.$apiCall("api.Invoice.getShopifyCompany", {}, (r) => {
+					this.$hideLoading();
+					if (r.ErrorCode == "9999") {
+						this.dialogMarkShipped.shopifyCompany = r.Data.Results;
+						this.dialogMarkShipped.isShow = true;
+						this.dialogMarkShipped.item = item;
+					} else {
+						this.$elementMessage(r.Message, "error");
+					}
+				});
+			},
+			openAddComment() {
+				//打开新建工单
+				if (this.$refs.uploadFile) this.$refs.uploadFile.clearFiles();
+				this.DialogEditComment = JSON.parse(this.DialogEditCommentDefault);
+				this.DialogEditComment.visible = true;
+			},
+			openSecretKey() {
+				this.dialoKeyInfo = JSON.parse(this.dialogKeyInfoDefault);
+				this.dialoKeyInfo.isShow = true;
+			},
+			openAuth() {
+				this.dialoAuthInfo = JSON.parse(this.dialogAuthInfoDefault);
+				this.dialoAuthInfo.shopData = localStorage.getItem("userInfo") ?
+					JSON.parse(localStorage.getItem("userInfo")).erpShops : [];
+				this.dialoAuthInfo.isShow = true;
+			},
+			submitUpload(uploadFile) {
+				this.$showLoading();
+				if ($("#ifilePro").length == 0) {
+					$("body").append(
+						'<iframe id="ifilePro" style="display:none"></iframe>'
+					);
+				}
+				let openDownload = (url) => {
+					document.getElementById("ifilePro").src = url;
+				};
+				let apiUrl = "api.ShopifyOrder.deliverImportNew";
+				let param = {
+					"@file": uploadFile,
+				};
+				this.$apiCall(apiUrl, param, (r) => {
+					if (r.ErrorCode == "9999") {
+						this.$elementMessage(this.$t("invoice.successImport"), "success");
+						openDownload(r.Data.Results.file);
+						this.dialoImportInfo = JSON.parse(this.dialogImportInfoDefault);
+						this.getItem();
+					} else {
+						this.$elementMessage(r.Message, "error");
+						if (r.ErrorCode == "1002" || r.ErrorCode == "1003") {
+							this.$userFailure(this);
+						}
+					}
+					this.$hideLoading();
+				});
+			},
+			createUpload(uploadFile){
+            //    手工创建订单
+              this.$showLoading();
+				if ($("#ifileProCreate").length == 0) {
+					$("body").append(
+						'<iframe id="ifileProCreate" style="display:none"></iframe>'
+					);
+				}
+				let openDownload = (url) => {
+					document.getElementById("ifileProCreate").src = url;
+				};
+				let apiUrl = "api.ShopifyOrder.importOrderExcel";
+				let param = {
+					"@file": uploadFile,
+				};
+				this.$apiCall(apiUrl, param, (r) => {
+					if (r.ErrorCode == "9999") {
+						this.$elementMessage('创建成功', "success");
+						openDownload(r.Data.Results.file);
+						this.dialogCreateInfo = JSON.stringify(this.dialogCreateInfoDefault);
+						this.getItem();
+					} else {
+						this.$elementMessage(r.Message, "error");
+						if (r.ErrorCode == "1002" || r.ErrorCode == "1003") {
+							this.$userFailure(this);
+						}
+					}
+					this.$hideLoading();
+				});
+
+			},
+			openImport() {
+				this.dialoImportInfo = JSON.parse(this.dialogImportInfoDefault);
+				this.dialoImportInfo.isShow = true;
+			},
+			openCreate() {
+				this.dialogCreateInfo = JSON.parse(this.dialogCreateInfoDefault);
+				this.dialogCreateInfo.isShow = true;
+			},
+			relateFn(sku) {
+				this.$showLoading();
+				this.$apiCall("api.ShopifyOrder.setSkuRelation", {
+					customerSku: this.dialogRelateInfo.item.variableId,
+					customerId: this.dialogRelateInfo.item.customerId,
+					vendorSku: sku,
+				}, (r) => {
+					if (r.ErrorCode == "9999") {
+						this.$elementMessage(this.$t('orders.success'), "success");
+						this.dialogQuoteInfo = JSON.parse(this.dialogQuoteInfoDefault);
+						this.dialogRelateInfo = JSON.parse(this.dialogRelateInfoDefault);
+						this.$refs.gridTable.clearSelection();
+						this.getItem();
+					} else {
+						this.$elementMessage(r.Message, "error");
+					}
+					this.$hideLoading();
+				})
+			},
+			openRelate(item) {
+				this.$showLoading();
+				this.$apiCall("api.VendorShop.vendorFindProducts", {
+					page: 1,
+					rowsPerPage: 10,
+					status:1
+				}, (r) => {
+					if (r.ErrorCode == "9999") {
+						// this.$elementMessage(this.$t('orders.success'), "success");
+						if (!r.Data.Results || !r.Data.Results.length) return;
+						this.dialogRelateInfo = JSON.parse(this.dialogRelateInfoDefault);
+						this.dialogRelateInfo.isShow = true;
+						this.dialogRelateInfo.item = item;
+						this.dialogRelateInfo.Pagination = r.Data.Pagination;
+						this.dialogRelateInfo.items = [];
+						this.dialogRelateInfo.list = [];
+						r.Data.Results.forEach(item1 => {
+							if (item1.stocks && item1.stocks.length) {
+								item1.stocks.forEach(obj => {
+									this.$set(obj, "name", item1.name);
+									this.dialogRelateInfo.items.push(obj);
+								})
+							}
+							this.dialogRelateInfo.list.push(item1);
+						})
+					} else {
+						this.$elementMessage(r.Message, "error");
+					}
+					this.$hideLoading();
+				})
+			},
+			syncFn(type, item) {
+				if (type == 'row') {
+					this.sync(type, item);
+				} else {
+					if (!this.checkIds.length) {
+						this.$elementMessage(this.$t('orders.selectOrder'), 'error');
+					} else {
+						this.sync()
+					}
+				}
+			},
+			sync(type, item){
+				let ids = [];
+				if (type == 'row') {
+					ids.push(item.id);
+				} else {
+					ids = this.checkIds;
+				}
+				this.$showLoading();
+				this.$apiCall("api.ShopifyOrder.setNotAbnormal", {ids:ids}, (r) => {
+					if (r.ErrorCode == "9999") {
+						this.$elementMessage(this.$t('orders.success'), "success");
+						this.getItem();
+					} else {
+						this.$elementMessage(r.Message, "error");
+					}
+					this.$hideLoading();
+				});
+			},
+			payFn(type, item) {
+				if (type == 'row') {
+					this.pay(type, item);
+				} else {
+					if (!this.checkIds.length) {
+						this.$elementMessage(this.$t('orders.selectOrder'), 'error');
+					} else {
+						let flag = 0;
+						this.checkItems.forEach(item=>{
+							if(item.paymentType == 1){
+								flag ++
+							}
+						})
+						if(flag == this.checkIds.length){
+							this.pay();
+						}else{
+							this.$elementMessage("只有线下付款的订单支持确认收款", 'error');
+						}
+					}
+				}
+			},
+			pay(type, item) {
+				this.$confirm(this.$t('orders.confirmRe'), "", {
+					confirmButtonText: this.$t('orders.confirm'),
+					cancelButtonText: this.$t('orders.cancel'),
+					type: ''
+				}).then(() => {
+					let ids = [];
+					if (type == 'row') {
+						ids.push(item.id);
+					} else {
+						ids = this.checkIds;
+					}
+					this.payConfirm(ids);
+				}).catch(() => {
+
+				});
+			},
+			async payConfirm(ids) {
+				this.$showLoading();
+				let resList = [];
+				for (let i = 0; i < ids.length; i++) {
+					await this.payConfirmItem(ids[i]).then((res) => {
+						resList.push(res)
+					});
+				}
+				if (resList.length == ids.length) {
+					this.$elementMessage(this.$t('orders.success'), "success");
+					this.$hideLoading();
+					this.getItem();
+				}
+			},
+			payConfirmItem(id) {
+				return new Promise((resolve, reject) => {
+					this.$apiCall("api.ShopifyOrder.setPaid", {
+						id: id
+					}, (r) => {
+						if (r.ErrorCode == "9999") {
+							resolve(id)
+						} else {
+							this.$hideLoading();
+							this.$elementMessage(r.Message, "error");
+							reject(id)
+						}
+					})
+				})
+			},
+			payCancelFn(type, item) {
+				if (type == 'row') {
+					this.payCancel(type, item);
+				} else {
+					if (!this.checkIds.length) {
+						this.$elementMessage(this.$t('orders.selectOrder'), 'error');
+					} else {
+						this.payCancel();
+					}
+				}
+			},
+			payCancel(type, item) {
+				this.$confirm(this.$t('orders.payagain'), "", {
+					confirmButtonText: this.$t('orders.confirm'),
+					cancelButtonText: this.$t('orders.cancel'),
+					type: ''
+				}).then(() => {
+					let ids = [];
+					if (type == 'row') {
+						ids.push(item.id);
+					} else {
+						ids = this.checkIds;
+					}
+					this.payCanceled(ids);
+				}).catch(() => {
+
+				});
+			},
+			async payCanceled(ids) {
+				this.$showLoading();
+				let resList = [];
+				for (let i = 0; i < ids.length; i++) {
+					await this.payCancelItem(ids[i]).then((res) => {
+						resList.push(res)
+					});
+				}
+				if (resList.length == ids.length) {
+					this.$elementMessage(this.$t('orders.success'), "success");
+					this.$hideLoading();
+					this.getItem();
+				}
+			},
+			payCancelItem(id) {
+				return new Promise((resolve, reject) => {
+					this.$apiCall("api.ShopifyOrder.setNotPaid", {
+						id: id
+					}, (r) => {
+						if (r.ErrorCode == "9999") {
+							resolve(id)
+						} else {
+							this.$hideLoading();
+							this.$elementMessage(r.Message, "error");
+							reject(id)
+						}
+					})
+				})
+			},
+			quoteFn(type, item) {
+				if (type == 'row') {
+					this.quote(type, item);
+				} else {
+					if (!this.checkIds.length) {
+						this.$elementMessage(this.$t('orders.selectOrder'), 'error');
+					} else {
+						this.quote();
+					}
+				}
+			},
+			quote(type, item) {
+				let ids = [];
+				if (type == 'row') {
+					ids.push(item.id);
+				} else {
+					ids = this.checkIds;
+				}
+				this.$showLoading();
+				this.$apiCall("api.ShopifyOrder.getOfferShopifyItems", {
+					ids: ids
+				}, (r) => {
+					if (r.ErrorCode == "9999") {
+						// this.$elementMessage(this.$t('orders.success'), "success");
+						// if(!r.Data.Results || !r.Data.Results.length) return;
+						// this.dialogQuoteInfo = JSON.parse(this.dialogQuoteInfoDefault);
+						// this.dialogQuoteInfo.isShow = true;
+						// this.dialogQuoteInfo.items = Object.values(r.Data.Results);
+						let items = Object.values(r.Data.Results)
+						if(!items || !items.length) {
+							this.$hideLoading();
+							this.$elementMessage("No data", "error");
+							return;
+						}
+						localStorage.setItem('needQuoteOrders',JSON.stringify(items))
+						this.$router.push({
+							name:'orderQuote',
+							params:{
+								ids:ids
+							},
+						})
+					} else {
+						this.$elementMessage(r.Message, "error");
+					}
+					this.$hideLoading();
+				})
+
+			},
+			quoteCancelFn() {
+				if (!this.checkIds.length) {
+					this.$elementMessage(this.$t('orders.selectOrder'), 'error');
+				} else {
+					this.$confirm(this.$t('orders.waive'), "", {
+						confirmButtonText: this.$t('orders.confirm'),
+						cancelButtonText: this.$t('orders.cancel'),
+						type: ''
+					}).then(() => {
+						this.$showLoading();
+						this.$apiCall("api.ShopifyOrder.cancel", {
+							ids: this.checkIds
+						}, (r) => {
+							if (r.ErrorCode == "9999") {
+								this.$elementMessage(this.$t('orders.success'), "success");
+								this.$refs.gridTable.clearSelection();
+								this.getItem();
+							} else {
+								this.$elementMessage(r.Message, "error");
+							}
+							this.$hideLoading();
+						})
+					}).catch(() => {
+
+					});
+				}
+			},
+			// val表示选中的表格行数据
+			handleSelectionChange(val) {
+				this.checkIds = [];
+				this.checkItems = [];
+				if (!val.length) return;
+				val.forEach(item => {
+					this.checkItems.push(item);
+					this.checkIds.push(item.id);
+				});
+			},
+			dateChange() {
+				if (this.filterParams.date.length > 1) {
+					this.filterParams.dateFrom = this.$moment(
+						this.filterParams.date[0]
+					).format("YYYY-MM-DD");
+					this.filterParams.dateTo = this.$moment(
+						this.filterParams.date[1]
+					).format("YYYY-MM-DD");
+					this.filterItem();
+				}
+			},
+			dateChange2() {
+				if (this.filterParams.date2 && this.filterParams.date2.length > 1) {
+					this.filterParams.dateFrom2 = this.$moment(
+						this.filterParams.date2[0]
+					).format("YYYY-MM-DD");
+					this.filterParams.dateTo2 = this.$moment(
+						this.filterParams.date2[1]
+					).format("YYYY-MM-DD");
+					this.filterItem();
+				}else{
+					this.clearFilter('date2');
+				}
+			},
+			clearFilter(type) {
+				switch (type) {
+					case "codeName":
+						this.filterParams.codeName = "";
+						break;
+					case "orderId":
+						this.filterParams.orderId = "";
+						break;
+					case "receiverName":
+						this.filterParams.receiverName = "";
+						break;
+					case "accountIds":
+						this.filterParams.accountIds = "";
+						break;
+					case "relationshipId":
+						this.filterParams.relationshipId = "";
+						break;
+					case "date":
+						this.filterParams.date = [];
+						this.filterParams.dateFrom = "";
+						this.filterParams.dateTo = "";
+						break;
+					case "date2":
+						this.filterParams.date2 = [];
+						this.filterParams.dateFrom2 = "";
+						this.filterParams.dateTo2 = "";
+						break;
+					case "sysCode":
+						this.filterParams.sysCode = "";
+						break;
+					default:
+						this.filterParams = JSON.parse(this.filterParamsDefault);
+						break;
+				}
+				this.filterItem();
+			},
+			filterItem(type) {
+				if (this.$route.query.page == 1) {
+					this.getItem();
+				} else {
+					
+					this.$router.push({
+						path:`/ordersManage/${Number(this.status)}/${Number(this.activeName)}`,
+						query: {
+							page: 1
+						}
+					});
+				}
+
+			},
+			gettabList() {
+				switch (this.status) {
+					case 2:
+						this.tabList = [{
+							id: 2,
+							name: 1,
+							title: this.$t('orders.tabBar1')
+						}, {
+							id: 22,
+							name: 2,
+							title: this.$t('orders.tabBar2')
+						}, {
+							id: 5,
+							name: 3,
+							title: this.$t('orders.tabBar3')
+						}]
+						break;
+					case 4:
+						this.tabList = [{
+							id: 8,
+							name: 1,
+							title: this.$t('orders.tabBar4')
+						}, {
+							id: 9,
+							name: 2,
+							title: this.$t('orders.tabBar5')
+						}, {
+							id: 10,
+							name: 3,
+							title: this.$t('orders.tabBar6')
+						}]
+						break;
+					default:
+						this.tabList = [];
+						break;
+				}
+			},
+			remoteMethodCustom() {
+				this.vendorList = [];
+				this.$apiCall("api.Relationship.findByVendor", {}, (r) => {
+					if (r.ErrorCode == 9999) {
+						this.vendorList = r.Data.Results;
+					} else {
+						this.$message({
+							message: r.Message,
+							type: "error"
+						});
+					}
+				});
+			},
+			getShopName() {
+				this.storeList = [];
+				this.$apiCall(
+					"api.Invoice.findStoreByVendor", {}, (r) => {
+						if (r.ErrorCode == 9999) {
+							this.storeList = r.Data.Results;
+						} else {
+							this.$message({
+								message: r.Message,
+								type: "error"
+							});
+						}
+					}
+				);
+			},
+			getVendorAllOrderCnt(){
+				this.$apiCall("api.ShopifyOrder.getVendorAllOrderCnt", {}, (r) => {
+					if (r.ErrorCode == 9999) {
+						this.vendorAllOrderCnt = r.Data.Results;
+					} else {
+						this.$message({
+							message: r.Message,
+							type: "error"
+						});
+					}
+				});
+			},
+			vendorAllOrderCntText(id){
+				let text = 0;
+				if(id == 22){
+					text = this.vendorAllOrderCnt.waitVendorConfirmCnt ? this.vendorAllOrderCnt.waitVendorConfirmCnt : 0;
+				}else{
+					text = this.vendorAllOrderCnt[id] ? this.vendorAllOrderCnt[id] : 0;
+				}
+				return text;
+			},
+			getItem(s) {
+				this.gettabList();
+				this.remoteMethodCustom();
+				this.getShopName();
+				this.getVendorAllOrderCnt();
+				this.items = [];
+				let status = "",
+					url = "api.ShopifyOrder.findByVendor",
+					params,
+					params1 = {
+						page: this.page,
+						rowsPerPage: this.rowsPerPage,
+						status: status,
+						dateFrom: this.filterParams.dateFrom,
+						dateTo: this.filterParams.dateTo,
+						accountIds: this.filterParams.accountIds ? [this.filterParams.accountIds] : "",
+						relationshipId: this.filterParams.relationshipId,
+						orderId: this.filterParams.orderId,
+						keywords: this.filterParams.codeName,
+						receiverName: this.filterParams.receiverName,
+					},
+					params2 = {
+						page: this.page,
+						rowsPerPage: this.rowsPerPage,
+						status: status,
+						sysCode: this.filterParams.sysCode,
+						timeCreatedFrom: this.filterParams.dateFrom2,
+						timeCreatedTo: this.filterParams.dateTo2,
+					};
+				params = params1;
+				if (this.status == 3) { //已发货
+					status = 6;
+				} else if (this.status == 5) { //已完成
+					status = 7;
+				} else if (this.status == 6) { //查询页面
+					status = "";
+					params = Object.assign(params1, params2);
+				} else if (this.status == 311) { //查询页面
+					status = 311;
+				} else {
+					let item = this.tabList.filter(item => {
+						return item.name == this.activeName
+					});
+					status = item[0].id;
+					if (this.status == 2) { //付款
+						if (this.activeName == 2) {
+							status = 3;
+							params = params2;
+							url = "api.ShopifyOrder.findByInvoice"
+						}
+					}
+				}
+				this.loading = true;
+				params.status = status;
+				this.$apiCall(url, params, (r) => {
+					this.loading = false;
+					if (r.ErrorCode == 9999) {
+						this.items = r.Data.Results;
+						this.items.forEach(item=>{
+							this.$set(item,"shippingJsonInfo",item.shippingJson ? JSON.parse(item.shippingJson) : "");
+							if(item.accountPayment && item.accountPayment.extJson){
+								this.$set(item,"voucherUrl",item.accountPayment.extJson.voucherUrl || "");
+								this.$set(item,"voucherUrlPreview",[item.accountPayment.extJson.voucherUrl]);
+							}
+						})
+						this.total = Number(r.Data.Pagination.totalCount);
+						this.totalPage = Number(r.Data.Pagination.totalPage);
+						this.$getTableHeight(this);
+						if (!s) this.$root.$children[0].$refs.mainScroll.wrap.scrollTop = 0;
+					} else {
+						this.$message({
+							message: r.Message,
+							type: "error",
+						});
+					}
+				});
+			},
+			toPage(val) {
+				if (val != this.$route.query.page)
+				
+					this.$router.push({
+						path:`/ordersManage/${Number(this.status)}/${Number(this.activeName)}`,
+						query: {
+							page: val,
+						},
+					});
+			},
+			changePageSize(val) {
+				this.rowsPerPage = val;
+				localStorage.setItem("ordersRowsPerPage", val);
+				this.getItem();
+			},
+			gotoPage() {
+				this.page = this.$route.query.page ? this.$route.query.page : 1;
+				this.getItem();
+			},
+			//tab切换
+			handleClick(tab, event) {
+				this.filterParams = JSON.parse(this.filterParamsDefault);
+				this.getItem();
+			}
+		},
+	};
+</script>
+<style lang="scss" scoped>
+	.btns-wrap {
+		position: absolute;
+		right: 0;
+	}
+	.tx-middle {
+		display:flex;
+		align-items: center;
+	}
+	.noVip{
+		height: 500px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+		color: #606266;
+	}
+	
+</style>
+<style>
+	.el-popover .items{
+	  /* max-height: 62vh; */
+	  max-height: 300px;
+	  overflow: auto;
+	}
+</style>

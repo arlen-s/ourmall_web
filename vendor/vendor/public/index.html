@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta base ="<%= BASE_URL %>">
+    <link rel="icon" href="<%= BASE_URL %>images/icon.png" type="image/png">
+    <!--<title><%= htmlWebpackPlugin.options.title %></title>-->
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="<%= BASE_URL %>fonts/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<%= BASE_URL %>fonts/iconfont/iconfont.css">
+    <link rel="stylesheet" href="<%= BASE_URL %>css/custom.css">
+    <link rel="stylesheet" href="<%= BASE_URL %>css/style.css">
+    <link rel="stylesheet" href="<%= BASE_URL %>css/emoji.css">
+    <!-- <script>
+      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();  
+    </script> -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-72711313-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-72711313-1');
+    </script>
+    <style>
+      .loading-mask {
+        position: fixed;
+        background-color: hsla(0, 0%, 100%, .9);
+        margin: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transition: opacity .3s;
+      }
+  
+      .loading-spinner {
+        top: 50%;
+        margin-top: -25px;
+        width: 100%;
+        text-align: center;
+        position: absolute;
+      }
+  
+      .loading-spinner .circular {
+        height: 50px;
+        width: 50px;
+        animation: loading-rotate 2s linear infinite;
+      }
+  
+      .loading-spinner .path {
+        animation: loading-dash 1.5s ease-in-out infinite;
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: 0;
+        stroke-width: 2;
+        stroke: #409eff;
+        stroke-linecap: round;
+      }
+  
+      @-webkit-keyframes loading-rotate {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+  
+      @keyframes loading-rotate {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+  
+      @-webkit-keyframes loading-dash {
+        0% {
+          stroke-dasharray: 1, 200;
+          stroke-dashoffset: 0;
+        }
+  
+        50% {
+          stroke-dasharray: 90, 150;
+          stroke-dashoffset: -40px;
+        }
+  
+        100% {
+          stroke-dasharray: 90, 150;
+          stroke-dashoffset: -120px;
+        }
+      }
+  
+      @keyframes loading-dash {
+        0% {
+          stroke-dasharray: 1, 200;
+          stroke-dashoffset: 0;
+        }
+  
+        50% {
+          stroke-dasharray: 90, 150;
+          stroke-dashoffset: -40px;
+        }
+  
+        100% {
+          stroke-dasharray: 90, 150;
+          stroke-dashoffset: -120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="loading">
+      <div class="loading-mask">
+        <div class="loading-spinner">
+          <svg viewBox="25 25 50 50" class="circular">
+            <circle cx="50" cy="50" r="20" fill="none" class="path"></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div id="app"></div>
+    <script type="text/javascript" src="<%= BASE_URL %>js/echarts.min.js"></script>
+    <script src="<%= BASE_URL %>js/moment.min.js"></script>
+    <script src="<%= BASE_URL %>js/moment-zhcn.js"></script>
+    <!-- built files will be auto injected -->
+  </body>
+  <script src="<%= BASE_URL %>js/jquery.1.12.4.min.js"></script>
+	<!-- <script src="js/bootstrap.min.js"></script> -->
+	<script src="<%= BASE_URL %>js/config.js"></script>
+	<script src="<%= BASE_URL %>js/util.js"></script>
+	<script src="<%= BASE_URL %>js/jquery.emojiarea.js"></script>
+  <script src="<%= BASE_URL %>js/base64img/exif.js"></script>
+  <script src="<%= BASE_URL %>js/base64img/base64image.js"></script>
+  <script src="<%= BASE_URL %>js/emoji-picker.js"></script>
+  <script src="<%= BASE_URL %>fonts/iconfont/iconfont.js"></script>
+	<!-- <script>
+    $(()=>{
+      $('body').on('click', '.el-image-viewer__mask', ()=>{
+        $('.el-image-viewer__btn.el-image-viewer__close').click();
+      });
+      // 开
+      Tawk_API.onChatMaximized = () => {
+        $('.chat-mask').show();
+      };
+      //关
+      Tawk_API.onChatMinimized = () => {
+        $('.chat-mask').hide();
+      };
+      Tawk_API.onChatHidden = () => {
+        $('.chat-mask').hide();
+      };
+    })
+	</script> -->
+</html>

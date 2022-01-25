@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>OurMall—全国领先的跨境电商一件代发SaaS平台，自己也能搭建dropshipping网站</title>
+		<meta name="description" content="OurMall是一家全国领先的跨境电商一件代发服务平台，紧抓跨境电商一件代发红利，牢握私域流量，无货源也能“弯道超车”">
+		<meta name="keywords" content="跨境电商SaaS，外贸电商SaaS，Droppshipping，跨境电商一件代发，一件代发供应商，国外分销商">
+		<meta name="renderer" content="webkit">
+		<meta name="author" content="OurMall">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="stylesheet" href="css/common.css" />
+		<style type="text/css">
+		#main-news-area {
+			margin-bottom: 150px;
+		}
+		#main-news-area h2{
+			margin: 200px 0 100px;
+			text-align: center;
+		}
+		#main-news-area h4{
+			font-size: 24px;
+			font-weight: 400;
+			color: #8E8E8E;
+			margin-bottom: 20px;
+		}
+		#main-news-area .news{
+			display: flex;
+			align-items: flex-start;
+			justify-content: space-between;
+			box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.17);
+			border-radius: 4px;
+			padding: 20px;
+			margin-bottom: 20px;
+		}
+		#main-news-area .news .news-l{
+			display: flex;
+			align-items: flex-start;
+		}
+		#main-news-area .news .news-l img{
+			margin-right: 30px;
+		}
+		#main-news-area .news .news-l h5{
+			font-size: 24px;
+			font-weight: 500;
+			color: #000000;
+			line-height: 36px;
+			margin-bottom: 30px;
+		}
+		#main-news-area .news .news-l h6{
+			font-size: 18px;
+			font-weight: 400;
+			color: #686868;
+			line-height: 25px;
+		}
+		#main-news-area .news .date{
+			font-size: 12px;
+			font-weight: 400;
+			color: #686868;
+			white-space: nowrap;
+		}
+		</style>
+	</head>
+	<body>
+		<header id="header"></header>
+		<section id="main-news-area">
+			<div class="container">
+				<h2>更多咨询</h2>
+				<h4>新闻动态</h4>
+				<div class="news-area">
+					<a href="detail2.html">
+					<div class="news">
+						<div class="news-l">
+							<img src="images/news/news2.png" width="350" alt="news">
+							<div>
+								<h5>Dropshipping怎么做？95%卖家都不知道可以如此简单</h5>
+								<h6>资讯来源：雨果网</h6>
+							</div>
+						</div>
+						<div class="date">
+							2021/07/10
+						</div>
+					</div>
+					</a>
+					<a href="detail1.html">
+					<div class="news">
+						<div class="news-l">
+							<img src="images/news/news1.png" width="350" alt="news">
+							<div>
+								<h5>2021年，越来越火爆的Dropshipping模式</h5>
+								<h6>资讯来源：雨果网</h6>
+							</div>
+						</div>
+						<div class="date">
+							2021/06/10
+						</div>
+					</div>
+					</a>
+				</div>
+			</div>
+		</section>
+		<footer id="footer"></footer>
+	</body>
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script>
+	$(function(){
+		$("#header").load("components/header.html", function() {
+			var sc = document.createElement("script");
+			sc.src = "js/common.js";
+			$("body").append(sc);
+		});
+		$("#footer").load("components/footer.html");
+		// $("#header").load("components/header.html",function(){
+		// 	$("nav.nav-bar").addClass("fixedmenu");
+		// 	$('.navbar-nav li a').each(function(){
+		// 		if($($(this))[0].href==String(window.location))
+		// 			$(this).parent().addClass('active');
+		// 	});
+		// });
+		// $("#footer").load("components/footer.html");
+	})
+	</script>
+</html>

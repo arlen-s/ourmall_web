@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="./images/icon.png" type="image/png">
+    <title>Website Maintenance</title>
+    <style>
+      html,body{
+        margin: 0;
+        padding: 0;
+        background-color: #DCF0FB;
+        font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+      .row1{
+        position: relative;
+        min-width: 1000px;
+      }
+      .row1 .left-bg{
+        position: absolute;
+        top: 0;
+        right: 50%;
+        bottom: 0;
+        left: 0;
+        background-color: #9CC7E9;      
+      }
+      .row1 .right-bg{
+        position: absolute;
+        right: 0;
+        width: 246px;
+        height: 154px;
+        z-index: 2;
+        background-image: url('./images/maintenance/right.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        
+      }
+      .row1 .main{
+        position: relative;
+        z-index: 1;
+        margin: 0 auto;
+        max-width: 1200px;
+        min-width: 1000px;
+        height: 573px;
+        background-image: url('./images/maintenance/main1.png');
+      }
+      .main .content{
+        margin-left: 580px;
+        padding-top: 160px;
+      }
+      .main .content h2{
+        margin: 0 0 15px;
+        line-height: 48px;
+        text-align: right;
+        color: #5c6ac4;
+        font-size: 32px;
+      }
+      .main .content p{
+        color: #909399;
+        text-align: right;
+        line-height: 26px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row1">
+      <div class="left-bg"></div>
+      <div class="right-bg"></div>
+      <div class="main">
+        <div class="content">
+          <h2>Website is under  MAINTENANCE</h2>
+          <p>
+            Don't worry, we will be back soon!
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
