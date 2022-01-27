@@ -840,6 +840,9 @@ const routes = [
         return '/dashboard';
       }
       let hostArr = location.host.split('.');
+      if(location.host === 'app.fforder.com'){
+        return '/home'
+      }
       if (hostArr.length > 2 && !(hostArr[0].toLowerCase() == 'www' || hostArr[0].toLowerCase() == 'sandboxwww' || hostArr[0].toLowerCase() == 'app' || hostArr[0].toLowerCase() == 'shopify' || hostArr[0].toLowerCase() == 'sandboxshopify')) {
         return '/home';
       } else {
