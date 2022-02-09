@@ -27,7 +27,7 @@
         <div v-else class="box-content">
           <!-- 登录 -->
           <template v-if="isReg == '1'">
-						<!-- 1.8.1 不用欢迎了 -->
+                        <!-- 1.8.1 不用欢迎了 -->
             <!-- <div v-if="$store.state.userInfo" class="welcome-box">
               <h2>{{$t('signin.welcome')}}<span style=" color:#606266;">{{$store.state.userInfo.name}}</span></h2>
               <el-divider></el-divider>
@@ -211,7 +211,7 @@
       </div>
     </div>
     <UserAgreementDialog ref="userAgreementDialog" />
-		<RetrievePasswordDialog ref="retrievePassword" />
+        <RetrievePasswordDialog ref="retrievePassword" />
   </div>
 </template>
 
@@ -219,342 +219,342 @@
 import UserAgreementDialog from "@/components/userAgreementDialog";
 import RetrievePasswordDialog from "@/components/RetrievePasswordDialog";
 export default {
-		data() {
-			const validatePass2 = (rule, value, callback) => {
-				if (value === '') {
-					callback(new Error(this.$t('signin.请再次输入密码')));
-				} else if (value !== this.formValue.password) {
-					callback(new Error(this.$t('signin.两次输入密码不一致')));
-				} else {
-					callback();
-				}
-			};
-			return {
-				timer: null,
-				labelWidth: "0px",
-				loading: false,
-				formValue: {
-					username: '',
-					token: '',
-					password: "",
-					rePassword: "",
-				},
-				showReSend: true,
-				mobileSeconds: 60, // 倒计时
-				confirmSuccess: false, // 是否通过滑动验证
-				error: null,
-				errorT: 0,
-				rules: {
-					userName: [{
-						required: true,
-						message: this.$t('signin.enterMobile'),
-						trigger: "blur"
-					}, ],
-					token: [{
-						required: true,
-						message: this.$t('signin.enterCaptcha'),
-						trigger: "blur"
-					}],
-					password: [{
-							required: true,
-							message: this.$t('signin.请输入新密码'),
-							trigger: "blur"
-						},
-						{
-							min: 6,
-							message: this.$t('signin.passBits'),
-							trigger: "blur"
-						},
-						{
-							pattern: /(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}/,
-							message: this.$t('signin.密码必须包含字母、数字和特殊字符，至少6个字符'),
-							trigger: "blur",
-						},
-					],
-					rePassword: [{
-						validator: validatePass2,
-						trigger: 'blur'
-					}]
-				},
-				isReg: '1',
-				isAutoSignin: false,
-				tabAction: 'login',
-				loginForm: {
-					userName: "",
-					password: "",
-					token: "",
-					isSubUser: false,
-					time: 60,
-					timer: null,
-					isGetToken: false,
-				},
-				loginRules: {
-					userName: [{
-						required: true,
-						message: this.$t('signin.username'),
-						trigger: "blur"
-					}],
-					password: [{
-						required: true,
-						message: this.$t('signin.passwordMust'),
-						trigger: "blur"
-					}]
-				},
-				loginStatus: {
-					labelWidth: "0px",
-					error: "",
-					errorT: 0,
-					loading: false,
-				},
-				regForm: {
-					shopName: "",
-					userName: "",
-					password: "",
-					rePassword: "",
-					token: "",
-				},
-				regRules: {
-					userName: [{
-						required: true,
-						message: this.$t('signin.enterMobile'),
-						trigger: "blur"
-					}, ],
-					password: [{
-							required: true,
-							message: this.$t('signin.enterPass'),
-							trigger: "blur"
-						},
-						{
-							min: 6,
-							message: this.$t('signin.密码必须包含字母、数字和特殊字符，至少6个字符'),
-							trigger: "blur"
-						},
-						{
-							pattern: /(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}/,
-							message: this.$t('signin.密码必须包含字母、数字和特殊字符，至少6个字符'),
-							trigger: "blur",
-						},
-					],
-					token: [{
-						required: true,
-						message: this.$t('signin.enterCaptcha'),
-						trigger: "blur"
-					}],
-					shopName: [{
-							required: true,
-							message: this.$t('signin.请输入店铺名称'),
-							trigger: "blur"
-						},
-						{
-							min: 3,
-							message: this.$t('signin.店铺名称格式错误'),
-							trigger: "blur"
-						},
-						{
-							pattern: /^[A-Za-z0-9]{3,35}$/,
-							message: this.$t('signin.店铺名称格式错误'),
-							trigger: "blur",
-						},
-					],
-				},
-				regStatus: {
-					showReSend: true,
-					mobileSeconds: 60, // 倒计时
-					confirmSuccess: false, // 是否通过滑动验证
-					isAgree: true, // 是否同意用户协议
-					labelWidth: "0px",
-					loading: false,
-					error: "",
-					errorT: 0,
-					success: "",
-					successT: 0,
-					dialogUserAgreementVisible: false, // 用户协议窗口
-				},
-				needSelectShop: false,
-				selectShopList:[],
-				selectShopToken:"",
-			};
-		},
-		components: {
-			RetrievePasswordDialog,
-			// homeAlert,
-			// Footer,
-			UserAgreementDialog,
-		},
-		computed: {
-			lang() {
-				let l = "CN"
-				if (navigator.appName == 'Netscape') {
-					l = navigator.language
-				} else {
-					l = navigator.browserLanguage
-				}
+        data() {
+            const validatePass2 = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error(this.$t('signin.请再次输入密码')));
+                } else if (value !== this.formValue.password) {
+                    callback(new Error(this.$t('signin.两次输入密码不一致')));
+                } else {
+                    callback();
+                }
+            };
+            return {
+                timer: null,
+                labelWidth: "0px",
+                loading: false,
+                formValue: {
+                    username: '',
+                    token: '',
+                    password: "",
+                    rePassword: "",
+                },
+                showReSend: true,
+                mobileSeconds: 60, // 倒计时
+                confirmSuccess: false, // 是否通过滑动验证
+                error: null,
+                errorT: 0,
+                rules: {
+                    userName: [{
+                        required: true,
+                        message: this.$t('signin.enterMobile'),
+                        trigger: "blur"
+                    }, ],
+                    token: [{
+                        required: true,
+                        message: this.$t('signin.enterCaptcha'),
+                        trigger: "blur"
+                    }],
+                    password: [{
+                            required: true,
+                            message: this.$t('signin.请输入新密码'),
+                            trigger: "blur"
+                        },
+                        {
+                            min: 6,
+                            message: this.$t('signin.passBits'),
+                            trigger: "blur"
+                        },
+                        {
+                            pattern: /(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}/,
+                            message: this.$t('signin.密码必须包含字母、数字和特殊字符，至少6个字符'),
+                            trigger: "blur",
+                        },
+                    ],
+                    rePassword: [{
+                        validator: validatePass2,
+                        trigger: 'blur'
+                    }]
+                },
+                isReg: '1',
+                isAutoSignin: false,
+                tabAction: 'login',
+                loginForm: {
+                    userName: "",
+                    password: "",
+                    token: "",
+                    isSubUser: false,
+                    time: 60,
+                    timer: null,
+                    isGetToken: false,
+                },
+                loginRules: {
+                    userName: [{
+                        required: true,
+                        message: this.$t('signin.username'),
+                        trigger: "blur"
+                    }],
+                    password: [{
+                        required: true,
+                        message: this.$t('signin.passwordMust'),
+                        trigger: "blur"
+                    }]
+                },
+                loginStatus: {
+                    labelWidth: "0px",
+                    error: "",
+                    errorT: 0,
+                    loading: false,
+                },
+                regForm: {
+                    shopName: "",
+                    userName: "",
+                    password: "",
+                    rePassword: "",
+                    token: "",
+                },
+                regRules: {
+                    userName: [{
+                        required: true,
+                        message: this.$t('signin.enterMobile'),
+                        trigger: "blur"
+                    }, ],
+                    password: [{
+                            required: true,
+                            message: this.$t('signin.enterPass'),
+                            trigger: "blur"
+                        },
+                        {
+                            min: 6,
+                            message: this.$t('signin.密码必须包含字母、数字和特殊字符，至少6个字符'),
+                            trigger: "blur"
+                        },
+                        {
+                            pattern: /(?=.*[0-9])(?=.*[a-zA-Z]).{6,20}/,
+                            message: this.$t('signin.密码必须包含字母、数字和特殊字符，至少6个字符'),
+                            trigger: "blur",
+                        },
+                    ],
+                    token: [{
+                        required: true,
+                        message: this.$t('signin.enterCaptcha'),
+                        trigger: "blur"
+                    }],
+                    shopName: [{
+                            required: true,
+                            message: this.$t('signin.请输入店铺名称'),
+                            trigger: "blur"
+                        },
+                        {
+                            min: 3,
+                            message: this.$t('signin.店铺名称格式错误'),
+                            trigger: "blur"
+                        },
+                        {
+                            pattern: /^[A-Za-z0-9]{3,35}$/,
+                            message: this.$t('signin.店铺名称格式错误'),
+                            trigger: "blur",
+                        },
+                    ],
+                },
+                regStatus: {
+                    showReSend: true,
+                    mobileSeconds: 60, // 倒计时
+                    confirmSuccess: false, // 是否通过滑动验证
+                    isAgree: true, // 是否同意用户协议
+                    labelWidth: "0px",
+                    loading: false,
+                    error: "",
+                    errorT: 0,
+                    success: "",
+                    successT: 0,
+                    dialogUserAgreementVisible: false, // 用户协议窗口
+                },
+                needSelectShop: false,
+                selectShopList:[],
+                selectShopToken:"",
+            };
+        },
+        components: {
+            RetrievePasswordDialog,
+            // homeAlert,
+            // Footer,
+            UserAgreementDialog,
+        },
+        computed: {
+            lang() {
+                let l = "CN"
+                if (navigator.appName == 'Netscape') {
+                    l = navigator.language
+                } else {
+                    l = navigator.browserLanguage
+                }
 
-				if (l.indexOf('zh') > -1) {
-					return "CN"
-				} else {
-					return "EN"
-				}
-			}
-		},
-		mounted() {
-			this.$Burying({
-				object: '1001'
-			});
-			this.isReg = this.$getParams("isReg") ? this.$getParams("isReg") : "1"; 
-			// this.getCookie()
-		},
-		methods: {
-			//设置cookie
-			setCookie(c_name, c_pwd, exdays) {
-				var exdate = new Date(); //获取时间
-				exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
-				//字符串拼接cookie
-				window.document.cookie = "userName" + "=" + c_name + ";path=/;expires=" + exdate.toGMTString();
-				window.document.cookie = "userPwd" + "=" + c_pwd + ";path=/;expires=" + exdate.toGMTString();
-			},
-			//读取cookie 
-			getCookie() {
-				if (document.cookie.length > 0) {
-					var arr = document.cookie.split('; '); //这里显示的格式需要切割一下自己可输出看下
-					for (var i = 0; i < arr.length; i++) {
-						var arr2 = arr[i].split('='); //再次切割
-						//判断查找相对应的值
-						if (arr2[0] == 'userName') {
-							this.loginForm.userName = arr2[1]; //保存到保存数据的地方
-						} else if (arr2[0] == 'userPwd') {
-							this.loginForm.password = arr2[1];
-						}
-					}
-					this.isAutoSignin = true;
-					this.login()
-				}
-			},
-			//清除cookie
-			clearCookie: function() {
-				this.setCookie("", "", -1); //修改2值都为空，天数为负1天就好了
-			},
-			//忘记密码
-			success2() {
-				this.confirmSuccess = true
-				this.sendToken2()
-			},
-			dragReset() {
-				this.confirmSuccess = false;
-				if (this.isReg == 1) {
-					this.$refs.verify2.reset()
-				} else if (this.isReg == 2) {
-					this.$refs.verify.reset()
-				} else {
-					this.$refs.verify3.reset()
-				}
-			},
-			focusPassword() {
-				this.$refs.iptPassword.$refs.input.focus();
-			},
-			handleReset() {
-				this.$refs.refFrom.validate((valid) => {
-					if (valid) {
-						this.error = "";
-						this.loading = true;
-						this.$apiCall(
-							"api.User.resetPassword", {
-								mobile: this.formValue.userName,
-								password: this.formValue.password,
-								token: this.formValue.token,
-								newPassword: this.formValue.password,
-								repeatNewPassword: this.formValue.rePassword,
-							},
-							(r) => {
-								this.loading = false;
-								if (r.ErrorCode == 9999) {
-									this.$message({
-										message: this.$t("signin.密码重置成功"),
-										type: "success"
-									});
-									// this.handleClose()
-									// clearInterval(this.successT);
-									// this.regStatus.success = this.$t('signin.successful');
-									// this.regStatus.successT = setInterval(() => {
-									//   this.regStatus.success = "";
-									// }, 5000);
-									// this.$message({ message: this.$t("signin.successful"), type: "success" });
-									// this.tabAction = "login"
-								} else {
-									clearInterval(this.errorT);
-									this.error = r.Message;
-									this.errorT = setInterval(() => {
-										this.error = "";
-									}, 5000);
-									// this.$message({ message: r.Message, type: "error" });
-								}
-							}
-						);
-					}
-				});
-			},
-			sendToken2() { // 获取验证码
-				if (this.errorT) {
-					clearInterval(this.errorT);
-				}
-				if (!this.formValue.userName) {
-					clearInterval(this.errorT);
-					this.error = this.$t('signin.correctNum');
-					this.errorT = setInterval(() => {
-						this.error = "";
-					}, 5000);
-					this.dragReset();
-					return;
-				}
-				if (!this.confirmSuccess) {
-					clearInterval(this.errorT);
-					this.error = this.$t('signin.slideBar');
-					this.errorT = setInterval(() => {
-						this.error = "";
-					}, 5000);
-					this.dragReset();
-					return;
-				}
-				this.loading = true;
-				this.$apiCall(
-					"api.User.sendToken", {
-						mobile: this.formValue.userName,
-						reset: true,
-						lang: this.lang
-					},
-					(r) => {
-						this.loading = false;
-						if (r.ErrorCode == 9999) {
-							this.mobileSeconds = 60;
-							this.showReSend = false;
-							let t = setInterval(() => {
-								if (this.mobileSeconds <= 1) {
-									this.dragReset();
-									this.showReSend = true;
-									clearInterval(t);
-								}
-								this.mobileSeconds--;
-							}, 1000);
-						} else {
-							this.dragReset();
-							clearInterval(this.errorT);
-							this.error = r.Message;
-							this.errorT = setInterval(() => {
-								this.error = "";
-							}, 5000);
-						}
-					}
-				);
-			},
-			//////////////////////////////////忘记密码end
-			logout() {
-				localStorage.removeItem('wantVisitPathSu');
-				this.$userFailure();
-			},
-			openRePasswordDialog() {
-				this.$refs.retrievePassword.openDialog()
-			},
-			handleTab(type){
+                if (l.indexOf('zh') > -1) {
+                    return "CN"
+                } else {
+                    return "EN"
+                }
+            }
+        },
+        mounted() {
+            this.$Burying({
+                object: '1001'
+            });
+            this.isReg = this.$getParams("isReg") ? this.$getParams("isReg") : "1"; 
+            // this.getCookie()
+        },
+        methods: {
+            //设置cookie
+            setCookie(c_name, c_pwd, exdays) {
+                var exdate = new Date(); //获取时间
+                exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
+                //字符串拼接cookie
+                window.document.cookie = "userName" + "=" + c_name + ";path=/;expires=" + exdate.toGMTString();
+                window.document.cookie = "userPwd" + "=" + c_pwd + ";path=/;expires=" + exdate.toGMTString();
+            },
+            //读取cookie 
+            getCookie() {
+                if (document.cookie.length > 0) {
+                    var arr = document.cookie.split('; '); //这里显示的格式需要切割一下自己可输出看下
+                    for (var i = 0; i < arr.length; i++) {
+                        var arr2 = arr[i].split('='); //再次切割
+                        //判断查找相对应的值
+                        if (arr2[0] == 'userName') {
+                            this.loginForm.userName = arr2[1]; //保存到保存数据的地方
+                        } else if (arr2[0] == 'userPwd') {
+                            this.loginForm.password = arr2[1];
+                        }
+                    }
+                    this.isAutoSignin = true;
+                    this.login()
+                }
+            },
+            //清除cookie
+            clearCookie: function() {
+                this.setCookie("", "", -1); //修改2值都为空，天数为负1天就好了
+            },
+            //忘记密码
+            success2() {
+                this.confirmSuccess = true
+                this.sendToken2()
+            },
+            dragReset() {
+                this.confirmSuccess = false;
+                if (this.isReg == 1) {
+                    this.$refs.verify2.reset()
+                } else if (this.isReg == 2) {
+                    this.$refs.verify.reset()
+                } else {
+                    this.$refs.verify3.reset()
+                }
+            },
+            focusPassword() {
+                this.$refs.iptPassword.$refs.input.focus();
+            },
+            handleReset() {
+                this.$refs.refFrom.validate((valid) => {
+                    if (valid) {
+                        this.error = "";
+                        this.loading = true;
+                        this.$apiCall(
+                            "api.User.resetPassword", {
+                                mobile: this.formValue.userName,
+                                password: this.formValue.password,
+                                token: this.formValue.token,
+                                newPassword: this.formValue.password,
+                                repeatNewPassword: this.formValue.rePassword,
+                            },
+                            (r) => {
+                                this.loading = false;
+                                if (r.ErrorCode == 9999) {
+                                    this.$message({
+                                        message: this.$t("signin.密码重置成功"),
+                                        type: "success"
+                                    });
+                                    // this.handleClose()
+                                    // clearInterval(this.successT);
+                                    // this.regStatus.success = this.$t('signin.successful');
+                                    // this.regStatus.successT = setInterval(() => {
+                                    //   this.regStatus.success = "";
+                                    // }, 5000);
+                                    // this.$message({ message: this.$t("signin.successful"), type: "success" });
+                                    // this.tabAction = "login"
+                                } else {
+                                    clearInterval(this.errorT);
+                                    this.error = r.Message;
+                                    this.errorT = setInterval(() => {
+                                        this.error = "";
+                                    }, 5000);
+                                    // this.$message({ message: r.Message, type: "error" });
+                                }
+                            }
+                        );
+                    }
+                });
+            },
+            sendToken2() { // 获取验证码
+                if (this.errorT) {
+                    clearInterval(this.errorT);
+                }
+                if (!this.formValue.userName) {
+                    clearInterval(this.errorT);
+                    this.error = this.$t('signin.correctNum');
+                    this.errorT = setInterval(() => {
+                        this.error = "";
+                    }, 5000);
+                    this.dragReset();
+                    return;
+                }
+                if (!this.confirmSuccess) {
+                    clearInterval(this.errorT);
+                    this.error = this.$t('signin.slideBar');
+                    this.errorT = setInterval(() => {
+                        this.error = "";
+                    }, 5000);
+                    this.dragReset();
+                    return;
+                }
+                this.loading = true;
+                this.$apiCall(
+                    "api.User.sendToken", {
+                        mobile: this.formValue.userName,
+                        reset: true,
+                        lang: this.lang
+                    },
+                    (r) => {
+                        this.loading = false;
+                        if (r.ErrorCode == 9999) {
+                            this.mobileSeconds = 60;
+                            this.showReSend = false;
+                            let t = setInterval(() => {
+                                if (this.mobileSeconds <= 1) {
+                                    this.dragReset();
+                                    this.showReSend = true;
+                                    clearInterval(t);
+                                }
+                                this.mobileSeconds--;
+                            }, 1000);
+                        } else {
+                            this.dragReset();
+                            clearInterval(this.errorT);
+                            this.error = r.Message;
+                            this.errorT = setInterval(() => {
+                                this.error = "";
+                            }, 5000);
+                        }
+                    }
+                );
+            },
+            //////////////////////////////////忘记密码end
+            logout() {
+                localStorage.removeItem('wantVisitPathSu');
+                this.$userFailure();
+            },
+            openRePasswordDialog() {
+                this.$refs.retrievePassword.openDialog()
+            },
+            handleTab(type){
         this.tabAction = type;
         setTimeout(()=>{
           if(type == 'login'){
@@ -567,314 +567,328 @@ export default {
           }   
         },200)
       },
-			success(i) {
-				if (i == "login") {
-					this.regForm.userName = this.loginForm.userName;
-				}
-				this.regStatus.confirmSuccess = true;
-				this.$Burying({
-					object: '2002'
-				})
-				this.sendToken()
-			},
-			openUserAgreement() {
-				this.$refs.userAgreementDialog.open()
-			},
-			goto(name) {
-				this.$router.push({
-					name
-				});
-			},
-			selectShopUrl(item){
-				window.open(`//${item.firstUrl}`,"shopUrl");
-			},
-			selectShopLogin(item){
-				this.$showLoading();
-				localStorage.setItem('apiShopId', item.shopId);
-				this.$apiCall("api.User.login", {
-					username: this.loginForm.userName,
-					apiShopId: item.shopId,
-					token: this.selectShopToken, 
-					type: 2,
-				},
-				r => {
-					if (r.ErrorCode == 9999) {
-						// alert(`Results=${JSON.stringify(r.Data.Results)}`)
-						this.handleLogin(r.Data.Results);
-					} 
-				});
-			},
-			handleLogin(Results) {
-				localStorage.setItem("apiUserToken",Results.apiUserToken);
-				localStorage.setItem("apiUserId", Results.id);
-				localStorage.setItem("apiSubUserId", Results.subUserId ? Results.subUserId : "");
-				localStorage.setItem("userInfo",JSON.stringify(Results));
-				this.$store.commit("setUserInfo", Results);
-				this.$root.$children[0].getCnt();
-				let reg = /^localhost:/;
-				let reg2 = /^sandbox/;
-				// alert(`Results=${JSON.stringify(Results)}`)
-				//登录后跳转页面
-				let admin = ".myourmall.com";
-				if(this.$root.$children[0].baseUrl != '/admin'){
-					admin = ".myourmall.com/admin"
-				}
-				if (localStorage.getItem('wantVisitPathSu')) {
-					if (reg.test(window.location.host)) {
-						this.$router.push({
-							path: localStorage.getItem('wantVisitPathSu')
-						});
-					}else {
-						let e;
-						this.$root.$children[0].navMenu.forEach(item=>{
-							if(item.path == localStorage.getItem('wantVisitPathSu')){
-								e = item;
-							}
-						})
-						if(e.role && this.$isRole(e.role) && (!e.subItem || e.subItem.some(obj => {return obj.role && this.$isRole(obj.role)}))){
-							let url;
-							if (reg2.test(window.location.host)) {
-								url = window.location.href.replace(window.location.host,`//sandbox${this.$store.state.userInfo.shop.name}${admin}`);
-							} else {
-								url = window.location.href.replace(window.location.host,`//${this.$store.state.userInfo.shop.name}${admin}`);
-							}
-							let path = e.path.substring(1);//去掉前面的/符号
-							window.location = `${url}jump?t=${localStorage.getItem("apiUserToken")}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
-						}else{
-							let e = this.$root.$children[0].navMenu.find(item => {
-								return item.role && this.$isRole(item.role) && (!item.subItem || item.subItem.some(obj => {return obj.role && this.$isRole(obj.role)}))
-							});
-							if(e){
-								if (reg.test(window.location.host)) {
-									this.$router.push({
-										path: e.path
-									});
-								} else{
-									let url;
-									if (reg2.test(window.location.host)) {
-										url = window.location.href.replace(window.location.host,`//sandbox${this.$store.state.userInfo.shop.name}${admin}`);
-									} else {
-										url = window.location.href.replace(window.location.host,`//${this.$store.state.userInfo.shop.name}${admin}`);
-									}
-									let path = e.path.substring(1);//去掉前面的/符号
-									window.location = `${url}jump?t=${localStorage.getItem("apiUserToken")}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
-								}
-							}else{
-								alert(`没有权限，请联系管理员`)
-							}
-						}
-					}
+            success(i) {
+                if (i == "login") {
+                    this.regForm.userName = this.loginForm.userName;
+                }
+                this.regStatus.confirmSuccess = true;
+                this.$Burying({
+                    object: '2002'
+                })
+                this.sendToken()
+            },
+            openUserAgreement() {
+                this.$refs.userAgreementDialog.open()
+            },
+            goto(name) {
+                this.$router.push({
+                    name
+                });
+            },
+            selectShopUrl(item){
+                window.open(`//${item.firstUrl}`,"shopUrl");
+            },
+            selectShopLogin(item){
+                this.$showLoading();
+                localStorage.setItem('apiShopId', item.shopId);
+                this.$apiCall("api.User.login", {
+                    username: this.loginForm.userName,
+                    apiShopId: item.shopId,
+                    token: this.selectShopToken, 
+                    type: 2,
+                },
+                r => {
+                    if (r.ErrorCode == 9999) {
+                        // alert(`Results=${JSON.stringify(r.Data.Results)}`)
+                        this.handleLogin(r.Data.Results);
+                    } 
+                });
+            },
+            handleLogin(Results) {
+                localStorage.setItem("apiUserToken",Results.apiUserToken);
+                localStorage.setItem("apiUserId", Results.id);
+                localStorage.setItem("apiSubUserId", Results.subUserId ? Results.subUserId : "");
+                localStorage.setItem("userInfo",JSON.stringify(Results));
+                this.$store.commit("setUserInfo", Results);
+                this.$root.$children[0].getCnt();
+                let reg = /^localhost:/;
+                let reg2 = /^sandbox/;
+                // alert(`Results=${JSON.stringify(Results)}`)
+                //登录后跳转页面
+				let urlHalf = ""
+				if(this.$root.$children[0].vipDetail.service){
+					urlHalf = ".myourmall.com"
 				} else {
-					let e = this.$root.$children[0].navMenu.find(item => {
-						return item.role && this.$isRole(item.role) && (!item.subItem || item.subItem.some(obj => {return obj.role && this.$isRole(obj.role)}))
-					});
-					if(e){
-						if (reg.test(window.location.host)) {
-							this.$router.push({
-								path: e.path
-							});
-						} else{
-							let url;
-							if (reg2.test(window.location.host)) {
-								url = window.location.href.replace(window.location.host,`//sandbox${this.$store.state.userInfo.shop.name}${admin}`);
-							} else {
-								url = window.location.href.replace(window.location.host,`//${this.$store.state.userInfo.shop.name}${admin}`);
-							}
-							let path = e.path.substring(1);//去掉前面的/符号
-							window.location = `${url}jump?t=${localStorage.getItem("apiUserToken")}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
-						}
-					}else{
-						alert(`没有权限，请联系管理员`)
-					}
-					// this.$router.push({ name: "dashboard" });
+					let freeUser = this.$store.state.userInfo.shop.name.split('.')
+					urlHalf = `.${freeUser[1]}.${freeUser[2]}`
 				}
-			}, 
-			login() {
-				// if(this.isAutoSignin){
-				//   this.setCookie(this.loginForm.userName,this.loginForm.password,7);
-				// }else {
-				//  this.clearCookie()
-				// }
-				if (this.tabAction == "login") {
-					this.$refs.loginForm.validate(valid => {
-						if (valid) {
-							this.loginStatus.error = '';
-							this.loginStatus.loading = true;
-							this.$Burying({
-								object: '1002'
-							})
-							this.toLogin();
-						}
-					});
-				} else {
-					this.$refs.loginForm2.validate(valid => {
-						if (valid) {
-							this.loginStatus.error = '';
-							this.loginStatus.loading = true;
-							this.$Burying({
-								object: '1002'
-							})
-							this.toLogin();
-						}
-					});
-				}
+                let admin = urlHalf;
+                if(this.$root.$children[0].baseUrl != '/admin'){
+                    admin = `${urlHalf}/admin`
+                }
+                //todo1 如果有仪表盘的路径
+                if (localStorage.getItem('wantVisitPathSu')) {
+                    //todo2 如果正则验证是本地 直接跳转local的路径
+                    if (reg.test(window.location.host)) {
+                        this.$router.push({
+                            path: localStorage.getItem('wantVisitPathSu')
+                        });
+                    //todo2 如果正则验证不是本地
+                    }else {
+                        let e;
+                        //todo3 如果根组件下的children[0].navMenu路径和local的路径一样 e = 路径
+                        this.$root.$children[0].navMenu.forEach(item=>{
+                            if(item.path == localStorage.getItem('wantVisitPathSu')){
+                                e = item;
+                            }
+                        })
+                        //todo4 这些路径是否有权限访问做判断
+                        if(e.role && this.$isRole(e.role) && (!e.subItem || e.subItem.some(obj => {return obj.role && this.$isRole(obj.role)}))){
+                            let url;
+                            //todo5 如果sandbox正则匹配通过
+                            if (reg2.test(window.location.host)) {
+                                url = window.location.href.replace(window.location.host,`//sandbox${this.$store.state.userInfo.shop.name}${admin}`);
+                            } else {
+                                url = window.location.href.replace(window.location.host,`//${this.$store.state.userInfo.shop.name}${admin}`);
+                            }
+                            //todo6 那本地的token判断是否需要登录
+                            let path = e.path.substring(1);//去掉前面的/符号
+                            window.location = `${url}jump?t=${localStorage.getItem("apiUserToken")}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
+                        }else{
+                            let e = this.$root.$children[0].navMenu.find(item => {
+                                return item.role && this.$isRole(item.role) && (!item.subItem || item.subItem.some(obj => {return obj.role && this.$isRole(obj.role)}))
+                            });
+                            if(e){
+                                if (reg.test(window.location.host)) {
+                                    this.$router.push({
+                                        path: e.path
+                                    });
+                                } else{
+                                    let url;
+                                    if (reg2.test(window.location.host)) {
+                                        url = window.location.href.replace(window.location.host,`//sandbox${this.$store.state.userInfo.shop.name}${admin}`);
+                                    } else {
+                                        url = window.location.href.replace(window.location.host,`//${this.$store.state.userInfo.shop.name}${admin}`);
+                                    }
+                                    let path = e.path.substring(1);//去掉前面的/符号
+                                    window.location = `${url}jump?t=${localStorage.getItem("apiUserToken")}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
+                                }
+                            }else{
+                                alert(`没有权限，请联系管理员`)
+                            }
+                        }
+                    }
+                } else {
+                    let e = this.$root.$children[0].navMenu.find(item => {
+                        return item.role && this.$isRole(item.role) && (!item.subItem || item.subItem.some(obj => {return obj.role && this.$isRole(obj.role)}))
+                    });
+                    if(e){
+                        if (reg.test(window.location.host)) {
+                            this.$router.push({
+                                path: e.path
+                            });
+                        } else{
+                            let url;
+                            if (reg2.test(window.location.host)) {
+                                url = window.location.href.replace(window.location.host,`//sandbox${this.$store.state.userInfo.shop.name}${admin}`);
+                            } else {
+                                url = window.location.href.replace(window.location.host,`//${this.$store.state.userInfo.shop.name}${admin}`);
+                            }
+                            let path = e.path.substring(1);//去掉前面的/符号
+                            window.location = `${url}jump?t=${localStorage.getItem("apiUserToken")}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
+                        }
+                    }else{
+                        alert(`没有权限，请联系管理员`)
+                    }
+                    // this.$router.push({ name: "dashboard" });
+                }
+            }, 
+            login() {
+                // if(this.isAutoSignin){
+                //   this.setCookie(this.loginForm.userName,this.loginForm.password,7);
+                // }else {
+                //  this.clearCookie()
+                // }
+                if (this.tabAction == "login") {
+                    this.$refs.loginForm.validate(valid => {
+                        if (valid) {
+                            this.loginStatus.error = '';
+                            this.loginStatus.loading = true;
+                            this.$Burying({
+                                object: '1002'
+                            })
+                            this.toLogin();
+                        }
+                    });
+                } else {
+                    this.$refs.loginForm2.validate(valid => {
+                        if (valid) {
+                            this.loginStatus.error = '';
+                            this.loginStatus.loading = true;
+                            this.$Burying({
+                                object: '1002'
+                            })
+                            this.toLogin();
+                        }
+                    });
+                }
 
-			},
-			toLogin() {
-				const rid = this.$route.query.rid || '';
-				this.$apiCall(
-					"api.User.login", {
-						// isSubUser:this.loginForm.isSubUser, //是否子账号
-						username: this.loginForm.userName,
-						password: this.loginForm.password,
-						token: this.loginForm.token, //验证码
-						type: 2,
-						relationshipId: rid,
-					},
-					r => {
-						if (r.ErrorCode == 9999) {
-							this.$Burying({
-								object: '1005'
-							})
-							if(!r.Data.Results.chooseStore){
-								this.handleLogin(r.Data.Results);
-							}else{
-								this.needSelectShop = true;
-								this.selectShopList = r.Data.Results.shops || [];
-								this.selectShopToken = r.Data.Results.token;
-							}
-						} else {
-							this.$Burying({
-								object: '1006'
-							})
-							this.loginStatus.loading = false;
-							clearInterval(this.loginStatus.errorT)
-							this.loginStatus.error = r.Message;
-							this.loginStatus.errorT = setInterval(() => {
-								this.loginStatus.error = '';
-							}, 5000)
-						}
-					}
-				);
-			},
-			registers() {
-				const rid = this.$route.query.rid || ''
-				if (!this.regStatus.isAgree) {
-					clearInterval(this.regStatus.errorT);
-					this.regStatus.error = this.$t('signin.read');
-					this.regStatus.errorT = setInterval(() => {
-						this.regStatus.error = "";
-					}, 5000);
-					return;
-				}
-				this.$refs.regForm.validate((valid) => {
-					if (valid) {
-						this.regStatus.error = "";
-						this.regStatus.loading = true;
-						this.$Burying({
-							object: '2001'
-						})
-						this.$apiCall(
-							"api.User.register", {
-								shopName: this.regForm.shopName,
-								username: this.regForm.userName,
-								password: this.regForm.password,
-								code: this.regForm.token,
-								type: 2,
-								ivc: this.$route.query.ivc,
-								relationshipId: rid,
-								isLogin: true,
-								lang: this.lang
-							},
-							(r) => {
-								this.regStatus.loading = false;
-								if (r.ErrorCode == 9999) {
-									this.$Burying({
-										object: '2004'
-									})
-									this.handleLogin(r.Data.Results)
-									// clearInterval(this.successT);
-									// this.regStatus.success = this.$t('signin.successful');
-									// this.regStatus.successT = setInterval(() => {
-									//   this.regStatus.success = "";
-									// }, 5000);
-									// this.$message({ message: this.$t("signin.successful"), type: "success" });
-									// this.tabAction = "login"
-								} else {
-									this.$Burying({
-										object: '2005'
-									})
-									clearInterval(this.regStatus.errorT);
-									this.regStatus.error = r.Message;
-									this.regStatus.errorT = setInterval(() => {
-										this.regStatus.error = "";
-									}, 5000);
-									this.$message({
-										message: r.Message,
-										type: "error"
-									});
-								}
-							}
-						);
-					}
-				});
-			},
-			sendToken() { // 获取验证码
-				clearInterval(this.timer);
-				if (!this.regForm.userName) {
-					clearInterval(this.regStatus.errorT);
-					this.regStatus.error = this.$t('signin.correctNum');
-					this.regStatus.errorT = setInterval(() => {
-						this.regStatus.error = "";
-					}, 5000);
-					this.dragReset();
-					return;
-				}
-				if (!this.regStatus.confirmSuccess) {
-					clearInterval(this.regStatus.errorT);
-					this.regStatus.error = this.$t('signin.slideBar');
-					this.regStatus.errorT = setInterval(() => {
-						this.regStatus.error = "";
-					}, 5000);
-					this.dragReset();
-					return;
-				}
-				this.regStatus.loading = true;
-				this.$apiCall(
-					"api.User.sendToken", {
-						mobile: this.regForm.userName,
-						lang: this.lang
-					},
-					(r) => {
-						this.regStatus.loading = false;
-						if (r.ErrorCode == 9999) {
-							this.regStatus.mobileSeconds = 60;
-							this.regStatus.showReSend = false;
-							this.timer = setInterval(() => {
-								if (this.regStatus.mobileSeconds <= 1) {
-									this.dragReset();
-									this.regStatus.showReSend = true;
-									clearInterval(this.timer);
-								}
-								this.regStatus.mobileSeconds--;
-							}, 1000);
-						} else {
-							this.dragReset();
-							clearInterval(this.regStatus.errorT);
-							this.regStatus.error = r.Message;
-							this.regStatus.errorT = setInterval(() => {
-								this.regStatus.error = "";
-							}, 5000);
-						}
-					}
-				);
-			},
-			toSignin() {
-				this.tabAction = 'login'
-				this.isReg = '1';
-			}
-		}
-	};
+            },
+            toLogin() {
+                const rid = this.$route.query.rid || '';
+                this.$apiCall(
+                    "api.User.login", {
+                        // isSubUser:this.loginForm.isSubUser, //是否子账号
+                        username: this.loginForm.userName,
+                        password: this.loginForm.password,
+                        token: this.loginForm.token, //验证码
+                        type: 2,
+                        relationshipId: rid,
+                    },
+                    r => {
+                        if (r.ErrorCode == 9999) {
+                            this.$Burying({
+                                object: '1005'
+                            })
+                            if(!r.Data.Results.chooseStore){
+                                this.handleLogin(r.Data.Results);
+                            }else{
+                                this.needSelectShop = true;
+                                this.selectShopList = r.Data.Results.shops || [];
+                                this.selectShopToken = r.Data.Results.token;
+                            }
+                        } else {
+                            this.$Burying({
+                                object: '1006'
+                            })
+                            this.loginStatus.loading = false;
+                            clearInterval(this.loginStatus.errorT)
+                            this.loginStatus.error = r.Message;
+                            this.loginStatus.errorT = setInterval(() => {
+                                this.loginStatus.error = '';
+                            }, 5000)
+                        }
+                    }
+                );
+            },
+            registers() {
+                const rid = this.$route.query.rid || ''
+                if (!this.regStatus.isAgree) {
+                    clearInterval(this.regStatus.errorT);
+                    this.regStatus.error = this.$t('signin.read');
+                    this.regStatus.errorT = setInterval(() => {
+                        this.regStatus.error = "";
+                    }, 5000);
+                    return;
+                }
+                this.$refs.regForm.validate((valid) => {
+                    if (valid) {
+                        this.regStatus.error = "";
+                        this.regStatus.loading = true;
+                        this.$Burying({
+                            object: '2001'
+                        })
+                        this.$apiCall(
+                            "api.User.register", {
+                                shopName: this.regForm.shopName,
+                                username: this.regForm.userName,
+                                password: this.regForm.password,
+                                code: this.regForm.token,
+                                type: 2,
+                                ivc: this.$route.query.ivc,
+                                relationshipId: rid,
+                                isLogin: true,
+                                lang: this.lang
+                            },
+                            (r) => {
+                                this.regStatus.loading = false;
+                                if (r.ErrorCode == 9999) {
+                                    this.$Burying({
+                                        object: '2004'
+                                    })
+                                    this.handleLogin(r.Data.Results)
+                                    // clearInterval(this.successT);
+                                    // this.regStatus.success = this.$t('signin.successful');
+                                    // this.regStatus.successT = setInterval(() => {
+                                    //   this.regStatus.success = "";
+                                    // }, 5000);
+                                    // this.$message({ message: this.$t("signin.successful"), type: "success" });
+                                    // this.tabAction = "login"
+                                } else {
+                                    this.$Burying({
+                                        object: '2005'
+                                    })
+                                    clearInterval(this.regStatus.errorT);
+                                    this.regStatus.error = r.Message;
+                                    this.regStatus.errorT = setInterval(() => {
+                                        this.regStatus.error = "";
+                                    }, 5000);
+                                    this.$message({
+                                        message: r.Message,
+                                        type: "error"
+                                    });
+                                }
+                            }
+                        );
+                    }
+                });
+            },
+            sendToken() { // 获取验证码
+                clearInterval(this.timer);
+                if (!this.regForm.userName) {
+                    clearInterval(this.regStatus.errorT);
+                    this.regStatus.error = this.$t('signin.correctNum');
+                    this.regStatus.errorT = setInterval(() => {
+                        this.regStatus.error = "";
+                    }, 5000);
+                    this.dragReset();
+                    return;
+                }
+                if (!this.regStatus.confirmSuccess) {
+                    clearInterval(this.regStatus.errorT);
+                    this.regStatus.error = this.$t('signin.slideBar');
+                    this.regStatus.errorT = setInterval(() => {
+                        this.regStatus.error = "";
+                    }, 5000);
+                    this.dragReset();
+                    return;
+                }
+                this.regStatus.loading = true;
+                this.$apiCall(
+                    "api.User.sendToken", {
+                        mobile: this.regForm.userName,
+                        lang: this.lang
+                    },
+                    (r) => {
+                        this.regStatus.loading = false;
+                        if (r.ErrorCode == 9999) {
+                            this.regStatus.mobileSeconds = 60;
+                            this.regStatus.showReSend = false;
+                            this.timer = setInterval(() => {
+                                if (this.regStatus.mobileSeconds <= 1) {
+                                    this.dragReset();
+                                    this.regStatus.showReSend = true;
+                                    clearInterval(this.timer);
+                                }
+                                this.regStatus.mobileSeconds--;
+                            }, 1000);
+                        } else {
+                            this.dragReset();
+                            clearInterval(this.regStatus.errorT);
+                            this.regStatus.error = r.Message;
+                            this.regStatus.errorT = setInterval(() => {
+                                this.regStatus.error = "";
+                            }, 5000);
+                        }
+                    }
+                );
+            },
+            toSignin() {
+                this.tabAction = 'login'
+                this.isReg = '1';
+            }
+        }
+    };
 </script>
 
 <style lang="scss">
@@ -884,21 +898,21 @@ export default {
     margin-bottom: 48px;
     .el-button{
       margin-right: 30px;
-			padding: 12px 0;
+            padding: 12px 0;
       height: 55px;
       border: none;
-			border-radius: 0;
-			border-bottom: 2px transparent solid;
+            border-radius: 0;
+            border-bottom: 2px transparent solid;
       color: #ADB0C4;
-			font-size: 20px;
+            font-size: 20px;
     }
-		.el-button:hover, 	.el-button:focus{
-			color: #292929;
-			background-color: transparent;
-		}
+        .el-button:hover,   .el-button:focus{
+            color: #292929;
+            background-color: transparent;
+        }
     .el-button.active{
       color: #292929;
-			border-color: #525FB0;
+            border-color: #525FB0;
     }
   }
   .login-box, .reg-box, .forgot-box{
@@ -935,9 +949,9 @@ export default {
   min-width: 1200px;
   height: 100%;
   min-height: 850px;
-	@media screen and (max-width: 1120px){
-		min-width: 980px;
-	}
+    @media screen and (max-width: 1120px){
+        min-width: 980px;
+    }
   .left{
     position: relative;
     display: flex;
@@ -952,10 +966,10 @@ export default {
     background-repeat: no-repeat;
     background-position: right 0;
     background-size: cover;
-		@media screen and (max-width: 1120px){
-			min-width: 640px;
-			padding-right: 15px;
-		}
+        @media screen and (max-width: 1120px){
+            min-width: 640px;
+            padding-right: 15px;
+        }
     @media screen and (min-width: 1280px){
      flex: 1.2
     } 
@@ -997,9 +1011,9 @@ export default {
     background-color: #fff;
     display: flex;
     flex-direction: column;
-		@media screen and (max-width: 1120px){
-			padding: 15px;
-		}
+        @media screen and (max-width: 1120px){
+            padding: 15px;
+        }
     @media screen and (min-width: 1280px){
      flex: .8
     }  
