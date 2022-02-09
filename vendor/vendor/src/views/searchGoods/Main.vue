@@ -161,11 +161,9 @@ export default {
       activeName: "",
       pageSize: [10, 20, 50, 100],
       page: this.$route.query.page ? Number(this.$route.query.page) : 1,
-      // rowsPerPage: localStorage.getItem(`${this.$route.name}RowsPerPage`)
-      //   ? Number(localStorage.getItem(`${this.$route.name}RowsPerPage`))
-      //   : 10,
-      //  TODO 原来根据外边分页筛选数量来选择 现在改为固定的
-      rowsPerPage: 100,
+      rowsPerPage: localStorage.getItem(`${this.$route.name}RowsPerPage`)
+        ? Number(localStorage.getItem(`${this.$route.name}RowsPerPage`))
+        : 10,
       items: [],
       total: 0,
       totalPage: 0,
@@ -247,7 +245,8 @@ export default {
       this.isSetect = true;
       this.$apiCall('api.SubUser.findByUser',{
          page: this.page,
-         rowsPerPage: this.rowsPerPage,
+         //  TODO 原来根据外边分页筛选数量来选择 现在改为固定的
+         rowsPerPage: 100,
          roleId:this.form.roleId,
        },r=>{
          if(r.ErrorCode == 9999){
