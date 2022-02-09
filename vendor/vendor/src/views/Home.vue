@@ -826,8 +826,10 @@ export default {
       // alert(`Results=${JSON.stringify(Results)}`)
       //登录后跳转页面
       let admin = ".myourmall.com";
+	  let commonAdmin = this.$store.state.userInfo.shop.url;
       if (this.$root.$children[0].baseUrl != "/admin") {
         admin = ".myourmall.com/admin";
+		commonAdmin = `${commonAdmin}/admin`
       }
       //todo1 如果有仪表盘的路径
       if (localStorage.getItem("wantVisitPathSu")) {
@@ -865,7 +867,7 @@ export default {
               if (this.$root.$children[0].vipDetail.service) {
 				url = window.location.href.replace(
                   window.location.host,
-                  `//${this.$store.state.userInfo.shop.url}`
+                  `//${commonAdmin}`
                 );
               } else {
                 url = window.location.href.replace(
@@ -906,7 +908,7 @@ export default {
                   if (this.$root.$children[0].vipDetail.service) {
                     url = window.location.href.replace(
                       window.location.host,
-                      `//${this.$store.state.userInfo.shop.url}`
+                      `//${commonAdmin}`
                     );
                   } else {
                     url = window.location.href.replace(
@@ -952,7 +954,7 @@ export default {
               if (this.$root.$children[0].vipDetail.service) {
                 url = window.location.href.replace(
                   window.location.host,
-                  `//${this.$store.state.userInfo.shop.url}`
+                  `//${commonAdmin}`
                 );
               } else {
                 url = window.location.href.replace(
