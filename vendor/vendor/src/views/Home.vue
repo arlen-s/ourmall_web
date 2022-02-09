@@ -875,10 +875,10 @@ export default {
               }
             }
             //todo6 那本地的token判断是否需要登录
-            let path = e.path.substring(1); //去掉前面的/符号
-            window.location = `${url}jump?t=${localStorage.getItem(
-              "apiUserToken"
-            )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
+            // let path = e.path.substring(1); //去掉前面的/符号
+            // window.location = `${url}jump?t=${localStorage.getItem(
+            //   "apiUserToken"
+            // )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
           } else {
             let e = this.$root.$children[0].navMenu.find((item) => {
               return (
@@ -915,10 +915,10 @@ export default {
                     );
                   }
                 }
-                let path = e.path.substring(1); //去掉前面的/符号
-                window.location = `${url}jump?t=${localStorage.getItem(
-                  "apiUserToken"
-                )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
+                // let path = e.path.substring(1); //去掉前面的/符号
+                // window.location = `${url}jump?t=${localStorage.getItem(
+                //   "apiUserToken"
+                // )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
               }
             } else {
               alert(`没有权限，请联系管理员`);
@@ -961,10 +961,10 @@ export default {
                 );
               }
             }
-            let path = e.path.substring(1); //去掉前面的/符号
-            window.location = `${url}jump?t=${localStorage.getItem(
-              "apiUserToken"
-            )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
+            // let path = e.path.substring(1); //去掉前面的/符号
+            // window.location = `${url}jump?t=${localStorage.getItem(
+            //   "apiUserToken"
+            // )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
           }
         } else {
           alert(`没有权限，请联系管理员`);
