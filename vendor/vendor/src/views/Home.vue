@@ -863,22 +863,22 @@ export default {
               );
             } else {
               if (this.$root.$children[0].vipDetail.service) {
-                url = window.location.href.replace(
+				url = window.location.href.replace(
                   window.location.host,
-                  `//${this.$store.state.userInfo.shop.name}${admin}`
+                  `//${this.$store.state.userInfo.shop.url}`
                 );
               } else {
                 url = window.location.href.replace(
                   window.location.host,
-                  `//${this.$store.state.userInfo.shop.url}`
+                  `//${this.$store.state.userInfo.shop.name}${admin}`
                 );
               }
             }
             //todo6 那本地的token判断是否需要登录
-            // let path = e.path.substring(1); //去掉前面的/符号
-            // window.location = `${url}jump?t=${localStorage.getItem(
-            //   "apiUserToken"
-            // )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
+            let path = e.path.substring(1); //去掉前面的/符号
+            window.location = `${url}jump?t=${localStorage.getItem(
+              "apiUserToken"
+            )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
           } else {
             let e = this.$root.$children[0].navMenu.find((item) => {
               return (
@@ -906,19 +906,19 @@ export default {
                   if (this.$root.$children[0].vipDetail.service) {
                     url = window.location.href.replace(
                       window.location.host,
-                      `//${this.$store.state.userInfo.shop.name}${admin}`
+                      `//${this.$store.state.userInfo.shop.url}`
                     );
                   } else {
                     url = window.location.href.replace(
                       window.location.host,
-                      `//${this.$store.state.userInfo.shop.url}`
+                      `//${this.$store.state.userInfo.shop.name}${admin}`
                     );
                   }
                 }
-                // let path = e.path.substring(1); //去掉前面的/符号
-                // window.location = `${url}jump?t=${localStorage.getItem(
-                //   "apiUserToken"
-                // )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
+                let path = e.path.substring(1); //去掉前面的/符号
+                window.location = `${url}jump?t=${localStorage.getItem(
+                  "apiUserToken"
+                )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
               }
             } else {
               alert(`没有权限，请联系管理员`);
@@ -952,19 +952,19 @@ export default {
               if (this.$root.$children[0].vipDetail.service) {
                 url = window.location.href.replace(
                   window.location.host,
-                  `//${this.$store.state.userInfo.shop.name}${admin}`
+                  `//${this.$store.state.userInfo.shop.url}`
                 );
               } else {
                 url = window.location.href.replace(
                   window.location.host,
-                  `//${this.$store.state.userInfo.shop.url}`
+                  `//${this.$store.state.userInfo.shop.name}${admin}`
                 );
               }
             }
-            // let path = e.path.substring(1); //去掉前面的/符号
-            // window.location = `${url}jump?t=${localStorage.getItem(
-            //   "apiUserToken"
-            // )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
+            let path = e.path.substring(1); //去掉前面的/符号
+            window.location = `${url}jump?t=${localStorage.getItem(
+              "apiUserToken"
+            )}&u=${localStorage.getItem("apiUserId")}&p=${path}`;
           }
         } else {
           alert(`没有权限，请联系管理员`);
