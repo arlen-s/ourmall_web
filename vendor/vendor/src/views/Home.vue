@@ -864,7 +864,7 @@ export default {
                 `//sandbox${this.$store.state.userInfo.shop.name}${admin}`
               );
             } else {
-              if (this.$root.$children[0].vipDetail.service) {
+              if (this.$store.state.userInfo.service && this.$store.state.userInfo.shop.url) {
 				url = window.location.href.replace(
                   window.location.host,
                   `//${commonAdmin}`
@@ -905,7 +905,7 @@ export default {
                     `//sandbox${this.$store.state.userInfo.shop.name}${admin}`
                   );
                 } else {
-                  if (this.$root.$children[0].vipDetail.service) {
+                  if (this.$store.state.userInfo.service && this.$store.state.userInfo.shop.url) {
                     url = window.location.href.replace(
                       window.location.host,
                       `//${commonAdmin}`
@@ -951,7 +951,7 @@ export default {
                 `//sandbox${this.$store.state.userInfo.shop.name}${admin}`
               );
             } else {
-              if (this.$root.$children[0].vipDetail.service) {
+              if (this.$store.state.userInfo.service && this.$store.state.userInfo.shop.url) {
                 url = window.location.href.replace(
                   window.location.host,
                   `//${commonAdmin}`
