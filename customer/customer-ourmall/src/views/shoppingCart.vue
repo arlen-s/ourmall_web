@@ -375,6 +375,8 @@ export default {
   },
   data() {
     return {
+      payPalSessionId:'',
+      payPalId:"",
       delLoading: false,
       newWin: null,
       paystatus: 0,
@@ -481,6 +483,11 @@ export default {
         this.paystatus = localStorage.getItem("c_returnPayStatus") || 0;
         setTimeout(() => {
           this.closePayPage();
+          if(this.platformType == '3'){
+             console.log(this.platformType,'平台类型1')
+            this.returnPay()
+          }
+          console.log(this.platformType,'平台类型')
         }, 300);
       }
     });
@@ -517,6 +524,18 @@ export default {
       return;
   },
   methods: {
+    returnPay(){
+       console.log(this.platformType,'平台类型2')
+      let params = {
+        id: this.payPalId,
+        sessionId: this.payPalSessionId
+      }
+      this.$apiCall("api.ShopifyOrder.returnPay", params, (r) => {
+        if (r.ErrorCode == 9999) {
+          console.log('ok')
+        }
+      });
+    },
     closePayPage() {
       //关闭支付新开页面
       if (this.newWin) {
@@ -901,6 +920,8 @@ export default {
             );
             this.newWin.location = r.Data.Results.url;
             this.paystatus = 1;
+            this.payPalId = r.Data.Results.id
+            this.payPalSessionId = r.Data.Results.sessionId
           }
         } else {
           this.$message.error(r.Message);
@@ -1286,3 +1307,4 @@ export default {
   color: #99a0b2;
 }
 </style>
+
