@@ -193,9 +193,9 @@
                 //     // this.$message({ message: '当前记录值与正确记录值不符，无法添加', type: "error" });
                 //     return;
                 // }
-                let itemJson = this.items.find((item) => item.type == 'CNAME')
+                let itemJson = this.items.find((item) => item.type == 'A')
                 if(itemJson.ip != itemJson.correctIp) {
-                    this.$message.error('解析失败，CNAME记录值不正确')
+                    this.$message.error('解析失败，A记录值不正确')
                     return
                 }
                 this.$apiCall('api.VendorShop.addShopUrl',{url:this.linkUrl},r=>{
