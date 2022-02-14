@@ -33,7 +33,8 @@
 		methods: {
 			getInfo() {
 				// location.host.split('.').length < 3 || 
-				if ((location.host.split('.')[0].toLowerCase() == 'www' || location.host.split('.')[0].toLowerCase() ==
+				// location.host.split('.')[0].toLowerCase() == 'www' || 去除 贴牌逻辑修改
+				if ((location.host.split('.')[0].toLowerCase() ==
 						'sandboxwww') || location.host.split('.')[0].toLowerCase() == 'supplier' || location.host.split(
 						'.')[0].toLowerCase() == 'sandboxsupplier' && location.host.indexOf('localhost') < 0) {
 					return;

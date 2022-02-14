@@ -840,7 +840,11 @@ const routes = [
         return '/dashboard';
       }
       let hostArr = location.host.split('.');
-      if(location.host === 'app.fforder.com'){
+      let hostList = [
+        "https://app.fforder.com",
+        "https://www.7dropshipping.com",
+      ]
+      if(hostList.includes(location.origin)){
         return '/home'
       }
       if (hostArr.length > 2 && !(hostArr[0].toLowerCase() == 'www' || hostArr[0].toLowerCase() == 'sandboxwww' || hostArr[0].toLowerCase() == 'app' || hostArr[0].toLowerCase() == 'shopify' || hostArr[0].toLowerCase() == 'sandboxshopify')) {
