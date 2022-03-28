@@ -830,7 +830,7 @@ export default {
 //   right: 290px;
 //   top: -2px;
 // }
-.headTab /deep/ .el-tabs__item{
+.headTab ::v-deep .el-tabs__item{
  padding: 0 7px !important;
 }
 </style>

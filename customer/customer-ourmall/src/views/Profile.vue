@@ -744,7 +744,7 @@ ul,li{
   text-align: 18px;
   font-size: 16px;
 }
-#app /deep/.el-alert__content{
+#app ::v-deep.el-alert__content{
   width: 100%;
    .el-alert__title{
     display: block;
@@ -762,37 +762,37 @@ ul,li{
 .phoneCountry{
   display: flex;
 }
-.phoneCountry /deep/ .country-intl-label{
+.phoneCountry ::v-deep .country-intl-label{
  padding: 0 15px;
  top: -3px;
  left: 0;
  height: 38px;
 } 
-.phoneCountry /deep/ .vue-country-list{
+.phoneCountry ::v-deep .vue-country-list{
   padding:0px;
   list-style: none;
 }
-.phoneCountry /deep/ .vue-country-item{
+.phoneCountry ::v-deep .vue-country-item{
   padding: 0 15px;
 }
-.phoneCountry /deep/ .vue-country-list-wrap{
+.phoneCountry ::v-deep .vue-country-list-wrap{
   width: 480px;
 }
-.phoneCountry /deep/ .country-intl-input{
+.phoneCountry ::v-deep .country-intl-input{
   padding: 10px 0px 10px 10px;
   height: 38px;
 }
-.phoneCountry /deep/ .vue-country-intl{
+.phoneCountry ::v-deep .vue-country-intl{
   width: 140px;
   margin-right: -5px;
 }
-.phoneCountry /deep/ .country-intl-input-wrap{
+.phoneCountry ::v-deep .country-intl-input-wrap{
   overflow: hidden;
 }
-.phoneCountry /deep/ .iti-flag {
+.phoneCountry ::v-deep .iti-flag {
     margin-right: 0px;
 }
-.phoneCountry /deep/ .el-input__inner{
+.phoneCountry ::v-deep .el-input__inner{
   border-radius: 0;
 }
 </style>

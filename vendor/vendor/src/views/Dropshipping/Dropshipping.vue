@@ -427,7 +427,7 @@ export default {
 .table-contact tbody tr th:nth-child(4) {
   color: #495057;
 }
-.card /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active{
+.card ::v-deep .el-pagination.is-background .el-pager li:not(.disabled).active{
   background-color:#7ca4d2
 }
 .formBox {

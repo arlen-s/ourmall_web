@@ -29,7 +29,19 @@
                       <el-link :underline="false" type="primary" @click="tip()">{{$t('shop.更换')}}</el-link>
                   </div>
                 <el-input
-                  v-if="!form.url"
+                  v-if="!form.url && apiSubUserId"
+                  v-model="form.subDomain+'/home?invitationCode'+invitationCode"
+                  disabled
+                >
+                </el-input>
+                <el-input
+                  v-else-if="form.url && apiSubUserId"
+                  v-model="form.url+'/home?invitationCode'+invitationCode"
+                  disabled
+                >
+                </el-input>
+                <el-input
+                  v-else-if="!form.url"
                   v-model="form.subDomain"
                   disabled
                 >
@@ -121,6 +133,8 @@
 export default {
   data() {
     return {
+      invitationCode:'',
+      apiSubUserId: JSON.parse(localStorage.getItem('apiSubUserId')),
       dialogVisible:false,
       loading: false,
       form: {
@@ -198,9 +212,14 @@ export default {
       });
     },
     goMyStore(){
-      if(this.form.url){
+      
+      if(this.form.url && this.apiSubUserId){
+        window.open(`//${this.form.url}/?invitationCode=${this.invitationCode}`)
+      }else if(!this.form.url && this.apiSubUserId){
+        window.open(`//${this.form.subDomain}/?invitationCode=${this.invitationCode}`)
+      }else if(this.form.url) {
         window.open(`//${this.form.url}`)
-      }else{
+      }else {
         window.open(`//${this.form.subDomain}`)
       }
     },
@@ -259,6 +278,7 @@ export default {
         this.loading = false;
         if(r.ErrorCode == 9999){
           let data = r.Data.Results;
+          this.invitationCode = data.invitationCode || ''
           this.form.name = data.name;
           if(this.form.subDomain){
              this.form.subDomain = window.location.host.indexOf("sandbox") >= 0 ? `sandbox${data.subDomain}.myourmall.com`:`${data.subDomain}.myourmall.com`;

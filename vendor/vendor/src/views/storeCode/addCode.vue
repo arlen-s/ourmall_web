@@ -228,7 +228,7 @@
 		display: inline-block;
 		width: 30%;
 	}
-	/deep/ .el-dialog__body {
+	::v-deep .el-dialog__body {
 		height: 62vh;
 		overflow: auto;
 	}

@@ -1900,37 +1900,37 @@ label.required:before {
   border: 1px solid #cfd9db;
 }
 // table边框颜色
-.tableBox /deep/ .el-table--border:after,
-.tableBox /deep/ .el-table--group:after,
-.tableBox /deep/ .el-table:before {
+.tableBox ::v-deep .el-table--border:after,
+.tableBox ::v-deep .el-table--group:after,
+.tableBox ::v-deep .el-table:before {
   background-color: #eee;
 }
 
-.tableBox /deep/ .el-table--border,
-.tableBox /deep/ .el-table--group {
+.tableBox ::v-deep .el-table--border,
+.tableBox ::v-deep .el-table--group {
   border-color: #cfd9db;
 }
 
-.tableBox /deep/ .el-table td {
+.tableBox ::v-deep .el-table td {
   border-bottom: 1px solid #cfd9db;
 }
-.tableBox /deep/ .el-table th.is-leaf{
+.tableBox ::v-deep .el-table th.is-leaf{
   border-bottom: 2px solid #cfd9db;
   color: #5e5e5e;
   background: #eee;
 }
 
-.tableBox /deep/ .el-table--border th,
-.tableBox /deep/ .el-table--border th.gutter:last-of-type {
+.tableBox ::v-deep .el-table--border th,
+.tableBox ::v-deep .el-table--border th.gutter:last-of-type {
   border-bottom: 2px solid #cfd9db;
   background: #eee;
 }
 
-.tableBox /deep/ .el-table--border td,
-.tableBox /deep/ .el-table--border th {
+.tableBox ::v-deep .el-table--border td,
+.tableBox ::v-deep .el-table--border th {
   border-right: 1px solid #cfd9db;
 }
-.formItem /deep/ .el-radio{
+.formItem ::v-deep .el-radio{
   .el-radio__input.is-checked .el-radio__inner{
     border-color: #7ca4d2;
     background: #7ca4d2;
@@ -1940,10 +1940,10 @@ label.required:before {
 
   }
 }
-.formBox /deep/ .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active{
+.formBox ::v-deep .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active{
   color: #7ca4d2;
 }
-.formBox /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active{
+.formBox ::v-deep .el-pagination.is-background .el-pager li:not(.disabled).active{
   background-color:#7ca4d2
 }
 .power{

@@ -325,7 +325,7 @@ export default {
   flex: 1;
   padding-right: 30px;
   word-break: normal;
-  /deep/ .el-table__header {
+  ::v-deep .el-table__header {
     margin-bottom: 0;
   }
   .name {

@@ -160,7 +160,7 @@
 	}
 </script>
 <style scoped lang="scss">
-/deep/ .el-dialog__body {
+::v-deep .el-dialog__body {
 	  max-height: 62vh;
 	  overflow: auto;
 	}
@@ -186,10 +186,10 @@
     font-size: 16px;
   }
 }
-/deep/ .d-body .quill-editor .ql-toolbar.ql-snow{
+::v-deep .d-body .quill-editor .ql-toolbar.ql-snow{
 		display: none!important;
 	}
-/deep/ .d-body .quill-editor .ql-container.ql-snow {
+::v-deep .d-body .quill-editor .ql-container.ql-snow {
 	    border: none;
 		background: #fff;
 	}

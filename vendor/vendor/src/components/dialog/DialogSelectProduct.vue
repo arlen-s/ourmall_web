@@ -293,10 +293,10 @@ export default {
           cursor: pointer;
       }
   }
-  .select-product /deep/ .el-dialog{
+  .select-product ::v-deep .el-dialog{
     margin-top: 60px !important;
   }
-  .select-product /deep/ .el-radio{
+  .select-product ::v-deep .el-radio{
     margin-left: 15px !important;
   }
   .no-data{

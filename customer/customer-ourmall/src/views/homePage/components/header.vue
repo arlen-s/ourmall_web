@@ -655,7 +655,7 @@
 		}
 
 	.search-input {
-		/deep/ .el-input__inner {
+		::v-deep .el-input__inner {
 			border-radius: 0;
 			border: none;
 			border-bottom: 1px solid #ddd;
@@ -663,7 +663,7 @@
 		}
 
 		.el-input__suffix {
-			/deep/ i.el-icon-close {
+			::v-deep i.el-icon-close {
 				font-size: 16px;
 			}
 		}

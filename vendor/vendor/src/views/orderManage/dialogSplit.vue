@@ -153,7 +153,7 @@
 .d-body{
 		margin: 20px;
 	}
-/deep/ .el-dialog__body {
+::v-deep .el-dialog__body {
 	  max-height: 62vh;
 	  overflow: auto;
 	}

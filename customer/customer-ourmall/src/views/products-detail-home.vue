@@ -1182,7 +1182,7 @@ ul,li{
   img{
     max-width: 1000px !important;
   }
-  /deep/ .detailmodule_image{
+  ::v-deep .detailmodule_image{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1191,7 +1191,7 @@ ul,li{
       margin-top: 20px;
     }
   }
-  /deep/ .detailmodule_text{
+  ::v-deep .detailmodule_text{
     p{
      display: flex;
     flex-direction: column;
@@ -1223,16 +1223,16 @@ ul,li{
   transition: .1s;
   font-weight: 500;
 }
-.descript /deep/ .el-tabs__active-bar .is-top{
+.descript ::v-deep .el-tabs__active-bar .is-top{
   width: 95px;
 }
-.descript /deep/ #tab-first{
+.descript ::v-deep #tab-first{
   font-size: 20px;
 }
-.recommend /deep/ .el-tabs__active-bar .is-top{
+.recommend ::v-deep .el-tabs__active-bar .is-top{
   width: 221px;
 }
-.recommend /deep/ #tab-first{
+.recommend ::v-deep #tab-first{
   font-size: 20px;
 }
 .recommend{
@@ -1398,10 +1398,10 @@ ul,li{
   }
 }
 
-.home-page /deep/ .el-radio__input.is-checked + .el-radio__label{
+.home-page ::v-deep .el-radio__input.is-checked + .el-radio__label{
   color: #eff0f9;
 }
-.home-page /deep/ .el-table__row:hover .el-radio__label{
+.home-page ::v-deep .el-table__row:hover .el-radio__label{
   color: rgb(236, 237, 247);
 }
 .el-backtop{
@@ -1414,7 +1414,7 @@ ul,li{
   .title{
     margin-right: 15px;
   }
-  /deep/{
+  ::v-deep{
     .el-input-number__decrease, .el-input-number__increase{
       background-color: #fff;
     }
@@ -1445,7 +1445,7 @@ ul.tags{
 .inner-description{
   margin-top: 30px;
   width: 716px;
-  /deep/ img{
+  ::v-deep img{
     max-width: 700px;
   }
 }

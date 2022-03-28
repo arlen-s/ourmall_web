@@ -32,7 +32,7 @@
 </template>
 
 <script>
-
+import {queryUrlParam} from '../../plugins/tools'
 export default {
   props: ["data"],
   data(){
@@ -80,6 +80,7 @@ export default {
       this.$emit('switchTo', type)
     },
     register(){
+      
       this.data.loading = true;
       this.$refs['regForm'].validate((valid) => {
         if(valid){ //验证成功
@@ -91,7 +92,8 @@ export default {
             password: this.data.form.password,
             notCheckCode: true,
             type: 1,
-            lang: 'EN'
+            lang: 'EN',
+            invitationCode: queryUrlParam('invitationCode') || JSON.parse(localStorage.getItem('invitationCode'))
           }
           this.$emit('register', params);
         }else{ //验证失败

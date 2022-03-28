@@ -14112,7 +14112,7 @@ export default {
   margin-right: 4px;
 }
 
-.unactive /deep/ .el-input__inner {
+.unactive ::v-deep .el-input__inner {
   border: 1px solid red !important;
 }
 </style>

@@ -62,6 +62,17 @@
                         @keyup.enter.native="filterGetItem"
                       ></el-input>
                     </el-form-item>
+                    <!-- //todo -->
+                    
+                    <el-form-item>
+                      <el-autocomplete
+                      class="mg-r-10"
+                      v-model="supplierName"
+                      :fetch-suggestions="querySearchAsync"
+                      :placeholder="$t('请输入员工名称')"
+                    ></el-autocomplete>
+                      <!-- <el-input v-model="filterParams.inviterUserId" :placeholder="$t('请输入员工名称')" @keyup.enter.native="filterGetItem"></el-input> -->
+                    </el-form-item>
                     <el-form-item :label="$t('mycustomer.storeAuthorized')">
                       <el-select
                         v-model="filterParams.isAuth"
@@ -160,6 +171,11 @@
                     </el-popover>
                     <span v-else>{{ scope.row.customerAuthCnt }}</span>
                   </div>
+                </template>
+              </el-table-column>
+              <el-table-column :label="$t('员工名称')">
+                <template slot-scope="scope">
+                  {{scope.row.inviterName || '--'}}
                 </template>
               </el-table-column>
               <el-table-column :label="$t('mycustomer.customersContact')">
@@ -693,6 +709,8 @@ import dialogDeduction from "@/views/MyCustom/dialogDeduction";
 export default {
   data() {
     return {
+      searchList: [],
+      supplierName: "",
       aliasLoading: false,
       OtherName: "",
       shopId: "",
@@ -735,6 +753,7 @@ export default {
         isAuth: "",
         customerLike: "",
         relationshipId: "",
+        inviterUserId: '',
       },
       filterParamsDefault: "{}",
       dialogInvite: {
@@ -807,6 +826,36 @@ export default {
   //   window.onresize = () => {};
   // },
   methods: {
+    querySearchAsync(queryString, cb) {
+      if (!queryString) {
+        return false;
+      }
+      this.$apiCall(
+        "api.SubUser.findByUser",
+        {
+          nameLike: queryString,
+          page: 1,
+          rowsPerPage: 10,
+        },
+        (r) => {
+          if (r.ErrorCode == "9999") {
+            if (r.Data.Results.length == 0) {
+              this.$message.error(this.$t("supplier.搜索不到数据"))
+            }
+            this.searchList = r.Data.Results;
+            var results = queryString
+              ? this.searchList.filter(
+                  (item) => item.name.indexOf(queryString) > -1
+                )
+              : this.searchList;
+            results = results.map((item) => ({ value: item.name }));
+            cb(results);
+          } else {
+            this.$message.error(r.Message)
+          }
+        }
+      );
+    },
 	  openDeduction(item){ //打开ioss设置
       this.dialogDeductionData = JSON.parse(this.defaultDialogDeductionData);
       this.dialogDeductionData.item = item;
@@ -976,6 +1025,7 @@ export default {
       this.dialogInvite.qrcode = item.qrcodeBase64;
     },
     clearFilter() {
+      this.supplierName =""
       //清空筛选
       this.filterParams = JSON.parse(this.filterParamsDefault);
       this.selectArr = [];
@@ -1056,6 +1106,10 @@ export default {
     },
     getItem(s) {
       this.loading = true;
+      if(this.supplierName){
+        this.filterParams.inviterUserId = this.searchList.find((item)=> item.name == this.supplierName).roleId
+      }
+      
       this.$apiCall(
         "api.Relationship.findByVendor",
         {
@@ -1068,6 +1122,7 @@ export default {
           isAuth: this.filterParams.isAuth,
           customerLike: this.filterParams.customerLike,
           relationshipId: this.filterParams.relationshipId,
+          inviterUserId: this.filterParams.inviterUserId,
           status: 1,
         },
         (r) => {
@@ -1254,11 +1309,11 @@ export default {
       margin-bottom: 30px;
     }
   }
-  /deep/ .el-form-item__label{
+  ::v-deep .el-form-item__label{
     width: 110px !important;
     text-align: left !important;
   }
- .bonusRemark /deep/ .el-form-item__content{
+ .bonusRemark ::v-deep .el-form-item__content{
    flex: 1;
 
  }

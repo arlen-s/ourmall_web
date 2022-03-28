@@ -259,7 +259,7 @@ $leftW: 300px;
           }
           .el-link{
             height: 32px;
-            /deep/ .el-icon-plus{
+            ::v-deep .el-icon-plus{
                font-size: 18px;
             }
           }
@@ -289,7 +289,7 @@ $leftW: 300px;
     width: $leftW;
   }
 }  
-.setting-page /deep/ .ti-tag{
+.setting-page ::v-deep .ti-tag{
   background-color: #f4f4f5;
   border: 1px solid #E4E7ED;
   color: #909399;

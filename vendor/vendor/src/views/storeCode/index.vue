@@ -179,7 +179,7 @@
 			margin: 0 0 40px;
 		}
 	}
-	/deep/ .el-dialog__body {
+	::v-deep .el-dialog__body {
 	  height: 62vh;
 	  overflow: auto;
 	}

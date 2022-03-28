@@ -459,7 +459,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.formBox /deep/ .el-form-item{
+.formBox ::v-deep .el-form-item{
   margin-bottom: 10px;
 }
 .body-wrap{
@@ -470,7 +470,7 @@ export default {
   justify-content: flex-end;
   padding-top: 15px;
 }
-.price /deep/ .el-input__inner{
+.price ::v-deep .el-input__inner{
   font-size: 20px;
 }
 .invite{

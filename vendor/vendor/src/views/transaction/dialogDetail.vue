@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/deep/ .d-detail .el-dialog__body {
+::v-deep .d-detail .el-dialog__body {
   height: auto;
   overflow: hidden;
 }

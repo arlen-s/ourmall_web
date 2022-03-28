@@ -279,6 +279,7 @@
 </template>
 
 <script>
+import {queryUrlParam} from '../plugins/tools'
 import LoginDropdown from "./../components/Home/loginDropdown";
 import DialogSignin from "./../components/Home/DialogSignIn"; //signIn 弹框登录
 import DialogSignUp from "./../components/Home/DialogSignUp"; //sigup 注册
@@ -363,6 +364,11 @@ export default {
     });
     if (this.$route.params.login == "woo") {
       this.openSingIn();
+    }
+  },
+  created(){
+    if(queryUrlParam('invitationCode')){
+      localStorage.setItem('invitationCode',queryUrlParam('invitationCode'))
     }
   },
   methods: {

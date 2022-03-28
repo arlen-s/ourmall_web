@@ -976,14 +976,14 @@
 		font-size: 12px;
 	}
 
-	.signup-page /deep/ .el-form-item__error {
+	.signup-page ::v-deep .el-form-item__error {
 		position: absolute !important;
 		top: 100% !important;
 		left: 0 !important;
 		margin: 0 !important;
 	}
 
-	.signup-page /deep/ .el-form-item {
+	.signup-page ::v-deep .el-form-item {
 		margin-bottom: 25px;
 	}
 

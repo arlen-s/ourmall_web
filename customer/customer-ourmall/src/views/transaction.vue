@@ -568,14 +568,14 @@
 			}
 		}
 	}
-	/deep/ .el-dialog__body {
+	::v-deep .el-dialog__body {
 	  height: 62vh;
 	  overflow: auto;
 	}
 	
 </style>
 <style lang="scss" scoped>
-	.dialog-open-custom /deep/ .el-table .el-table__row{
+	.dialog-open-custom ::v-deep .el-table .el-table__row{
 		.el-table__cell:nth-child(6), 
 		.el-table__cell:nth-child(7), 
 		.el-table__cell:nth-child(8), 

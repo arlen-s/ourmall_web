@@ -191,7 +191,7 @@ export default {
             color: #606266;
           }
           .ipt-num-wrap{
-            /deep/{
+            ::v-deep{
               .el-input-number__decrease, .el-input-number__increase{
                 background-color: #fff;
               }
@@ -221,7 +221,7 @@ export default {
           margin-bottom: 30px;
           .el-button{
             width: 360px;
-            /deep/{
+            ::v-deep{
               span{
                 font-size: 18px;
               }
@@ -230,10 +230,10 @@ export default {
         }
       }
     }
-    .descript /deep/ .el-tabs__active-bar .is-top{
+    .descript ::v-deep .el-tabs__active-bar .is-top{
       width: 95px;
     }
-    .descript /deep/ #tab-first{
+    .descript ::v-deep #tab-first{
       font-size: 20px;
     }
   }

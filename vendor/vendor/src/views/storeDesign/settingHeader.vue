@@ -340,7 +340,7 @@ $leftW: 300px;
       margin-bottom: 10px;
       padding-left: 15px;
       display: block;
-      /deep/ .el-radio__label{
+      ::v-deep .el-radio__label{
         font-size: 12px;
       }
     }

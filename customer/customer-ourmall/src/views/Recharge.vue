@@ -300,7 +300,7 @@ export default {
     margin-left: 17px !important;
   }
 }
-.checkBox /deep/ .el-link--default{
+.checkBox ::v-deep .el-link--default{
   position: relative;
     top: -2px;
     color:#5c6ac4;

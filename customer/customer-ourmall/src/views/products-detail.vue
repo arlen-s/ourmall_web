@@ -672,7 +672,7 @@ ul,li{
   display: flex;
   flex-direction: column;
   align-items: center;
-  /deep/ .detailmodule_image{
+  ::v-deep .detailmodule_image{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -681,7 +681,7 @@ ul,li{
       margin-top: 20px;
     }
   }
-  /deep/ .detailmodule_text{
+  ::v-deep .detailmodule_text{
     p{
      display: flex;
     flex-direction: column;
@@ -713,16 +713,16 @@ ul,li{
   transition: .1s;
   font-weight: 500;
 }
-.descript /deep/ .el-tabs__active-bar .is-top{
+.descript ::v-deep .el-tabs__active-bar .is-top{
   width: 95px;
 }
-.descript /deep/ #tab-first{
+.descript ::v-deep #tab-first{
   font-size: 20px;
 }
-.recommend /deep/ .el-tabs__active-bar .is-top{
+.recommend ::v-deep .el-tabs__active-bar .is-top{
   width: 221px;
 }
-.recommend /deep/ #tab-first{
+.recommend ::v-deep #tab-first{
   font-size: 20px;
 }
 .recommend{

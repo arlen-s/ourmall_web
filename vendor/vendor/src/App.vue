@@ -2670,7 +2670,7 @@
 		font-size: 16px;
 	}
 
-	#app /deep/.el-alert__content {
+	#app ::v-deep.el-alert__content {
 		width: 100%;
 
 		.el-alert__title {

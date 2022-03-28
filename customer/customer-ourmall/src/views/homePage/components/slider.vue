@@ -70,13 +70,13 @@
 		}
 	}
 
-	/deep/ .el-carousel__indicator--horizontal {
+	::v-deep .el-carousel__indicator--horizontal {
 		.el-carousel__button {
 			background-color: #ccc;
 		}
 	}
 
-	/deep/ .el-carousel__indicator--horizontal.is-active {
+	::v-deep .el-carousel__indicator--horizontal.is-active {
 		.el-carousel__button {
 			background-color: #5c6ac4;
 		}

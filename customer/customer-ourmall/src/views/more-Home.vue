@@ -764,10 +764,10 @@ export default {
 .pagetitle{
   width: 100%;
   justify-content: flex-start;
-  /deep/ .el-input__inner {
+  ::v-deep .el-input__inner {
     border-radius: 0 !important;
   }
-  /deep/ .el-input__inner:last-child {
+  ::v-deep .el-input__inner:last-child {
     background-image: url('../../public/images/productShop/search.png') !important;
     background-repeat: no-repeat;
     background-position: 20px center;
