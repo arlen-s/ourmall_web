@@ -30,13 +30,13 @@
                   </div>
                 <el-input
                   v-if="!form.url && apiSubUserId"
-                  v-model="form.subDomain+'/home?invitationCode'+invitationCode"
+                  v-model="form.subDomain+'/home?invitationCode='+invitationCode"
                   disabled
                 >
                 </el-input>
                 <el-input
                   v-else-if="form.url && apiSubUserId"
-                  v-model="form.url+'/home?invitationCode'+invitationCode"
+                  v-model="form.url+'/home?invitationCode='+invitationCode"
                   disabled
                 >
                 </el-input>
