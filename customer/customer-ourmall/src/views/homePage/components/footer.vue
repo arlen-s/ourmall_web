@@ -370,6 +370,8 @@ export default {
 			}
 		}
 		.c-2 {
+			flex: 1;
+			padding-left: 20px;
 			dl {
 				margin-top: 60px;
 				dt {
