@@ -1385,9 +1385,16 @@
 				})
 				},
 			goToMyStore() {
-				window.open(
+				if(this.$store.state.userInfo.service && this.$store.state.userInfo.shop.url){
+					window.open(
+					`//${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.url}`
+					)
+				} else {
+					window.open(
 					`//${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.name}.myourmall.com`
 					)
+				}
+				
 			},
 			getInfo() {
 				if ((location.host.split('.').length < 3 || location.host.split('.')[0].toLowerCase() == 'www' || location
