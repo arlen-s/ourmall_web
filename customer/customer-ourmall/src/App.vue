@@ -1178,7 +1178,7 @@ export default {
         (location.host.split(".").length < 3 ||
           // location.host.split(".")[0].toLowerCase() == "www" ||
           location.host.split(".")[0].toLowerCase() == "sandboxwww" ||
-          location.host.split(".")[0].toLowerCase() == "app" ||
+          // location.host.split(".")[0].toLowerCase() == "app" ||
           location.host.split(".")[0].toLowerCase() == "shopify" ||
           location.host.split(".")[0].toLowerCase() == "sandboxshopify") &&
         location.host.indexOf("localhost") < 0
