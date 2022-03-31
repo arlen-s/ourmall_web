@@ -1385,6 +1385,18 @@
 				})
 				},
 			goToMyStore() {
+				// this.VondersData invitationCode
+				if(localStorage.getItem('apiSubUserId')){
+					if(this.$store.state.userInfo.service && this.$store.state.userInfo.shop.url){
+						window.open(
+						`//${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.url}/home?invitationCode=${this.VondersData.invitationCode}`
+						)
+					} else {
+						window.open(
+						`//${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.name}.myourmall.com/home?invitationCode=${this.VondersData.invitationCode}`
+						)
+					}
+				}
 				if(this.$store.state.userInfo.service && this.$store.state.userInfo.shop.url){
 					window.open(
 					`//${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.url}`
