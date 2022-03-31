@@ -134,7 +134,7 @@ export default {
   data() {
     return {
       invitationCode:'',
-      apiSubUserId: JSON.parse(localStorage.getItem('apiSubUserId')),
+      apiSubUserId: null,
       dialogVisible:false,
       loading: false,
       form: {
@@ -192,6 +192,11 @@ export default {
   mounted(){
     console.log(this.$isRole('shopEdit'))
     this.getVonders();
+  },
+  created(){
+    if(localStorage.getItem('apiSubUserId')){
+      this.apiSubUserId = JSON.parse(localStorage.getItem('apiSubUserId')) 
+    }
   },
   methods: {
     gotoUp(){
