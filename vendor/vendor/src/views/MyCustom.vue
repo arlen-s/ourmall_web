@@ -930,6 +930,9 @@ export default {
     },
     close() {
       this.selectArr = [];
+      // todo
+      this.filterParams.relationshipId = ''
+      this.getItem()
     },
     goTo(n, row) {
       this.$router.push({
