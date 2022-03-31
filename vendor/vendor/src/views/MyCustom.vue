@@ -1107,7 +1107,7 @@ export default {
     getItem(s) {
       this.loading = true;
       if(this.supplierName){
-        this.filterParams.inviterUserId = this.searchList.find((item)=> item.name == this.supplierName).roleId
+        this.filterParams.inviterUserId = this.searchList.find((item)=> item.name == this.supplierName).subUserId
       }
       
       this.$apiCall(
