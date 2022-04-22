@@ -552,6 +552,7 @@ export default {
   name: "app",
   data() {
     return {
+      tipsNum: 1,
       tips: false,
       shopName: "",
       importNum: 0,
@@ -763,6 +764,13 @@ export default {
     };
   },
   created() {
+    this.tipsNum = localStorage.getItem('tips') || 1
+    if(this.tipsNum == 1) {
+      this.tips = true
+      localStorage.setItem('tips', 2)
+    } else {
+      this.tips = false
+    }
     this.setting = JSON.parse(JSON.stringify(this.$store.state.configJson));
     this.getInfo();
     if (this.baseUrl != "/my") {
@@ -1792,7 +1800,7 @@ export default {
                 this.$route.name == "dashboard"
               ) {
                 this.verifyVisible = true;
-                this.tips = true
+                // this.tips = true
               }
               this.$store.commit("setUserInfo", r.Data.Results);
             }
