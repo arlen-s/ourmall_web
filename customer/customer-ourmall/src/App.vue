@@ -510,32 +510,6 @@
       @resetSEC="resetSEC"
       @saveNewPSD="saveNewPSD"
     />
-    <div class="el-tips" type="primary" circle @click="tips = !tips">
-      <div>Newbie</div>
-      <div>guide</div>
-    </div>
-    <el-dialog
-      title="Newbie guide"
-      :visible.sync="tips"
-      width="681px"
-      class="guide"
-      custom-class="verify-1"
-    >
-      <div class="tips-content">
-        <p class="ctx"> <el-tag type="warning" class="mg-r-10">Step 1</el-tag> Complete personal information</p>
-        <p class="ctx"><el-tag type="warning" class="mg-r-10">Step 2</el-tag>Authorize to bind the store</p>
-        <p class="ctx"><el-tag type="warning" class="mg-r-10">Step 3</el-tag>Publish the push product</p>
-        <p class="ctx"><el-tag type="warning" class="mg-r-10">Step 4</el-tag>Start pulling orders</p>
-      </div>
-      <div class="flex-center">
-        <el-button
-          class="btn spec-1"
-          type="primary"
-          @click="tips = false"
-          >Already
-        </el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -552,8 +526,6 @@ export default {
   name: "app",
   data() {
     return {
-      tipsNum: 1,
-      tips: false,
       shopName: "",
       importNum: 0,
       cartNum: 0,
@@ -764,13 +736,7 @@ export default {
     };
   },
   created() {
-    this.tipsNum = localStorage.getItem('tips') || 1
-    if(this.tipsNum == 1) {
-      this.tips = true
-      localStorage.setItem('tips', 2)
-    } else {
-      this.tips = false
-    }
+    console.log(this.$route)
     this.setting = JSON.parse(JSON.stringify(this.$store.state.configJson));
     this.getInfo();
     if (this.baseUrl != "/my") {
@@ -1800,7 +1766,6 @@ export default {
                 this.$route.name == "dashboard"
               ) {
                 this.verifyVisible = true;
-                // this.tips = true
               }
               this.$store.commit("setUserInfo", r.Data.Results);
             }

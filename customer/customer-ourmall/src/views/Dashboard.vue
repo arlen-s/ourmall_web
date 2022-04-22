@@ -25,7 +25,7 @@
           </router-link>
         </div>
       </div> -->
-      <div class="pagebody" >
+      <div class="pagebody">
         <template>
           <div>
             <el-row :gutter="20">
@@ -51,7 +51,8 @@
                       </div>
                       <div class="grid-bottom">
                         <h2 class="tx-primary">
-                          {{$showSybmol()}} {{$exchangeRate(dashBoardData.orderRevenue)}}
+                          {{ $showSybmol() }}
+                          {{ $exchangeRate(dashBoardData.orderRevenue) }}
                         </h2>
                         <p>This month Revenue</p>
                       </div>
@@ -85,7 +86,8 @@
                       </div>
                       <div class="grid-bottom">
                         <h2 class="tx-primary">
-                          {{$showSybmol()}} {{$exchangeRate(dashBoardData.orderCost)}}
+                          {{ $showSybmol() }}
+                          {{ $exchangeRate(dashBoardData.orderCost) }}
                         </h2>
                         <p>This month Cost</p>
                       </div>
@@ -116,7 +118,12 @@
           <div class="mg-t-20">
             <el-card>
               <div
-                class="statistic-top d-flex align-item-center justify-content-between"
+                class="
+                  statistic-top
+                  d-flex
+                  align-item-center
+                  justify-content-between
+                "
               >
                 <h2>Statistics</h2>
                 <div>
@@ -149,8 +156,9 @@
                   </el-select>
                 </div>
               </div>
-              <div class="mg-t-20" style="width:100%">
-                <div ref="chart"
+              <div class="mg-t-20" style="width: 100%">
+                <div
+                  ref="chart"
                   id="dashboardCharts"
                   style="width: 100%; height: 400px"
                 ></div>
@@ -176,7 +184,7 @@
                         width="180"
                       >
                         <template slot-scope="scope">
-                          {{$exchangeRate(scope.row.revenue)}}
+                          {{ $exchangeRate(scope.row.revenue) }}
                         </template>
                       </el-table-column>
                       <el-table-column
@@ -184,7 +192,7 @@
                         width="180"
                       >
                         <template slot-scope="scope">
-                          {{$exchangeRate(scope.row.cost)}}
+                          {{ $exchangeRate(scope.row.cost) }}
                         </template>
                       </el-table-column>
                     </el-table>
@@ -206,7 +214,13 @@
                   </div>
                   <el-divider></el-divider>
                   <div
-                    class="grid-content d-flex grid-dashboard quick-summary mg-t-20 mg-b-20"
+                    class="
+                      grid-content
+                      d-flex
+                      grid-dashboard
+                      quick-summary
+                      mg-t-20 mg-b-20
+                    "
                     @click="gotoPage(1)"
                   >
                     <div
@@ -224,7 +238,13 @@
                   </div>
                   <el-divider></el-divider>
                   <div
-                    class="grid-content d-flex grid-dashboard quick-summary mg-t-20 mg-b-20"
+                    class="
+                      grid-content
+                      d-flex
+                      grid-dashboard
+                      quick-summary
+                      mg-t-20 mg-b-20
+                    "
                     @click="gotoPage(2)"
                   >
                     <div
@@ -243,7 +263,13 @@
                   </div>
                   <el-divider></el-divider>
                   <div
-                    class="grid-content d-flex grid-dashboard quick-summary mg-t-20 mg-b-20"
+                    class="
+                      grid-content
+                      d-flex
+                      grid-dashboard
+                      quick-summary
+                      mg-t-20 mg-b-20
+                    "
                     @click="gotoPage(3)"
                   >
                     <div class="grid-top">
@@ -336,7 +362,11 @@
                               class="cost"
                             >
                               Purchase price:
-                              <span>{{$showSybmol()}} {{ $exchangeRate(item.price) }}</span> /piece
+                              <span
+                                >{{ $showSybmol() }}
+                                {{ $exchangeRate(item.price) }}</span
+                              >
+                              /piece
                             </div>
                             <div v-else class="cost">
                               Purchase price:
@@ -352,7 +382,13 @@
                   </el-col>
                   <el-col :span="6" class="right pd-l-10">
                     <div
-                      class="title mg-b-10 d-flex justify-content-between align-items-center"
+                      class="
+                        title
+                        mg-b-10
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                      "
                     >
                       <h3 style="font-size: 16px; font-weight: bold">
                         Statistics
@@ -387,7 +423,12 @@
                     </div>
                     <div v-if="vendor.vendorCnt.invoiceAmount" class="mg-b-20">
                       <span style="color: #909399">Valid Amount Due:</span>
-                      <span>{{$showSybmol()}} {{ $exchangeRate(vendor.vendorCnt.invoiceAmount) }}</span>
+                      <span
+                        >{{ $showSybmol() }}
+                        {{
+                          $exchangeRate(vendor.vendorCnt.invoiceAmount)
+                        }}</span
+                      >
                     </div>
                     <div>
                       <el-button type="primary" @click="gotoOrder(vendor)"
@@ -708,8 +749,8 @@
         </div>
         <div style="color: #909399">
           <i class="el-icon-info" style="margin-right: 5px"></i>
-          You can modify your order dispatch rules at any time in the menu
-          "My Orders >> Dispatch settings"
+          You can modify your order dispatch rules at any time in the menu "My
+          Orders >> Dispatch settings"
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
@@ -778,14 +819,22 @@
           </el-table-column>
           <el-table-column prop="orderCnt" label="Total Orders">
           </el-table-column>
-          <el-table-column prop="revenue" :label="`Revenue (${$showSybmol()})`" width="180">
+          <el-table-column
+            prop="revenue"
+            :label="`Revenue (${$showSybmol()})`"
+            width="180"
+          >
             <template slot-scope="scope">
-              {{$exchangeRate(scope.row.revenue)}}
+              {{ $exchangeRate(scope.row.revenue) }}
             </template>
           </el-table-column>
-          <el-table-column prop="cost" :label="`Cost (${$showSybmol()})`" width="180">
+          <el-table-column
+            prop="cost"
+            :label="`Cost (${$showSybmol()})`"
+            width="180"
+          >
             <template slot-scope="scope">
-              {{$exchangeRate(scope.row.cost)}}
+              {{ $exchangeRate(scope.row.cost) }}
             </template>
           </el-table-column>
         </el-table>
@@ -846,8 +895,7 @@
         </p>
         <div style="color: #909399">
           <i class="el-icon-info" style="margin-right: 5px"></i>
-          You can modify your store settings at any time in the menu "My
-          Stores"
+          You can modify your store settings at any time in the menu "My Stores"
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
@@ -867,6 +915,41 @@
         </div>
       </div>
     </el-dialog>
+    <div class="el-tips" type="primary" circle @click="tips = !tips">
+      <div>Newbie</div>
+      <div>guide</div>
+    </div>
+    <el-dialog
+      title="Newbie guide"
+      :visible.sync="tips"
+      width="681px"
+      class="guide"
+      custom-class="verify-1"
+    >
+      <div class="tips-content">
+        <p class="ctx">
+          <el-tag type="warning" class="mg-r-10">Step 1</el-tag> Complete
+          personal information
+        </p>
+        <p class="ctx">
+          <el-tag type="warning" class="mg-r-10">Step 2</el-tag>Authorize to
+          bind the store
+        </p>
+        <p class="ctx">
+          <el-tag type="warning" class="mg-r-10">Step 3</el-tag>Publish the push
+          product
+        </p>
+        <p class="ctx">
+          <el-tag type="warning" class="mg-r-10">Step 4</el-tag>Start pulling
+          orders
+        </p>
+      </div>
+      <div class="flex-center">
+        <el-button class="btn spec-1" type="primary" @click="tips = false"
+          >Already
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -875,10 +958,14 @@ import { commodityTypeMore } from "@/components/productList";
 export default {
   data() {
     return {
+      tipsNum: 1,
+      tips: false,
       autoplay: true,
       activeIndex: 0,
       vendorsList: [],
-      aliexpressVendorsStatus: !localStorage.getItem("c_aliexpressVendorsStatus"),
+      aliexpressVendorsStatus: !localStorage.getItem(
+        "c_aliexpressVendorsStatus"
+      ),
       pickerOptions0: {
         disabledDate(time) {
           return time.getTime() > Date.now() - 8.64e6;
@@ -962,6 +1049,15 @@ export default {
       categorysList: [],
     };
   },
+  created() {
+    this.tipsNum = localStorage.getItem("tips") || 1;
+    if (this.tipsNum == 1) {
+      this.tips = true;
+      localStorage.setItem("tips", 2);
+    } else {
+      this.tips = false;
+    }
+  },
   mounted() {
     if (
       localStorage.getItem("c_ourMallFirstLogin") &&
@@ -1001,14 +1097,16 @@ export default {
               ) {
                 stores.forEach((store, index) => {
                   if (
-                    store.subShopUrl == localStorage.getItem("c_inviteShopUrl") &&
-                    store.authStatus == 1 && this.$store.state.userInfo.vendorCnt == '1'
+                    store.subShopUrl ==
+                      localStorage.getItem("c_inviteShopUrl") &&
+                    store.authStatus == 1 &&
+                    this.$store.state.userInfo.vendorCnt == "1"
                   ) {
                     //上一步店铺名
                     this.DialogEntrustStore.shopName = stores[index].subShopUrl;
                     this.DialogEntrustStore.id = stores[index].id;
                     if (item.vendorId)
-                     this.DialogEntrustStore.vendorId = item.vendorId;
+                      this.DialogEntrustStore.vendorId = item.vendorId;
                     this.DialogEntrustStore.vendorName = item.vendorName;
                     this.DialogEntrustStore.isShow = true;
                     localStorage.removeItem("c_inviteShopUrl");
@@ -1250,20 +1348,16 @@ export default {
       return b.dateCode1 - a.dateCode1;
     },
     dateChange() {
-      console.log( moment(this.statisticDate[0]).format(
-          "YYYYMMDD"
-        ))
+      console.log(moment(this.statisticDate[0]).format("YYYYMMDD"));
       if (this.statisticDate && this.statisticDate.length > 1) {
         this.statisticDateFrom = moment(this.statisticDate[0]).format(
           "YYYYMMDD"
         );
-        this.statisticDateTo = moment(this.statisticDate[1]).format(
-          "YYYYMMDD"
-        );
+        this.statisticDateTo = moment(this.statisticDate[1]).format("YYYYMMDD");
         this.$Burying({
-          object: '4001',
-          objectId: `${this.statisticDateFrom} - ${this.statisticDateTo}`
-        })
+          object: "4001",
+          objectId: `${this.statisticDateFrom} - ${this.statisticDateTo}`,
+        });
         this.myEcharts(1);
         this.statisticDateRange = "";
       }
@@ -1276,9 +1370,7 @@ export default {
           this.statisticDateTo = moment().format("YYYYMMDD");
           break;
         case "2":
-          this.statisticDateFrom = moment()
-            .subtract(7, "d")
-            .format("YYYYMMDD");
+          this.statisticDateFrom = moment().subtract(7, "d").format("YYYYMMDD");
           this.statisticDateTo = moment().format("YYYYMMDD");
           break;
         case "3":
@@ -1306,9 +1398,9 @@ export default {
       }
       this.statisticDate = [this.statisticDateFrom, this.statisticDateTo];
       this.$Burying({
-        object: '4001',
-        objectId: `${this.statisticDateFrom} - ${this.statisticDateTo}`
-      })
+        object: "4001",
+        objectId: `${this.statisticDateFrom} - ${this.statisticDateTo}`,
+      });
       this.myEcharts(1);
     },
     getDashboardSummary() {
@@ -1364,17 +1456,15 @@ export default {
     },
     showMoreReference() {
       this.$Burying({
-        object: '3012'
-      })
+        object: "3012",
+      });
       this.moreReference.isShow = true;
       this.getTableData();
     },
     myEcharts(type) {
-      const chart = document.getElementById('dashboardCharts');
+      const chart = document.getElementById("dashboardCharts");
       if (!type) {
-        this.statisticDateFrom = moment()
-          .subtract(1, "M")
-          .format("YYYYMMDD");
+        this.statisticDateFrom = moment().subtract(1, "M").format("YYYYMMDD");
         this.statisticDateTo = moment().format("YYYYMMDD");
         this.statisticDate = [this.statisticDateFrom, this.statisticDateTo];
       }
@@ -1399,8 +1489,8 @@ export default {
                 );
               });
             }
-            console.log(arr)
-            const myChart = echarts.init(chart)
+            console.log(arr);
+            const myChart = echarts.init(chart);
             // 指定图表的配置项和数据
             var option = {
               title: {
@@ -1450,9 +1540,9 @@ export default {
             };
             myChart.setOption(option);
             //修改首次进入时图的宽度
-            setTimeout(function(){
-                 myChart.resize();     
-            },200);
+            setTimeout(function () {
+              myChart.resize();
+            }, 200);
             window.onresize = myChart.resize;
           } else {
             this.$elementMessage(r.Message, "error");
@@ -2106,6 +2196,67 @@ export default {
       color: #666;
     }
   }
+}
+.guide {
+  z-index: 9999 !important;
+  ::v-deep .el-dialog__headerbtn{
+    display: none;
+}
+}
+
+.el-tips {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #5c6ac4;
+  color: #fff;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  box-shadow: 0 0 6px rgb(0 0 0 / 12%);
+  cursor: pointer;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  div {
+    font-size: 12px;
+  }
+}
+.el-tips:hover {
+  background-color: #868dc0;
+  transform: 0.3s;
+}
+.tips-content {
+  padding: 30px;
+  margin: 30px 60px;
+  border: 1px solid #eee;
+  border-radius: 15px;
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0 40px;
+}
+.btn {
+  width: 179px;
+    height: 46px;
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    border-radius: 10px;
+}
+.ctx {
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 22px;
+  word-break: normal;
+  font-size: AlibabaSans;
+  color: #4e4e4e;
+  line-height: 28px;
+}
+.mg-r-10{
+  margin-right: 10px;
 }
 </style>
 

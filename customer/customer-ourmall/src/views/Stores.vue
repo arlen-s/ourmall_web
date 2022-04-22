@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="right">
-        <el-button type="primary" @click="openConnectStore"
+        <el-button v-if="c_apiShopId != 121135" type="primary" @click="openConnectStore"
           >Add a new store</el-button
         >
       </div>
@@ -143,7 +143,7 @@
                   {{ scope.row.vendorName ? scope.row.vendorName : "---" }}
                 </template>
               </el-table-column> -->
-              <el-table-column label="Action" width="300">
+              <el-table-column v-if="c_apiShopId != 121135" label="Action" width="300">
                 <template slot-scope="scope">
                   <div>
                     <el-link type="danger" @click="delStore(scope.row)"
@@ -634,6 +634,7 @@ import shopCate from "../components/shopCate";
 export default {
   data() {
     return {
+      c_apiShopId: localStorage.getItem('c_apiShopId'),
       userId: "",
       vipData: {},
       num: 0,
