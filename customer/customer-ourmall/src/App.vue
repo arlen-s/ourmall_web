@@ -510,6 +510,32 @@
       @resetSEC="resetSEC"
       @saveNewPSD="saveNewPSD"
     />
+    <div class="el-tips" type="primary" circle @click="tips = !tips">
+      <div>Newbie</div>
+      <div>guide</div>
+    </div>
+    <el-dialog
+      title="Newbie guide"
+      :visible.sync="tips"
+      width="681px"
+      class="guide"
+      custom-class="verify-1"
+    >
+      <div class="tips-content">
+        <p class="ctx"> <el-tag type="warning" class="mg-r-10">Step 1</el-tag> Complete personal information</p>
+        <p class="ctx"><el-tag type="warning" class="mg-r-10">Step 2</el-tag>Authorize to bind the store</p>
+        <p class="ctx"><el-tag type="warning" class="mg-r-10">Step 3</el-tag>Publish the push product</p>
+        <p class="ctx"><el-tag type="warning" class="mg-r-10">Step 4</el-tag>Start pulling orders</p>
+      </div>
+      <div class="flex-center">
+        <el-button
+          class="btn spec-1"
+          type="primary"
+          @click="tips = false"
+          >Already
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -526,6 +552,7 @@ export default {
   name: "app",
   data() {
     return {
+      tips: false,
       shopName: "",
       importNum: 0,
       cartNum: 0,
@@ -1374,19 +1401,17 @@ export default {
       this.dialogRegisterData = JSON.parse(this.defaultDialogRegisterData);
       this.dialogRegisterData.isShow = true;
     },
-    getCartNum(){
+    getCartNum() {
       if (!this.$store.state.userInfo) {
         this.importNum = 0;
         return;
       }
-      this.$apiCall(
-        "api.Cart.countCart", {}, (r) => {
-          if (r.ErrorCode == 9999) {
-            this.cartNum = Number(r.Data.Results);
-            // this.cartNum = 16
-          }
+      this.$apiCall("api.Cart.countCart", {}, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.cartNum = Number(r.Data.Results);
+          // this.cartNum = 16
         }
-      );
+      });
     },
     getImportNum() {
       //获取没推送的importlist 数量
@@ -1767,6 +1792,7 @@ export default {
                 this.$route.name == "dashboard"
               ) {
                 this.verifyVisible = true;
+                this.tips = true
               }
               this.$store.commit("setUserInfo", r.Data.Results);
             }
@@ -2248,5 +2274,66 @@ export default {
     overflow-wrap: break-word;
     white-space: pre-wrap;
   }
+}
+.guide {
+  z-index: 9999 !important;
+  ::v-deep .el-dialog__headerbtn{
+    display: none;
+}
+}
+
+.el-tips {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #5c6ac4;
+  color: #fff;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  box-shadow: 0 0 6px rgb(0 0 0 / 12%);
+  cursor: pointer;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  div {
+    font-size: 12px;
+  }
+}
+.el-tips:hover {
+  background-color: #868dc0;
+  transform: 0.3s;
+}
+.tips-content {
+  padding: 30px;
+  margin: 30px 60px;
+  border: 1px solid #eee;
+  border-radius: 15px;
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0 40px;
+}
+.btn {
+  width: 179px;
+    height: 46px;
+    font-size: 20px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    border-radius: 10px;
+}
+.ctx {
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 22px;
+  word-break: normal;
+  font-size: AlibabaSans;
+  color: #4e4e4e;
+  line-height: 28px;
+}
+.mg-r-10{
+  margin-right: 10px;
 }
 </style>
