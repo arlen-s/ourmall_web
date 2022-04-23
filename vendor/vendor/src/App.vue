@@ -71,7 +71,7 @@
 												</span>
 											</span>
 										</div>
-										<el-button type="primary" size="mini" @click="toPricing">
+										<el-button v-if="false" type="primary" size="mini" @click="toPricing">
 											{{$t('package.升级套餐')}}
 										</el-button>
 									</div>
