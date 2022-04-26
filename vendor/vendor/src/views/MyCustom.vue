@@ -49,7 +49,7 @@
                       </el-select>
                     </el-form-item>
                     <!-- //TODO先不加筛选 -->
-                    <el-form-item v-if="apiShopId == 121173 && false">
+                    <el-form-item v-if="apiShopId == 1105 && false">
                       <el-input
                         v-model="filterParams.customCode"
                         :placeholder="$t('站长外部编号')"
@@ -180,7 +180,7 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column v-if="apiShopId == 121173" :label="$t('站长外部编号')">
+              <el-table-column v-if="apiShopId == 1105" :label="$t('站长外部编号')">
                 <template slot-scope="scope">
                   {{scope.row.customCode || '--'}}
                 </template>
