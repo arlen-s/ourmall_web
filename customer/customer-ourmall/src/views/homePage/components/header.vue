@@ -577,7 +577,7 @@ export default {
         case "dashboard":
           let isValidationCW = localStorage.getItem("isValidationCW");
 		  let apiShopId = localStorage.getItem('c_apiShopId')
-          if (!isValidationCW && apiShopId == 121173) {
+          if (!isValidationCW && apiShopId == 1105) {
             this.isValidationCWDialog = true
             return;
           }
