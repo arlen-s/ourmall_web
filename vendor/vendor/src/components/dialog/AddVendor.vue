@@ -192,6 +192,17 @@
               auto-complete="off"
             ></el-input>
           </el-form-item>
+          <el-form-item
+            v-if="apiShopId == 121173"
+            :label="$t('站长外部编号')"
+            :label-width="addVendorDialog.labelW"
+          >
+            <el-input
+              :placeholder="$t('站长外部编号')"
+              v-model="addVendorDialog.customCode"
+              auto-complete="off"
+            ></el-input>
+          </el-form-item>
         </el-form>
       </el-row>
       <el-divider></el-divider>
@@ -220,6 +231,7 @@ export default {
     return {
       visibleMask: false,
       newName: "",
+      apiShopId: localStorage.getItem('c_apiShopId')
     };
   },
   methods: {
@@ -269,12 +281,13 @@ export default {
         QQ: this.addVendorDialog.QQ,
         wangwang: this.addVendorDialog.wangwang,
         whatsapp: this.addVendorDialog.whatsapp,
+        customCode: this.addVendorDialog.customCode,
       };
       if (this.addVendorDialog.id) {
         params.relationshipId = this.addVendorDialog.id;
         url = "api.Relationship.changeByVendor";
       }
-
+      console.log(params)
       this.$apiCall(url, params, (r) => {
         this.addVendorDialog.loading = false;
         if (r.ErrorCode == 9999) {

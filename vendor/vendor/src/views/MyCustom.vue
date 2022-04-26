@@ -48,6 +48,14 @@
                         ></el-option>
                       </el-select>
                     </el-form-item>
+                    <!-- //TODO先不加筛选 -->
+                    <el-form-item v-if="apiShopId == 121173 && false">
+                      <el-input
+                        v-model="filterParams.customCode"
+                        :placeholder="$t('站长外部编号')"
+                        @keyup.enter.native="filterGetItem"
+                      ></el-input>
+                    </el-form-item>
                     <el-form-item>
                       <el-input
                         v-model="filterParams.customerLike"
@@ -62,7 +70,6 @@
                         @keyup.enter.native="filterGetItem"
                       ></el-input>
                     </el-form-item>
-                    <!-- //todo -->
                     
                     <el-form-item>
                       <el-autocomplete
@@ -171,6 +178,11 @@
                     </el-popover>
                     <span v-else>{{ scope.row.customerAuthCnt }}</span>
                   </div>
+                </template>
+              </el-table-column>
+              <el-table-column v-if="apiShopId == 121173" :label="$t('站长外部编号')">
+                <template slot-scope="scope">
+                  {{scope.row.customCode || '--'}}
                 </template>
               </el-table-column>
               <el-table-column :label="$t('员工名称')">
@@ -744,8 +756,10 @@ export default {
         QQ: "",
         wangwang: "",
         whatsapp: "",
+        customCode: "",
       },
       filterParams: {
+        customCode: "",
         customerId: "",
         vendorSku: "",
         name: "",
@@ -793,6 +807,7 @@ export default {
         item: '',
       },
       defaultDialogDeductionData: '{}',
+      apiShopId: localStorage.getItem('c_apiShopId'),
     };
   },
   components: {
@@ -1099,6 +1114,7 @@ export default {
       this.addVendorDialog.whatsapp = item.customerWhatsapp;
       this.addVendorDialog.isShow = true;
 	  this.addVendorDialog.isEdit = item.customerEmail ? true : false;
+    this.addVendorDialog.customCode = item.customCode || ''
     },
     openAddVendor() {
       this.addVendorDialog = JSON.parse(this.addVendorDialogDefault);
@@ -1120,6 +1136,7 @@ export default {
           rowsPerPage: this.rowsPerPage,       
           name: this.filterParams.name,
           customerId: this.filterParams.customerId,
+          customCode: this.filterParams.customCode,
           vendorSku: this.filterParams.vendorSku,
           email: this.filterParams.email,
           isAuth: this.filterParams.isAuth,
