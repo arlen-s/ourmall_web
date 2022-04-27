@@ -460,7 +460,9 @@ export default {
       showInput: false,
       langArr,
       isVisibleDropdown: false,
-	  isValidationCWDialog: false,
+	    isValidationCWDialog: false,
+      isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
+      c_apiShopId: localStorage.getItem('c_apiShopId')
     };
   },
   computed: {
@@ -575,11 +577,9 @@ export default {
           });
           break;
         case "dashboard":
-          let isValidationCW = localStorage.getItem("isValidationCW");
-		  let apiShopId = localStorage.getItem('c_apiShopId')
-          if (!isValidationCW && apiShopId == 1105) {
+          if (!this.isValidationCW && this.c_apiShopId == 1105) {
             this.isValidationCWDialog = true
-            return;
+            return
           }
           this.$router.push({
             name: "dashboard",
