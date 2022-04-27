@@ -577,7 +577,7 @@ export default {
           });
           break;
         case "dashboard":
-          if (!this.isValidationCW && this.c_apiShopId == 242) {
+          if (!this.isValidationCW && this.c_apiShopId == 1105) {
             this.isValidationCWDialog = true
             return
           }

@@ -1324,8 +1324,8 @@ export default {
             //登录后暂无跳转
             // this.$router.push({ name: "dashboard" });
           }
-          let isValidationCW = localStorage.getItem('c_apiShopId')
-          if(isValidationCW == 242){
+          let isValidationCW = JSON.parse(localStorage.getItem('c_apiShopId'))
+          if(isValidationCW == 1105){
             this.$apiCall('api.Relationship.checkCustomCode',{}, (r) => {
               if(r.ErrorCode == 9999) {
                 if(r.Data.Results){
