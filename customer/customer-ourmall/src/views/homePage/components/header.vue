@@ -578,7 +578,7 @@ export default {
           break;
         case "dashboard":
           // eslint-disable-next-line no-case-declarations
-          let isValidationCW = localStorage.getItem('isValidationCW')
+          let isValidationCW = JSON.parse(localStorage.getItem('isValidationCW'))
           if (!isValidationCW && this.c_apiShopId == 1105) {
             this.isValidationCWDialog = true
             return
