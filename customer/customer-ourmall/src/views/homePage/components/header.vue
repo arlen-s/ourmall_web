@@ -427,7 +427,7 @@
     </div>
     <el-dialog
       class="isValidationCW-dialog"
-	  append-to-body
+      append-to-body
       title=""
       :visible.sync="isValidationCWDialog"
       width="50%"
@@ -439,7 +439,12 @@
           subTitle="请联系供应商，完善站长外部编号"
         >
           <template slot="extra">
-            <el-button type="primary" size="medium" @click="isValidationCWDialog = false">返回</el-button>
+            <el-button
+              type="primary"
+              size="medium"
+              @click="isValidationCWDialog = false"
+              >返回</el-button
+            >
           </template>
         </el-result>
       </div>
@@ -460,9 +465,9 @@ export default {
       showInput: false,
       langArr,
       isVisibleDropdown: false,
-	    isValidationCWDialog: false,
+      isValidationCWDialog: false,
       // isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
-      c_apiShopId: JSON.parse(localStorage.getItem('c_apiShopId'))
+      c_apiShopId: JSON.parse(localStorage.getItem("c_apiShopId")),
     };
   },
   computed: {
@@ -578,23 +583,33 @@ export default {
           break;
         case "dashboard":
           // eslint-disable-next-line no-case-declarations
-          
-          if(this.c_apiShopId == 1105) {
-            let isValidationCW = JSON.parse(localStorage.getItem('isValidationCW'))
-            // console.log(isValidationCW)
-            if (!isValidationCW) {
-              this.isValidationCWDialog = true
-              return
-            } 
+          if (this.c_apiShopId == 242) {
+            this.release();
+          } else {
+            this.$router.push({
+              name: "dashboard",
+            });
           }
-          this.$router.push({
-            name: "dashboard",
-          });
           break;
         case "login":
           this.openDialogLogin();
           break;
       }
+    },
+    release() {
+      // debugger
+      let isValidationCW = JSON.parse(localStorage.getItem("isValidationCW"));
+      console.log(isValidationCW);
+      setTimeout(()=> {
+        if (!isValidationCW) {
+          this.isValidationCWDialog = true;
+          return;
+        } else {
+          this.$router.push({
+            name: "dashboard",
+          });
+        }
+      },1000)
     },
     openDialogLogin() {
       this.$root.$children[0].openDialogLogin();
@@ -963,11 +978,11 @@ export default {
   }
 }
 .isValidationCW-dialog {
-	::v-deep .el-dialog {
-		border-radius: 15px;
-	}
-	::v-deep .el-dialog__headerbtn {
-		display: none;
-	}
+  ::v-deep .el-dialog {
+    border-radius: 15px;
+  }
+  ::v-deep .el-dialog__headerbtn {
+    display: none;
+  }
 }
 </style>
