@@ -597,19 +597,32 @@ export default {
       }
     },
     release() {
+        this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
+          if (r.ErrorCode == 9999) {
+            if (!r.Data.Results) {
+              this.isValidationCWDialog = true;
+            } else {
+              this.$router.push({
+                name: "dashboard",
+              });
+            }
+          } else {
+            this.$message.error(r.Message);
+          }
+        });
       // debugger
-      let isValidationCW = JSON.parse(localStorage.getItem("isValidationCW"));
-      console.log(isValidationCW);
-      setTimeout(()=> {
-        if (!isValidationCW) {
-          this.isValidationCWDialog = true;
-          return;
-        } else {
-          this.$router.push({
-            name: "dashboard",
-          });
-        }
-      },1000)
+      // let isValidationCW = JSON.parse(localStorage.getItem("isValidationCW"));
+      // console.log(isValidationCW);
+      // setTimeout(()=> {
+      //   if (!isValidationCW) {
+      //     this.isValidationCWDialog = true;
+      //     return;
+      //   } else {
+      // this.$router.push({
+      //   name: "dashboard",
+      // });
+      //   }
+      // },1000)
     },
     openDialogLogin() {
       this.$root.$children[0].openDialogLogin();

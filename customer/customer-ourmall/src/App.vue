@@ -1324,20 +1324,6 @@ export default {
             //登录后暂无跳转
             // this.$router.push({ name: "dashboard" });
           }
-          let isValidationCW = JSON.parse(localStorage.getItem('c_apiShopId'))
-          if(isValidationCW == 1105){
-            this.$apiCall('api.Relationship.checkCustomCode',{}, (r) => {
-              if(r.ErrorCode == 9999) {
-                if(r.Data.Results){
-                  localStorage.setItem('isValidationCW', true)
-                } else {
-                  localStorage.setItem('isValidationCW', false)
-                }
-              } else {
-                this.$message.error(r.Message)
-              }
-            })
-          }
           this.dialogLoginData.isShow = false;
         } else {
           this.$message({
