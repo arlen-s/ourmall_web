@@ -462,7 +462,7 @@ export default {
       isVisibleDropdown: false,
 	    isValidationCWDialog: false,
       isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
-      c_apiShopId: localStorage.getItem('c_apiShopId')
+      c_apiShopId: JSON.parse(localStorage.getItem('c_apiShopId'))
     };
   },
   computed: {
@@ -577,7 +577,7 @@ export default {
           });
           break;
         case "dashboard":
-          if (!this.isValidationCW && this.c_apiShopId == 1105) {
+          if (!this.isValidationCW && this.c_apiShopId == 242) {
             this.isValidationCWDialog = true
             return
           }

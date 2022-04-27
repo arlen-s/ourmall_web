@@ -1325,7 +1325,7 @@ export default {
             // this.$router.push({ name: "dashboard" });
           }
           let isValidationCW = localStorage.getItem('c_apiShopId')
-          if(isValidationCW == 1105){
+          if(isValidationCW == 242){
             this.$apiCall('api.Relationship.checkCustomCode',{}, (r) => {
               if(r.ErrorCode == 9999) {
                 if(r.Data.Results){
