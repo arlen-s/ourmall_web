@@ -461,7 +461,7 @@ export default {
       langArr,
       isVisibleDropdown: false,
 	    isValidationCWDialog: false,
-      isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
+      // isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
       c_apiShopId: JSON.parse(localStorage.getItem('c_apiShopId'))
     };
   },
@@ -577,7 +577,9 @@ export default {
           });
           break;
         case "dashboard":
-          if (!this.isValidationCW && this.c_apiShopId == 1105) {
+          // eslint-disable-next-line no-case-declarations
+          let isValidationCW = localStorage.getItem('isValidationCW')
+          if (!isValidationCW && this.c_apiShopId == 1105) {
             this.isValidationCWDialog = true
             return
           }
