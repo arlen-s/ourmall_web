@@ -583,7 +583,7 @@ export default {
           break;
         case "dashboard":
           // eslint-disable-next-line no-case-declarations
-          if (this.c_apiShopId == 242) {
+          if (this.c_apiShopId == 1105) {
             this.release();
           } else {
             this.$router.push({
