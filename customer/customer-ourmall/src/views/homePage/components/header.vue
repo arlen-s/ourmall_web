@@ -467,7 +467,6 @@ export default {
       isVisibleDropdown: false,
       isValidationCWDialog: false,
       // isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
-      c_apiShopId: JSON.parse(localStorage.getItem("c_apiShopId")),
     };
   },
   computed: {
@@ -582,9 +581,11 @@ export default {
           });
           break;
         case "dashboard":
-          console.log(this.c_apiShopId)
+          
           // eslint-disable-next-line no-case-declarations
-          if (this.c_apiShopId == 1105) {
+          let c_apiShopId = JSON.parse(localStorage.getItem("c_apiShopId"))
+          console.log(c_apiShopId)
+          if (c_apiShopId == 1105) {
             this.release();
           } else {
             this.$router.push({
