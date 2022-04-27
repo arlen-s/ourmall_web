@@ -578,10 +578,14 @@ export default {
           break;
         case "dashboard":
           // eslint-disable-next-line no-case-declarations
-          let isValidationCW = JSON.parse(localStorage.getItem('isValidationCW'))
-          if (!isValidationCW && this.c_apiShopId == 1105) {
-            this.isValidationCWDialog = true
-            return
+          
+          if(this.c_apiShopId == 1105) {
+            let isValidationCW = JSON.parse(localStorage.getItem('isValidationCW'))
+            // console.log(isValidationCW)
+            if (!isValidationCW) {
+              this.isValidationCWDialog = true
+              return
+            } 
           }
           this.$router.push({
             name: "dashboard",
