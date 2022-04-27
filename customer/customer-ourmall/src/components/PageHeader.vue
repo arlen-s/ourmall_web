@@ -69,6 +69,11 @@
 <script>
 export default {
   props:['title'],
+  data(){
+    return {
+      c_apiShopId: JSON.parse(localStorage.getItem('c_apiShopId'))
+    }
+  },
   methods: {
     goHome(){
       this.$router.pash({name: 'home'});
@@ -82,7 +87,17 @@ export default {
           this.$router.push({ name: "profile" });
           break;
         case "dashboard":
-          this.$router.push({ name: "dashboard" });
+          if(this.c_apiShopId == 1105) {
+            let isValidationCW = JSON.parse(localStorage.getItem('isValidationCW'))
+            // console.log(isValidationCW)
+            if (!isValidationCW) {
+              this.isValidationCWDialog = true
+              return
+            } 
+          }
+          this.$router.push({
+            name: "dashboard",
+          });
           break;
       }
     },
