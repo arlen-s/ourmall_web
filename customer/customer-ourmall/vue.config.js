@@ -11,7 +11,7 @@ process.env.VERSION = `${new Date().getTime()}`;
 process.env.OUTPUTDIR = './../ourmall';
 const diyPlugin = require('./src/build/diy-plugin');
 module.exports = {
-	productionSourceMap: false,
+	productionSourceMap: true,
   publicPath: process.env.VUE_APP_BASEURL,
   lintOnSave: false,
   outputDir: './../ourmall',

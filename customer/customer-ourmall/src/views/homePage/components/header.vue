@@ -582,6 +582,7 @@ export default {
           });
           break;
         case "dashboard":
+          console.log(this.c_apiShopId)
           // eslint-disable-next-line no-case-declarations
           if (this.c_apiShopId == 1105) {
             this.release();
@@ -597,32 +598,21 @@ export default {
       }
     },
     release() {
+        console.log('123131231qweqweqwe23123')
         this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
           if (r.ErrorCode == 9999) {
-            if (!r.Data.Results) {
-              this.isValidationCWDialog = true;
-            } else {
+            console.log('12313123')
+            if (r.Data.Results) {
               this.$router.push({
                 name: "dashboard",
               });
+            } else {
+              this.isValidationCWDialog = true;
             }
           } else {
             this.$message.error(r.Message);
           }
         });
-      // debugger
-      // let isValidationCW = JSON.parse(localStorage.getItem("isValidationCW"));
-      // console.log(isValidationCW);
-      // setTimeout(()=> {
-      //   if (!isValidationCW) {
-      //     this.isValidationCWDialog = true;
-      //     return;
-      //   } else {
-      // this.$router.push({
-      //   name: "dashboard",
-      // });
-      //   }
-      // },1000)
     },
     openDialogLogin() {
       this.$root.$children[0].openDialogLogin();
