@@ -807,7 +807,7 @@ export default {
         item: '',
       },
       defaultDialogDeductionData: '{}',
-      apiUserId: localStorage.getItem('c_apiUserId'),
+      apiUserId: JSON.parse(localStorage.getItem('userInfo')).id,
     };
   },
   components: {

@@ -193,7 +193,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item
-            v-if="apiUserId == 1105"
+            v-if="apiUserId == 971"
             :label="$t('站长外部编号')"
             :label-width="addVendorDialog.labelW"
           >
@@ -231,7 +231,7 @@ export default {
     return {
       visibleMask: false,
       newName: "",
-      apiUserId: localStorage.getItem('c_apiUserId'),
+      apiUserId: JSON.parse(localStorage.getItem('userInfo')).id,
     };
   },
   methods: {
