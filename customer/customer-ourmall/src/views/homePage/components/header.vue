@@ -622,7 +622,23 @@ export default {
       if (!this.$store.state.userInfo) {
         this.$root.$children[0].openDialogLogin();
       } else {
-        this.$router.push({ name: "shoppingCart" });
+        let c_apiShopId = JSON.parse(localStorage.getItem("c_apiShopId"))
+        console.log(c_apiShopId)
+        if (c_apiShopId == 242) {
+          this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
+          if (r.ErrorCode == 9999) {
+            if (r.Data.Results) {
+              this.$router.push({ name: "shoppingCart" })
+            } else {
+              this.isValidationCWDialog = true;
+            }
+          } else {
+            this.$message.error(r.Message);
+          }
+        });
+        } else {
+         this.$router.push({ name: "shoppingCart" })
+        }
       }
     },
     openRegister() {
