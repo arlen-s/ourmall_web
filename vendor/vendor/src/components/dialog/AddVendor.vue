@@ -193,7 +193,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item
-            v-if="apiUserId == 971"
+            v-if="apiUserId == 148797"
             :label="$t('站长外部编号')"
             :label-width="addVendorDialog.labelW"
           >
