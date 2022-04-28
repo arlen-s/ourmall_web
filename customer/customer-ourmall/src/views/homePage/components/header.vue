@@ -585,7 +585,7 @@ export default {
           // eslint-disable-next-line no-case-declarations
           let c_apiShopId = JSON.parse(localStorage.getItem("c_apiShopId"))
           console.log(c_apiShopId)
-          if (c_apiShopId == 1105) {
+          if (c_apiShopId == 121173) {
             this.release();
           } else {
             this.$router.push({
@@ -624,7 +624,7 @@ export default {
       } else {
         let c_apiShopId = JSON.parse(localStorage.getItem("c_apiShopId"))
         console.log(c_apiShopId)
-        if (c_apiShopId == 1105) {
+        if (c_apiShopId == 121173) {
           this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
           if (r.ErrorCode == 9999) {
             if (r.Data.Results) {

@@ -84,7 +84,7 @@ export default {
           this.$router.push({ name: "profile" });
           break;
         case "dashboard":
-          if(this.c_apiShopId == 1105) {
+          if(this.c_apiShopId == 121173) {
             let isValidationCW = JSON.parse(localStorage.getItem('isValidationCW'))
             // console.log(isValidationCW)
             if (!isValidationCW) {
