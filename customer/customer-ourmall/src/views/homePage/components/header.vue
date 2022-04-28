@@ -624,7 +624,7 @@ export default {
       } else {
         let c_apiShopId = JSON.parse(localStorage.getItem("c_apiShopId"))
         console.log(c_apiShopId)
-        if (c_apiShopId == 242) {
+        if (c_apiShopId == 1105) {
           this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
           if (r.ErrorCode == 9999) {
             if (r.Data.Results) {
