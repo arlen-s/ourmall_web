@@ -741,6 +741,13 @@
 										</template>
 									</el-table-column>
 								</template>
+								<template v-if="status == 1 && activeName == 2 && apiUserId == '146445'">
+									<el-table-column label="Action" width="150">
+										<template slot-scope="scope">
+											<el-link @click="addTracking(scope.row)">Add tracking</el-link>
+										</template>
+									</el-table-column>
+								</template>
 								<template v-if="status == 3 || status == 5 || status == 6">
 									<el-table-column label="Shipping Method" width="250">
 										<template slot-scope="scope">
@@ -958,6 +965,7 @@
 				<el-button size="mini" type="primary" @click="createUpload">提交</el-button>
 			</div>
 		</el-dialog>
+		<add-tracking-dialog :dialog="addTrackingDialog" v-if="addTrackingDialog.visible"></add-tracking-dialog>
 	</div>
 </template>
 
@@ -968,9 +976,11 @@
 	import dlocal from "@/components/checkout/dlocal";
 	import checkStock from "@/components/checkout/dialogCheckStock";
 	import orderCnt from "./dialogOrderCnt.vue";
+	import AddTrackingDialog from './addTrackingDialog.vue'
 	export default {
 		data() {
 			return {
+				apiUserId: localStorage.getItem('c_apiUserId'),
 				dialogLogisticDefault: "{}",
 				dialogLogistic: {
 					isShow: false,
@@ -1176,6 +1186,10 @@
 				isDisabled: false,
 				count: '',
 				timer: null,
+				addTrackingDialog: {
+					visible: false,
+					row: {}
+				}
 			};
 		},
 		components: {
@@ -1185,6 +1199,7 @@
 			dlocal,
 			checkStock,
 			orderCnt,
+			AddTrackingDialog
 		},
 		watch: {
 			$route(to, from) {
@@ -1248,6 +1263,12 @@
 		},
 		beforeDestroy() {},
 		methods: {
+			addTracking(row){
+				this.addTrackingDialog = {
+					visible: true,
+					row: row
+				}
+			},
 			shippedFn (row) {
 				this.dialogLogistic.errorType = row.shippingMethodArr.errorType
 				if (row.shippingMethodArr.errorSkuList) {

@@ -8,7 +8,7 @@ let ApiCall = (api, params, callBack) => {
 	let reg = /^localhost:/;
 	if (reg.test(window.location.host)){
 		// params.apiShopId = '1064';
-		params.apiShopId = '242';
+		params.apiShopId = '1064';
 	}else{
 		params.apiShopId = localStorage.getItem('c_apiShopId') || '';
 	}
