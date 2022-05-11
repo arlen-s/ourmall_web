@@ -290,7 +290,7 @@ router.beforeEach((to, from, next) => {
 })
 router.afterEach((to, from) => {
   if (to.meta.title) {
-    document.title = `${to.meta.title} - ${process.env.VUE_APP_BASEURL == '/my' ? 'GoDropshipping' : 'OurMall Dropshipping'} - Easy Dropshipping `
+    document.title = `${to.meta.title}`
   }
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 });
