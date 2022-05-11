@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="right">
-        <el-button v-if="apiUserId == 146445" type="primary" @click="openConnectStore"
+        <el-button v-if="apiUserId != 146445" type="primary" @click="openConnectStore"
           >Add a new store</el-button
         >
       </div>
@@ -143,7 +143,7 @@
                   {{ scope.row.vendorName ? scope.row.vendorName : "---" }}
                 </template>
               </el-table-column> -->
-              <el-table-column v-if="apiUserId == 146445" label="Action" width="300">
+              <el-table-column v-if="apiUserId != 146445" label="Action" width="300">
                 <template slot-scope="scope">
                   <div>
                     <el-link type="danger" @click="delStore(scope.row)"
