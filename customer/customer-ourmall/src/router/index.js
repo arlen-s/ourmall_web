@@ -847,7 +847,10 @@ const routes = [
       if(hostList.includes(location.origin)){
         return '/home'
       }
-      if (hostArr.length > 2 && !(hostArr[0].toLowerCase() == 'www' || hostArr[0].toLowerCase() == 'sandboxwww' || hostArr[0].toLowerCase() == 'app' || hostArr[0].toLowerCase() == 'shopify' || hostArr[0].toLowerCase() == 'sandboxshopify')) {
+      if(hostArr[0].toLowerCase() == 'app'){
+        return '/home';
+      }
+      if (hostArr.length > 2 && !(hostArr[0].toLowerCase() == 'www' || hostArr[0].toLowerCase() == 'sandboxwww' || hostArr[0].toLowerCase() == 'shopify' || hostArr[0].toLowerCase() == 'sandboxshopify')) {
         return '/home';
       } else {
         return '/shopify'
