@@ -1477,7 +1477,7 @@
                   <el-table-column label="Action" width="150">
                     <template slot-scope="scope">
                       <el-link type="primary" @click="addTracking(scope.row)"
-                        >Add tracking</el-link
+                        >Fulfill Item</el-link
                       >
                     </template>
                   </el-table-column>
