@@ -41,7 +41,9 @@
         <div class="pagetitle">
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/products-market' }"
-              >{{$root.$children[0].pName.a}} Products Market</el-breadcrumb-item
+              >
+              <!-- {{$root.$children[0].pName.a}} -->
+               Products Market</el-breadcrumb-item
             >
             <el-breadcrumb-item v-if="activeCategory.l1">
               <a v-if="activeCategory.L > 1" @click="gotoCategory(1)">
