@@ -14,7 +14,8 @@
       <div class="pagetitle">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/products-market' }">
-          {{$root.$children[0].pName.a}} Products Market
+          <!-- {{$root.$children[0].pName.a}} -->
+           Products Market
           </el-breadcrumb-item>
           <template v-if="breadCrumbs && breadCrumbs.L && breadCrumbs.l1">
             <el-breadcrumb-item  :to="{path: `/category/${breadCrumbs.l1.id}/${breadCrumbs.l1.name.replace(/\s+/g,'-')}.html`}">
