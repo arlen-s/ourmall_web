@@ -137,7 +137,7 @@
 										</el-form-item>
 									</el-form>
 								</div>
-								<div v-if="item.accountType == 2 || item.accountType == 4" style="margin: 20px auto;width:50%;">
+								<div v-if="item.accountType == 2 || item.accountType == 4 || item.accountType == 13" style="margin: 20px auto;width:50%;">
 									<el-form label-width="200px" class="demo-ruleForm">
 										<el-form-item label="secretKey: " prop="secretKey">
 											<el-input v-model="item.info.secretKey" :readonly="true"></el-input>
@@ -237,6 +237,11 @@
 					icon:require('@/assets/pay/10.png'),
 					name:"dlocal",
 					status:"2"
+				},{
+					accountType:"13",
+					icon:require('@/assets/pay/13.png'),
+					name:"Kasikornbank",
+					status:"2"
 				}],
 				underlineItems:[],
 				dialogData: {
@@ -285,11 +290,14 @@
 								if (item.accountType == payment.accountType) {
 									this.paymentMethods.splice(payIndex,1,r.Data.Results[index]);
 								}
+								
 							})
+							
 							if(item.accountType == 12){
 								this.underlineItems.push(item);
 							}
 						})
+						console.log(this.paymentMethods)
 					} else {
 						this.$elementMessage(r.Message, "error");
 					}

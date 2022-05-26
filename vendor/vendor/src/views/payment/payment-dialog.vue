@@ -73,7 +73,7 @@
 				</el-form>
 			</div>
 			<!-- ebanx checkout-->
-			<div v-if="dialogData.item.accountType == 2 || dialogData.item.accountType == 4" style="width:80%">
+			<div v-if="dialogData.item.accountType == 2 || dialogData.item.accountType == 4 || dialogData.item.accountType == 13" style="width:80%">
 				<el-form v-if="dialogData.item" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="200px" class="demo-ruleForm">	
 					<el-form-item label="SecretKey: " prop="secretKey">
 						<el-input v-model="ruleForm.secretKey"></el-input>
@@ -342,6 +342,11 @@
 								break;
 								//CheckOut
 							case 4:
+								params.secretKey = this.ruleForm.secretKey;
+								params.publicKey = this.ruleForm.publicKey;
+								break;
+								//Kasikornbank
+							case 13:
 								params.secretKey = this.ruleForm.secretKey;
 								params.publicKey = this.ruleForm.publicKey;
 								break;

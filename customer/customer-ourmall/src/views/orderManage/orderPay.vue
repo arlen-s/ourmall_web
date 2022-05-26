@@ -430,6 +430,7 @@
 					}
 				})
 			},
+			// TODO支付
 			orderPay(openType) {
 				console.log(openType)
 				this.openType = openType;
@@ -613,6 +614,7 @@
 						this.bonusStatus = r.Data.Results.bonusStatus;
 					} else {}
 				})
+				// TODO支付
 				this.$apiCall("api.AccountPayment.getPaymentAccounts", {
 				}, (r) => {
 					if (r.ErrorCode == "9999") {
