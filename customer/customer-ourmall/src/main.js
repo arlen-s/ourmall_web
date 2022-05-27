@@ -31,6 +31,8 @@ import '../theme/index.css'
 import 'vue-country-intl/lib/vue-country-intl.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import './assets/swiper/swiper.min.css'
+import VueAppend from 'vue-append'
+Vue.use(VueAppend)
 if(process.env.NODE_ENV !== "production"){
 	Vue.config.devtools = true;
 }

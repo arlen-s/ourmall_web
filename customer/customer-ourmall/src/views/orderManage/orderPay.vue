@@ -204,22 +204,36 @@
 					Amount due (including freight)（$）:
 					<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
 				</span>
-				 <el-button type="primary" @click="orderPay(openType)">Submit orders</el-button>
+				<div v-show="platformType == 13" v-append="html"></div>
+				<!-- v-show="platformType != 13" -->
+				 <el-button v-show="platformType != 13"  type="primary" @click="orderPay(openType)">Submit orders</el-button>
+				 
 			</div>
 		</div>
 		
 		<checkout :data="dialogCheckOut" @payCheckOut="payCheckOut"></checkout>
 		<underline :data="dialogUnderline" @submitUnderline="submitUnderline"></underline>
 		<dlocal :data="dialogDlocal" @submitDlocal="submitDlocal"></dlocal>
+		<KasikornbankPayDialog :dialog="KasikornbankPayDialog" v-if="KasikornbankPayDialog.visible"></KasikornbankPayDialog>
 	</div>
 </template>
 <script>
 	import checkout from "@/components/checkout/checkout";
 	import underline from "@/components/checkout/underline";
 	import dlocal from "@/components/checkout/dlocal";
+	import KasikornbankPayDialog from './KasikornbankPayDialog.vue'
+import { arrayEach } from 'xe-utils/methods';
 	export default {
 		data() {
 			return {
+				html: "",
+				//开泰银行信息
+				KasikornbankInfo: {
+					apikey: '123',
+					amount: '123',
+					methods: 'qr',
+					orderId: '123',
+				},
 				loading: false,
 				items:[],
 				bonus:0,
@@ -253,17 +267,44 @@
 				openType:"",
 				width:0,
 				coupon:"",
-				couponInfo:""
+				couponInfo:"",
+				KasikornbankPayDialog: {
+					visible: false,
+					row: {}
+				}
 			};
 		},
 		components: {
 			checkout,
 			underline,
 			dlocal,
+			KasikornbankPayDialog,
 		},
 		computed: {},
 		watch: {},
 		created() {
+			// this.$nextTick(function() {
+			// 	let script = document.createElement('script')
+			// 	script.type = 'text/javascript'
+			// 	script.src = 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js'
+			// 	script.data-apikey = '123'
+			// 	script.amount = '123'
+			// 	document.getElementById('bankPay').appendChild(script)
+			// 	script.onload = function () {
+			// 		console.log('js资源已加载成功了')
+			// 	}
+			// 	console.log(document.getElementById('bankPay'),'bank............')
+			// })	
+
+			this.html = `<form id="bankPay" method="POST" action="/checkout">
+						<script type="text/javascript"
+							src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+							data-apikey="${this.KasikornbankInfo.apikey}"
+							data-amount ='${this.KasikornbankInfo.amount}'	
+							data-payment-methods="${this.KasikornbankInfo.methods}"
+							data-order-id="${this.KasikornbankInfo.orderId}" ><\/script>
+						</form>`
+
 		},
 		mounted() {
 			this.width = window.getComputedStyle(this.$refs.pagebody).width;
@@ -459,6 +500,10 @@
 					type = Number(this.platformType);
 				}
 				switch (type) {
+					//Kasikornbank
+					case 13:
+						this.KasikornbankPay()
+						break;
 					//underline
 					case 12:
 						this.dialogUnderline.isShow = true;
@@ -501,7 +546,7 @@
 						//bonus
 						break;
 				}
-				if (type == 4 || type == 10 || type == 12) {
+				if (type == 4 || type == 10 || type == 12 || type == 13) {
 					//CheckOut或者dlocal或者underline
 					return;
 				}
@@ -572,6 +617,13 @@
 				// clearInterval(this.payTime);
 				localStorage.removeItem("c_returnPayStatus");
 			},
+			KasikornbankPay() {
+				// 接口获取数据
+				this.KasikornbankPayDialog = {
+					visible: true,
+					row: this.KasikornbankInfo
+				}
+			},
 			changeBonusPlatform() {
 				if(this.bonus == 0 || this.bonus < this.totalAllGoodsAndFreight){
 					return;
@@ -590,6 +642,15 @@
 					if (this.platformType != 6) {
 						this.platformType = type;
 					}
+				}
+				if(type == 13) {
+					this.KasikornbankInfo = {
+						apikey: '456',
+						amount: '456',
+						methods: 'qr',
+						orderId: '456',
+					}
+					console.log(this.KasikornbankInfo)
 				}
 			},
 			getBonus(){
@@ -630,6 +691,7 @@
 								this.payTypes.push(item);
 							}
 						})
+						console.log(this.payTypes)
 					} else {}
 				})
 			},
@@ -862,6 +924,9 @@
 		background: #fff;
 		z-index: 9;
 		border: 1px solid #DFDFDF;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
 		.left{
 			margin-right: 50px;
 			font-size: 26px;

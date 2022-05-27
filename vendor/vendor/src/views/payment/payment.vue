@@ -137,13 +137,29 @@
 										</el-form-item>
 									</el-form>
 								</div>
-								<div v-if="item.accountType == 2 || item.accountType == 4 || item.accountType == 13" style="margin: 20px auto;width:50%;">
+								<div v-if="item.accountType == 2 || item.accountType == 4" style="margin: 20px auto;width:50%;">
 									<el-form label-width="200px" class="demo-ruleForm">
 										<el-form-item label="secretKey: " prop="secretKey">
 											<el-input v-model="item.info.secretKey" :readonly="true"></el-input>
 										</el-form-item>
 										<el-form-item label="publicKey: " prop="publicKey">
 											<el-input v-model="item.info.publicKey" :readonly="true"></el-input>
+										</el-form-item>
+									</el-form>
+								</div>
+								<div v-if="item.accountType == 13" style="margin: 20px auto;width:50%;">
+									<el-form label-width="200px" class="demo-ruleForm">
+										<el-form-item label="secretKey: " prop="secretKey">
+											<el-input v-model="item.info.secretKey" :readonly="true"></el-input>
+										</el-form-item>
+										<el-form-item label="publicKey: " prop="publicKey">
+											<el-input v-model="item.info.publicKey" :readonly="true"></el-input>
+										</el-form-item>
+										<el-form-item label="merchantId: " prop="publicKey">
+											<el-input v-model="item.info.merchantId" :readonly="true"></el-input>
+										</el-form-item>
+										<el-form-item label="publicKey: " prop="publicKey">
+											<el-input v-model="item.info.terminalId" :readonly="true"></el-input>
 										</el-form-item>
 									</el-form>
 								</div>

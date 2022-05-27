@@ -73,13 +73,30 @@
 				</el-form>
 			</div>
 			<!-- ebanx checkout-->
-			<div v-if="dialogData.item.accountType == 2 || dialogData.item.accountType == 4 || dialogData.item.accountType == 13" style="width:80%">
+			<div v-if="dialogData.item.accountType == 2 || dialogData.item.accountType == 4" style="width:80%">
 				<el-form v-if="dialogData.item" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="200px" class="demo-ruleForm">	
 					<el-form-item label="SecretKey: " prop="secretKey">
 						<el-input v-model="ruleForm.secretKey"></el-input>
 					</el-form-item>
 					<el-form-item label="PublicKey: " prop="publicKey">
 						<el-input v-model="ruleForm.publicKey"></el-input>
+					</el-form-item>
+				</el-form>
+			</div>
+			<!--  -->
+			<div v-if="dialogData.item.accountType == 13" style="width:80%">
+				<el-form v-if="dialogData.item" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="200px" class="demo-ruleForm">	
+					<el-form-item label="SecretKey: " prop="secretKey">
+						<el-input v-model="ruleForm.secretKey"></el-input>
+					</el-form-item>
+					<el-form-item label="PublicKey: " prop="publicKey">
+						<el-input v-model="ruleForm.publicKey"></el-input>
+					</el-form-item>
+					<el-form-item label="MERCHANT ID: " prop="merchantId">
+						<el-input v-model="ruleForm.merchantId"></el-input>
+					</el-form-item>
+					<el-form-item label="TERMINAL ID: " prop="terminalId">
+						<el-input v-model="ruleForm.terminalId"></el-input>
 					</el-form-item>
 				</el-form>
 			</div>
@@ -170,6 +187,8 @@
 					cname: '',
 					info1: '',
 					info2: '',
+					terminalId: '',
+					merchantId: '',
 				},
 				rules: {
 					bankName: [{
@@ -286,6 +305,18 @@
 							trigger: 'blur'
 						}
 					],
+					merchantId: [{
+							required: true,
+							message: this.$t('payment.pleaseEnter') + ' merchantId',
+							trigger: 'blur'
+						}
+					],
+					terminalId: [{
+							required: true,
+							message: this.$t('payment.pleaseEnter') + ' terminalId',
+							trigger: 'blur'
+						}
+					],
 				}
 			};
 		},
@@ -349,6 +380,8 @@
 							case 13:
 								params.secretKey = this.ruleForm.secretKey;
 								params.publicKey = this.ruleForm.publicKey;
+								params.terminalId = this.ruleForm.terminalId;
+								params.merchantId = this.ruleForm.merchantId
 								break;
 								//paypal
 							case 3:
