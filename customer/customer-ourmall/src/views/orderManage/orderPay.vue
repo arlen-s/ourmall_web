@@ -204,9 +204,11 @@
 					Amount due (including freight)（$）:
 					<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
 				</span>
-				<div v-show="platformType == 13" v-append="html"></div>
+				<div id="bank"></div>
+				<!-- <div v-show="platformType == 13" v-append="html"></div> -->
+				<!-- <div v-show="platformType == 13" v-append="html"></div> -->
 				<!-- v-show="platformType != 13" -->
-				 <el-button v-show="platformType != 13"  type="primary" @click="orderPay(openType)">Submit orders</el-button>
+				 <el-button type="primary" @click="orderPay(openType)">Submit orders</el-button>
 				 
 			</div>
 		</div>
@@ -283,27 +285,27 @@ import { arrayEach } from 'xe-utils/methods';
 		computed: {},
 		watch: {},
 		created() {
-			// this.$nextTick(function() {
-			// 	let script = document.createElement('script')
-			// 	script.type = 'text/javascript'
-			// 	script.src = 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js'
-			// 	script.data-apikey = '123'
-			// 	script.amount = '123'
-			// 	document.getElementById('bankPay').appendChild(script)
-			// 	script.onload = function () {
-			// 		console.log('js资源已加载成功了')
-			// 	}
-			// 	console.log(document.getElementById('bankPay'),'bank............')
-			// })	
+			this.$nextTick(function() {
+				// let script = document.createElement('script')
+				// script.type = 'text/javascript'
+				// script.src = 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js'
+				// script.data-apikey = '123'
+				// script.amount = '123'
+				// document.getElementById('bankPay').appendChild(script)
+				// script.onload = function () {
+				// 	console.log('js资源已加载成功了')
+				// }
+				console.log(document.getElementById('bank'),'bank............')
+			})	
 
-			this.html = `<form id="bankPay" method="POST" action="/checkout">
-						<script type="text/javascript"
-							src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-							data-apikey="${this.KasikornbankInfo.apikey}"
-							data-amount ='${this.KasikornbankInfo.amount}'	
-							data-payment-methods="${this.KasikornbankInfo.methods}"
-							data-order-id="${this.KasikornbankInfo.orderId}" ><\/script>
-						</form>`
+			// this.html = `<form id="bankPay" method="POST" action="/checkout">
+			// 			<script type="text/javascript"
+			// 				src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+			// 				data-apikey="${this.KasikornbankInfo.apikey}"
+			// 				data-amount ='${this.KasikornbankInfo.amount}'	
+			// 				data-payment-methods="${this.KasikornbankInfo.methods}"
+			// 				data-order-id="${this.KasikornbankInfo.orderId}" ><\/script>
+			// 			</form>`
 
 		},
 		mounted() {
@@ -619,10 +621,20 @@ import { arrayEach } from 'xe-utils/methods';
 			},
 			KasikornbankPay() {
 				// 接口获取数据
-				this.KasikornbankPayDialog = {
-					visible: true,
-					row: this.KasikornbankInfo
-				}
+				
+				let html = `<form id="bankPay" method="POST" action="/checkout">
+						<script  type="text/javascript"
+							src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+							data-apikey="123"
+							data-amount ='20'	
+							data-payment-methods="rq"
+							data-order-id="89" ><\/script>
+						</form>`
+				document.getElementById('bank').appendChild(html)
+				// this.KasikornbankPayDialog = {
+				// 	visible: true,
+				// 	row: this.KasikornbankInfo
+				// }
 			},
 			changeBonusPlatform() {
 				if(this.bonus == 0 || this.bonus < this.totalAllGoodsAndFreight){

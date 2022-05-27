@@ -158,7 +158,7 @@
 										<el-form-item label="merchantId: " prop="publicKey">
 											<el-input v-model="item.info.merchantId" :readonly="true"></el-input>
 										</el-form-item>
-										<el-form-item label="publicKey: " prop="publicKey">
+										<el-form-item label="terminalId: " prop="publicKey">
 											<el-input v-model="item.info.terminalId" :readonly="true"></el-input>
 										</el-form-item>
 									</el-form>
