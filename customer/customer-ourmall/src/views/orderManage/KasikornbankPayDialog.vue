@@ -35,32 +35,39 @@ export default {
     },
   },
   data() {
-//     const html = `<form method="POST" action="/checkout">
-// <script type="text/javascript"
-// src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-// data-apikey="pkey_prod_75677dushd74774gdgdgd77d7dhsgfhfghfhgdh"
-// data-amount ="13.00"
-// data-payment-methods="qr"
-// data-order-id="1" ><\/script>
-// </form>`
     return {
       dialogModal: this.dialog,
-      html: '',
+      html: "",
     };
   },
   watch: {
     dialog: {
       handler: function (val) {
-          if(val) {
-              this.html = `<form id="bankPay" method="POST" action="/checkout">
-						<script type="text/javascript"
-							src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-							data-apikey="${val.row.apikey}"
-							data-amount ='${val.row.amount}'	
-							data-payment-methods="${val.row.methods}"
-							data-order-id="${val.row.orderId}" ><\/script>
-						</form>`
-          }
+        if (val) {
+          let info = val.row;
+          this.html = `<form id="bankPayDialog" method="POST" action="/checkout">
+              
+						</form>`;
+            // <script type="text/javascript"
+						// 	src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+						// 	data-apikey="${info.apikey}"
+						// 	data-amount ='${info.amount}'	
+						// 	data-payment-methods="${info.methods}"
+						// 	data-order-id="${info.orderId}" ><\/script>
+          console.log(document.getElementById('bankPayDialog'))
+          // let script = document.createElement('script')
+          // script.type = 'text/javascript'
+          // script.src = 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js'
+          // script.setAttribute('data-apikey',info.apikey)
+          // script.setAttribute('data-amount','222333')
+          // script.setAttribute('data-payment-methods','card')
+          // script.setAttribute('data-order-id','222333')
+          // document.getElementById('bankPay').appendChild(script)
+          // script.onload = function () {
+          //   console.log('js资源已加载成功了')
+          // }
+          // console.log(document.getElementById('bankPay'),'bank............2')
+        }
       },
       deep: true,
       immediate: true,
