@@ -204,8 +204,7 @@
 					Amount due (including freight)（$）:
 					<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
 				</span>
-				<div id="bank" v-append="html"></div>
-				<!-- v-show="platformType != 13" -->
+				<!-- <div id="bank" v-append="html"></div> -->
 				 <el-button type="primary" @click="orderPay(openType)">Submit orders</el-button>
 				 
 			</div>
@@ -227,12 +226,11 @@ import { arrayEach } from 'xe-utils/methods';
 		data() {
 			return {
 				html: "",
-				//开泰银行信息
-				KasikornbankInfo: {
-					apikey: '123',
-					amount: '123',
-					methods: 'qr',
-					orderId: '123',
+				KasikornbankInfo: {}, //开泰银行信息
+				shopName: '', //店铺名称
+				KasikornbankPayDialog: {
+					visible: false,
+					html: ""
 				},
 				loading: false,
 				items:[],
@@ -268,10 +266,6 @@ import { arrayEach } from 'xe-utils/methods';
 				width:0,
 				coupon:"",
 				couponInfo:"",
-				KasikornbankPayDialog: {
-					visible: false,
-					row: {}
-				}
 			};
 		},
 		components: {
@@ -284,20 +278,22 @@ import { arrayEach } from 'xe-utils/methods';
 		watch: {},
 		created() {
 			//开泰银行获取支付信息
-			// this.getInfoFromKasikornbank()
-			this.$nextTick(() => {
-				console.log(document.getElementById('bank'))
-			})
-			this.html = `<form id="bankPay" method="POST" action="https://sandboxapi.myourmall.com/kaitaiCheckout.php">
-						<script type="text/javascript"
-							src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-							data-apikey='"pkey_test_21309fUcbpFt5H7fHKoPUjpo8GD7iVJxtjwev"'
-							data-amount ='70'	
-							data-currency ='USD'	
-							data-payment-methods="card"
-							data-name ='TESTHAN2'	
-							data-mid='401882205171001' ><\/script>
-						</form>`
+			this.getInfoFromKasikornbank()
+			this.getShopName()
+			// this.$nextTick(() => {
+			// 	console.log(document.getElementById('bank'))
+			// })
+			// this.html = `<form id="bankPay" method="POST" action="https://sandboxapi.myourmall.com/kaitaiCheckout.php">
+			// 			<script type="text/javascript"
+			// 				src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+			// 				data-apikey='pkey_test_21309fUcbpFt5H7fHKoPUjpo8GD7iVJxtjwev'
+			// 				data-amount ='70'	
+			// 				data-currency ='THB'	
+			// 				data-payment-methods="card"
+			// 				data-name ='TESTHAN2'
+			// 				data-smartpay-id ='0001' 	
+			// 				data-mid='401882205171001' ><\/script>
+			// 			</form>`
 		},
 		mounted() {
 			this.width = window.getComputedStyle(this.$refs.pagebody).width;
@@ -328,26 +324,40 @@ import { arrayEach } from 'xe-utils/methods';
 				this.$apiCall("api.AccountPayment.getKaiTaiPayInfo", {}, (r) => {
 					this.$hideLoading();
 					if (r.ErrorCode == "9999") {
-						console.log(r, '开泰银行信息')
-						// this.KasikornbankInfo 
-						let info =  r.Data.Results
-						if(info){
-							this.html = `<form id="bankPay" method="POST" action="https://sandboxapi.myourmall.com/kaitaiCheckout.php">
-							<script type="text/javascript"
-								src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-								data-apikey='${info.publickey}'
-								data-amount ='${this.totalAllGoodsAndFreight}'	
-								data-currency ='USD'	
-								data-payment-methods="card"
-								data-name ='${this.$root.$children[0].shopName}'	
-								data-mid='${info.merchantId}' ><\/script>
-							</form>`
-						}
-						
+						this.KasikornbankInfo =  r.Data.Results
 					} else {
 						this.$elementMessage(r.Message, "error");
 					}
 				})
+			},
+			getShopName() {
+				this.$apiCall("api.VendorShop.getVendorShop", {}, (r) => {
+					if (r.ErrorCode == 9999) {
+					this.shopName = r.Data.Results.name;
+					}
+				});
+			},
+			KasikornbankPay() {
+				// Todo 先获取接口获取数据
+				if(Object.keys(this.KasikornbankInfo).length && this.shopName !== ''){
+					this.html = `<form id="bankPay" method="POST" action="https://sandboxapi.myourmall.com/kaitaiCheckout.php">
+								<script type="text/javascript"
+									src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
+									data-apikey='${this.KasikornbankInfo.publicKey}'
+									data-amount='${this.totalAllGoodsAndFreight}'	
+									data-currency='THB'	
+									data-payment-methods="card"
+									data-name='${this.shopName}'
+									data-smartpay-id='${this.KasikornbankInfo.smartpayId}' 	
+									data-mid='${this.KasikornbankInfo.merchantId}' ><\/script>
+								</form>`
+					this.KasikornbankPayDialog = {
+						visible: true,
+						html: this.html
+					}
+				} else {
+					this.$elementMessage('请稍后重试～', "error");
+				}
 			},
 			mathTofixed(num){
 				let number = Math.floor(Number(num) * 100) / 100;
@@ -635,27 +645,6 @@ import { arrayEach } from 'xe-utils/methods';
 				}
 				// clearInterval(this.payTime);
 				localStorage.removeItem("c_returnPayStatus");
-			},
-			KasikornbankPay() {
-				// Todo 先获取接口获取数据
-				// let script = document.createElement('script')
-				// script.type = 'text/javascript'
-				// script.src = 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js'
-				// script.setAttribute('data-apikey','222333')
-				// script.setAttribute('data-amount','222333')
-				// script.setAttribute('data-payment-methods','card')
-				// script.setAttribute('data-order-id','222333')
-				// document.getElementById('bankPay').appendChild(script)
-				// script.onload = function () {
-				// 	console.log('js资源已加载成功了')
-				// }
-				// console.log(document.getElementById('bankPay'),'bank............2')
-				
-				this.KasikornbankPayDialog = {
-					visible: true,
-					row: this.KasikornbankInfo
-				}
-
 			},
 			changeBonusPlatform() {
 				if(this.bonus == 0 || this.bonus < this.totalAllGoodsAndFreight){

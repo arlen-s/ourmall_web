@@ -4,10 +4,10 @@
     :visible.sync="dialog.visible"
     :close-on-click-modal="false"
     :before-close="initDialog"
-    top="5vh"
-    width="70%"
+    :fullscreen="true"
   >
     <div class="scroll-box">
+      <p v-if="innerWidth===0">请耐心等待，正在努力为您创建链接中～</p>
       <div v-append="html"></div>
     </div>
     <!-- <div slot="footer" class="dialog-footer">
@@ -29,7 +29,7 @@ export default {
       default: () => {
         return {
           visible: false,
-          row: {},
+          html: "",
         };
       },
     },
@@ -37,46 +37,43 @@ export default {
   data() {
     return {
       dialogModal: this.dialog,
-      html: "",
+      html: '',
+      innerWidth: 0,
     };
   },
   watch: {
     dialog: {
       handler: function (val) {
         if (val) {
-          let info = val.row;
-          this.html = `<form id="bankPayDialog" method="POST" action="/checkout">
-              
-						</form>`;
-            // <script type="text/javascript"
-						// 	src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-						// 	data-apikey="${info.apikey}"
-						// 	data-amount ='${info.amount}'	
-						// 	data-payment-methods="${info.methods}"
-						// 	data-order-id="${info.orderId}" ><\/script>
-          console.log(document.getElementById('bankPayDialog'))
-          // let script = document.createElement('script')
-          // script.type = 'text/javascript'
-          // script.src = 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js'
-          // script.setAttribute('data-apikey',info.apikey)
-          // script.setAttribute('data-amount','222333')
-          // script.setAttribute('data-payment-methods','card')
-          // script.setAttribute('data-order-id','222333')
-          // document.getElementById('bankPay').appendChild(script)
-          // script.onload = function () {
-          //   console.log('js资源已加载成功了')
-          // }
-          // console.log(document.getElementById('bankPay'),'bank............2')
+          console.log(val)
+          this.html = val.html
         }
       },
       deep: true,
       immediate: true,
     },
   },
+  mounted() {
+    this.watchSize();
+  },
   methods: {
     initDialog() {
       this.dialog.visible = false;
-      this.dialog.row = {};
+      this.dialog.html = "";
+    },
+    watchSize() {
+      let t
+      if(this.innerWidth === 0){
+        this.$showLoading();
+        t = setTimeout(() => {
+          this.innerWidth = document.getElementById('bankPay').offsetWidth
+          this.watchSize()
+        },500)  
+      } else {
+        this.$hideLoading();
+        clearTimeout(t)
+      }
+      
     },
     save() {},
   },
@@ -84,11 +81,15 @@ export default {
 </script>
 <style scoped>
 ::v-deep .el-dialog__body {
-  border: 1px solid #eee;
+  /* border: 1px solid #eee; */
 }
 .scroll-box {
   height: 60vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>
 
