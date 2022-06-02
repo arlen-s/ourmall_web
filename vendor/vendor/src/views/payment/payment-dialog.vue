@@ -98,6 +98,9 @@
 					<el-form-item label="TERMINAL ID: " prop="terminalId">
 						<el-input v-model="ruleForm.terminalId"></el-input>
 					</el-form-item>
+					<el-form-item label="SMARTPAY ID: " prop="smartpayId">
+						<el-input v-model="ruleForm.smartpayId"></el-input>
+					</el-form-item>
 				</el-form>
 			</div>
 			<!-- stripe -->
@@ -189,6 +192,7 @@
 					info2: '',
 					terminalId: '',
 					merchantId: '',
+					smartpayId: '',
 				},
 				rules: {
 					bankName: [{
@@ -317,6 +321,12 @@
 							trigger: 'blur'
 						}
 					],
+					smartpayId: [{
+							required: true,
+							message: this.$t('payment.pleaseEnter') + ' smartpayId',
+							trigger: 'blur'
+						}
+					],
 				}
 			};
 		},
@@ -382,6 +392,7 @@
 								params.publicKey = this.ruleForm.publicKey;
 								params.terminalId = this.ruleForm.terminalId;
 								params.merchantId = this.ruleForm.merchantId
+								params.smartpayId = this.ruleForm.smartpayId
 								break;
 								//paypal
 							case 3:

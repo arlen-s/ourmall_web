@@ -161,6 +161,9 @@
 										<el-form-item label="terminalId: " prop="publicKey">
 											<el-input v-model="item.info.terminalId" :readonly="true"></el-input>
 										</el-form-item>
+										<el-form-item label="smartpayId: " prop="publicKey">
+											<el-input v-model="item.info.smartpayId" :readonly="true"></el-input>
+										</el-form-item>
 									</el-form>
 								</div>
 								<div v-if="item.accountType == 1" style="margin: 20px auto;width:50%;">
