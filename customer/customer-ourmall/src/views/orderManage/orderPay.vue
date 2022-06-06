@@ -338,9 +338,14 @@ import { arrayEach } from 'xe-utils/methods';
 				});
 			},
 			KasikornbankPay() {
-				// Todo 先获取接口获取数据
+				// Todo 这块跟后端协商。。。action的
+
+				// let success_url = window.location.origin + '/orderPay?paystatus=2'
+			 	// let cancel_url = window.location.origin + '/orderPay?paystatus=3'
+				// let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?success_url=${success_url}?cancel_url=${cancel_url}`
+
 				if(Object.keys(this.KasikornbankInfo).length && this.shopName !== ''){
-					this.html = `<form id="bankPay" method="POST" action="https://sandboxapi.myourmall.com/kaitaiCheckout.php">
+					this.html = `<form id="bankPay" method="POST" action="${url}">
 								<script type="text/javascript"
 									src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
 									data-apikey='${this.KasikornbankInfo.publicKey}'

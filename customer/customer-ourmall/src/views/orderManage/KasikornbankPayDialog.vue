@@ -73,7 +73,6 @@ export default {
         this.$hideLoading();
         clearTimeout(t)
       }
-      
     },
     save() {},
   },
@@ -92,4 +91,3 @@ export default {
   justify-content: center;
 }
 </style>
-
