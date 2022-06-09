@@ -537,7 +537,7 @@
 				.t-card.active {
 					background-color: #f8f9fc;
 					.row1 {
-						color: $--color-primary;
+						color: #5c6ac4;
 					}
 					.row2 {
 						color: #909399;
@@ -671,12 +671,12 @@
 								left: auto;
 								right: 40px;
 								transform: rotateY(180deg);
-								border-right-color: $--color-primary;
+								border-right-color: #5c6ac4;
 							}
 							.text {
 								left: auto;
 								right: 20px;
-								background-color: $--color-primary;
+								background-color: #5c6ac4;
 								color: #fff;
 								a {
 									color: #fff!important;
@@ -718,7 +718,7 @@
 						}
 						input:focus,
 						input:active {
-							border-color: $--color-primary !important;
+							border-color: #5c6ac4 !important;
 						}
 					}
 				}

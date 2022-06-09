@@ -86,16 +86,16 @@ export default {
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1;
-        color: $--color-primary;
+        color: #5c6ac4;
         font-size: 48px;
       }
     }
     .img-wrap:hover {
-      border-color: $--color-primary;
+      border-color: #5c6ac4;
     }
     .img-wrap.active {
       background-color: #fff;
-      border-color: $--color-primary;
+      border-color: #5c6ac4;
       > i {
         display: block;
       }

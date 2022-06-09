@@ -683,7 +683,7 @@ export default {
   margin-bottom: 40px;
   .color-card {
     margin-bottom: 15px;
-    background-color: $--color-primary;
+    background-color: #5c6ac4;
     .content {
       width: 1200px;
       height: 200px;
@@ -869,7 +869,7 @@ export default {
         margin: 0 20px;
         a,
         .el-dropdown-link {
-          color:  $--color-primary;
+          color:  #5c6ac4;
           font-weight: bold;
           font-size: 16px;
         }
@@ -1011,7 +1011,7 @@ export default {
       }
     }
     .card4 {
-      background-color: $--color-primary;
+      background-color: #5c6ac4;
       padding: 15px 0;
       .content {
         margin: 0 auto;

@@ -749,7 +749,7 @@ export default {
     transform: translate(-50%, -50%);
     width: 26px;
     height: 26px;
-    background-color: $--color-primary;
+    background-color: #5c6ac4;
     line-height: 26px;
     text-align: center;
     border-radius: 50%;

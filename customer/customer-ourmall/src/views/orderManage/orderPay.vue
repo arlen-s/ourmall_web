@@ -340,9 +340,11 @@ import { arrayEach } from 'xe-utils/methods';
 			KasikornbankPay() {
 				// Todo 这块跟后端协商。。。action的
 
-				// let success_url = window.location.origin + '/orderPay?paystatus=2'
-			 	// let cancel_url = window.location.origin + '/orderPay?paystatus=3'
-				// let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?success_url=${success_url}?cancel_url=${cancel_url}`
+				let success_url = window.location.origin + '/orderPay?paystatus=2'
+			 	let cancel_url = window.location.origin + '/orderPay?paystatus=3'
+				let id = this.payparams.id;
+
+				let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?success_url=${success_url}&cancel_url=${cancel_url}&id=${id}&code=${this.coupon}&platformType=13`
 
 				if(Object.keys(this.KasikornbankInfo).length && this.shopName !== ''){
 					this.html = `<form id="bankPay" method="POST" action="${url}">

@@ -354,7 +354,7 @@ export default {
   input:focus,
   input:active {
     outline: none;
-    border-color: $--color-primary !important;
+    border-color: #5c6ac4 !important;
   }
   button {
     padding: 0 15px;

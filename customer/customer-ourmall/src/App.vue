@@ -2035,7 +2035,7 @@ export default {
 }
 
 .box-store {
-  background-position: -21px ​-42px;
+  background-position: -21px -42px;
 }
 
 .box-bill {
@@ -2097,7 +2097,7 @@ export default {
   .top {
     width: 100%;
     height: 3px;
-    background-color: $--color-primary;
+    background-color: #5c6ac4;
     transition: all 1s;
   }
 
@@ -2116,7 +2116,7 @@ export default {
         padding: 0 20px 0 15px;
 
         i {
-          color: $--color-primary;
+          color: #5c6ac4;
           font-size: 56px;
         }
       }

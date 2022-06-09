@@ -1131,7 +1131,7 @@ ul,li{
   }
 }
 // .img_view_list .active {
-//   box-shadow: inset 0 0 0 1px $--color-primary;
+//   box-shadow: inset 0 0 0 1px #5c6ac4;
 // }
 .detail{
   max-width: 1300px;
@@ -1161,7 +1161,7 @@ ul,li{
  color: #000;
 }
 .moreName:hover{
- color: $--color-primary;
+ color: #5c6ac4;
 }
 .ball {
   position: fixed;
@@ -1280,7 +1280,7 @@ ul,li{
 .price {
         color: #909399;
         span {
-          color: $--color-primary;
+          color: #5c6ac4;
           font-weight: bold;
         }
       }

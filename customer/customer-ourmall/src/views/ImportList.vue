@@ -2795,7 +2795,7 @@ export default {
       input:focus,
       input:active {
         outline: none;
-        border-color: $--color-primary !important;
+        border-color: #5c6ac4 !important;
       }
       button {
         padding: 0 15px;
@@ -2867,7 +2867,7 @@ export default {
         color: #909399;
         margin-top: 10px;
         span {
-          color: $--color-primary;
+          color:#5c6ac4;
           font-weight: bold;
         }
       }
@@ -2953,7 +2953,7 @@ export default {
     transform: translate(-50%, -50%);
     width: 26px;
     height: 26px;
-    background-color: $--color-primary;
+    background-color: #5c6ac4;
     line-height: 26px;
     text-align: center;
     border-radius: 50%;
@@ -2993,16 +2993,16 @@ export default {
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1;
-        color: $--color-primary;
+        color: #5c6ac4;
         font-size: 48px;
       }
     }
     .img-wrap:hover {
-      border-color: $--color-primary;
+      border-color: #5c6ac4;
     }
     .img-wrap.active {
       background-color: #fff;
-      border-color: $--color-primary;
+      border-color: #5c6ac4;
       > i {
         display: block;
       }

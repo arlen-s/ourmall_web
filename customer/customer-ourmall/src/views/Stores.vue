@@ -1295,10 +1295,10 @@ export default {
     }
   }
   .shopImg:hover:not(.disable) {
-    border-color: $--color-primary;
+    border-color: #5c6ac4;
   }
   .active {
-    border-color: $--color-primary;
+    border-color: #5c6ac4;
   }
   .shopImg.disable {
     cursor: not-allowed;

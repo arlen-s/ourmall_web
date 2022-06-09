@@ -176,7 +176,7 @@ export default {
 </script>
 <style lang="scss">
 .primary-bg {
-  background-color: $--color-primary;
+  background-color: #5c6ac4;
 }
 </style>
 <style lang="scss" scoped>

@@ -2009,7 +2009,7 @@ export default {
   margin-top: 20px;
   display: inline-block;
   padding: 20px;
-  background-color: $--color-primary;
+  background-color: #5c6ac4;
   color: #fff;
   text-align: center;
   i {
@@ -2018,7 +2018,7 @@ export default {
 }
 
 .add-vendor-btn:hover {
-  background-color: $--primary-hover;
+  background-color: #7d88d0;
   text-decoration: none;
 }
 

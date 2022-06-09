@@ -426,7 +426,7 @@ export default {
 .price {
         color: #909399;
         span {
-          color: $--color-primary;
+          color: #5c6ac4;
           font-weight: bold;
         }
       }

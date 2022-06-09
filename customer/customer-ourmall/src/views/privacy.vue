@@ -74,7 +74,7 @@ export default {
   margin-bottom: 25px;
   .color-card {
     margin-bottom: 20px;
-    background-color: $--color-primary;
+    background-color: #5c6ac4;
     .content {
       width: 1200px;
       height: 200px;

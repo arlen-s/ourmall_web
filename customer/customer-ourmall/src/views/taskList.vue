@@ -391,7 +391,7 @@ export default {
       color: #909399;
       margin-top: 10px;
       span {
-        color: $--color-primary;
+        color: #5c6ac4;
         font-weight: bold;
       }
     }

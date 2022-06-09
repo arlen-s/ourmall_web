@@ -1007,7 +1007,7 @@ export default {
       }
     }
     .card4 {
-      background-color: $--color-primary;
+      background-color: #5c6ac4;
       padding: 15px 0;
       .content {
         margin: 0 auto;
