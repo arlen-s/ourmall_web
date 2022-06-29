@@ -392,6 +392,7 @@ export default {
       countryJSON: null,
       countryArr: [],
       logError: "",
+      KasikornbankInfo: '',
       logisticArr: [],
       country: "",
       multipleSelection: [],
@@ -509,6 +510,7 @@ export default {
     );
   },
   created() {
+   this.getInfoFromKasikornbank()
     this.initAddress();
     this.getBonus();
     this.initPayTypes();
@@ -824,7 +826,6 @@ export default {
       }
       let type = "";
       type = this.platformType;
-
       let paymentId = "";
       if (
         this.platformType &&
@@ -860,6 +861,9 @@ export default {
         case 6:
           this.pay(type);
           break;
+        case 13:
+          this.pay(type);
+          break;
         case 10:
           //dlocal
           this.dialogDlocal.isShow = true;
@@ -880,7 +884,19 @@ export default {
           break;
       }
     },
+    			getInfoFromKasikornbank() {
+				this.$showLoading();
+				this.$apiCall("api.AccountPayment.getKaiTaiPayInfo", {}, (r) => {
+					this.$hideLoading();
+					if (r.ErrorCode == "9999") {
+						this.KasikornbankInfo =  r.Data.Results
+					} else {
+						this.$elementMessage(r.Message, "error");
+					}
+				})
+			},
     pay(type) {
+      console.log(type , 'sadasdasdastype');
       let stockInfo = {};
       this.multipleSelection.forEach((item) => {
         stockInfo[item.stockInfo.id] = item.stockInfo.chooseInventory;
@@ -922,6 +938,30 @@ export default {
             this.paystatus = 1;
             this.payPalId = r.Data.Results.id
             this.payPalSessionId = r.Data.Results.sessionId
+          }else if(type == 13) {
+            let success_url = window.location.origin + '/orderPay?paystatus=2'
+            let cancel_url = window.location.origin + '/orderPay?paystatus=3'
+            let id = r.Data.Results.id;
+            let apiUserId = localStorage.getItem("c_apiUserId")?localStorage.getItem("c_apiUserId"):"";
+            let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?success_url=${success_url}&cancel_url=${cancel_url}&id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=13`
+            let obj = {
+									succ_url: success_url,
+									fail_url:  cancel_url,
+									action_url: url,
+									src: 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js',
+									dataApikey: this.KasikornbankInfo.publicKey,
+									dataAmount:this.sum,
+									dataCurrency: 'THB',
+									dataPaymentMethods: 'card',
+									dataName: 'this.shopName',
+									dataSmartpayId:	this.KasikornbankInfo.smartpayId,
+									dataMid: this.KasikornbankInfo.merchantId
+								}
+            let htmlObj = JSON.stringify(obj)
+            this.paystatus = 1;
+            sessionStorage.setItem('html', htmlObj)
+            window.open(`./payment.html`, '_blank')
+            window.close();
           }
         } else {
           this.$message.error(r.Message);

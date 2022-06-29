@@ -204,19 +204,39 @@
 					Amount due (including freight)（$）:
 					<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
 				</span>
-				<!-- <div id="bank" v-append="html"></div> -->
-				 <el-button type="primary" @click="orderPay(openType)">Submit orders</el-button>
+				 <el-button  type="primary" @click="orderPay(openType)">Submit orders</el-button>
 				 
 			</div>
 		</div>
-		
+		<el-dialog
+		:close-on-press-escape="false" :close-on-click-modal="false"
+  title="Please select payment method"
+  :visible.sync="dialogVisibleKTPay"
+  width="800px"
+  :before-close="handleClosePay">
+	<el-divider></el-divider>
+ 	<div class="pd-x-20 mg-y-30 cell-flex">
+			  <el-radio-group v-model="KTType">
+    <el-radio v-for="(item, i) of KTpayList" :key="i" :label="item.name">{{item.name}}</el-radio>
+  </el-radio-group>
+	</div>
+	<el-divider></el-divider>
+	<div slot="footer" class="dialog-footer" @click="dialogVisibleKTPay = false">
+		<el-button>
+			Cancel
+		</el-button>
+		<el-button type="primary" @click="continuePay()">
+			Pay
+		</el-button>
+	</div>
+</el-dialog>
 		<checkout :data="dialogCheckOut" @payCheckOut="payCheckOut"></checkout>
 		<underline :data="dialogUnderline" @submitUnderline="submitUnderline"></underline>
 		<dlocal :data="dialogDlocal" @submitDlocal="submitDlocal"></dlocal>
 		<KasikornbankPayDialog :dialog="KasikornbankPayDialog" v-if="KasikornbankPayDialog.visible"></KasikornbankPayDialog>
 	</div>
 </template>
-<script>
+<script>  
 	import checkout from "@/components/checkout/checkout";
 	import underline from "@/components/checkout/underline";
 	import dlocal from "@/components/checkout/dlocal";
@@ -226,15 +246,33 @@ import { arrayEach } from 'xe-utils/methods';
 		data() {
 			return {
 				html: "",
-				KasikornbankInfo: {}, //开泰银行信息
+				bankPayDialogKasikornbankInfo: {}, //开泰银行信息
 				shopName: '', //店铺名称
 				KasikornbankPayDialog: {
 					visible: false,
-					html: ""
+					html: "",
+					data:''
 				},
+				dialogVisibleKTPay: false,
 				loading: false,
 				items:[],
 				bonus:0,
+				KTpayList: [
+					{
+						name: 'credit card',
+						id: 13,
+
+					},
+					{
+						name: 'qr payment',
+						id: 14
+					},
+					{
+						name: 'debit card',
+						id: 15
+					}
+				],
+				KTType: 'credit card',
 				bonusStatus:"",
 				payTypes:[],
 				platformType:"",
@@ -266,6 +304,9 @@ import { arrayEach } from 'xe-utils/methods';
 				width:0,
 				coupon:"",
 				couponInfo:"",
+				KTurl: '',
+				KTPayId: '',
+				KTPaySession: ''
 			};
 		},
 		components: {
@@ -277,35 +318,32 @@ import { arrayEach } from 'xe-utils/methods';
 		computed: {},
 		watch: {},
 		created() {
+			//
 			//开泰银行获取支付信息
 			this.getInfoFromKasikornbank()
 			this.getShopName()
-			// this.$nextTick(() => {
-			// 	console.log(document.getElementById('bank'))
-			// })
-			// this.html = `<form id="bankPay" method="POST" action="https://sandboxapi.myourmall.com/kaitaiCheckout.php">
-			// 			<script type="text/javascript"
-			// 				src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-			// 				data-apikey='pkey_test_21309fUcbpFt5H7fHKoPUjpo8GD7iVJxtjwev'
-			// 				data-amount ='70'	
-			// 				data-currency ='THB'	
-			// 				data-payment-methods="card"
-			// 				data-name ='TESTHAN2'
-			// 				data-smartpay-id ='0001' 	
-			// 				data-mid='401882205171001' ><\/script>
-			// 			</form>`
+				this.platformType = this.$route.query.type || ""
+				if(this.$route.query.type==13){
+					
+						
+				}
 		},
 		mounted() {
 			this.width = window.getComputedStyle(this.$refs.pagebody).width;
 			this.paystatus  = this.$route.query.paystatus ? Number(this.$route.query.paystatus) : 0;
 			let returnPayId = localStorage.getItem("c_returnPayId") || "";
 			let returnPaySessionId = localStorage.getItem("c_returnPaySessionId") || "";
+			let payTypeKT = this.$route.query.payType;
 			if (this.paystatus == 2) {
-				this.paySuccess(returnPayId,returnPaySessionId);
+				if (payTypeKT != 13) {
+						this.paySuccess(returnPayId,returnPaySessionId);	
+				}
+				
 			}
 			localStorage.setItem("c_returnPayStatus",this.paystatus);
-			window.addEventListener('storage', (e)=> {
-			　　if(e.key == "c_returnPayStatus"){
+			if (payTypeKT != 13) {
+							window.addEventListener('storage', (e)=> {
+			if(e.key == "c_returnPayStatus"){
 					//支付回调，显示支付结果
 					this.paystatus = localStorage.getItem("c_returnPayStatus") || 0;
 					setTimeout(()=>{
@@ -313,6 +351,8 @@ import { arrayEach } from 'xe-utils/methods';
 					},300)
 				}
 			})
+			}
+
 			if(!this.paystatus){
 				this.getItems();
 				this.getBonus();
@@ -330,6 +370,32 @@ import { arrayEach } from 'xe-utils/methods';
 					}
 				})
 			},
+			//开泰弹层关闭
+			handleClosePay(){
+					this.dialogVisibleKTPay = false
+			},
+			continuePay(){
+				if (this.KTType == 'qr payment') {
+						this.$apiCall("api.ShopifyOrder.createPay", {
+							code: this.coupon,
+							platformType: 14,
+							id:this.payparams.id
+						}, (r) => {
+							if (r.ErrorCode == "9999") {
+								// this.couponInfo = r.Data.Results;
+								// this.totalAllGoodsAndFreight = this.couponInfo.realAmount;
+								let sessionId = r.Data.Results.sessionId
+								this.KasikornbankPay(sessionId, 'qr')
+								this.dialogVisibleKTPay = false
+							} else {
+								this.$elementMessage(r.Message, "error");
+							}
+						})
+				}else if(this.KTType == 'credit card'){
+						this.KasikornbankPay('card')
+				}
+					console.log('asda378', this.KTType);
+			},
 			getShopName() {
 				this.$apiCall("api.VendorShop.getVendorShop", {}, (r) => {
 					if (r.ErrorCode == 9999) {
@@ -337,31 +403,39 @@ import { arrayEach } from 'xe-utils/methods';
 					}
 				});
 			},
-			KasikornbankPay() {
+			KasikornbankPay(seId, codeType) {
 				// Todo 这块跟后端协商。。。action的
-
-				let success_url = window.location.origin + '/orderPay?paystatus=2'
-			 	let cancel_url = window.location.origin + '/orderPay?paystatus=3'
+				let returnPayId = localStorage.setItem("c_returnPayId", this.KTPayId) || "";
+		  	let returnPaySessionId = localStorage.setItem("c_returnPaySessionId", this.KTPaySession) || "";
+				console.log('34210', returnPayId, returnPaySessionId);
 				let id = this.payparams.id;
-
-				let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?success_url=${success_url}&cancel_url=${cancel_url}&id=${id}&code=${this.coupon}&platformType=13`
-
+				let apiUserId = localStorage.getItem("c_apiUserId")?localStorage.getItem("c_apiUserId"):"";
+				let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=13`
 				if(Object.keys(this.KasikornbankInfo).length && this.shopName !== ''){
-					this.html = `<form id="bankPay" method="POST" action="${url}">
-								<script type="text/javascript"
-									src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js"
-									data-apikey='${this.KasikornbankInfo.publicKey}'
-									data-amount='${this.totalAllGoodsAndFreight}'	
-									data-currency='THB'	
-									data-payment-methods="card"
-									data-name='${this.shopName}'
-									data-smartpay-id='${this.KasikornbankInfo.smartpayId}' 	
-									data-mid='${this.KasikornbankInfo.merchantId}' ><\/script>
-								</form>`
-					this.KasikornbankPayDialog = {
-						visible: true,
-						html: this.html
-					}
+								let obj = {
+									sessionId:seId,
+									action_url: url,
+									src: 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js',
+									dataApikey: this.KasikornbankInfo.publicKey,
+									dataAmount:this.totalAllGoodsAndFreight,
+									dataCurrency: 'THB',
+									dataPaymentMethods: codeType || 'card',
+									dataName: 'this.shopName',
+									dataSmartpayId:	this.KasikornbankInfo.smartpayId,
+									dataMid: this.KasikornbankInfo.merchantId,
+
+								}
+								 let htmlObj = JSON.stringify(obj)
+								// sessionStorage.setItem('payTypeKT', 13)
+							//跳转新页面-做支付
+								this.paystatus = 1;
+								sessionStorage.setItem('html', htmlObj)
+							 	window.open(`./payment.html`, '_blank')
+								 window.close();
+					// this.KasikornbankPayDialog = {
+					// 	visible: true,
+					// 	html: obj
+					// }
 				} else {
 					this.$elementMessage('请稍后重试～', "error");
 				}
@@ -507,9 +581,32 @@ import { arrayEach } from 'xe-utils/methods';
 					}
 				})
 			},
+			KTPayFun(){
+			let success_url = window.location.origin + '/orderPay?paystatus=2'
+			 	let cancel_url = window.location.origin + '/orderPay?paystatus=3'
+				let id = this.payparams.id;
+				let apiUserId = localStorage.getItem("c_apiUserId")?localStorage.getItem("c_apiUserId"):"";
+						this.KTurl = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?success_url=${success_url}&cancel_url=${cancel_url}&id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=13`
+				console.log(this.KTurl, '232this.KTurl');
+				this.$nextTick(()=>{
+						const container = document.querySelector('#formPay')
+						container.removeChild()
+            const script = document.createElement('script')
+            script.type = 'text/javascript'
+            script.src = 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js'
+            script.setAttribute('data-apikey','pkey_test_21309fUcbpFt5H7fHKoPUjpo8GD7iVJxtjwev' )
+            script.setAttribute('data-amount', '1000')
+            script.setAttribute('data-currency', 'THB')
+            script.setAttribute('data-payment-methods', 'card')
+            script.setAttribute('data-name', 'Your Shop Name')
+            script.setAttribute('data-smartpay-id', '0001')
+            script.setAttribute('data-mid', '401882205171001')
+            container?.appendChild(script)
+						container.style.display= ''
+					})
+					},
 			// TODO支付
 			orderPay(openType) {
-				// console.log(openType)
 				this.openType = openType;
 				if(!this.platformType){
 					this.$elementMessage("Please select payment method", "error");
@@ -601,8 +698,10 @@ import { arrayEach } from 'xe-utils/methods';
 							localStorage.setItem("c_returnPayId",params.id);
 						}else{
 							localStorage.setItem("c_returnPayId",r.Data.Results.id);
+							this.KTPayId = r.Data.Results.id;
 						}
 						localStorage.setItem("c_returnPaySessionId",r.Data.Results.sessionId);
+						this.KTPaySession = r.Data.Results.sessionId;
 						//bonus
 						if (this.platformType == 6) {
 							this.paystatus = 2;
@@ -640,18 +739,25 @@ import { arrayEach } from 'xe-utils/methods';
 				}, (r) => {
 					if (r.ErrorCode == "9999") {
 						this.$elementMessage("Successfully", "success");
+						this.$router.push({path:'ordersManage/3'})
 					} else {
 						this.$elementMessage(r.Message, "error");
 					}
 				})
 			},
 			closePayPage() {
-				//关闭支付新开页面
+
+				// clearInterval(this.payTime);
+				// let pay = parseInt(sessionStorage.getItem('payTypeKT')) 
+				// if(pay != 13){
+				// 		}
+									//关闭支付新开页面
 				if (this.newWin) {
 					this.newWin.close();
 				}
-				// clearInterval(this.payTime);
 				localStorage.removeItem("c_returnPayStatus");
+			
+				
 			},
 			changeBonusPlatform() {
 				if(this.bonus == 0 || this.bonus < this.totalAllGoodsAndFreight){
@@ -671,6 +777,9 @@ import { arrayEach } from 'xe-utils/methods';
 					if (this.platformType != 6) {
 						this.platformType = type;
 					}
+				}
+				if (type == 13) {
+					this.dialogVisibleKTPay = true
 				}
 			},
 			getBonus(){
@@ -764,6 +873,12 @@ import { arrayEach } from 'xe-utils/methods';
 	::v-deep .el-dialog__body {
 		height: 62vh;
 		overflow: auto;
+	}
+	.cell-flex{
+		display: flex;
+		justify-content: center;
+		padding-top: 50px;
+		padding-bottom: 50px;
 	}
 	.pay-status-body{
 		border: 1px solid #DFDFDF;

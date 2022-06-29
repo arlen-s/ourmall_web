@@ -155,11 +155,17 @@
 										<el-form-item label="publicKey: " prop="publicKey">
 											<el-input v-model="item.info.publicKey" :readonly="true"></el-input>
 										</el-form-item>
-										<el-form-item label="merchantId: " prop="publicKey">
-											<el-input v-model="item.info.merchantId" :readonly="true"></el-input>
+										<el-form-item label="merchantIdInst: " prop="publicKey">
+											<el-input v-model="item.info.merchantId_Installment" :readonly="true"></el-input>
 										</el-form-item>
-										<el-form-item label="terminalId: " prop="publicKey">
-											<el-input v-model="item.info.terminalId" :readonly="true"></el-input>
+										<el-form-item label="merchantIdFull: " prop="publicKey">
+											<el-input v-model="item.info.merchantId_FullPayment" :readonly="true"></el-input>
+										</el-form-item>
+										<el-form-item label="terminalIdInst: " prop="publicKey">
+											<el-input v-model="item.info.terminalId_Installment" :readonly="true"></el-input>
+										</el-form-item>
+										<el-form-item label="terminalIdFull: " prop="publicKey">
+											<el-input v-model="item.info.terminalId_FullPayment" :readonly="true"></el-input>
 										</el-form-item>
 										<el-form-item label="smartpayId: " prop="publicKey">
 											<el-input v-model="item.info.smartpayId" :readonly="true"></el-input>
