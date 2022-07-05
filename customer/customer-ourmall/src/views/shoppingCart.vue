@@ -329,7 +329,7 @@
             Amount due (including freight)（$）:
             <span class="font_bold"> {{ sum }} </span>
           </span>
-          <el-button type="primary" @click="orderPay()"
+          <el-button type="primary" :disabled="platformType == '13'" @click="orderPay()"
             >Submit orders</el-button
           >
         </div>
@@ -353,6 +353,28 @@
       <Dlocal :data="dialogDlocal" @submitDlocal="submitDlocal" />
       <Checkout :data="dialogCheckOut" @payCheckOut="payCheckOut" />
     </div>
+   		<el-dialog
+		:close-on-press-escape="false" :close-on-click-modal="false"
+  title="Please select payment method"
+  :visible.sync="dialogVisibleKTPay"
+  width="800px"
+  :before-close="handleClosePay">
+	<el-divider></el-divider>
+ 	<div class="pd-x-20 mg-y-30 cell-flex">
+			  <el-radio-group v-model="KTType">
+    <el-radio v-for="(item, i) of KTpayList" :key="i" :label="item.name">{{item.name}}</el-radio>
+  </el-radio-group>
+	</div>
+	<el-divider></el-divider>
+	<div slot="footer" class="dialog-footer" @click="dialogVisibleKTPay = false">
+		<el-button>
+			Cancel
+		</el-button>
+		<el-button type="primary" @click="continuePay()">
+			Pay
+		</el-button>
+	</div>
+</el-dialog> 
   </div>
 </template>
 
@@ -380,6 +402,22 @@ export default {
       delLoading: false,
       newWin: null,
       paystatus: 0,
+      KTType: 'credit card',
+      KTpayList: [
+        {
+          name: 'credit card',
+          id: 13,
+
+        },
+        {
+          name: 'qr payment',
+          id: 14
+        },
+        {
+          name: 'debit card',
+          id: 15
+        }
+      ],
       setting: null,
       logLoading: false,
       code: {
@@ -392,6 +430,7 @@ export default {
       countryJSON: null,
       countryArr: [],
       logError: "",
+      dialogVisibleKTPay: false,
       KasikornbankInfo: '',
       logisticArr: [],
       country: "",
@@ -538,6 +577,23 @@ export default {
         }
       });
     },
+    			//开泰弹层关闭
+			handleClosePay(){
+					this.dialogVisibleKTPay = false
+			},
+			continuePay(){
+        // console.log(JSON.parse(r.Data.Results[0].extra).code, 'a11414585');
+				if (this.KTType == 'qr payment') {
+            this.platformType = 14 
+             this.orderPay()
+				}else if(this.KTType == 'credit card'){
+						this.platformType = 13
+            this.orderPay()
+				}else{
+						this.platformType = 15
+            this.orderPay()
+				}
+			},
     closePayPage() {
       //关闭支付新开页面
       if (this.newWin) {
@@ -694,6 +750,9 @@ export default {
     },
     changePlatform(accountType) {
       this.platformType = accountType;
+      if (accountType == 13) {
+					this.dialogVisibleKTPay = true
+			}
     },
     confirmDiscount() {
       // api.ShopifyOrder.getCoupon
@@ -864,6 +923,12 @@ export default {
         case 13:
           this.pay(type);
           break;
+          case 14:
+          this.pay(type);
+          break;
+          case 15:
+          this.pay(type);
+          break;
         case 10:
           //dlocal
           this.dialogDlocal.isShow = true;
@@ -939,29 +1004,12 @@ export default {
             this.payPalId = r.Data.Results.id
             this.payPalSessionId = r.Data.Results.sessionId
           }else if(type == 13) {
-            let success_url = window.location.origin + '/orderPay?paystatus=2'
-            let cancel_url = window.location.origin + '/orderPay?paystatus=3'
-            let id = r.Data.Results.id;
-            let apiUserId = localStorage.getItem("c_apiUserId")?localStorage.getItem("c_apiUserId"):"";
-            let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?success_url=${success_url}&cancel_url=${cancel_url}&id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=13`
-            let obj = {
-									succ_url: success_url,
-									fail_url:  cancel_url,
-									action_url: url,
-									src: 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js',
-									dataApikey: this.KasikornbankInfo.publicKey,
-									dataAmount:this.sum,
-									dataCurrency: 'THB',
-									dataPaymentMethods: 'card',
-									dataName: 'this.shopName',
-									dataSmartpayId:	this.KasikornbankInfo.smartpayId,
-									dataMid: this.KasikornbankInfo.merchantId
-								}
-            let htmlObj = JSON.stringify(obj)
-            this.paystatus = 1;
-            sessionStorage.setItem('html', htmlObj)
-            window.open(`./payment.html`, '_blank')
-            window.close();
+                this.KasikornbankPay('','card', 13, r.Data.Results.id)
+          }else if(type == 14){
+                let sessionId = r.Data.Results.sessionId
+								this.KasikornbankPay(sessionId, 'qr', 14,r.Data.Results.id)
+          }else if(type == 15){
+                this.KasikornbankPay('','debit', 15, r.Data.Results.id)
           }
         } else {
           this.$message.error(r.Message);
@@ -969,6 +1017,42 @@ export default {
         }
       });
     },
+    KasikornbankPay(seId, codeType, formType, id) {
+				// Todo 这块跟后端协商。。。action的
+        // let id = r.Data.Results.id;
+        let success_url = window.location.origin + '/orderPay?paystatus=2&payType=13'
+        let apiUserId = localStorage.getItem("c_apiUserId")?localStorage.getItem("c_apiUserId"):"";
+				let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=${formType}`
+				if(Object.keys(this.KasikornbankInfo).length && this.shopName !== ''){
+								let obj = {
+									sessionId:seId,
+									action_url: url,
+                  success_url: success_url,
+									src: 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js',
+									dataApikey: this.KasikornbankInfo.publicKey,
+									dataAmount:this.sum,
+									dataCurrency: 'THB',
+									dataPaymentMethods: codeType || 'card',
+									dataName: 'this.shopName',
+									merchantId_Installment: this.KasikornbankInfo.merchantId_Installment,
+									merchantId_FullPayment: this.KasikornbankInfo.merchantId_FullPayment,
+									dataSmartpayId:	this.KasikornbankInfo.smartpayId,
+									terminalId_Installment: this.KasikornbankInfo.terminalId_Installment,
+									terminalId_FullPayment: this.KasikornbankInfo.terminalId_FullPayment,
+
+								}
+								 let htmlObj = JSON.stringify(obj)
+								// sessionStorage.setItem('payTypeKT', 13)
+							//跳转新页面-做支付
+								this.paystatus = 1;
+								sessionStorage.setItem('html', htmlObj)
+							 	window.open(`./payment.html`, '_blank')
+								 window.close();
+
+				} else {
+					this.$elementMessage('请稍后重试～', "error");
+				}
+			},
     submitUnderline(account, imageUrl) {
       this.dialogUnderline.loading = true;
       let stockInfo = {};
@@ -1129,6 +1213,12 @@ export default {
     border-color: #4b9bfb;
   }
 }
+	.cell-flex{
+		display: flex;
+		justify-content: center;
+		padding-top: 50px;
+		padding-bottom: 50px;
+	}
 .disabled {
   width: 170px;
   height: 80px;

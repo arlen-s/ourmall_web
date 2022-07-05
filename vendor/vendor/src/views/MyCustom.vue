@@ -8,6 +8,9 @@
         </div>
       </div>
       <div class="right" >
+        <el-button type="primary" size="medium" @click="openBatchVendor" >{{
+          $t("mycustomer.batchSettings")
+        }}</el-button>        
         <el-button type="primary" size="medium" @click="openAddVendor" :disabled="!$isRole($route.meta.roleWrite)">{{
           $t("mycustomer.customersAdd")
         }}</el-button>
@@ -702,6 +705,18 @@
         >
       </div>
     </el-dialog>
+    <!-- 批量设置邮件推送 -->
+    <el-dialog
+  :title="$t('mycustomer.batchSettings')"
+  :visible.sync="dialogEmailVisible"
+  width="30%">
+  <div class="email-box">
+    <span class="txt">是否允许推送shopifly邮件</span>
+    <el-switch
+  v-model="sendEmailFlag" @change="switchEmail">
+</el-switch>
+  </div>
+</el-dialog>
     <el-backtop
       class="goto-top"
       target=".main-scroll  .el-scrollbar__wrap"
@@ -724,10 +739,12 @@ export default {
       searchList: [],
       supplierName: "",
       aliasLoading: false,
+      dialogEmailVisible: false,
       OtherName: "",
       shopId: "",
       shopIndex: "",
       loading: false,
+      sendEmailFlag: true,
       ShopifyNameEdit: false,
       EditInput: false,
       tableHeight: 400,
@@ -912,6 +929,19 @@ export default {
           }
         }
       );
+    },
+    //open批量设置dialog
+    openBatchVendor(){
+this.dialogEmailVisible = true
+    },
+    switchEmail(v){
+        this.$apiCall("api.User.changeByUser", { deliverNotifyCustomer: v }, (r) => {
+        if (r.ErrorCode == 9999) {
+         this.$message({ message: r.Message, type: "success" });
+        } else {
+          this.$message({ message: r.Message, type: "error" });
+        }
+      });
     },
     ChangeEdit() {
       this.aliasLoading = true;
@@ -1338,5 +1368,11 @@ export default {
 
  }
 
+}
+.email-box{
+  padding: 20px;
+  .txt{
+      padding-right: 15px;
+  }
 }
 </style>

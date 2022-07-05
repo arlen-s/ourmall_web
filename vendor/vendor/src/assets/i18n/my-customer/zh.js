@@ -2,6 +2,7 @@ export const lang = {
   customers: '客户管理',
   customersAdd: '添加客户',
   customersName: '客户名称',
+  batchSettings: '批量设置',
   customersContact: '联系方式',
   storeAuthorized: '是否有授权Shopify店铺:',
   yes: '是',

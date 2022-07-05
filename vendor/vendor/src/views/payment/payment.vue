@@ -155,16 +155,16 @@
 										<el-form-item label="publicKey: " prop="publicKey">
 											<el-input v-model="item.info.publicKey" :readonly="true"></el-input>
 										</el-form-item>
-										<el-form-item label="merchantIdInst: " prop="publicKey">
+										<el-form-item label="merchantIdInstallment: " prop="publicKey">
 											<el-input v-model="item.info.merchantId_Installment" :readonly="true"></el-input>
 										</el-form-item>
-										<el-form-item label="merchantIdFull: " prop="publicKey">
+										<el-form-item label="merchantIdFullPayment: " prop="publicKey">
 											<el-input v-model="item.info.merchantId_FullPayment" :readonly="true"></el-input>
 										</el-form-item>
-										<el-form-item label="terminalIdInst: " prop="publicKey">
+										<el-form-item label="terminalIdInstallment: " prop="publicKey">
 											<el-input v-model="item.info.terminalId_Installment" :readonly="true"></el-input>
 										</el-form-item>
-										<el-form-item label="terminalIdFull: " prop="publicKey">
+										<el-form-item label="terminalIdFullPayment: " prop="publicKey">
 											<el-input v-model="item.info.terminalId_FullPayment" :readonly="true"></el-input>
 										</el-form-item>
 										<el-form-item label="smartpayId: " prop="publicKey">
@@ -322,7 +322,7 @@
 								this.underlineItems.push(item);
 							}
 						})
-						console.log(this.paymentMethods)
+						console.log(this.paymentMethods, 'sda131113')
 					} else {
 						this.$elementMessage(r.Message, "error");
 					}
@@ -352,6 +352,7 @@
 				});
 			},
 			bindPayment(item,type1) {
+				console.log(item, 'asdasda1241');
 				this.dialogData.edit = false;
 				let type = Number(item.accountType);
 				this.dialogData.item = item;

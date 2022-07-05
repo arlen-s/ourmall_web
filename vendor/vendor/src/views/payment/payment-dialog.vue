@@ -92,11 +92,17 @@
 					<el-form-item label="PublicKey: " prop="publicKey">
 						<el-input v-model="ruleForm.publicKey"></el-input>
 					</el-form-item>
-					<el-form-item label="MERCHANT ID: " prop="merchantId">
-						<el-input v-model="ruleForm.merchantId"></el-input>
+					<el-form-item label="MERCHANT ID Installment: " prop="merchantId_Installment">
+						<el-input v-model="ruleForm.merchantId_Installment"></el-input>
 					</el-form-item>
-					<el-form-item label="TERMINAL ID: " prop="terminalId">
-						<el-input v-model="ruleForm.terminalId"></el-input>
+					<el-form-item label="MERCHANT ID FullPayment: " prop="merchantId_FullPayment">
+						<el-input v-model="ruleForm.merchantId_FullPayment"></el-input>
+					</el-form-item>
+					<el-form-item label="TERMINAL ID Installment: " prop="terminalId_Installment">
+						<el-input v-model="ruleForm.terminalId_Installment"></el-input>
+					</el-form-item>
+					<el-form-item label="TERMINAL ID FullPayment: " prop="terminalId_FullPayment">
+						<el-input v-model="ruleForm.terminalId_FullPayment"></el-input>
 					</el-form-item>
 					<el-form-item label="SMARTPAY ID: " prop="smartpayId">
 						<el-input v-model="ruleForm.smartpayId"></el-input>
@@ -190,8 +196,10 @@
 					cname: '',
 					info1: '',
 					info2: '',
-					terminalId: '',
-					merchantId: '',
+					terminalId_Installment: '',
+					terminalId_FullPayment: '',
+					merchantId_Installment: '',
+					merchantId_FullPayment: '',
 					smartpayId: '',
 				},
 				rules: {
@@ -309,15 +317,27 @@
 							trigger: 'blur'
 						}
 					],
-					merchantId: [{
+					merchantId_Installment: [{
 							required: true,
-							message: this.$t('payment.pleaseEnter') + ' merchantId',
+							message: this.$t('payment.pleaseEnter') + ' merchantId_Installment',
 							trigger: 'blur'
 						}
 					],
-					terminalId: [{
+					merchantId_FullPayment: [{
 							required: true,
-							message: this.$t('payment.pleaseEnter') + ' terminalId',
+							message: this.$t('payment.pleaseEnter') + ' merchantId_FullPayment',
+							trigger: 'blur'
+						}
+					],
+					terminalId_Installment: [{
+							required: true,
+							message: this.$t('payment.pleaseEnter') + ' terminalId_Installment',
+							trigger: 'blur'
+						}
+					],
+				  terminalId_FullPayment: [{
+							required: true,
+							message: this.$t('payment.pleaseEnter') + ' terminalId_FullPayment',
 							trigger: 'blur'
 						}
 					],

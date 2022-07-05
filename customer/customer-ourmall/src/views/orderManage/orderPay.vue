@@ -142,7 +142,7 @@
 							<div class="other">
 								<p>Payment method:</p>
 								<div class="types" v-if="payTypes.length">
-									<div v-for="(type,index) in payTypes" :key="type.accountType" @click="changePlatform(type.accountType)" :class="{ active: platformType == type.accountType, disabled: bonusStatus == 1 && platformType == 6 && bonus > totalAllGoodsAndFreight}">
+									<div v-for="type in payTypes" :key="type.accountType" @click="changePlatform(type.accountType)" :class="{ active: platformType == type.accountType, disabled: bonusStatus == 1 && platformType == 6 && bonus > totalAllGoodsAndFreight}">
 										<img :src="type.icon" alt="" width="100%"/>
 										<img v-show="platformType == type.accountType" class="active-type" src="../../assets/pay/Active.png" alt=""/>
 									</div>
@@ -204,7 +204,7 @@
 					Amount due (including freight)（$）:
 					<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
 				</span>
-				 <el-button  type="primary" @click="orderPay(openType)">Submit orders</el-button>
+				 <el-button  type="primary" :disabled="platformType == '13'" @click="orderPay(openType)">Submit orders</el-button>
 				 
 			</div>
 		</div>
@@ -318,6 +318,7 @@ import { arrayEach } from 'xe-utils/methods';
 		computed: {},
 		watch: {},
 		created() {
+			console.log('321ceasasisahdqwnwqui1223');
 			//
 			//开泰银行获取支付信息
 			this.getInfoFromKasikornbank()
@@ -335,13 +336,15 @@ import { arrayEach } from 'xe-utils/methods';
 			let returnPaySessionId = localStorage.getItem("c_returnPaySessionId") || "";
 			let payTypeKT = this.$route.query.payType;
 			if (this.paystatus == 2) {
-				if (payTypeKT != 13) {
-						this.paySuccess(returnPayId,returnPaySessionId);	
+				if (payTypeKT != '13') {
+						
+				this.paySuccess(returnPayId,returnPaySessionId);	
 				}
 				
 			}
 			localStorage.setItem("c_returnPayStatus",this.paystatus);
-			if (payTypeKT != 13) {
+			if (payTypeKT != '13' ) {
+				console.log('347132saas14');
 							window.addEventListener('storage', (e)=> {
 			if(e.key == "c_returnPayStatus"){
 					//支付回调，显示支付结果
@@ -385,14 +388,16 @@ import { arrayEach } from 'xe-utils/methods';
 								// this.couponInfo = r.Data.Results;
 								// this.totalAllGoodsAndFreight = this.couponInfo.realAmount;
 								let sessionId = r.Data.Results.sessionId
-								this.KasikornbankPay(sessionId, 'qr')
+								this.KasikornbankPay(sessionId, 'qr', 14)
 								this.dialogVisibleKTPay = false
 							} else {
 								this.$elementMessage(r.Message, "error");
 							}
 						})
 				}else if(this.KTType == 'credit card'){
-						this.KasikornbankPay('card')
+						this.KasikornbankPay('','card', 13)
+				}else{
+						this.KasikornbankPay('','debit', 15)
 				}
 					console.log('asda378', this.KTType);
 			},
@@ -403,31 +408,36 @@ import { arrayEach } from 'xe-utils/methods';
 					}
 				});
 			},
-			KasikornbankPay(seId, codeType) {
+			KasikornbankPay(seId, codeType, formType) {
 				// Todo 这块跟后端协商。。。action的
 				let returnPayId = localStorage.setItem("c_returnPayId", this.KTPayId) || "";
 		  	let returnPaySessionId = localStorage.setItem("c_returnPaySessionId", this.KTPaySession) || "";
-				console.log('34210', returnPayId, returnPaySessionId);
+				let success_url = window.location.origin + '/orderPay?paystatus=2&payType=13'
 				let id = this.payparams.id;
 				let apiUserId = localStorage.getItem("c_apiUserId")?localStorage.getItem("c_apiUserId"):"";
-				let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=13`
+				let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=${formType}`
 				if(Object.keys(this.KasikornbankInfo).length && this.shopName !== ''){
 								let obj = {
 									sessionId:seId,
 									action_url: url,
+									success_url: success_url,
 									src: 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js',
 									dataApikey: this.KasikornbankInfo.publicKey,
 									dataAmount:this.totalAllGoodsAndFreight,
 									dataCurrency: 'THB',
 									dataPaymentMethods: codeType || 'card',
 									dataName: 'this.shopName',
+									merchantId_Installment: this.KasikornbankInfo.merchantId_Installment,
+									merchantId_FullPayment: this.KasikornbankInfo.merchantId_FullPayment,
 									dataSmartpayId:	this.KasikornbankInfo.smartpayId,
-									dataMid: this.KasikornbankInfo.merchantId,
+									terminalId_Installment: this.KasikornbankInfo.terminalId_Installment,
+									terminalId_FullPayment: this.KasikornbankInfo.terminalId_FullPayment,
 
 								}
 								 let htmlObj = JSON.stringify(obj)
 								// sessionStorage.setItem('payTypeKT', 13)
 							//跳转新页面-做支付
+							console.log(htmlObj, 'dsadadhtmlObj');
 								this.paystatus = 1;
 								sessionStorage.setItem('html', htmlObj)
 							 	window.open(`./payment.html`, '_blank')

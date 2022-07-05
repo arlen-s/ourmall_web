@@ -1,6 +1,7 @@
 export const lang = {
 	customers: 'Customers',
 	customersAdd: 'Add Customer',
+	batchSettings: 'batchSettings',
 	customersName: 'Customer name',
 	customersContact: 'Contact information',
 	storeAuthorized: 'Authorized Shopify store:',
