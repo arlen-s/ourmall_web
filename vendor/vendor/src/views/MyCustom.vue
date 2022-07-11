@@ -836,9 +836,14 @@ export default {
     $route: "gotoPage",
   },
   mounted() {
+    let configJson = JSON.parse(localStorage.getItem('userInfo')).configJson;
+    let shopifyEmailType = JSON.parse(configJson).deliverNotifyCustomer
     if (this.$route.query.id) {
       this.filterParams.relationshipId = this.$route.query.id;
       // this.getItem();
+    }
+    if (shopifyEmailType) {
+        this.sendEmailFlag = shopifyEmailType == '2' ? false : true
     }
     (this.filterParams.isAuth = this.$route.query.isAuth
       ? this.$route.query.isAuth
@@ -848,7 +853,7 @@ export default {
     this.dialogInviteDefault = JSON.stringify(this.dialogInvite);
     this.bonusParamsDefault = JSON.stringify(this.bonusParams);
     this.defaultDialogSettingIossData = JSON.stringify(this.dialogSettingIossData);
-	this.defaultDialogDeductionData = JSON.stringify(this.dialogDeductionData);
+	  this.defaultDialogDeductionData = JSON.stringify(this.dialogDeductionData);
     this.getItem();
     // window.onresize = () => {
     //   this.$getTableHeight(this);
@@ -935,7 +940,8 @@ export default {
 this.dialogEmailVisible = true
     },
     switchEmail(v){
-        this.$apiCall("api.User.changeByUser", { deliverNotifyCustomer: v }, (r) => {
+      let type = v == true ? 1 : 2
+        this.$apiCall("api.User.changeByUser", { deliverNotifyCustomer: type }, (r) => {
         if (r.ErrorCode == 9999) {
          this.$message({ message: r.Message, type: "success" });
         } else {
