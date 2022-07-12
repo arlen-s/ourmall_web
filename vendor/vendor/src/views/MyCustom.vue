@@ -7,13 +7,22 @@
           <h2>{{ $t("mycustomer.customers") }}</h2>
         </div>
       </div>
-      <div class="right" >
-        <el-button type="primary" size="medium" @click="openBatchVendor" >{{
+      <div class="right">
+        <el-button type="primary" size="medium" @click="openBatchVendor">
+          {{
           $t("mycustomer.batchSettings")
-        }}</el-button>        
-        <el-button type="primary" size="medium" @click="openAddVendor" :disabled="!$isRole($route.meta.roleWrite)">{{
+          }}
+        </el-button>
+        <el-button
+          type="primary"
+          size="medium"
+          @click="openAddVendor"
+          :disabled="!$isRole($route.meta.roleWrite)"
+        >
+          {{
           $t("mycustomer.customersAdd")
-        }}</el-button>
+          }}
+        </el-button>
       </div>
     </div>
     <div class="pagebody" v-loading="loading">
@@ -30,7 +39,7 @@
                         placeholder="OurMall ID"
                         @keyup.enter.native="filterGetItem"
                       ></el-input>
-                    </el-form-item> -->
+                    </el-form-item>-->
                     <el-form-item>
                       <el-select
                         filterable
@@ -73,14 +82,14 @@
                         @keyup.enter.native="filterGetItem"
                       ></el-input>
                     </el-form-item>
-                    
+
                     <el-form-item>
                       <el-autocomplete
-                      class="mg-r-10"
-                      v-model="supplierName"
-                      :fetch-suggestions="querySearchAsync"
-                      :placeholder="$t('请输入员工名称')"
-                    ></el-autocomplete>
+                        class="mg-r-10"
+                        v-model="supplierName"
+                        :fetch-suggestions="querySearchAsync"
+                        :placeholder="$t('请输入员工名称')"
+                      ></el-autocomplete>
                       <!-- <el-input v-model="filterParams.inviterUserId" :placeholder="$t('请输入员工名称')" @keyup.enter.native="filterGetItem"></el-input> -->
                     </el-form-item>
                     <el-form-item :label="$t('mycustomer.storeAuthorized')">
@@ -90,43 +99,29 @@
                         :placeholder="$t('mycustomer.all')"
                         @change="filterGetItem"
                       >
-                        <el-option
-                          :label="$t('mycustomer.all')"
-                          value=""
-                        ></el-option>
-                        <el-option
-                          :label="$t('mycustomer.yes')"
-                          value="true"
-                        ></el-option>
-                        <el-option
-                          :label="$t('mycustomer.no')"
-                          value="false"
-                        ></el-option>
+                        <el-option :label="$t('mycustomer.all')" value></el-option>
+                        <el-option :label="$t('mycustomer.yes')" value="true"></el-option>
+                        <el-option :label="$t('mycustomer.no')" value="false"></el-option>
                       </el-select>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="primary" @click="filterGetItem">{{
+                      <el-button type="primary" @click="filterGetItem">
+                        {{
                         $t("mycustomer.filter")
-                      }}</el-button>
-                      <el-button type="danger" @click="clearFilter">{{
+                        }}
+                      </el-button>
+                      <el-button type="danger" @click="clearFilter">
+                        {{
                         $t("mycustomer.clear")
-                      }}</el-button>
+                        }}
+                      </el-button>
                     </el-form-item>
                   </el-form>
                 </div>
               </el-col>
             </el-row>
-            <el-table
-              :data="items"
-              stripe
-              row-key="id"
-              style="width: 100%"
-              ref="gridTable"
-            >
-              <el-table-column
-                prop="customerName"
-                :label="$t('mycustomer.customersName')"
-              >
+            <el-table :data="items" stripe row-key="id" style="width: 100%" ref="gridTable">
+              <el-table-column prop="customerName" :label="$t('mycustomer.customersName')">
                 <template slot-scope="scope">
                   <div>
                     <b>{{ scope.row.customerName }}</b>
@@ -147,7 +142,7 @@
                       >{{ scope.row.customerId }}</b
                     >
                     <span v-else>-({{ $t("mycustomer.尚未注册") }})</span>
-                  </div> -->
+                  </div>-->
                   <div>
                     {{ $t("mycustomer.授权Shopify") }}:
                     <el-popover
@@ -156,18 +151,13 @@
                       placement="right"
                     >
                       <div slot style="font-size: 12px">
-                        <div
-                          v-for="shop in scope.row.shops"
-                          :key="shop.url"
-                          class="d-flex mg-b-10"
-                        >
+                        <div v-for="shop in scope.row.shops" :key="shop.url" class="d-flex mg-b-10">
                           <span>{{ $t("mycustomer.shopName") }}</span>
                           <a
                             :href="`//${shop.url}`"
                             target="_blank"
                             class="text-primary"
-                            >{{ shop.name }}</a
-                          >
+                          >{{ shop.name }}</a>
                         </div>
                       </div>
                       <span slot="reference">
@@ -175,8 +165,7 @@
                           style="color: #5c6ac4"
                           href="javascript:;"
                           @click="editShopName(scope.row)"
-                          >{{ scope.row.customerAuthCnt }}</a
-                        >
+                        >{{ scope.row.customerAuthCnt }}</a>
                       </span>
                     </el-popover>
                     <span v-else>{{ scope.row.customerAuthCnt }}</span>
@@ -184,89 +173,75 @@
                 </template>
               </el-table-column>
               <el-table-column v-if="apiUserId == 148797" :label="$t('站长外部编号')">
-                <template slot-scope="scope">
-                  {{scope.row.customCode || '--'}}
-                </template>
+                <template slot-scope="scope">{{scope.row.customCode || '--'}}</template>
               </el-table-column>
               <el-table-column :label="$t('员工名称')">
-                <template slot-scope="scope">
-                  {{scope.row.inviterName || '--'}}
-                </template>
+                <template slot-scope="scope">{{scope.row.inviterName || '--'}}</template>
               </el-table-column>
               <el-table-column :label="$t('mycustomer.customersContact')">
                 <template slot-scope="scope">
                   <div class="customer-info-box">
                     <div v-if="scope.row.customerEmail">
-                      <span style="color: #606266"
-                        ><i class="iconfont icon-email"></i
-                      ></span>
+                      <span style="color: #606266">
+                        <i class="iconfont icon-email"></i>
+                      </span>
                       <a
                         :href="`mailto:${scope.row.customerEmail}`"
                         target="_blank"
-                        >{{ scope.row.customerEmail }}</a
-                      >
+                      >{{ scope.row.customerEmail }}</a>
                     </div>
                     <div v-if="scope.row.customerWeChat">
-                      <span style="color: #55a947"
-                        ><i class="iconfont icon-wechat"></i
-                      ></span>
-
+                      <span style="color: #55a947">
+                        <i class="iconfont icon-wechat"></i>
+                      </span>
                       {{ scope.row.customerWeChat }}
                     </div>
                     <div v-if="scope.row.customerSkype">
-                      <span style="color: #00b0f6"
-                        ><i class="iconfont icon-skype"></i
-                      ></span>
+                      <span style="color: #00b0f6">
+                        <i class="iconfont icon-skype"></i>
+                      </span>
                       <a
                         :href="`skype:${scope.row.customerSkype}?chat`"
                         target="_blank"
-                      >
-                        {{ scope.row.customerSkype }}
-                      </a>
+                      >{{ scope.row.customerSkype }}</a>
                     </div>
                     <div v-if="scope.row.customerLine">
-                      <span style="color: #00c300"
-                        ><i class="iconfont icon-line"></i
-                      ></span>
+                      <span style="color: #00c300">
+                        <i class="iconfont icon-line"></i>
+                      </span>
                       {{ scope.row.customerLine }}
                     </div>
                     <div v-if="scope.row.customerQQ">
-                      <span style="color: #1e6fff"
-                        ><i class="iconfont icon-qq"></i
-                      ></span>
+                      <span style="color: #1e6fff">
+                        <i class="iconfont icon-qq"></i>
+                      </span>
                       <a
                         :href="`tencent://message/?uin=${scope.row.customerQQ}&Site=5yoho&Menu=yes`"
-                      >
-                        {{ scope.row.customerQQ }}
-                      </a>
+                      >{{ scope.row.customerQQ }}</a>
                     </div>
                     <div v-if="scope.row.customerWangwang">
-                      <span style="color: #009fff"
-                        ><i class="iconfont icon-wangwang"></i
-                      ></span>
+                      <span style="color: #009fff">
+                        <i class="iconfont icon-wangwang"></i>
+                      </span>
                       <a
                         :href="`http://amos.alicdn.com/msg.aw?v=2&uid=${scope.row.customerWangwang}&site=cnalichn&s=11&charset=UTF-8`"
                         target="_blank"
-                      >
-                        {{ scope.row.customerWangwang }}
-                      </a>
+                      >{{ scope.row.customerWangwang }}</a>
                     </div>
                     <div v-if="scope.row.customerWhatsapp">
-                      <span style="color: #109d58"
-                        ><i class="iconfont icon-whatsapp"></i
-                      ></span>
+                      <span style="color: #109d58">
+                        <i class="iconfont icon-whatsapp"></i>
+                      </span>
                       <a
                         :href="`https://wa.me/${scope.row.customerWhatsapp}`"
                         target="_blank"
-                      >
-                        {{ scope.row.customerWhatsapp }}
-                      </a>
+                      >{{ scope.row.customerWhatsapp }}</a>
                     </div>
                   </div>
                 </template>
               </el-table-column>
               <!-- 新增客户bonus余额列-->
-              <el-table-column  v-if="$store.state.userInfo.walletOpen != 1" >
+              <el-table-column v-if="$store.state.userInfo.walletOpen != 1">
                 <template slot="header">
                   <span>{{ $t("mycustomer.客户Bonus余额") }}（$）</span>
                   <el-tooltip
@@ -275,40 +250,53 @@
                   >
                     <i class="el-icon-info"></i>
                   </el-tooltip>
-                </template> 
+                </template>
                 <template slot-scope="scope">
-                  <div>
-                    {{ scope.row.bonus || 0 }}
-                  </div>
+                  <div>{{ scope.row.bonus || 0 }}</div>
                   <div>
                     <template>
-                    <el-link
-                     :disabled="!$isRole($route.meta.roleWrite)"
-                      class="mg-r-20"
-                      :type="
+                      <el-link
+                        :disabled="!$isRole($route.meta.roleWrite)"
+                        class="mg-r-20"
+                        :type="
                         (scope.row.bonusStatus == 1 && 'danger') ||
                         (scope.row.bonusStatus == 2 && 'primary') ||
                         'primary'
                       "
-                      @click="showBonus(scope.row, 1)"
-                      >{{
+                        @click="showBonus(scope.row, 1)"
+                      >
+                        {{
                         (scope.row.bonusStatus == 1 && $t("mycustomer.停用")) ||
                         (scope.row.bonusStatus == 2 && $t("mycustomer.启用")) ||
                         $t("mycustomer.启用")
-                      }}</el-link
-                    >
-                    <el-link class="mg-r-20" :disabled="!$isRole($route.meta.roleWrite)" type="primary" @click="showBonus(scope.row, 2)">{{
-                      $t("mycustomer.充值")
-                    }}</el-link>
-					<el-link  :disabled="!scope.row.bonus || !$isRole($route.meta.roleWrite)" type="primary" @click="openDeduction(scope.row)">{{
-					  $t("mycustomer.扣款")
-					}}</el-link><br>
+                        }}
+                      </el-link>
+                      <el-link
+                        class="mg-r-20"
+                        :disabled="!$isRole($route.meta.roleWrite)"
+                        type="primary"
+                        @click="showBonus(scope.row, 2)"
+                      >
+                        {{
+                        $t("mycustomer.充值")
+                        }}
+                      </el-link>
+                      <el-link
+                        :disabled="!scope.row.bonus || !$isRole($route.meta.roleWrite)"
+                        type="primary"
+                        @click="openDeduction(scope.row)"
+                      >
+                        {{
+                        $t("mycustomer.扣款")
+                        }}
+                      </el-link>
+                      <br />
                     </template>
                     <!-- <el-link type="primary">
                       <router-link tag="span" :to="{path:'/Bonus',query:{id:scope.row.id}}">
                       {{$t("mycustomer.Bonus明细")}}
                       </router-link>
-                      </el-link> -->
+                    </el-link>-->
                   </div>
                 </template>
               </el-table-column>
@@ -364,23 +352,20 @@
                     <b v-else>0</b>
                   </div>
                 </template>
-              </el-table-column> -->
+              </el-table-column>-->
               <!-- 已授权店铺 -->
               <el-table-column :label="$t('mycustomer.已授权店铺')">
                 <template slot-scope="scope">
                   <div>
                     <!-- {{ $t("mycustomer.授权店铺数量：") }} -->
-                    <b type="primary" style="font-size: 13px">
-                      {{ scope.row.customerAuthCnt }}</b
-                    >
+                    <b type="primary" style="font-size: 13px">{{ scope.row.customerAuthCnt }}</b>
                   </div>
                   <div>
                     <el-link
-                     :disabled="!$isRole($route.meta.roleWrite)"
+                      :disabled="!$isRole($route.meta.roleWrite)"
                       type="primary"
                       @click="openInvitation(scope.row)"
-                      >{{ $t("mycustomer.storeInvite") }}</el-link
-                    >
+                    >{{ $t("mycustomer.storeInvite") }}</el-link>
                   </div>
                 </template>
               </el-table-column>
@@ -391,27 +376,24 @@
                 <template slot-scope="scope">
                   
                 </template>
-              </el-table-column> -->
-              <el-table-column 
-              :label="$t('mycustomer.operate')" width="230">
+              </el-table-column>-->
+              <el-table-column :label="$t('mycustomer.operate')" width="230">
                 <template slot-scope="scope">
                   <!-- 编辑 -->
                   <div>
                     <el-link
-                     :disabled="!$isRole($route.meta.roleWrite)"
+                      :disabled="!$isRole($route.meta.roleWrite)"
                       class="mg-r-20"
                       type="primary"
                       @click="editVendor(scope.row)"
-                      >{{ $t("mycustomer.modify") }}</el-link
-                    >
+                    >{{ $t("mycustomer.modify") }}</el-link>
                     <!-- 删除 -->
                     <el-link
-                     :disabled="!$isRole($route.meta.roleWrite)"
+                      :disabled="!$isRole($route.meta.roleWrite)"
                       v-if="scope.row.canDelete"
                       type="danger"
                       @click="delVendor(scope.row)"
-                      >{{ $t("mycustomer.delete") }}</el-link
-                    >
+                    >{{ $t("mycustomer.delete") }}</el-link>
                   </div>
                   <!-- 导入 -->
                   <!-- <div v-if="scope.row.hasAuth != 1">
@@ -420,18 +402,26 @@
                      type="primary" @click="gotoImport(scope.row)">{{
                       $t("mycustomer.orderImport")
                     }}</el-link>
-                  </div> -->
+                  </div>-->
                   <!-- 邀请 -->
                   <div v-if="scope.row.shops && scope.row.shops.length != 0">
-                    <el-link 
-                     :disabled="!$isRole($route.meta.roleWrite)"
-                     type="primary" @click="editShopName(scope.row)">{{
+                    <el-link
+                      :disabled="!$isRole($route.meta.roleWrite)"
+                      type="primary"
+                      @click="editShopName(scope.row)"
+                    >
+                      {{
                       $t("mycustomer.管理店铺别名")
-                    }}</el-link>
+                      }}
+                    </el-link>
                   </div>
                   <!-- IOSS -->
                   <div v-if="scope.row.shops && scope.row.shops.length != 0">
-                    <el-link :disabled="!$isRole($route.meta.roleWrite)" type="primary" @click="openSetIOSS(scope.row)">IOSS 设置</el-link>
+                    <el-link
+                      :disabled="!$isRole($route.meta.roleWrite)"
+                      type="primary"
+                      @click="openSetIOSS(scope.row)"
+                    >IOSS 设置</el-link>
                   </div>
                 </template>
               </el-table-column>
@@ -451,8 +441,7 @@
               :total="Number(total)"
               @current-change="toPage"
               @size-change="changePageSize"
-            >
-            </el-pagination>
+            ></el-pagination>
           </div>
         </el-col>
       </el-row>
@@ -467,13 +456,9 @@
       :visible.sync="dialogInvite.isShow"
       @opened="inviteOpened"
     >
-    <el-divider></el-divider>
+      <el-divider></el-divider>
       <div>
-        <el-form
-          v-loading="dialogInvite.wordLoading"
-          class="mg-b-15"
-          label-width="120px"
-        >
+        <el-form v-loading="dialogInvite.wordLoading" class="mg-b-15" label-width="120px">
           <el-form-item :label="$t('mycustomer.messageEnter')">
             <el-input
               type="textarea"
@@ -490,9 +475,11 @@
         <el-row :gutter="20">
           <el-col :span="24" class="mg-b-15">
             <div class="d-flex">
-              <span class="tx-right mg-r-10" style="width: 120px">{{
+              <span class="tx-right mg-r-10" style="width: 120px">
+                {{
                 $t("mycustomer.appSocial")
-              }}</span>
+                }}
+              </span>
               <div
                 class="skype-share mg-r-10"
                 :data-href="dialogInvite.inviteUrl"
@@ -516,49 +503,46 @@
           </el-col>
           <el-col :span="24">
             <div class="d-flex">
-              <span class="tx-right mg-r-10" style="width: 120px">{{
+              <span class="tx-right mg-r-10" style="width: 120px">
+                {{
                 $t("mycustomer.urlInvite")
-              }}</span>
+                }}
+              </span>
               <a
                 class="mg-r-15"
                 :href="dialogInvite.inviteUrl"
                 target="_blank"
-                >{{ dialogInvite.inviteUrl }}</a
-              >
+              >{{ dialogInvite.inviteUrl }}</a>
               <el-button
                 size="mini"
                 type="success"
                 v-clipboard:copy="dialogInvite.inviteUrl"
                 v-clipboard:success="onCopy"
                 v-clipboard:error="onError"
-                >{{ $t("mycustomer.urlCopy") }}</el-button
-              >
+              >{{ $t("mycustomer.urlCopy") }}</el-button>
             </div>
           </el-col>
         </el-row>
       </div>
       <el-divider></el-divider>
       <div slot="footer" class="dialog-footer d-flex justify-content-end">
-        <el-link type="primary" class="mg-r-30">{{
+        <el-link type="primary" class="mg-r-30">
+          {{
           $t("mycustomer.document")
-        }}</el-link>
-        <el-button @click="dialogInvite.isShow = false">{{
+          }}
+        </el-link>
+        <el-button @click="dialogInvite.isShow = false">
+          {{
           $t("mycustomer.close")
-        }}</el-button>
+          }}
+        </el-button>
       </div>
-    </el-dialog> 
+    </el-dialog>
     <!-- 客户Shopify店铺别名管理 -->
-    <el-dialog
-      :title="$t('mycustomer.客户Shopify店铺别名管理')"
-      :visible.sync="ShopifyNameEdit"
-    >
+    <el-dialog :title="$t('mycustomer.客户Shopify店铺别名管理')" :visible.sync="ShopifyNameEdit">
       <div class="mg-l-20 mg-b-20 mg-r-20" v-loading="aliasLoading">
         <el-table :data="ShopOtherName">
-          <el-table-column
-            property="name"
-            :label="$t('mycustomer.店铺名称')"
-            width="200"
-          ></el-table-column>
+          <el-table-column property="name" :label="$t('mycustomer.店铺名称')" width="200"></el-table-column>
           <el-table-column property="url" :label="$t('mycustomer.店铺地址')">
             <template slot-scope="scope">
               <a
@@ -566,8 +550,7 @@
                 target="_blank"
                 v-if="scope.row.url"
                 class="text-primary"
-                >{{ scope.row.url }}</a
-              >
+              >{{ scope.row.url }}</a>
               <span v-else>---</span>
             </template>
           </el-table-column>
@@ -577,30 +560,24 @@
               <span v-else>---</span>
             </template>
           </el-table-column>
-          <el-table-column
-            property="active"
-            :label="$t('mycustomer.操作')"
-            width="150"
-          >
+          <el-table-column property="active" :label="$t('mycustomer.操作')" width="150">
             <template slot-scope="scope">
               <el-link
                 type="primary"
                 @click="editOtherName(scope)"
                 v-if="scope.row.alias"
-                >{{ $t("mycustomer.修改店铺别名") }}</el-link
-              >
+              >{{ $t("mycustomer.修改店铺别名") }}</el-link>
               <el-link
                 type="primary"
                 @click="editOtherName(scope)"
                 v-if="!scope.row.alias"
-                >{{ $t("mycustomer.添加店铺别名") }}</el-link
-              ><br />
+              >{{ $t("mycustomer.添加店铺别名") }}</el-link>
+              <br />
               <el-link
                 type="danger"
                 @click="deleteAlias(scope)"
                 v-if="scope.row.alias"
-                >{{ $t("mycustomer.删除店铺别名") }}</el-link
-              >
+              >{{ $t("mycustomer.删除店铺别名") }}</el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -613,26 +590,29 @@
         append-to-body
       >
         <el-form :label-position="'left'">
-          <el-form-item
-            :label="$t('mycustomer.请输入店铺别名:')"
-            label-width="150px"
-          >
+          <el-form-item :label="$t('mycustomer.请输入店铺别名:')" label-width="150px">
             <el-input v-model="OtherName"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="EditInput = false">{{
+          <el-button @click="EditInput = false">
+            {{
             $t("mycustomer.取 消")
-          }}</el-button>
-          <el-button type="primary" @click="ChangeEdit">{{
+            }}
+          </el-button>
+          <el-button type="primary" @click="ChangeEdit">
+            {{
             $t("mycustomer.确定")
-          }}</el-button>
+            }}
+          </el-button>
         </div>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="ShopifyNameEdit = false">{{
+        <el-button @click="ShopifyNameEdit = false">
+          {{
           $t("mycustomer.关 闭")
-        }}</el-button>
+          }}
+        </el-button>
       </div>
     </el-dialog>
     <!-- 启用或停用bonus抵扣功能的模态框 -->
@@ -646,9 +626,8 @@
       <el-divider></el-divider>
       <div class="dialog-body">
         <p>
-        {{  bonusParams.status == 1?$t('mycustomer.确定为 {name} 客户关闭Bonus抵扣功能？',{name:bonusParams.name})
-        :$t('mycustomer.确定为 {name} 客户开启Bonus抵扣功能？',{name:bonusParams.name})}}
-          
+          {{ bonusParams.status == 1?$t('mycustomer.确定为 {name} 客户关闭Bonus抵扣功能？',{name:bonusParams.name})
+          :$t('mycustomer.确定为 {name} 客户开启Bonus抵扣功能？',{name:bonusParams.name})}}
         </p>
       </div>
       <el-divider></el-divider>
@@ -658,8 +637,7 @@
           type="primary"
           :loading="bonusParams.loading"
           @click="updateBonus"
-          >{{$t('mycustomer.确定')}}</el-button
-        >
+        >{{$t('mycustomer.确定')}}</el-button>
       </div>
     </el-dialog>
     <!-- 充值bonus余额的模态框 -->
@@ -674,23 +652,14 @@
       <div class="dialog-body">
         <el-form>
           <el-form-item :label="$t('mycustomer.请输入金额：')" required>
-            <el-input-number
-              :min="0"
-              :precision="2"
-              :controls="false"
-              v-model="bonusParams.num"
-            ></el-input-number>
+            <el-input-number :min="0" :precision="2" :controls="false" v-model="bonusParams.num"></el-input-number>
           </el-form-item>
           <el-form-item>
             <i class="el-icon-info"></i>
             {{$t('mycustomer.您的客户可用Bonus抵扣订单货款，请确保收到款项后，为客户Bonus账户进行充值')}}
           </el-form-item>
           <el-form-item class="d-flex bonusRemark" :label="$t('mycustomer.备注：')">
-            <el-input
-              type="textarea"
-              :autosize="{ minRows: 2}"
-              v-model="bonusParams.remark">
-            </el-input>
+            <el-input type="textarea" :autosize="{ minRows: 2}" v-model="bonusParams.remark"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -701,40 +670,37 @@
           type="primary"
           :loading="bonusParams.loading"
           @click="addBonusNum"
-          >{{$t('mycustomer.确定')}}</el-button
-        >
+        >{{$t('mycustomer.确定')}}</el-button>
       </div>
     </el-dialog>
     <!-- 批量设置邮件推送 -->
     <el-dialog
-  :title="$t('mycustomer.batchSettings')"
-  :visible.sync="dialogEmailVisible"
-  width="30%">
-  <div class="email-box">
-    <span class="txt">是否允许推送shopifly邮件</span>
-    <el-switch
-  v-model="sendEmailFlag" @change="switchEmail">
-</el-switch>
-  </div>
-</el-dialog>
+      :title="$t('mycustomer.batchSettings')"
+      :visible.sync="dialogEmailVisible"
+      width="30%"
+    >
+      <div class="email-box">
+        <span class="txt">是否允许推送shopifly邮件</span>
+        <el-switch v-model="sendEmailFlag" @change="switchEmail"></el-switch>
+      </div>
+    </el-dialog>
     <el-backtop
       class="goto-top"
       target=".main-scroll  .el-scrollbar__wrap"
       :right="20"
       :bottom="20"
-    >
-    </el-backtop>
-    <DialogSettingIOSS :data="dialogSettingIossData"/>
-	<dialogDeduction :data="dialogDeductionData" @saveDeduction="saveDeduction"/>
+    ></el-backtop>
+    <DialogSettingIOSS :data="dialogSettingIossData" />
+    <dialogDeduction :data="dialogDeductionData" @saveDeduction="saveDeduction" />
   </div>
 </template>
 
 <script>
-import DialogAddVendor from "./../components/dialog/AddVendor";
-import DialogSettingIOSS from "@/views/MyCustom/DialogSettingIoss";
-import dialogDeduction from "@/views/MyCustom/dialogDeduction";
+import DialogAddVendor from "./../components/dialog/AddVendor"
+import DialogSettingIOSS from "@/views/MyCustom/DialogSettingIoss"
+import dialogDeduction from "@/views/MyCustom/dialogDeduction"
 export default {
-  data() {
+  data () {
     return {
       searchList: [],
       supplierName: "",
@@ -759,7 +725,7 @@ export default {
       totalPage: 0,
       ShopOtherName: [],
       addVendorDialog: {
-		  isEdit: false,
+        isEdit: false,
         isShow: false,
         loading: false,
         labelW: "100px",
@@ -800,7 +766,7 @@ export default {
       selectArr: [],
       // 启用或停用bonus抵扣和充值bonus余额所需字段
       bonusParams: {
-        remark:"",
+        remark: "",
         type: "",
         isShow: false,
         loading: false,
@@ -818,54 +784,57 @@ export default {
         id: '',
       },
       defaultDialogSettingIossData: '{}',
-	  dialogDeductionData: {
+      dialogDeductionData: {
         isShow: false,
         loading: false,
         item: '',
       },
       defaultDialogDeductionData: '{}',
       apiUserId: JSON.parse(localStorage.getItem('userInfo')).id,
-    };
+    }
   },
   components: {
     DialogAddVendor,
     DialogSettingIOSS,
-	dialogDeduction,
+    dialogDeduction,
   },
-  watch: { 
+  watch: {
     $route: "gotoPage",
   },
-  mounted() {
-    let configJson = JSON.parse(localStorage.getItem('userInfo')).configJson;
-    let shopifyEmailType = JSON.parse(configJson).deliverNotifyCustomer
+  mounted () {
+    setTimeout(() => {
+      // let userInfo = this.$store.state.userInfo;
+      let configJson = JSON.parse(localStorage.getItem('userInfo')).configJson
+      let shopifyEmailType = JSON.parse(configJson).deliverNotifyCustomer
+
+      if (shopifyEmailType) {
+        console.log(111111, shopifyEmailType)
+        this.sendEmailFlag = shopifyEmailType === "2" ? false : true
+        console.log(111121651511, this.sendEmailFlag)
+      }
+    }, 1000)
     if (this.$route.query.id) {
-      this.filterParams.relationshipId = this.$route.query.id;
+      this.filterParams.relationshipId = this.$route.query.id
       // this.getItem();
     }
-    if (shopifyEmailType) {
-        this.sendEmailFlag = shopifyEmailType == '2' ? false : true
-    }
+
     (this.filterParams.isAuth = this.$route.query.isAuth
       ? this.$route.query.isAuth
       : ""),
-      (this.addVendorDialogDefault = JSON.stringify(this.addVendorDialog));
-    this.filterParamsDefault = JSON.stringify(this.filterParams);
-    this.dialogInviteDefault = JSON.stringify(this.dialogInvite);
-    this.bonusParamsDefault = JSON.stringify(this.bonusParams);
-    this.defaultDialogSettingIossData = JSON.stringify(this.dialogSettingIossData);
-	  this.defaultDialogDeductionData = JSON.stringify(this.dialogDeductionData);
-    this.getItem();
-    // window.onresize = () => {
-    //   this.$getTableHeight(this);
-    // };
+      (this.addVendorDialogDefault = JSON.stringify(this.addVendorDialog))
+    this.filterParamsDefault = JSON.stringify(this.filterParams)
+    this.dialogInviteDefault = JSON.stringify(this.dialogInvite)
+    this.bonusParamsDefault = JSON.stringify(this.bonusParams)
+    this.defaultDialogSettingIossData = JSON.stringify(this.dialogSettingIossData)
+    this.defaultDialogDeductionData = JSON.stringify(this.dialogDeductionData)
+    this.getItem()
+
   },
-  // beforeDestroy() {
-  //   window.onresize = () => {};
-  // },
+
   methods: {
-    querySearchAsync(queryString, cb) {
+    querySearchAsync (queryString, cb) {
       if (!queryString) {
-        return false;
+        return false
       }
       this.$apiCall(
         "api.SubUser.findByUser",
@@ -879,45 +848,45 @@ export default {
             if (r.Data.Results.length == 0) {
               this.$message.error(this.$t("supplier.搜索不到数据"))
             }
-            this.searchList = r.Data.Results;
+            this.searchList = r.Data.Results
             var results = queryString
               ? this.searchList.filter(
-                  (item) => item.name.indexOf(queryString) > -1
-                )
-              : this.searchList;
-            results = results.map((item) => ({ value: item.name }));
-            cb(results);
+                (item) => item.name.indexOf(queryString) > -1
+              )
+              : this.searchList
+            results = results.map((item) => ({ value: item.name }))
+            cb(results)
           } else {
             this.$message.error(r.Message)
           }
         }
-      );
+      )
     },
-	  openDeduction(item){ //打开ioss设置
-      this.dialogDeductionData = JSON.parse(this.defaultDialogDeductionData);
-      this.dialogDeductionData.item = item;
-      this.dialogDeductionData.isShow = true;
+    openDeduction (item) { //打开ioss设置
+      this.dialogDeductionData = JSON.parse(this.defaultDialogDeductionData)
+      this.dialogDeductionData.item = item
+      this.dialogDeductionData.isShow = true
     },
-	saveDeduction(params) {
-	      this.dialogDeductionData.loading = true;
-	      this.$apiCall("api.Relationship.reduceBonusVendor",params,(r) => {
-	          this.dialogDeductionData.loading = false;
-	          if (r.ErrorCode == 9999) {
-	            this.$elementMessage(this.$t("orders.success"), "success");
-	            this.dialogDeductionData.isShow = false;
-	            this.getItem(true);
-	          } else {
-	            this.$message({ message: r.Message, type: "error" });
-	          }
-			 });
-	    },
-    openSetIOSS(item){ //打开ioss设置
-      this.dialogSettingIossData = JSON.parse(this.defaultDialogSettingIossData);
-      this.dialogSettingIossData.id = item.id;
-      this.dialogSettingIossData.isShow = true;
+    saveDeduction (params) {
+      this.dialogDeductionData.loading = true
+      this.$apiCall("api.Relationship.reduceBonusVendor", params, (r) => {
+        this.dialogDeductionData.loading = false
+        if (r.ErrorCode == 9999) {
+          this.$elementMessage(this.$t("orders.success"), "success")
+          this.dialogDeductionData.isShow = false
+          this.getItem(true)
+        } else {
+          this.$message({ message: r.Message, type: "error" })
+        }
+      })
     },
-    deleteAlias(shop) {
-      this.aliasLoading = true;
+    openSetIOSS (item) { //打开ioss设置
+      this.dialogSettingIossData = JSON.parse(this.defaultDialogSettingIossData)
+      this.dialogSettingIossData.id = item.id
+      this.dialogSettingIossData.isShow = true
+    },
+    deleteAlias (shop) {
+      this.aliasLoading = true
       this.$apiCall(
         "api.ShopifyAccount.changeAlias",
         {
@@ -925,33 +894,33 @@ export default {
           name: "",
         },
         (r) => {
-          this.aliasLoading = false;
+          this.aliasLoading = false
           if (r.ErrorCode == 9999) {
-            this.ShopOtherName[shop.$index].alias = "";
-            this.$message({ message: this.$t('mycustomer.删除成功'), type: "success" });
+            this.ShopOtherName[shop.$index].alias = ""
+            this.$message({ message: this.$t('mycustomer.删除成功'), type: "success" })
           } else {
-            this.$message({ message: r.Message, type: "error" });
+            this.$message({ message: r.Message, type: "error" })
           }
         }
-      );
+      )
     },
     //open批量设置dialog
-    openBatchVendor(){
-this.dialogEmailVisible = true
+    openBatchVendor () {
+      this.dialogEmailVisible = true
     },
-    switchEmail(v){
+    switchEmail (v) {
       let type = v == true ? 1 : 2
-        this.$apiCall("api.User.changeByUser", { deliverNotifyCustomer: type }, (r) => {
+      this.$apiCall("api.User.changeByUser", { deliverNotifyCustomer: type }, (r) => {
         if (r.ErrorCode == 9999) {
-         this.$message({ message: r.Message, type: "success" });
+          this.$message({ message: r.Message, type: "success" })
         } else {
-          this.$message({ message: r.Message, type: "error" });
+          this.$message({ message: r.Message, type: "error" })
         }
-      });
+      })
     },
-    ChangeEdit() {
-      this.aliasLoading = true;
-      let name = this.OtherName;
+    ChangeEdit () {
+      this.aliasLoading = true
+      let name = this.OtherName
       this.$apiCall(
         "api.ShopifyAccount.changeAlias",
         {
@@ -959,156 +928,156 @@ this.dialogEmailVisible = true
           name,
         },
         (r) => {
-          this.EditInput = false;
-          this.aliasLoading = false;
+          this.EditInput = false
+          this.aliasLoading = false
           if (r.ErrorCode == 9999) {
-            this.ShopOtherName[this.shopIndex].alias = name;
-            this.$message({ message: this.$t('mycustomer.修改成功'), type: "success" });
+            this.ShopOtherName[this.shopIndex].alias = name
+            this.$message({ message: this.$t('mycustomer.修改成功'), type: "success" })
           } else {
-            this.$message({ message: r.Message, type: "error" });
+            this.$message({ message: r.Message, type: "error" })
           }
         }
-      );
+      )
     },
-    editOtherName(shop) {
-      this.EditInput = true;
-      this.shopId = shop.row.id;
-      this.shopIndex = shop.$index;
+    editOtherName (shop) {
+      this.EditInput = true
+      this.shopId = shop.row.id
+      this.shopIndex = shop.$index
     },
-    editShopName(shop) {
-      this.ShopifyNameEdit = true;
-      this.ShopOtherName = shop.shops;
+    editShopName (shop) {
+      this.ShopifyNameEdit = true
+      this.ShopOtherName = shop.shops
     },
-    close() {
-      this.selectArr = [];
+    close () {
+      this.selectArr = []
       // todo
       this.filterParams.relationshipId = ''
       this.getItem()
     },
-    goTo(n, row) {
+    goTo (n, row) {
       this.$router.push({
         name: n,
         params: {
           id: row.id,
           customerName: row.customerName,
         },
-      });
+      })
     },
-    remoteMethodCustom(query) {
-      this.selectArr = [];
+    remoteMethodCustom (query) {
+      this.selectArr = []
       //获取筛选客户
-      if (!query) return;
-      this.selectLoading = true;
+      if (!query) return
+      this.selectLoading = true
       this.$apiCall("api.Relationship.findByVendor", { name: query }, (r) => {
-        this.selectLoading = false;
+        this.selectLoading = false
         if (r.ErrorCode == 9999) {
-          this.selectArr = r.Data.Results;
+          this.selectArr = r.Data.Results
         } else {
-          this.$message({ message: r.Message, type: "error" });
+          this.$message({ message: r.Message, type: "error" })
         }
-      });
+      })
     },
-    setInvoiceWord() {
+    setInvoiceWord () {
       //设置话术
-      this.dialogInvite.wordLoading = true;
+      this.dialogInvite.wordLoading = true
       this.$apiCall(
         "api.User.setWords",
         { words: this.dialogInvite.words },
         (r) => {
-          this.dialogInvite.wordLoading = false;
+          this.dialogInvite.wordLoading = false
           if (r.ErrorCode == 9999) {
             this.$message({
               message: this.$t("mycustomer.savedSuccess"),
               type: "success",
-            });
-            let userInfo = this.$store.state.userInfo;
-            userInfo.inviteWords = this.dialogInvite.words;
-            this.$store.commit("setUserInfo", userInfo);
-            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+            })
+            let userInfo = this.$store.state.userInfo
+            userInfo.inviteWords = this.dialogInvite.words
+            this.$store.commit("setUserInfo", userInfo)
+            localStorage.setItem("userInfo", JSON.stringify(userInfo))
           } else {
-            this.$message({ message: r.Message, type: "error" });
+            this.$message({ message: r.Message, type: "error" })
           }
         }
-      );
+      )
     },
-    onCopy() {
-      this.$elementMessage(this.$t("mycustomer.copiedSuccess"), "success");
+    onCopy () {
+      this.$elementMessage(this.$t("mycustomer.copiedSuccess"), "success")
     },
-    onError() {
-      this.$elementMessage(this.$t("mycustomer.copiedFailed"), "error");
+    onError () {
+      this.$elementMessage(this.$t("mycustomer.copiedFailed"), "error")
     },
-    inviteOpened() {
+    inviteOpened () {
       //邀请弹层打开后
       (function (r, d, s) {
         r.loadSkypeWebSdkAsync =
           r.loadSkypeWebSdkAsync ||
           function (p) {
             var js,
-              sjs = d.getElementsByTagName(s)[0];
+              sjs = d.getElementsByTagName(s)[0]
             if (d.getElementById(p.id)) {
-              return;
+              return
             }
-            js = d.createElement(s);
-            js.id = p.id;
-            js.src = p.scriptToLoad;
-            js.onload = p.callback;
-            sjs.parentNode.insertBefore(js, sjs);
-          };
-        var p = { 
+            js = d.createElement(s)
+            js.id = p.id
+            js.src = p.scriptToLoad
+            js.onload = p.callback
+            sjs.parentNode.insertBefore(js, sjs)
+          }
+        var p = {
           scriptToLoad:
             "https://swx.cdn.skype.com/shared/v/latest/skypewebsdk.js",
           id: "skype_web_sdk",
-        };
-        r.loadSkypeWebSdkAsync(p);
-      })(window, document, "script");
+        }
+        r.loadSkypeWebSdkAsync(p)
+      })(window, document, "script")
     },
-    openInvite(name) {
+    openInvite (name) {
       this.items.some((e) => {
         if (e.customerName == name) {
-          this.openInvitation(e);
-          return true;
+          this.openInvitation(e)
+          return true
         }
-      });
+      })
     },
-    openInvitation(item) {
+    openInvitation (item) {
       //打开邀请链接弹层
-      this.dialogInvite = JSON.parse(this.dialogInviteDefault);
-      this.dialogInvite.isShow = true;
-      this.dialogInvite.words = this.$store.state.userInfo.inviteWords;
-      this.dialogInvite.inviteUrl = `${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.subDomain}.myourmall.com/`;
-      this.dialogInvite.qrcode = item.qrcodeBase64;
+      this.dialogInvite = JSON.parse(this.dialogInviteDefault)
+      this.dialogInvite.isShow = true
+      this.dialogInvite.words = this.$store.state.userInfo.inviteWords
+      this.dialogInvite.inviteUrl = `${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.subDomain}.myourmall.com/`
+      this.dialogInvite.qrcode = item.qrcodeBase64
     },
-    clearFilter() {
-      this.supplierName =""
+    clearFilter () {
+      this.supplierName = ""
       //清空筛选
-      this.filterParams = JSON.parse(this.filterParamsDefault);
-      this.selectArr = [];
+      this.filterParams = JSON.parse(this.filterParamsDefault)
+      this.selectArr = []
       if (this.$route.query.page == 1) {
-        this.getItem();
+        this.getItem()
       } else {
-        this.$router.push({ query: { page: 1 } });
+        this.$router.push({ query: { page: 1 } })
       }
     },
-    filterGetItem(type) {
+    filterGetItem (type) {
       //筛选
       if (type == "relationshipId") {
         this.selectArr.forEach((c) => {
           if (c.customerName == this.filterParams.name)
-            this.filterParams.relationshipId = c.id;
-        });
-        this.getItem();
+            this.filterParams.relationshipId = c.id
+        })
+        this.getItem()
       } else {
         if (this.$route.query.page == 1) {
-          this.getItem();
+          this.getItem()
         } else {
-          this.$router.push({ query: { page: 1 } });
+          this.$router.push({ query: { page: 1 } })
         }
       }
     },
-    gotoImport(item) {
-      this.$router.push({ name: "importData", query: { rid: item.id } });
+    gotoImport (item) {
+      this.$router.push({ name: "importData", query: { rid: item.id } })
     },
-    delVendor(item) {
+    delVendor (item) {
       //删除
       this.$confirm(this.$t("mycustomer.confirmToCancel"), "", {
         confirmButtonText: this.$t("mycustomer.delete"),
@@ -1121,55 +1090,55 @@ this.dialogEmailVisible = true
             { relationshipId: item.id },
             (r) => {
               if (r.ErrorCode == 9999) {
-                this.$root;
+                this.$root
                 this.$message({
                   message: this.$t("mycustomer.cancelSuccess"),
                   type: "success",
-                });
-                this.$root.$children[0].getCnt();
-                this.getItem(true);
+                })
+                this.$root.$children[0].getCnt()
+                this.getItem(true)
               } else {
-                this.$message({ message: r.Message, type: "error" });
+                this.$message({ message: r.Message, type: "error" })
               }
             }
-          );
+          )
         })
-        .catch(() => {});
+        .catch(() => { })
     },
-    editVendor(item) {
-      this.addVendorDialog = JSON.parse(this.addVendorDialogDefault);
-      this.addVendorDialog.name = item.customerName;
-      this.addVendorDialog.email = item.customerEmail;
-      this.addVendorDialog.remark = item.customerRemark;
-      this.addVendorDialog.id = item.id;
-      this.addVendorDialog.weChat = item.customerWeChat;
-      this.addVendorDialog.skype = item.customerSkype;
-      this.addVendorDialog.line = item.customerLine;
-      this.addVendorDialog.QQ = item.customerQQ;
-      this.addVendorDialog.wangwang = item.customerWangwang;
-      this.addVendorDialog.whatsapp = item.customerWhatsapp;
-      this.addVendorDialog.isShow = true;
-	  this.addVendorDialog.isEdit = item.customerEmail ? true : false;
-    this.addVendorDialog.customCode = item.customCode || ''
+    editVendor (item) {
+      this.addVendorDialog = JSON.parse(this.addVendorDialogDefault)
+      this.addVendorDialog.name = item.customerName
+      this.addVendorDialog.email = item.customerEmail
+      this.addVendorDialog.remark = item.customerRemark
+      this.addVendorDialog.id = item.id
+      this.addVendorDialog.weChat = item.customerWeChat
+      this.addVendorDialog.skype = item.customerSkype
+      this.addVendorDialog.line = item.customerLine
+      this.addVendorDialog.QQ = item.customerQQ
+      this.addVendorDialog.wangwang = item.customerWangwang
+      this.addVendorDialog.whatsapp = item.customerWhatsapp
+      this.addVendorDialog.isShow = true
+      this.addVendorDialog.isEdit = item.customerEmail ? true : false
+      this.addVendorDialog.customCode = item.customCode || ''
     },
-    openAddVendor() {
-      this.addVendorDialog = JSON.parse(this.addVendorDialogDefault);
-      this.addVendorDialog.isShow = true;
+    openAddVendor () {
+      this.addVendorDialog = JSON.parse(this.addVendorDialogDefault)
+      this.addVendorDialog.isShow = true
     },
-    addVendorSaveSuccess() {
-      this.clearFilter();
+    addVendorSaveSuccess () {
+      this.clearFilter()
     },
-    getItem(s) {
-      this.loading = true;
-      if(this.supplierName){
-        this.filterParams.inviterUserId = this.searchList.find((item)=> item.name == this.supplierName).subUserId
+    getItem (s) {
+      this.loading = true
+      if (this.supplierName) {
+        this.filterParams.inviterUserId = this.searchList.find((item) => item.name == this.supplierName).subUserId
       }
-      
+
       this.$apiCall(
         "api.Relationship.findByVendor",
         {
           page: this.page,
-          rowsPerPage: this.rowsPerPage,       
+          rowsPerPage: this.rowsPerPage,
           name: this.filterParams.name,
           customerId: this.filterParams.customerId,
           customCode: this.filterParams.customCode,
@@ -1182,9 +1151,9 @@ this.dialogEmailVisible = true
           status: 1,
         },
         (r) => {
-          this.loading = false;
+          this.loading = false
           if (r.ErrorCode == 9999) {
-            this.items = r.Data.Results;
+            this.items = r.Data.Results
             this.items.forEach((n) => {
               this.$apiCall(
                 "api.Relationship.getCntDetail",
@@ -1193,125 +1162,125 @@ this.dialogEmailVisible = true
                 },
                 (i) => {
                   if (i.ErrorCode == 9999) {
-                    n.invoiceCnt = i.Data.Results.invoiceCnt;
-                    n.totalAmount = i.Data.Results.totalAmount;
-                    n.orderCnt = i.Data.Results.orderCnt;
-                    n.skuCnt = i.Data.Results.skuCnt;
-                    n.offerSkuCnt = i.Data.Results.offerSkuCnt;
-                    this.items = [...this.items];
+                    n.invoiceCnt = i.Data.Results.invoiceCnt
+                    n.totalAmount = i.Data.Results.totalAmount
+                    n.orderCnt = i.Data.Results.orderCnt
+                    n.skuCnt = i.Data.Results.skuCnt
+                    n.offerSkuCnt = i.Data.Results.offerSkuCnt
+                    this.items = [...this.items]
                   }
                 }
-              );
-            });
+              )
+            })
 
-            this.total = Number(r.Data.Pagination.totalCount);
-            this.totalPage = Number(r.Data.Pagination.totalPage);
+            this.total = Number(r.Data.Pagination.totalCount)
+            this.totalPage = Number(r.Data.Pagination.totalPage)
             // this.$getTableHeight(this);
-            if (!s) this.$root.$children[0].$refs.mainScroll.wrap.scrollTop = 0;
+            if (!s) this.$root.$children[0].$refs.mainScroll.wrap.scrollTop = 0
             if (this.$route.params.openInvite) {
               this.items.some((e) => {
                 if (e.customerName == this.$route.params.name) {
-                  this.openInvitation(e);
-                  this.$route.params.openInvite = false;
-                  return true;
+                  this.openInvitation(e)
+                  this.$route.params.openInvite = false
+                  return true
                 }
-              });
+              })
             }
             if (this.$route.params.item) {
-              this.openInvitation(this.$route.params.item);
-              this.$route.params.item = null;
+              this.openInvitation(this.$route.params.item)
+              this.$route.params.item = null
             }
 
             if (this.$route.query.id) {
               if (this.items.length != 0) {
-                this.filterParams.relationshipId = "";
-                this.openInvitation(this.items[0]);
+                this.filterParams.relationshipId = ""
+                this.openInvitation(this.items[0])
               }
             }
           } else {
-            this.$message({ message: r.Message, type: "error" });
+            this.$message({ message: r.Message, type: "error" })
           }
         }
-      );
+      )
     },
-    toPage(val) {
+    toPage (val) {
       if (val != this.$route.query.page)
-        this.$router.push({ query: { page: val } });
+        this.$router.push({ query: { page: val } })
     },
-    changePageSize(val) {
-      this.rowsPerPage = val;
-      localStorage.setItem("myCustomRowsPerPage", val);
-      this.getItem();
+    changePageSize (val) {
+      this.rowsPerPage = val
+      localStorage.setItem("myCustomRowsPerPage", val)
+      this.getItem()
     },
-    gotoPage() {
-      this.page = this.$route.query.page ? this.$route.query.page : 1;
-      this.getItem();
+    gotoPage () {
+      this.page = this.$route.query.page ? this.$route.query.page : 1
+      this.getItem()
     },
     /**
      * 根据type类型打开Bonus业务的相关模态框
      */
-    showBonus(params, type) {
-      this.bonusParams = JSON.parse(this.bonusParamsDefault);
-      this.bonusParams.type = type;
-      this.bonusParams.id = params.id;
-      this.bonusParams.name = params.customerName;
+    showBonus (params, type) {
+      this.bonusParams = JSON.parse(this.bonusParamsDefault)
+      this.bonusParams.type = type
+      this.bonusParams.id = params.id
+      this.bonusParams.name = params.customerName
       if (type == 1) {
-        this.bonusParams.status = params.bonusStatus;
+        this.bonusParams.status = params.bonusStatus
       }
-      this.bonusParams.isShow = true;
+      this.bonusParams.isShow = true
     },
     /**
      * 修改bonus账户的状态
      */
-    updateBonus() {
-      this.bonusParams.loading = true;
+    updateBonus () {
+      this.bonusParams.loading = true
       this.$apiCall(
         "api.Relationship.changeBonusStatusVendor",
         {
           relationshipId: this.bonusParams.id,
         },
         (r) => {
-          this.bonusParams.loading = false;
+          this.bonusParams.loading = false
           if (r.ErrorCode == 9999) {
             this.$message({
-              message: this.bonusParams.status == 1?this.$t("mycustomer.停用成功"):this.$t("mycustomer.启用成功"),
+              message: this.bonusParams.status == 1 ? this.$t("mycustomer.停用成功") : this.$t("mycustomer.启用成功"),
               type: "success",
-            });
-            this.bonusParams.isShow = false;
-            this.getItem(true);
+            })
+            this.bonusParams.isShow = false
+            this.getItem(true)
           } else {
-            this.$message({ message: r.Message, type: "error" });
+            this.$message({ message: r.Message, type: "error" })
           }
         }
-      );
+      )
     },
     /**
      * 为指定客户充值bonus余额
      */
-    addBonusNum() {
+    addBonusNum () {
       if (!this.bonusParams.num) {
-        this.$message({ message: this.$t("mycustomer.充值金额必须填写"), type: "error" });
-        return;
+        this.$message({ message: this.$t("mycustomer.充值金额必须填写"), type: "error" })
+        return
       }
-      this.bonusParams.loading = true;
+      this.bonusParams.loading = true
       this.$apiCall(
         "api.Relationship.addBonusVendor",
         {
           relationshipId: this.bonusParams.id,
           bonus: this.bonusParams.num,
-          remark:this.bonusParams.remark,
+          remark: this.bonusParams.remark,
         },
         (r) => {
-          this.bonusParams.loading = false;
+          this.bonusParams.loading = false
           if (r.ErrorCode == 9999) {
-            this.$message({ message: this.$t("mycustomer.充值成功"), type: "success" });
-            this.bonusParams.isShow = false;
-            this.getItem(true);
+            this.$message({ message: this.$t("mycustomer.充值成功"), type: "success" })
+            this.bonusParams.isShow = false
+            this.getItem(true)
           } else {
-            this.$message({ message: r.Message, type: "error" });
+            this.$message({ message: r.Message, type: "error" })
           }
         }
-      );
+      )
     },
   },
 };
@@ -1365,20 +1334,18 @@ this.dialogEmailVisible = true
       margin-bottom: 30px;
     }
   }
-  ::v-deep .el-form-item__label{
+  ::v-deep .el-form-item__label {
     width: 110px !important;
     text-align: left !important;
   }
- .bonusRemark ::v-deep .el-form-item__content{
-   flex: 1;
-
- }
-
+  .bonusRemark ::v-deep .el-form-item__content {
+    flex: 1;
+  }
 }
-.email-box{
+.email-box {
   padding: 20px;
-  .txt{
-      padding-right: 15px;
+  .txt {
+    padding-right: 15px;
   }
 }
 </style>
