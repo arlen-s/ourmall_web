@@ -318,7 +318,7 @@ import { arrayEach } from 'xe-utils/methods';
 		computed: {},
 		watch: {},
 		created() {
-			console.log('321ceasasisahdqwnwqui1223');
+			// console.log('321ceasasisahdqwnwqui1223');
 			//
 			//开泰银行获取支付信息
 			// this.getInfoFromKasikornbank()
