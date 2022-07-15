@@ -3,6 +3,7 @@ export const lang = {
   cancel: '取 消',
   confirm: '确 定',
   filter: '筛选',
+  allFilter: '批量筛选',
   clear: '清空',
   export: '导出',
   third: '第三方交易编号',

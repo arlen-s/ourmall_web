@@ -3,6 +3,7 @@ export const lang = {
 	cancel: 'Cancel',
 	confirm: 'Confirm',
 	filter: 'Filter',
+	allFilter: 'allFilter',
 	clear: 'Clear',
 	export: 'Export',
 	third: 'Your No.',
