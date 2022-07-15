@@ -2151,7 +2151,7 @@ export default {
               this.total = Number(r.Data.Pagination.totalCount)
               this.totalPage = Number(r.Data.Pagination.totalPage)
               this.page= r.Data.Pagination.page
-              if (r.Data.Results.noSearchList) {
+              if (r.Data.Results.noSearchList.length > 0) {
                 this.failData.isShowDialog = true
                 this.failData.obj = r.Data.Results.noSearchList
 								
