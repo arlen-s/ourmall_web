@@ -27,7 +27,24 @@
       </div> -->
       <div class="pagebody">
         <template>
-          <div>
+          <div>				            
+        <el-row :gutter="20"
+        class="mg-b-30 user-status-list"
+      >
+              <el-col :span="8">
+                <el-card>
+                  <div class="grid-content d-flex grid-dashboard">
+                    <div class="grid-top">
+                      <img class="walletIcon" src="../../public/images/qianbao.png" alt="">
+                    </div>
+                    <div class="grid-bottom">
+                      <h2 class="tx-primary">balance($): {{balance || '0.00'}}</h2>
+                      <p>wallet</p>
+                    </div>
+                  </div>
+                </el-card>
+              </el-col>
+      </el-row>
             <el-row :gutter="20">
               <el-col :span="8">
                 <el-card>
@@ -1122,6 +1139,7 @@ export default {
     this.myEcharts();
     this.getVnedors();
     this.getVendorShop();
+			this.getBalance()
   },
   components: {},
   computed: {
@@ -1142,6 +1160,17 @@ export default {
         //  e==false
       }
     },
+    getBalance(){
+				this.$apiCall("api.Relationship.getUserBonus", {
+				}, r => {
+					if(r.ErrorCode == 9999) {
+						this.balance = r.Data.Results
+						
+					}else{
+						this.$elementMessage(r.Message, 'error');
+					}
+				})
+			},
     getVendorShopProducts() {
       //getVendorShop 后获取商品
       let num = this.categorysList.length;
@@ -2263,5 +2292,8 @@ export default {
 <style>
 .commodity-tab-wrapper.diy1 .el-table__header-wrapper {
   display: none;
+}
+.walletIcon{
+  margin-top: -10px;
 }
 </style>
