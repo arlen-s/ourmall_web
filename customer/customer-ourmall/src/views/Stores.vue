@@ -403,6 +403,7 @@
         <el-button
           size="small"
           type="primary"
+          :disabled="ableClick"
           @click="connectStoreFn"
           v-if="errorMessage == ''"
           >Connect</el-button
@@ -703,6 +704,8 @@ export default {
         name: "",
       },
       depositDialogDefault: "{}",
+      disabled: '',
+      ableClick:  false
     };
   },
   components: { shopCate },
@@ -724,6 +727,7 @@ export default {
     this.getItem();
     this.getVendor();
     this.getVipDetail();
+    this.getStatusNews();
     // window.onresize = () => {
     // 	this.$getTableHeight(this);
     // };
@@ -766,6 +770,22 @@ export default {
           }
         });
       }
+    },
+    //获取授权状态
+    getStatusNews(){
+        this.$apiCall("api.User.checkLoginStatusNews",{}, (r) => {
+          if(r.ErrorCode == 9999){
+              console.log(r, '1111');
+              let res = r.Data.Results;
+              if (res.isAutoJump && res.isAutoJump == 1) {
+                this.disabled = 'disabled'
+              }else{
+                this.disabled = ''
+              }
+          } else {
+            this.$message.error(r.Message)
+          }
+        });
     },
     authShopee() {
       let params = {
@@ -1088,8 +1108,23 @@ export default {
       this.$apiCall("api.ShopifyAccount.addOtherAccount", params, (r) => {
         if (r.ErrorCode == "9999") {
           if (this.activePlatform == "shopify") {
+            if (this.disabled == 'disabled') {
+              console.log(11114);
+              this.connectStoreLoading = false;
+              this.connectStoreOpen = false;
+              this.getItem();
+              this.$message({
+                message: "Successful store authorization",
+                type: "success",
+                duration: 0,
+                showClose: true,
+              });
+
+            }else{
             this.shopifyWindow = window.open(r.Data.Results);
             this.connectConfirmStart();
+            }         
+
           }
           if (this.activePlatform == "lazada") {
             let state = r.Data.Results.state;
