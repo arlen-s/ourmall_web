@@ -12,6 +12,8 @@
 			</div>
 		</div>
 		<div class="pagebody" v-loading="loading">
+		<el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tab-pane :label="$t('transaction.正常账单')"  name="2">		
 			<el-row :gutter="15" class="mg-b-20">
 				<el-col :span="24">
 					<el-card>
@@ -176,6 +178,183 @@
 					</div>
 				</el-col>
 			</el-row>
+						</el-tab-pane>
+    <el-tab-pane :label="$t('transaction.异常账单')" name="1">
+				<el-row :gutter="15" class="mg-b-20">
+				<el-col :span="24">
+					<el-card>
+						<el-row :gutter="20">
+							<el-col :span="24">
+								<div ref="pageFilter" class="page-filter">
+									<el-form :inline="true" size="mini">
+										<!-- <el-form-item :label="$t('transaction.CreateDate')">
+											<el-date-picker value-format="yyyy-MM-dd" v-model="filterParams.date"
+												@clear="clearFilter('date')" @change="dateChange" type="daterange"
+												align="right" unlink-panels :range-separator="$t('myinvoice.to')"
+												:start-placeholder="$t('myinvoice.startDate')"
+												:end-placeholder="$t('myinvoice.endDate')">
+											</el-date-picker>
+										</el-form-item> -->
+										<el-form-item>
+											<el-radio-group v-model="dateFilter" size="mini" @change="filterDate">
+												<el-radio-button label="1">{{$t('transaction.today')}}</el-radio-button>
+												<el-radio-button label="2">{{$t('transaction.yestoday')}}
+												</el-radio-button>
+												<el-radio-button label="3">{{$t('transaction.last7Days')}}
+												</el-radio-button>
+												<el-radio-button label="4">{{$t('transaction.last30Days')}}
+												</el-radio-button>
+											</el-radio-group>
+										</el-form-item>
+										<el-form-item>
+											<el-input :placeholder="$t('transaction.paymentCode')"
+												v-model="filterParams.paymentCode" clearable
+												@keyup.enter.native="filterItem" @clear="clearFilter('paymentCode')">
+											</el-input>
+										</el-form-item>
+										<el-form-item>
+											<el-input :placeholder="$t('transaction.third')" v-model="filterParams.code"
+												clearable @keyup.enter.native="filterItem" @clear="clearFilter('code')">
+											</el-input>
+										</el-form-item>
+										<el-form-item>
+											<el-input :placeholder="$t('transaction.verdorName')"
+												v-model="filterParams.verdorName" clearable
+												@keyup.enter.native="filterItem" @clear="clearFilter('verdorName')">
+											</el-input>
+										</el-form-item>
+										<el-form-item :label="$t('transaction.tradeType')">
+											<el-select filterable remote :placeholder="$t('transaction.all')" clearable
+												v-model="filterParams.tradeType" @change="filterItem"
+												@clear="clearFilter('tradeType')">
+												<el-option v-for="opt in tradeTypeArr" :key="opt.id" :label="opt.name"
+													:value="opt.id"></el-option>
+											</el-select>
+										</el-form-item>
+										<el-form-item :label="$t('transaction.tradeStatus')">
+											<el-select filterable remote :placeholder="$t('transaction.all')" clearable
+												v-model="filterParams.tradeStatus" @change="filterItem"
+												@clear="clearFilter('tradeStatus')">
+												<el-option v-for="opt in tradeStatusArr" :key="opt.id" :label="opt.name"
+													:value="opt.id"></el-option>
+											</el-select>
+										</el-form-item>
+										<el-form-item :label="$t('transaction.accountPayee')">
+											<el-select filterable remote :placeholder="$t('transaction.all')" clearable
+												v-model="filterParams.accountPayee" @change="filterItem"
+												@clear="clearFilter('accountPayee')">
+												<el-option v-for="opt in accountPayeeArr" :key="opt.id"
+													:label="opt.name" :value="opt.id"></el-option>
+											</el-select>
+										</el-form-item>
+										<el-form-item>
+											<el-input :placeholder="$t('discount.订单编号')"
+												v-model="filterParams.shopifyOrder" clearable
+												@keyup.enter.native="filterItem" @clear="clearFilter('shopifyOrder')">
+											</el-input>
+										</el-form-item>
+										<el-form-item>
+											<el-button type="primary" @click="filterItem">{{$t("transaction.filter")}}
+											</el-button>
+											<el-button type="danger" @click="clearFilter">{{$t("transaction.clear")}}
+											</el-button>
+										</el-form-item>
+									</el-form>
+								</div>
+							</el-col>
+						</el-row>
+						<el-table stripe style="width: 100%" ref="gridTable" :data="items" tooltip-effect="dark" :row-key="(row) => row.id"
+						>
+							<!-- @selection-change="handleSelectionChange" -->
+							<!-- <el-table-column type="selection" width="55" :reserve-selection="true">
+							</el-table-column> -->
+							<el-table-column :label="$t('transaction.CreateDate')">
+								<template slot-scope="scope">
+									<span>{{$moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column :label="$t('transaction.paymentCode')">
+								<template slot-scope="scope">
+									<span>{{scope.row.sysCode || '---'}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column :label="$t('transaction.third')">
+								<template slot-scope="scope">
+									<span v-if="scope.row.code=='96'||scope.row.code=='97'||scope.row.code=='98'||scope.row.code=='99'">---</span>
+									<span v-else>{{scope.row.code || '---'}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column :label="$t('transaction.verdorName')">
+								<template slot-scope="scope">
+									<span>{{scope.row.customerName || '---'}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column :label="$t('transaction.tradeType')">
+								<template slot-scope="scope">
+									<span>{{filterText('tradeType',scope.row.type)}}</span>
+								</template>
+							</el-table-column>
+							<!-- <el-table-column :label="$t('transaction.tradeAmount')">
+								<template slot-scope="scope">
+									<span v-if="scope.row.status == 3" class="tx-danger">-
+										{{scope.row.totalAmount}}</span>
+									<span v-else>{{scope.row.totalAmount}}</span>
+								</template>
+							</el-table-column> -->
+							<el-table-column :label=" $t('transaction.交易')" width="150">
+								<template slot-scope="scope">
+									<span class="tx-danger">
+										{{scope.row.bonusAmount}}</span> <br/>
+									<span >{{scope.row.creditAmount}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column :label="$t('transaction.tradeStatus')">
+								<template slot-scope="scope">
+									<span>{{filterText('tradeStatus',scope.row.status)}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column :label="$t('transaction.paymentType')">
+								<template slot-scope="scope">
+									<span>{{filterText('platformType',scope.row.platformType)}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column :label="$t('quotation.备注')">
+								<template slot-scope="scope">
+									<span>{{scope.row.remark || '---'}}</span>
+								</template>
+							</el-table-column>
+							<el-table-column :label="$t('transaction.operate')" width="120">
+								<template slot-scope="scope">
+									<div>
+										<!-- <el-link :disabled="!$isRole($route.meta.roleWrite)" class="mg-r-20" type="primary" @click="viewDetailFn('row',scope.row)">
+											{{ $t("transaction.detailView") }}
+										</el-link> -->
+										<el-link  :disabled="!$isRole($route.meta.roleWrite) || scope.row.type != '1'" class="mg-r-20" type="primary" @click="openExportDetail(scope.row)">
+											{{ $t("transaction.detailView") }}
+										</el-link> <br/>
+										<el-link type="primary" @click="setOrder(scope.row)" >处理</el-link>
+									</div>
+								</template>
+							</el-table-column> 
+						</el-table>
+
+					</el-card>
+				</el-col>
+			</el-row>
+			<el-row v-if="items.length" :gutter="20">
+				<el-col :span="24" class="d-flex justify-content-center">
+					<div>
+						<el-pagination :current-page="Number(page)" :background="true"
+							layout="sizes, total, prev, pager, next, jumper" :page-sizes="pageSizes"
+							:page-size="rowsPerPage" :total="Number(total)" @current-change="toPage"
+							@size-change="changePageSize">
+						</el-pagination>
+					</div>
+				</el-col>
+			</el-row>
+					</el-tab-pane>
+  </el-tabs>
+
 		</div>
 		<el-backtop class="goto-top" target=".main-scroll  .el-scrollbar__wrap" :right="20" :bottom="20">
 		</el-backtop>
@@ -253,6 +432,7 @@
 					Number(localStorage.getItem("transactionRowsPerPage")) : 10,
 				items: [],
 				total: 0,
+				activeName: '2',
 				totalPage: 0,
 				filterParams: {
 					verdorName: "",
@@ -265,6 +445,7 @@
 					timeCreatedFrom: "",
 					timeCreatedTo: "",
 					shopifyOrder:"",
+					creditStatus: '2',
 				},
 				filterParamsDefault: "{}",
 				dateFilter: "",
@@ -332,6 +513,7 @@
 					items: [],
 				},
 				defaultDialogDetailData: '{}',
+
 			};
 		},
 		components: {
@@ -361,6 +543,25 @@
 				})
 
 				
+			},
+			//切换tabs
+			handleClick(tab, event){
+						console.log(this.activeName, 'this.activeName'); 
+				this.filterParams= {
+					verdorName: "",
+					paymentCode: "",
+					code: "",
+					accountPayee: "",
+					tradeStatus: "",
+					tradeType: "",
+					date: [],
+					timeCreatedFrom: "",
+					timeCreatedTo: "",
+					shopifyOrder:"",
+					creditStatus:  tab.name,
+				}
+				this.$refs.gridTable.clearSelection();	
+				this.getItem();
 			},
 			exportDetailFn() {
 				let ids = [];
@@ -431,6 +632,17 @@
 						break;
 				}
 				return obj ? obj.name : "---"
+			},
+			setOrder(item){
+								this.$apiCall('api.AccountPayment.changeCreditStatus', {id: item.id}, r => {
+					this.loading = false;
+					if (r.ErrorCode == "9999") {
+						this.$elementMessage(r.Message, 'success');
+						this.getItem();
+					}else{
+						this.$elementMessage(r.Message, 'error');
+					}
+				})
 			},
 			toPage(val) {
 				if (val != this.$route.query.page)
@@ -549,6 +761,7 @@
 						platformType: this.filterParams.accountPayee,
 						paymentType: this.filterParams.tradeType,
 						status: this.filterParams.tradeStatus,
+						creditStatus:this.activeName
 					},
 					(r) => {
 						this.loading = false;

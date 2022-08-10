@@ -290,6 +290,14 @@
             <span style="margin-right: 20px"
               >Bonus:<span class="font_bold"> ($ {{ bonus }})</span></span
             >
+            <el-tooltip class="item" effect="dark" content="The supplier has opened a credit limit for you. When your account balance is insufficient, you can deduct the credit limit" placement="top">
+      						<i class="el-icon-question" style="color:red;line-height:80px;margin-right:5px"></i>
+    				</el-tooltip>
+								
+						<span style="margin-right: 30px;">
+									Credits:
+							<span class="tx-bold"> ($ {{credits}})</span>
+						</span>
             <el-switch
               :disabled="disableSwitchBonus && bonusStatus == '2'"
               @change="changSwitchBonus"
@@ -402,6 +410,7 @@ export default {
       delLoading: false,
       newWin: null,
       paystatus: 0,
+			credits: 0,
       KTType: 'credit card',
       KTpayList: [
         {
@@ -733,6 +742,7 @@ export default {
       this.$apiCall("api.Invoice.getBonus", {}, (r) => {
         if (r.ErrorCode == "9999") {
           this.bonus = Number(r.Data.Results.bonus).toFixed(2);
+          this.credits = Number(r.Data.Results.creditAmount) - Number(r.Data.Results.usedCreditAmount);
           this.bonusStatus = r.Data.Results.bonusStatus;
           this.bonusStatus != "1"
             ? (this.switchBonus = false)

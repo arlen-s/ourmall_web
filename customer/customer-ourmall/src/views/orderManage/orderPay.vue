@@ -132,6 +132,14 @@
 									Bonus:
 									<span class="tx-bold"> ($ {{bonus}})</span>
 								</span>
+								<el-tooltip class="item" effect="dark" content="The supplier has opened a credit limit for you. When your account balance is insufficient, you can deduct the credit limit" placement="top">
+      						<i class="el-icon-question" style="color:red;line-height:80px;margin-right:5px"></i>
+    						</el-tooltip>
+								
+								<span style="margin-right: 30px;">
+									Credits:
+									<span class="tx-bold"> ($ {{credits}})</span>
+								</span>
 								<div class="active" v-show="platformType != 6 || bonus == 0 || bonus < totalAllGoodsAndFreight">
 									<img src="../../assets/pay/Basic.png" alt="" height="25">
 								</div>
@@ -306,7 +314,8 @@ import { arrayEach } from 'xe-utils/methods';
 				couponInfo:"",
 				KTurl: '',
 				KTPayId: '',
-				KTPaySession: ''
+				KTPaySession: '',
+				credits: 0,
 			};
 		},
 		components: {
@@ -812,6 +821,7 @@ import { arrayEach } from 'xe-utils/methods';
 							}
 						}
 						this.bonusStatus = r.Data.Results.bonusStatus;
+						this.credits = Number(r.Data.Results.creditAmount) - Number(r.Data.Results.usedCreditAmount);
 					} else {}
 				})
 				// TODO支付

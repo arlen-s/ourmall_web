@@ -11,6 +11,7 @@ export const lang = {
 	cusName: '客户名称：',
 	selectCus: '请选择客户',
 	newCus: '添加新的客户',
+	errorLimit: '请输入信用额度',
 	uploadFile: '上传文件：',
 	selectFile: '选取文件 CSV / EXCEL',
 	importFile: '请导入客户Shopify采购订单CSV或Excel文件',

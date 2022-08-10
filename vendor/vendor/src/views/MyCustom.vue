@@ -369,14 +369,15 @@
                   </div>
                 </template>
               </el-table-column>
-              <!-- <el-table-column
-                :label="$t('mycustomer.storeAuthorized2')"
+              <el-table-column
+                :label="`${$t('mycustomer.总信用额度')}/${$t('mycustomer.剩余信用额度')}`"
                 align="center"
               >
                 <template slot-scope="scope">
-                  
+                  <p>{{scope.row.creditAmount}}</p>
+                  <p>{{  Number(scope.row.creditAmount) - Number(scope.row.usedCreditAmount)  }}</p>
                 </template>
-              </el-table-column>-->
+              </el-table-column>
               <el-table-column :label="$t('mycustomer.operate')" width="230">
                 <template slot-scope="scope">
                   <!-- 编辑 -->
@@ -728,6 +729,8 @@ export default {
         isEdit: false,
         isShow: false,
         loading: false,
+        creditStatus: true,
+        creditAmount: 0.00,
         labelW: "100px",
         name: "",
         remark: "",
@@ -1116,6 +1119,8 @@ export default {
       this.addVendorDialog.line = item.customerLine
       this.addVendorDialog.QQ = item.customerQQ
       this.addVendorDialog.wangwang = item.customerWangwang
+      this.addVendorDialog.creditStatus = item.creditStatus == '2' ? false : true
+      this.addVendorDialog.creditAmount = item.creditAmount
       this.addVendorDialog.whatsapp = item.customerWhatsapp
       this.addVendorDialog.isShow = true
       this.addVendorDialog.isEdit = item.customerEmail ? true : false

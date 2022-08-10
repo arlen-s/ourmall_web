@@ -11,6 +11,7 @@ export const lang = {
 	cusName: 'Customer name:',
 	selectCus: 'Please select customer',
 	newCus: 'Add a new customer',
+	errorLimit: 'Please enter a credit limit',
 	uploadFile: 'Upload file:',
 	selectFile: 'Select a CSV / EXCEL file',
 	importFile: 'Please import customer Shopify purchase order CSV or excel file',

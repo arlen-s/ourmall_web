@@ -60,7 +60,7 @@
               </li>
             </ul>
           </div>
-          <div class="bottom-btn">
+          <div class="bottom-btn-avd">
             <el-button @click="addVendorDialog.isShow = false;">{{$t('mycustomer.Remindme')}}</el-button>
           </div>
         </div>
@@ -69,10 +69,12 @@
         <el-col
           v-if="!Number($store.state.cnt.customerCnt)"
           :span="24"
-          class="row1"
+          class="row1-avd"
         >
           {{$t('mycustomer.Justcreate')}}
         </el-col>
+          <el-tabs v-model="activeName" @tab-click="handleClick" class="vendor-tab">
+    <el-tab-pane :label="$t('mycustomer.基础信息')" name="first">
         <el-form>
           <el-row :gutter="10">
             <el-col :span="addVendorDialog.id ? 12 : 24">
@@ -204,6 +206,26 @@
             ></el-input>
           </el-form-item>
         </el-form>
+    </el-tab-pane>
+    <div></div>
+    <el-tab-pane :label="$t('mycustomer.信用额度')" name="second">
+      <div>
+        <span style="padding-left:35px">是否允许分销商使用信用额度</span>
+        <el-switch
+      style="margin-left:30px"
+  v-model="addVendorDialog.creditStatus"
+  active-color="#7d88d0"
+  >
+</el-switch>
+      </div> 
+<el-form status-icon  ref="ruleForm" label-width="100px" class="demo-ruleForm">
+  <el-form-item :label="$t('mycustomer.信用额度($)')">
+    <el-input type="text" v-model="addVendorDialog.creditAmount" autocomplete="off"></el-input>
+  </el-form-item>
+</el-form>
+    </el-tab-pane>
+  </el-tabs>
+
       </el-row>
       <el-divider></el-divider>
       <div
@@ -231,12 +253,17 @@ export default {
     return {
       visibleMask: false,
       newName: "",
+      flag: true,
+      activeName: 'first',
       apiUserId: JSON.parse(localStorage.getItem('userInfo')).id,
     };
   },
   methods: {
     closed() {
       this.visibleMask = false;
+    },
+    handleClick(){
+
     },
     action(type) {
       //继续操作
@@ -269,6 +296,9 @@ export default {
         this.$message({ message: this.$t('importdata.cusNameFilled'), type: "error" });
         return;
       }
+      if (!this.addVendorDialog.creditAmount) {
+        this.$message({ message: this.$t('importdata.errorLimit'), type: "error" });
+      }
       this.addVendorDialog.loading = true;
       let url = "api.Relationship.addByVendor";
       let params = {
@@ -279,6 +309,8 @@ export default {
         skype: this.addVendorDialog.skype,
         line: this.addVendorDialog.line,
         QQ: this.addVendorDialog.QQ,
+        creditAmount: this.addVendorDialog.creditAmount,
+        creditStatus: this.addVendorDialog.creditStatus == true ? 1 : 2,
         wangwang: this.addVendorDialog.wangwang,
         whatsapp: this.addVendorDialog.whatsapp,
         customCode: this.addVendorDialog.customCode,
@@ -315,16 +347,28 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.bottom-btn {
+<style lang="scss" >
+.bottom-btn-avd {
   position: absolute;
   bottom: -50px;
   left: 50%;
   transform: translateX(-50%);
 }
-.row1 {
+.row1-avd {
   position: relative;
   top: -8px;
   padding-left: 20px;
+}
+ .el-dialog__body .el-tabs:before {
+  left: 0 !important;
+}
+.el-dialog__body .el-tabs .el-tabs__item {
+  background: none ;
+}
+#tab-first{
+  padding-left: 10px;
+}
+.el-dialog__body .el-tabs .el-tabs__item.is-active{
+  background: none;
 }
 </style>
