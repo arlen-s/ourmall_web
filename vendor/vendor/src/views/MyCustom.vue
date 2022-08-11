@@ -374,8 +374,8 @@
                 align="center"
               >
                 <template slot-scope="scope">
-                  <p>{{scope.row.creditAmount}}</p>
-                  <p>{{  Number(scope.row.creditAmount) - Number(scope.row.usedCreditAmount)  }}</p>
+                  <p>{{Number(scope.row.creditAmount).toFixed(2) }}</p>
+                  <p>{{ (Number(scope.row.creditAmount) - Number(scope.row.usedCreditAmount)).toFixed(2)   }}</p>
                 </template>
               </el-table-column>
               <el-table-column :label="$t('mycustomer.operate')" width="230">
@@ -657,7 +657,7 @@
           </el-form-item>
           <el-form-item>
             <i class="el-icon-info"></i>
-            {{$t('mycustomer.您的客户可用Bonus抵扣订单货款，请确保收到款项后，为客户Bonus账户进行充值')}}
+            {{$t('mycustomer.bonusTips')}}
           </el-form-item>
           <el-form-item class="d-flex bonusRemark" :label="$t('mycustomer.备注：')">
             <el-input type="textarea" :autosize="{ minRows: 2}" v-model="bonusParams.remark"></el-input>

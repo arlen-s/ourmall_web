@@ -742,7 +742,8 @@ export default {
       this.$apiCall("api.Invoice.getBonus", {}, (r) => {
         if (r.ErrorCode == "9999") {
           this.bonus = Number(r.Data.Results.bonus).toFixed(2);
-          this.credits = Number(r.Data.Results.creditAmount) - Number(r.Data.Results.usedCreditAmount);
+          this.credits = (Number(r.Data.Results.creditAmount) - Number(r.Data.Results.usedCreditAmount)).toFixed(2);
+      
           this.bonusStatus = r.Data.Results.bonusStatus;
           this.bonusStatus != "1"
             ? (this.switchBonus = false)

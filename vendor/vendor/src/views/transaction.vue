@@ -304,8 +304,8 @@
 							<el-table-column :label=" $t('transaction.交易')" width="150">
 								<template slot-scope="scope">
 									<span class="tx-danger">
-										{{scope.row.bonusAmount}}</span> <br/>
-									<span >{{scope.row.creditAmount}}</span>
+										{{ Number(scope.row.bonusAmount).toFixed(2) }}</span> <br/>
+									<span >{{ Number(scope.row.creditAmount).toFixed(2)}}</span>
 								</template>
 							</el-table-column>
 							<el-table-column :label="$t('transaction.tradeStatus')">
@@ -495,6 +495,12 @@
 				}, {
 					id: 6,
 					name: this.$t('transaction.payment6')
+				},{
+					id: 7,
+					name: this.$t('transaction.payment7')
+				}, {
+					id: 8,
+					name: this.$t('transaction.payment8')
 				}, {
 					id: 10,
 					name: "dLocal"

@@ -35,6 +35,8 @@ export const lang = {
   status3:'已退款',
   status9:'取消',
   payment6:'bonus余额',
+  payment7:'信用支付',
+  payment8:'bonus余额+信用支付',
   payment12:'线下收款',
   '交易': '实付金额/信用支付',
   '支付明细': '支付明细',

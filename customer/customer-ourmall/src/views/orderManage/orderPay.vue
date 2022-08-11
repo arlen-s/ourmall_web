@@ -127,7 +127,7 @@
 									</el-input>
 								</div>
 							</div>
-							<div class="pay-bouns" v-if="bonusStatus == 1" :class="{ dis: bonus == 0 || bonus < totalAllGoodsAndFreight}" @click="changeBonusPlatform(6)">
+							<div class="pay-bouns" v-if="bonusStatus == 1" :class="{ dis: bonus + credits< totalAllGoodsAndFreight}" @click="changeBonusPlatform(6)">
 								<span style="margin-right: 30px;">
 									Bonus:
 									<span class="tx-bold"> ($ {{bonus}})</span>
@@ -140,7 +140,7 @@
 									Credits:
 									<span class="tx-bold"> ($ {{credits}})</span>
 								</span>
-								<div class="active" v-show="platformType != 6 || bonus == 0 || bonus < totalAllGoodsAndFreight">
+								<div class="active" v-show="platformType != 6 ||  bonus + credits < totalAllGoodsAndFreight">
 									<img src="../../assets/pay/Basic.png" alt="" height="25">
 								</div>
 								<div class="active-icon" v-show="platformType == 6">
@@ -779,7 +779,7 @@ import { arrayEach } from 'xe-utils/methods';
 				
 			},
 			changeBonusPlatform() {
-				if(this.bonus == 0 || this.bonus < this.totalAllGoodsAndFreight){
+				if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
 					return;
 				}else{
 					if(this.platformType == 6){

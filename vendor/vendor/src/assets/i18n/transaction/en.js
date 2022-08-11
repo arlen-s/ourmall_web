@@ -35,6 +35,8 @@ export const lang = {
 	status3:'Refunded',
 	status9:'Cancel',
 	payment6:'Bonus balance',
+	payment7:'credit',
+  payment8:'Bonus balance + credit',
 	payment12:'Offline payment',
 	'交易': 'Amount paid/Credit payment',
 	'支付明细': 'Billing Detail',

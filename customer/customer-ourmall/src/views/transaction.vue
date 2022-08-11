@@ -263,8 +263,8 @@
 							<el-table-column label=" Amount paid/Credit payment" width="150">
 								<template slot-scope="scope">
 									<span class="tx-danger">
-										{{scope.row.bonusAmount}}</span> <br/>
-									<span >{{scope.row.creditAmount}}</span>
+										{{ Number(scope.row.bonusAmount).toFixed(2) }}</span> <br/>
+									<span >{{ Number(scope.row.creditAmount).toFixed(2)}}</span>
 								</template>
 							</el-table-column>
 							<el-table-column label="Trade status" width="150">
@@ -290,8 +290,7 @@
 										</el-link> -->
 										<el-link :disabled="scope.row.type != '1'" class="mg-r-20" type="primary" @click="openExportDetail(scope.row)">
 											View detail
-										</el-link><br/>
-													<el-link @click="setOrder(scope.row)" type="primary" >处理</el-link>
+										</el-link>
 									</div>
 								</template>
 							</el-table-column>
@@ -453,6 +452,12 @@
 				}, {
 					id: 6,
 					name: "Bonus balance"
+				}, {
+					id: 7,
+					name: "Credit"
+				}, {
+					id: 8,
+					name: "balance + credit"
 				}, {
 					id: 10,
 					name: "dLocal"
