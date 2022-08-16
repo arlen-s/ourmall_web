@@ -108,7 +108,10 @@
                     >
                     </el-input>
                   </el-form-item>
-                  <el-form-item>
+                  <!-- <el-form-item>
+                    <JcRange  status="regStatus.confirmSuccess" :successFun="success('login')" :errorFun="onMpanelError"></JcRange>
+                  </el-form-item> -->
+                  <!-- <el-form-item>
                     <vue-simple-verify
                       ref="verify2"
                       @success="success('login')"
@@ -123,7 +126,7 @@
                       }`"
                       movedColor="#5c6ac4"
                     />
-                  </el-form-item>
+                  </el-form-item> -->
                   <el-form-item>
                     <el-input
                       v-model="loginForm.token"
@@ -396,6 +399,7 @@
 <script>
 import UserAgreementDialog from "@/components/userAgreementDialog";
 import RetrievePasswordDialog from "@/components/RetrievePasswordDialog";
+// import JcRange from "@/components/JcRange.vue";
 export default {
   data() {
     const validatePass2 = (rule, value, callback) => {
@@ -410,6 +414,7 @@ export default {
     return {
       timer: null,
       labelWidth: "0px",
+      status: false,
       loading: false,
       formValue: {
         username: "",
@@ -581,6 +586,7 @@ export default {
     // homeAlert,
     // Footer,
     UserAgreementDialog,
+    // JcRange
   },
   computed: {
     lang() {
@@ -780,6 +786,9 @@ export default {
         object: "2002",
       });
       this.sendToken();
+    },
+    onMpanelError(){
+
     },
     openUserAgreement() {
       this.$refs.userAgreementDialog.open();
