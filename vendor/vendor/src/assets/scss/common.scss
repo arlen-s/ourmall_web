@@ -3,6 +3,21 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.el-table.hide-more tbody tr:nth-child(n+4) {
+  display: none;
+}
+/* table */
+.property-td .el-table--scrollable-x .el-table__body-wrapper {
+  overflow-x: hidden;
+}
+.el-table__body td.property-td {
+  vertical-align: top;
+  padding: 0;
+}
+
+.el-table__body td.property-td>.cell {
+  padding: 0;
+}
 
 .tx-ellipsis2 {
   overflow: hidden;

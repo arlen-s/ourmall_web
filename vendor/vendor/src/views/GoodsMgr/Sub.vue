@@ -263,7 +263,13 @@ export default {
       return this.$t(text);
     },
     gotoEdit(id){ //跳转到
+          let UserId = localStorage.getItem('apiUserId')
+      if (UserId == 150488) {
+      this.$router.push({name: 'AddGoods2', query: {id}})
+      }else{
       this.$router.push({name: 'AddGoods', query: {id}})
+      }
+
     },
     filterGetItem(){
       this.$emit('filterGetItem');

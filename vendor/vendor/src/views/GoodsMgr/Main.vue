@@ -532,9 +532,16 @@ export default {
         this.$router.push({ name: tab.name });
       }
     },
-    goto(name){
-      if(name)
-        this.$router.push({name});
+    goto (name) {
+      let id = localStorage.getItem('apiUserId')
+      if (id == 150488) {
+        let name = 'AddGoods2'
+        this.$router.push({ name })
+      } else {
+        this.$router.push({ name })
+      }
+
+
     },
     gotoPage() {
       this.page = this.$route.query.page ? this.$route.query.page : 1;

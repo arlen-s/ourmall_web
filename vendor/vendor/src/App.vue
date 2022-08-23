@@ -872,6 +872,28 @@
 						role: "customerView",
 						enabled: true,
 					},
+					{
+						id: 45,
+						text: "router.storehouse",
+						icon: "el-icon-s-custom",
+						path: "/storehouse",
+						role: "customerView",
+						enabled: true,
+						subItem: [
+							{
+								name: "router.houseList",
+								path: "/storehouse/house",
+								enabled: true,
+								role: "",
+							},						
+							// 	{
+							// 	name: "router.stockSku",
+							// 	path: "/storehouse/stockSkuList",
+							// 	enabled: true,
+							// 	role: "",
+							// },
+						],
+					},
 					// {
 					// 	id: 5,
 					// 	text: "app.entrustedShopifyStores",

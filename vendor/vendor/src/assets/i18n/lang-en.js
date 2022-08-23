@@ -17,6 +17,7 @@ export const lang = {
   router: {
     Quotation:'My Quotations',
     dashboard: 'Dashboard',
+    storehouse: 'storehouse',
     customer: 'Customers',
     myInvoice: 'Purhcase Orders',
     ticket: 'Tickets',

@@ -29,6 +29,7 @@ export const lang = {
 		shopifyOrder: '一键托管店铺生成订单',
 		Pricing: '系统定价',
 		invite: '邀请',
+		'storehouse': '仓库管理',
 		'全部订单': '全部订单',
 		'待报价采购单': '待报价采购单',
 		'待客户付款': '待客户付款',

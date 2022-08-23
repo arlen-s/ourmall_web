@@ -185,6 +185,39 @@ const routes = [
     component: () => import(/* webpackChunkName: "Invoice" */ './../views/Invoice.vue')
   },
   {
+    //仓库列表
+    path: '/storehouse',
+    meta: {
+      title: '',
+      urlActive: '/storehouse',
+      role: "storehouse",
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'goods-mgr' */ '@/views/storehouse/Main.vue'),
+    children: [
+      {
+        path: 'house',
+        name: 'storehouse-house',
+        meta: {
+          title: 'router.houseList',
+          urlActive: '/storehouse',
+          checkLogin: true,
+        },
+        component: () => import('@/views/storehouse/house.vue'),
+      },
+      {
+        path: 'stockSkuList',
+        name: 'sku-list',
+        meta: {
+          title: 'router.stockSku',
+          urlActive: '/stockSkuList',
+          checkLogin: true,
+        },
+        component: () => import( '@/views/storehouse/stockSkuList.vue')
+      },
+    ]
+  },
+  {
     path: '/InvoiceCopy',
     name: 'InvoiceCopy',
     meta: {
@@ -620,7 +653,17 @@ const routes = [
       urlActive: '/add-goods',
       checkLogin: true,
     },
-    component: () => import(/* webpackChunkName: 'addGoods' */ '@/views/AddGoods/Main.vue'),
+    component: () => import(/* webpackChunkName: 'addGoods' */  '@/views/AddGoods/Main2.vue' ),
+  },
+  {
+    path: '/add-goods2',
+    name: 'AddGoods2',
+    meta: {
+      title: '新建商品',
+      urlActive: '/add-goods2',
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'addGoods' */'@/views/AddGoods/Main.vue'  ),
   },
   {
     path: '/category-mgr',
