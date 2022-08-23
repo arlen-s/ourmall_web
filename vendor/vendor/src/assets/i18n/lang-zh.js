@@ -189,4 +189,5 @@ export const lang = {
 	storeSetting: require('./storeSetting/zh').lang,
 	discount: require('./discount/zh').lang,
 	menuSetting: require('./menuSetting/zh').lang,
+	storehouse: require('./storehouse/zh').lang,
 }

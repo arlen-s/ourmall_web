@@ -188,4 +188,5 @@ export const lang = {
   storeSetting: require('./storeSetting/en').lang,
 	discount: require('./discount/en').lang,
 	menuSetting: require('./menuSetting/en').lang,
+	storehouse: require('./storehouse/en').lang,
 }
