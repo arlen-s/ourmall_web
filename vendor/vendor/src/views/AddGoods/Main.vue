@@ -317,7 +317,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column align="center" :label="$t('goodsEdit.重量')" width="140">
-                  <template slot="header" slot-scope>{{$t('goodsEdit.重量')}}(kg)</template>
+                  <template slot="header" slot-scope>{{$t('goodsEdit.重量')}}(g)</template>
                   <template slot-scope="scope">
                     <!-- <el-input-number
                       size="mini"
@@ -605,11 +605,11 @@
                       <el-table-column
                         align="center"
                         width="180"
-                        prop="barcode"
+                        prop="barCode"
                         :label="$t('goodsEdit.条形码')"
                       >
                         <template slot-scope="scope">
-                          <el-input v-model="scope.row.barcode" :placeholder="$t('goodsEdit.条形码')"></el-input>
+                          <el-input v-model="scope.row.barCode" :placeholder="$t('goodsEdit.条形码')"></el-input>
                         </template>
                       </el-table-column>
                       <el-table-column
@@ -731,7 +731,7 @@
     <el-dialog :visible.sync="dialogStorehouse.show" :width="'400px'" :title="$t('仓库信息')">
       <div class="sale-box">
         <el-checkbox-group v-model="checkStoreList">
-          <el-checkbox v-for="item of storehouse" :key="item.id" :label="item">{{item.name}}</el-checkbox>
+          <el-checkbox v-for="item of storehouse" :disabled="productId && item.isDs" :key="item.id" :label="item">{{item.name}}</el-checkbox>
         </el-checkbox-group>
       </div>
       <el-divider></el-divider>
@@ -807,6 +807,18 @@ export default {
       propType: 1, // 单多属性 1-2
       stepsActive: 0, // 新建步骤 0-1
       productId: '',
+      singleStorehouse:[{
+        sku: '',
+        productName: '',
+        childArr: [
+        ]
+      }],
+      multiStorehouse:[{
+        sku: '',
+        productName: '',
+        childArr: [
+        ]
+      }],
       form: { //填写数据
         name: '',
         status: true,
@@ -1017,20 +1029,22 @@ export default {
       },
       deep: true,
     },
-    // propType (newVal, oldVal) {
-    //   if (newVal == 1) {
-    //     this.tableData[0] = {
-    //       productName: this.form.stockSingle[0].productName,
-    //       sku: this.form.stockSingle[0].sku,
-    //       childArr: [
-    //       ]
-    //     }
-    //   }
-    // }
+    propType (newVal, oldVal) {
+      if (newVal == 1) {
+        this.tableData = this.singleStorehouse
+        let lng = this.tableData[0].childArr.length
+        if (lng == 0) {
+
+        }
+      }else{
+        this.tableData = this.multiStorehouse
+      }
+    }
   },
 
   mounted () {
     this.productId = this.$route.query.id
+    this.getHouseInfo()
     this.getCategroy()
     this.getCustomerList()
     window.addEventListener('storage', this.runGetCategroy)
@@ -1099,6 +1113,12 @@ export default {
       this.$apiCall("api.Warehouse.finds", params, (r) => {
         this.loading = false
         if (r.ErrorCode == 9999) {
+          this.storehouse = r.Data.Results.map(item=>{
+           item.isDs = false
+            return item
+          })
+        if (this.productId) { //获取分类后获取商品详细信息
+          this.getProduct()
 
           this.storehouse = r.Data.Results
         } else {
@@ -1106,6 +1126,7 @@ export default {
             message: r.Message,
             type: "error"
           })
+        }
         }
       })
     },
@@ -1118,7 +1139,7 @@ export default {
           nation: chid.countryName,
           price: '0.00',
           cost: '0.00',
-          barcode: '',
+          barCode: '',
           Inventory: '',
           warehouseId: chid.id,
           provinceId: chid.provinceId,
@@ -1311,20 +1332,32 @@ export default {
               this.$set(item, "email", item.customer && item.customer.email || '')
             })
           }
-          this.tableData = data.skuWarehouse
+         
           for (let a = 0; a < data.skuWarehouse.length; a++) {
             for (let i = 0; i < data.skuWarehouse[a].childArr.length; i++) {
               for (let j = 0; j < this.storehouse.length; j++) {
                 if (data.skuWarehouse[a].childArr[i].warehouseId == this.storehouse[j].id) {
                   data.skuWarehouse[a].childArr[i].storehouse = this.storehouse[j].name
                   data.skuWarehouse[a].childArr[i].nation = this.storehouse[j].countryName
-                  this.checkStoreList.push(this.storehouse[j])
+                  this.checkStoreList.push( this.storehouse[j])
+                  this.storehouse[j].isDs = true
                 }
 
               }
 
             }
           }
+          setTimeout(() => {
+                      if (data.stocks.length  >1) {
+            this.multiStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse)) 
+            this.tableData =  this.multiStorehouse
+          }else{
+            this.singleStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse)) 
+            this.tableData =  this.singleStorehouse
+          }
+        
+          }, 200);
+  console.log('1111111', this.tableData, data.skuWarehouse);
           this.form.name = data.name //商品名称
           this.form.status = data.status == '1' //是否上架
           this.form.spu = data.sku //spu
@@ -1375,11 +1408,11 @@ export default {
           if (data.stocks.length > 1) {
             //多属性
             //propertyNames
-            data.propertyName.split('||').forEach(e => {
-              this.form.propertyNames.push({
+            this.form.propertyNames= data.propertyName.split('||').map(e => {
+           return {
                 label: e,
                 tags: [],
-              })
+              }
             })
             let tArr = []
             data.stocks.forEach(e => {
@@ -1414,7 +1447,7 @@ export default {
                 error: false,
                 combination: 1,
                 currency: e.currency || '',
-                isCombination: 2,
+                isCombination: e.isCombination || 2,
                 material: e.material || '',
                 packageHeight: e.packageHeight || 0.00,
                 packageLength: e.packageLength || 0.00,
@@ -1558,10 +1591,15 @@ export default {
         this.stepsActive = 0
         return
       }
-      // if(!this.bulk){
-      //   this.$message({ message: '商品尺寸必须输入', type: "error" })
-      //   return;
-      // }
+
+      
+       if (this.tableData.some(item=>item.childArr.length == 0)) {
+        this.$message({
+          message: this.$t('goodsEdit.仓库必须填写'),
+          type: "error"
+        })
+        return
+      }
       if (!this.imgUrls.length) {
         this.$message({
           message: this.$t('goodsEdit.至少需要上传一张图片'),
@@ -1598,30 +1636,22 @@ export default {
         let arr = this.form.stockMulti
         for (let i = 0; arr.length > i; i++) {
           error = true
-          // if (!/^\d+$|^\d*\.\d+$/g.test(arr[i].price)) {
-          //   this.$message({
-          //     message: this.$t('goodsEdit.多规格售价必须全部填写'),
-          //     type: "error"
-          //   })
-          //   arr[i].error = true
-          //   break
-          // }
-          // if (!arr[i].weight) {
-          //   this.$message({
-          //     message: this.$t('goodsEdit.多规格重量必须全部填写'),
-          //     type: "error"
-          //   })
-          //   arr[i].error = true
-          //   break
-          // }
-          // if (!arr[i].sku) {
-          //   this.$message({
-          //     message: this.$t('goodsEdit.多规格SKU必须全部填写'),
-          //     type: "error"
-          //   })
-          //   arr[i].error = true
-          //   break
-          // }
+          if (!arr[i].productName) {
+            this.$message({
+              message: this.$t('goodsEdit.商品名必须填写'),
+              type: "error"
+            })
+            arr[i].error = true
+            break
+          }
+          if (!arr[i].sku) {
+            this.$message({
+              message: this.$t('goodsEdit.多规格SKU必须全部填写'),
+              type: "error"
+            })
+            arr[i].error = true
+            break
+          }
           //全通过
           arr[i].error = false
           error = false
@@ -1633,7 +1663,7 @@ export default {
       let sail = []
       for (let h = 0; h < skuWarehouse.length; h++) {
         for (let i = 0; i < skuWarehouse[h].childArr.length; i++) {
-          let a = { warehouseId: skuWarehouse[h].childArr[i].warehouseId, productId: skuWarehouse[h].childArr[i].provinceId, sku: skuWarehouse[h].sku, price: skuWarehouse[h].childArr[i].price, cost: skuWarehouse[h].childArr[i].cost, barCode: skuWarehouse[h].childArr[i].barcode, inventory: skuWarehouse[h].childArr[i].inventory }
+          let a = { warehouseId: skuWarehouse[h].childArr[i].warehouseId, productId: skuWarehouse[h].childArr[i].provinceId, sku: skuWarehouse[h].sku, price: skuWarehouse[h].childArr[i].price, cost: skuWarehouse[h].childArr[i].cost, barCode: skuWarehouse[h].childArr[i].barCode, inventory: skuWarehouse[h].childArr[i].inventory }
           sail.push(a)
 
         }
@@ -1651,6 +1681,21 @@ export default {
           barCode: e.barCode || '',
           inventory: e.inventory < 0 ? '' : e.inventory || undefined,
           propertyValue: e.propertyValue.join('||'),
+          combination: 1,
+          currency: e.currency || '',
+          isCombination: e.isCombination || 2,
+          material: e.material || '',
+          packageHeight: e.packageHeight || 0.00,
+          packageLength: e.packageLength || 0.00,
+          packageWidth: e.packageWidth || 0.00,
+          productAliId: e.productAliId || '',
+          productHeight: e.productHeight || 0.00,
+          productId: e.productId || '',
+          productLength: e.productLength || 0.00,
+          productName: e.productName || '',
+          productType: e.productType || [],
+          productWidth: e.productWidth || 0.00,
+          propertyImage: e.propertyImage || '',
         }
       })
       stocks.forEach((item) => {
@@ -1795,19 +1840,23 @@ export default {
           sku: this.form.stockMulti[this.index].sku,
           childArr :this.tableData[this.index].childArr.length  >0 ?this.tableData[this.index].childArr : []
         }
-        if (!this.productId) {
-          this.tableData[this.index].childArr = []
-        }
+        // if (!this.productId) {
+        //   this.tableData[this.index].childArr = []
+        // }
       } else {
         this.form.stockSingle[0] = v
-        this.tableData[0] = {
-          productName: this.form.stockSingle[0].productName,
-          sku: this.form.stockSingle[0].sku,
+        this.tableData[0].productName =this.form.stockSingle[0].productName
+        this.tableData[0].sku =this.form.stockSingle[0].sku 
+        // {
+        //   productName: this.form.stockSingle[0].productName,
+        //   sku: this.form.stockSingle[0].sku,
+        // }
+        // if (!this.productId) {
+        //   this.tableData[0].childArr = []
+        // }
         }
-        if (!this.productId) {
-          this.tableData[0].childArr = []
-        }
-      }
+      
+    console.log(this.drawerStorePropsData.isMulti, 'this.drawerStorePropsData.isMulti');
       this.num++
     },
     getCategroy (status) {
@@ -1877,7 +1926,49 @@ export default {
         //   return;
         // }
         if (step == 2) {
-
+      if (this.propType == 1) {
+        if (!this.form.stockSingle[0].productName) {
+          this.$message({
+            message: this.$t('goodsEdit.商品名必须填写'),
+            type: "error"
+          })
+          return
+        }
+        if (!this.form.stockSingle[0].sku) {
+          this.$message({
+            message: this.$t('goodsEdit.SKU必须填写'),
+            type: "error"
+          })
+          return
+        }
+      } else {
+        //验证多属性
+        let error = false
+        let arr = this.form.stockMulti
+        for (let i = 0; arr.length > i; i++) {
+          error = true
+          if (!arr[i].productName) {
+            this.$message({
+              message: this.$t('goodsEdit.商品名必须填写'),
+              type: "error"
+            })
+            arr[i].error = true
+            break
+          }
+          if (!arr[i].sku) {
+            this.$message({
+              message: this.$t('goodsEdit.多规格SKU必须全部填写'),
+              type: "error"
+            })
+            arr[i].error = true
+            break
+          }
+          //全通过
+          arr[i].error = false
+          error = false
+        }
+        if (error) return
+      }
         }
         if (this.visibleRange == 2) {
           this.$apiCall('api.VendorShop.checkProductVisibleCustomers', {
@@ -2375,5 +2466,8 @@ export default {
       }
     }
   }
+}
+::v-deep.img-wrap a{
+  line-height: 22px !important;
 }
 </style>

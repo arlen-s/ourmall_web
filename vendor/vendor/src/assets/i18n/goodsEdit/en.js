@@ -15,6 +15,7 @@ export const lang = {
   '商品分类': 'Product classification',
   '新增类目': 'Add a new category',
   '商品中文名':'Product Chinese name',
+'仓库必须填写': 'warehouse must be filled',
   '是否为组合':'Is combination',
   '商品名必须填写': 'Product name must be filled',
   '属性':'Attributes',

@@ -226,9 +226,11 @@ export default {
       setTimeout(() => {
         if (!this.data.form.sku) {
           this.$message.error("SKU必填")
+          return 
         }
         if (!this.data.form.productName) {
           this.$message.error("商品中文名必填")
+          return 
         }
         this.data.isShow = false
         this.$emit('callBackProps', this.data.form)

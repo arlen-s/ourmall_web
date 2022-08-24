@@ -238,6 +238,7 @@ export default {
       isAllCheck: false,
       checkboxArr: [],
       productTypeArr: this.$dict.productTypeArr,
+      appUserId: localStorage.getItem('apiUserId'),
     }  
   },
   watch: {
