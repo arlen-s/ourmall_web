@@ -18,6 +18,7 @@ export const lang = {
 		Quotation: '我的报价单',
 		dashboard: '我的首页',
 		customer: '客户管理',
+		houseList: '仓库列表',
 		myInvoice: '我的采购订单',
 		billList: '账单详情',
 		ticket: '客服支持',

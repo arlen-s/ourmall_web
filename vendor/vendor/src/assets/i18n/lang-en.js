@@ -19,6 +19,7 @@ export const lang = {
     dashboard: 'Dashboard',
     storehouse: 'storehouse',
     customer: 'Customers',
+    houseList: 'warehouse list',
     myInvoice: 'Purhcase Orders',
     ticket: 'Tickets',
     import: 'Import',
