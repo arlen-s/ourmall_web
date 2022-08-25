@@ -29,17 +29,17 @@
 					</el-alert>
 					<!-- 套餐  -->
 					<div style="margin-left:25px" v-if="vipNowData&&vipNowData.name&&vipNowData&&vipNowData.name">
-						<el-popover trigger="hover" placement="bottom-start" width="400">
+						<!-- <el-popover trigger="hover" placement="bottom-start" width="400"> -->
 							<div slot="reference" class="vip-type">
 								{{$i18n.locale == 'zh'? vipNowData.name :vipNowData.nameEn}}
 								<i class="el-icon-caret-bottom"></i>
 							</div>
-							<div style="padding:10px">
+							<!-- <div style="padding:10px">
 								<div style="display:flex;margin-bottom:8px">
 									<el-avatar v-if="!VondersData.logo" atar class="mg-r-15" icon="el-icon-s-shop">
 									</el-avatar>
-									<el-avatar v-else atar class="mg-r-15" :src="VondersData.logo"></el-avatar>
-									<div style="width: calc(100% - 55px)">
+									<el-avatar v-else atar class="mg-r-15" :src="VondersData.logo"></el-avatar> -->
+									<!-- <div style="width: calc(100% - 55px)">
 										<div class="tx-ellipsis1" style="font-size:18px;width:150px;font-weight:700">
 											{{VondersData.name}}</div>
 										<div class="mg-t-5 mg-b-10" style="font-size:14px">
@@ -74,11 +74,11 @@
 										<el-button v-if="false" type="primary" size="mini" @click="toPricing">
 											{{$t('package.升级套餐')}}
 										</el-button>
-									</div>
-								</div>
+									</div> -->
+								<!-- </div> -->
 
-							</div>
-						</el-popover>
+							<!-- </div> -->
+						<!-- </el-popover> -->
 					</div>
 				</div>
 				<div class="right">
@@ -805,6 +805,7 @@
 								enabled: true,
 								role: "productListView",
 							},
+
 							{
 								name: "app.商品类目",
 								path: "/category-mgr",
@@ -1186,6 +1187,8 @@
 			if(this.$route.name == 'jump'){
 				return;
 			}
+	
+
 			// this.openChat = this.$route.query.isOpen ? true : false;
 			this.openChat = this.$getParams("isOpen") ? true : false;
 			
