@@ -153,7 +153,7 @@
               :before-upload="beforeAvatarUpload"
               :on-remove="handleRemove"
             >
-              <img v-if="data.form.propertyImage" :src="data.form.propertyImage" class="avatar" />
+              <img v-if="data.form.propertyImageOriginal" :src="data.form.propertyImageOriginal" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </div>
@@ -275,7 +275,7 @@ export default {
       }, r => {
         // obj.loading = false
         if (r.ErrorCode == 9999) {
-          this.data.form.propertyImage = r.Data.Results.imgUrl
+          this.data.form.propertyImageOriginal = r.Data.Results.imgUrl
         } else {
           // this.form.imgUrlsList.splice(this.form.imgUrlsList.length - 1, 1)
           this.$message({
