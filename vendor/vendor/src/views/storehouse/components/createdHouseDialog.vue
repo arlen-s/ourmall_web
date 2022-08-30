@@ -31,7 +31,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="resetForm">{{$t('storehouse.取消')}}</el-button>
-        <el-button type="primary" @click="save">{{$t('storehouse.确定')}}</el-button>
+        <el-button type="primary" @click="save">{{$t('storehouse.创建')}}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -69,11 +69,11 @@ export default {
   methods: {
     save () {
       if (this.dialogAddData.form.name == '') {
-        this.$message.error('请填写仓库名称')
+        this.$message.error($t('storehouse.请填写仓库名称'))
         return false
       }
       if (this.dialogAddData.form.nation == '') {
-        this.$message.error('请选择国家')
+        this.$message.error($t('storehouse.请选择国家'))
         return false
       }
       let params = {

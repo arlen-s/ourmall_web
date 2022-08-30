@@ -94,8 +94,8 @@
 											{{$t("invoice.token")}}</el-link>
 									</div>
 									<div>
-										<el-link :disabled="!$isRole($route.meta.roleWrite)" type="danger"
-											@click="delItem(scope.row)">{{$t('shop.删除')}}</el-link>
+										<!-- <el-link :disabled="!$isRole($route.meta.roleWrite)" type="danger"
+											@click="delItem(scope.row)">{{$t('shop.删除')}}</el-link> -->
 									</div>
 								</template>
 							</el-table-column>
@@ -128,7 +128,7 @@
 								{{$t('shop.员工使用该手机号作为帐号即可登录后台')}}
 							</div>
 						</el-form-item>
-						<!-- <el-form-item :label="$t('shop.账号密码')" required>
+						<el-form-item :label="$t('shop.账号密码')" required>
             <el-input
               :placeholder="$t('shop.请输入员工账号的密码')"
               v-model="form.password"
@@ -136,8 +136,8 @@
               auto-complete="new-password"
             >
             </el-input>
-          </el-form-item> -->
-					</template>
+          </el-form-item>
+					</template>			
 					<el-form-item :label="$t('shop.员工姓名')" required>
 						<el-input v-model="form.name">
 						</el-input>
@@ -488,9 +488,9 @@
 					//   this.$message({message: this.$t('shop.请输入员工账号的密码'), type: "error"});
 					//   return false;
 					// }
-					if (!this.form.name) {
+					if (!this.form.password) {
 						this.$message({
-							message: this.$t('shop.请输入员工姓名'),
+							message: this.$t('shop.请输入员工账号的密码'),
 							type: "error"
 						});
 						return false;

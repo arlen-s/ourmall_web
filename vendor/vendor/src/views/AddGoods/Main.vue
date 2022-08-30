@@ -443,11 +443,11 @@
                         <span v-else>组合</span>
                       </template>
                     </el-table-column>
-                    <el-table-column align="center" :label="$t('goodsEdit.属性')">
+                    <!-- <el-table-column align="center" :label="$t('goodsEdit.属性')">
                       <template slot-scope="scope">
                         <span>单一属性</span>
                       </template>
-                    </el-table-column>
+                    </el-table-column> -->
                     <!-- <el-table-column width="150">
                       <template slot="header">
                         <span class="tx-danger">*</span>
@@ -731,7 +731,12 @@
     <el-dialog :visible.sync="dialogStorehouse.show" :width="'400px'" :title="$t('仓库信息')">
       <div class="sale-box">
         <el-checkbox-group v-model="checkStoreList">
-          <el-checkbox v-for="item of storehouse" :disabled="productId && item.isDs" :key="item.id" :label="item">{{item.name}}</el-checkbox>
+          <el-checkbox
+            v-for="item of storehouse"
+            :disabled="productId && item.isDs"
+            :key="item.id"
+            :label="item"
+          >{{item.name}}</el-checkbox>
         </el-checkbox-group>
       </div>
       <el-divider></el-divider>
@@ -807,13 +812,13 @@ export default {
       propType: 1, // 单多属性 1-2
       stepsActive: 0, // 新建步骤 0-1
       productId: '',
-      singleStorehouse:[{
+      singleStorehouse: [{
         sku: '',
         productName: '',
         childArr: [
         ]
       }],
-      multiStorehouse:[{
+      multiStorehouse: [{
         sku: '',
         productName: '',
         childArr: [
@@ -836,6 +841,7 @@ export default {
           combination: 1,
           inventory: undefined,
           propertyValue: 'default',
+          propertyImage: '',
           propertyImageOriginal: '',
           barCode: '',
           cost: '0.00',
@@ -1036,9 +1042,10 @@ export default {
         if (lng == 0) {
 
         }
-      }else{
+      } else {
         this.tableData = this.multiStorehouse
       }
+      console.log(this.tableData, 'this.tableData')
     }
   },
 
@@ -1112,7 +1119,7 @@ export default {
       this.$apiCall("api.Warehouse.finds", params, (r) => {
         this.loading = false
         if (r.ErrorCode == 9999) {
-          this.storehouse = r.Data.Results.map(item=>{
+          this.storehouse = r.Data.Results.map(item => {
            item.isDs = false
             return item
           })
@@ -1160,7 +1167,7 @@ export default {
         if (copyItem.length) {
           item.childArr = JSON.parse(JSON.stringify([...copyItem, ...checkList]))
         } else {
-          item.childArr =JSON.parse(JSON.stringify( [...item.childArr, ...checkList]))
+          item.childArr = JSON.parse(JSON.stringify([...item.childArr, ...checkList]))
 
         }
 
@@ -1338,23 +1345,23 @@ export default {
                 if (data.skuWarehouse[a].childArr[i].warehouseId == this.storehouse[j].id) {
                   data.skuWarehouse[a].childArr[i].storehouse = this.storehouse[j].name
                   data.skuWarehouse[a].childArr[i].nation = this.storehouse[j].countryName
-                  this.checkStoreList.push( this.storehouse[j])
+                  this.checkStoreList.push(this.storehouse[j])
                   this.storehouse[j].isDs = true
                 }
               }
             }
           }
           setTimeout(() => {
-                      if (data.stocks.length  >1) {
+            if (data.stocks.length > 1) {
             this.multiStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse)) 
-            this.tableData =  this.multiStorehouse
-          }else{
+              this.tableData = this.multiStorehouse
+            } else {
             this.singleStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse)) 
-            this.tableData =  this.singleStorehouse
+              this.tableData = this.singleStorehouse
           }
         
-          }, 200);
-  console.log('1111111', this.tableData, data.skuWarehouse);
+          }, 200)
+          console.log('1111111', this.tableData, data.skuWarehouse)
           this.form.name = data.name //商品名称
           this.form.status = data.status == '1' //是否上架
           this.form.spu = data.sku //spu
@@ -1405,7 +1412,7 @@ export default {
           if (data.stocks.length > 1) {
             //多属性
             //propertyNames
-            this.form.propertyNames= data.propertyName.split('||').map(e => {
+            this.form.propertyNames = data.propertyName.split('||').map(e => {
            return {
                 label: e,
                 tags: [],
@@ -1438,7 +1445,7 @@ export default {
                 inventory: e.inventory || undefined,
                 price: e.price || undefined,
                 propertyValue: e.propertyValue.split('||'),
-                propertyImageOriginal: e.propertyImageOriginal || '',
+                propertyImage: e.propertyImageOriginal || '',
                 sku: e.sku,
                 weight: e.weight ? (e.weight / 1000).toFixed(3) : undefined,
                 error: false,
@@ -1467,6 +1474,7 @@ export default {
                   this.form.propertyNames[i].tags.push({
                     text: t,
                     value: t,
+                    propertyImage:imgItem.propertyImageOriginal,
                     propertyImageOriginal: imgItem.propertyImageOriginal
                   })
                 })
@@ -1489,7 +1497,7 @@ export default {
             this.form.stockSingle[0].stockId = data.stocks[0].id || ''
             this.form.stockSingle[0].propertyValue = "default"
             this.form.stockSingle[0].productName = data.stocks[0].productName || ''
-            this.form.stockSingle[0].productType = this.form.productType
+            this.form.stockSingle[0].productType = data.stocks[0].productType
             this.form.stockSingle[0].weight = data.stocks[0].weight ? (data.stocks[0].weight /
               1000).toFixed(3) : undefined
 
@@ -1581,7 +1589,7 @@ export default {
       }
 
       
-       if (this.tableData.some(item=>item.childArr.length == 0)) {
+      if (this.tableData.some(item => item.childArr.length == 0)) {
         this.$message({
           message: this.$t('goodsEdit.仓库必须填写'),
           type: "error"
@@ -1652,7 +1660,7 @@ export default {
       console.log(this.form.stockMulti, 'sail')
       let stocks = this.form.stockMulti.map(e => {
         return {
-          propertyImageOriginal: e.propertyImageOriginal || '', //propertyImage
+          propertyImage: e.propertyImageOriginal || '', //propertyImage
           stockId: e.id || '',
           price: e.price || '',
           cost: e.cost || '',
@@ -1675,12 +1683,11 @@ export default {
           productName: e.productName || '',
           productType: e.productType || [],
           productWidth: e.productWidth || 0.00,
-          propertyImageOriginal: e.propertyImageOriginal || '',
         }
       })
       stocks.forEach((item) => {
-        if (item.propertyImageOriginal.indexOf('https:') == -1) {
-          item.propertyImageOriginal = `https:${item.propertyImageOriginal}`
+        if (item.propertyImage.indexOf('https:') == -1) {
+          item.propertyImage = `https:${item.propertyImage}`
         }
       })
       let params = {
@@ -1763,7 +1770,14 @@ export default {
         }
         a1.push(ca)
       }
-      this.tableData = a1
+      if (this.propType == 1) {
+        this.singleStorehouse = a1
+        this.tableData = this.singleStorehouse
+      } else {
+        this.multiStorehouse = a1
+        this.tableData = this.multiStorehouse
+      }
+
       console.log(this.tableData, 'this.tableData')
       arr.forEach(e => {
         let pValue = []
@@ -1785,7 +1799,7 @@ export default {
           barCode: '',
           combination: 1,
           inventory: undefined,
-          propertyImageOriginal: '',
+          propertyImage: '',
           barCode: '',
           cost: '0.00',
           currency: '',
@@ -1810,23 +1824,26 @@ export default {
       console.log(this.tableData)
     },
     callBackProps (v) { //编辑单一规格
-    console.log(v, v);
-    console.log(this.tableData, 'this.tableData');
+      console.log(v, 'v00000')
+      console.log(this.index, 'ss22');
+      console.log(this.tableData, 'this.tableData')
       if (this.drawerStorePropsData.isMulti) {
         this.form.stockMulti[this.index] = v
+        this.form.stockMulti[this.index].propertyImage = v.propertyImageOriginal
 
         this.tableData[this.index] = {
           productName: this.form.stockMulti[this.index].productName,
           sku: this.form.stockMulti[this.index].sku,
-          childArr :this.tableData[this.index].childArr.length  >0 ?this.tableData[this.index].childArr : []
+          childArr: this.tableData[this.index].childArr.length > 0 ? this.tableData[this.index].childArr : []
         }
         // if (!this.productId) {
         //   this.tableData[this.index].childArr = []
         // }
       } else {
+        console.log(this.tableData, 'this.tableData101');
         this.form.stockSingle[0] = v
-        this.tableData[0].productName =this.form.stockSingle[0].productName
-        this.tableData[0].sku =this.form.stockSingle[0].sku 
+         this.form.stockSingle[0].propertyImage = this.form.stockSingle[0].propertyImageOriginal
+        this.tableData[0].sku = this.form.stockSingle[0].sku
         // {
         //   productName: this.form.stockSingle[0].productName,
         //   sku: this.form.stockSingle[0].sku,
@@ -1836,7 +1853,7 @@ export default {
         // }
         }
       
-    console.log(this.drawerStorePropsData.isMulti, 'this.drawerStorePropsData.isMulti');
+      console.log(this.drawerStorePropsData.isMulti, 'this.drawerStorePropsData.isMulti')
       this.num++
     },
     getCategroy (status) {
@@ -2095,15 +2112,32 @@ export default {
               this.form.stockSingle.splice(i, 1, {
                 stockId: '',
                 price: undefined,
-                cost: undefined,
                 weight: undefined,
                 sku: '',
+          combination: 1,
+          inventory: undefined,
+          propertyValue: 'default',
+          propertyImage: '',
+          propertyImageOriginal: '',
                 barCode: '',
-                inventory: undefined,
-                propertyValue: 'default'
+          cost: '0.00',
+          currency: '',
+          isCombination: 2,
+          material: '',
+          packageHeight: 0.00,
+          packageLength: 0.00,
+          packageWidth: 0.00,
+          productAliId: '',
+          productHeight: 0.00,
+          productId: '',
+          productLength: 0.00,
+          productName: '',
+          productType: [],
+          productWidth: 0.00,
               })
             } else if (this.propType == 2) { //多属性删除
               this.form.stockMulti.splice(i, 1)
+              this.tableData.splice(i,1)
             }
           }
           if (this.$route.query.isCopy == 1) {//报价复制商品
@@ -2447,7 +2481,7 @@ export default {
     }
   }
 }
-::v-deep.img-wrap a{
+::v-deep.img-wrap a {
   line-height: 22px !important;
 }
 </style>

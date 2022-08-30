@@ -23,17 +23,17 @@
         <el-table-column prop="telephone" align="center" :label="$t('storehouse.联系电话')"></el-table-column>
         <el-table-column align="center" :label="$t('storehouse.状态')">
           <template slot-scope="scope">
-            <span v-if="scope.row.status == 1">启用</span>
-            <span v-else style="color:red">停用</span>
+            <span v-if="scope.row.status == 1">{{$t('storehouse.启用')}}</span>
+            <span v-else style="color:red">{{$t('storehouse.停用')}}</span>
           </template>
         </el-table-column>
         <el-table-column prop="stockQuantity" align="center" :label="$t('storehouse.关联库存SKU数')"></el-table-column>
         <el-table-column prop="createdAt" align="center" :label="$t('storehouse.创建时间')"></el-table-column>
         <el-table-column :label="$t('storehouse.操作')" align="center">
           <template slot-scope="scope">
-            <el-link type="primary" @click="edit(scope.row)" style="margin-right:5px">编辑</el-link>
-            <el-link type="danger" v-if="scope.row.status== 1" @click="handleStatus(scope.row)">停用</el-link>
-            <el-link type="primary" v-else @click="handleStatus(scope.row)">启用</el-link>
+            <el-link type="primary" @click="edit(scope.row)" style="margin-right:5px">{{$t('storehouse.编辑')}}</el-link>
+            <el-link type="danger" v-if="scope.row.status== 1" @click="handleStatus(scope.row)">{{$t('storehouse.停用')}}</el-link>
+            <el-link type="primary" v-else @click="handleStatus(scope.row)">{{$t('storehouse.启用')}}</el-link>
           </template>
         </el-table-column>
       </el-table>
