@@ -131,6 +131,7 @@ export default {
 		},
       dialogVipUp:false,
       loading: false,
+      appUserId: localStorage.getItem('apiUserId'),
       pageKey: new Date().valueOf(),
       activeName: "",
       pageSize: [10, 20, 50, 100],
