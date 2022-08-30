@@ -15,7 +15,7 @@
         >
           <el-link  type="primary" class=" mg-r-15" @click="openDialogExport" :disabled="!$isRole($route.meta.roleWrite)">{{$t('goods.导出产品')}}</el-link>
         </el-badge>
-        <el-link type="primary" class=" mg-r-30" @click="openDialogImport" :disabled="!$isRole($route.meta.roleWrite)">{{$t('goods.导入产品')}}</el-link>
+        <el-link type="primary" class=" mg-r-30" @click="openDialogImport"  v-if="appUserId != 150488" :disabled="!$isRole($route.meta.roleWrite)">{{$t('goods.导入产品')}}</el-link>
         <el-button type="primary" size="small" @click="goto('AddGoods')" :disabled="!$isRole($route.meta.roleWrite)">{{$t('goods.新增产品')}}</el-button>
 		<el-button type="primary" size="small" @click="collectGoods()" :disabled="!$isRole($route.meta.roleWrite)">{{$t('goods.采集商品')}}</el-button>
 	  </div>
