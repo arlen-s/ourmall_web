@@ -640,7 +640,14 @@ export default {
       }
     },
     goToDetail(item){
+            let id = localStorage.getItem('apiUserId')
+      if (id == 150488) {
       window.open(`/item/${item.id}/${item.name.replace(/\s+/g,"-").replace(/[^\w]/g,'_')}.html`)
+      }else{
+     window.open(`/itemOld/${item.id}/${item.name.replace(/\s+/g,"-").replace(/[^\w]/g,'_')}.html`)  //非慧仓
+
+      }
+
     },
     import_pro(item, e) {
       if(!this.$store.state.userInfo){

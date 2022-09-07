@@ -1120,14 +1120,14 @@ export default {
         this.loading = false
         if (r.ErrorCode == 9999) {
           this.storehouse = r.Data.Results.map(item => {
-           item.isDs = false
+            item.isDs = false
             return item
           })
-        if (this.productId) { //获取分类后获取商品详细信息
-          this.getProduct()
+          if (this.productId) { //获取分类后获取商品详细信息
+            this.getProduct()
 
-        }
-       console.log(this.storehouse, 'this.storehouse');
+          }
+          console.log(this.storehouse, 'this.storehouse')
         } else {
           this.$message({
             message: r.Message,
@@ -1137,7 +1137,7 @@ export default {
       })
     },
     handleHouseList () { //仓库选择
-    console.log(this.tableData, 'this.tableData');
+      console.log(this.tableData, 'this.tableData')
       this.dialogStorehouse.show = false
       let lists = []
       this.checkStoreList.forEach((chid, ind) => {
@@ -1338,7 +1338,7 @@ export default {
               this.$set(item, "email", item.customer && item.customer.email || '')
             })
           }
-         
+
           for (let a = 0; a < data.skuWarehouse.length; a++) {
             for (let i = 0; i < data.skuWarehouse[a].childArr.length; i++) {
               for (let j = 0; j < this.storehouse.length; j++) {
@@ -1353,13 +1353,13 @@ export default {
           }
           setTimeout(() => {
             if (data.stocks.length > 1) {
-            this.multiStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse)) 
+              this.multiStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse))
               this.tableData = this.multiStorehouse
             } else {
-            this.singleStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse)) 
+              this.singleStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse))
               this.tableData = this.singleStorehouse
-          }
-        
+            }
+
           }, 200)
           console.log('1111111', this.tableData, data.skuWarehouse)
           this.form.name = data.name //商品名称
@@ -1413,7 +1413,7 @@ export default {
             //多属性
             //propertyNames
             this.form.propertyNames = data.propertyName.split('||').map(e => {
-           return {
+              return {
                 label: e,
                 tags: [],
               }
@@ -1447,7 +1447,7 @@ export default {
                 propertyValue: e.propertyValue.split('||'),
                 propertyImage: e.propertyImageOriginal || '',
                 sku: e.sku,
-                weight: e.weight ? (e.weight / 1000).toFixed(3) : undefined,
+                weight: e.weight ? e.weight : undefined,
                 error: false,
                 combination: 1,
                 currency: e.currency || '',
@@ -1498,8 +1498,7 @@ export default {
             this.form.stockSingle[0].propertyValue = "default"
             this.form.stockSingle[0].productName = data.stocks[0].productName || ''
             this.form.stockSingle[0].productType = data.stocks[0].productType
-            this.form.stockSingle[0].weight = data.stocks[0].weight ? (data.stocks[0].weight /
-              1000).toFixed(3) : undefined
+            this.form.stockSingle[0].weight = data.stocks[0].weight ? data.stocks[0].weight : undefined
 
             this.drawerStorePropsData.form = this.form.stockSingle[0]
             console.log(this.drawerStorePropsData.form, ' this.drawerStorePropsData.form')
@@ -1588,7 +1587,7 @@ export default {
         return
       }
 
-      
+
       if (this.tableData.some(item => item.childArr.length == 0)) {
         this.$message({
           message: this.$t('goodsEdit.仓库必须填写'),
@@ -1721,7 +1720,7 @@ export default {
       //存的时候 kg 转 g
       params.stocks.forEach(e => {
         if (!isNaN(e.weight)) {
-          e.weight = Number(e.weight) * 1000
+          e.weight = Number(e.weight)
         } else {
           e.weight = ''
         }
@@ -1760,7 +1759,7 @@ export default {
       this.form.propertyNames = [...props]
       console.log(propValues)
       let a = []
-     let a1 = []
+      let a1 = []
       for (let i = 0; i < arr.length; i++) {
         let ca = {
           sku: '',
@@ -1851,8 +1850,8 @@ export default {
         // if (!this.productId) {
         //   this.tableData[0].childArr = []
         // }
-        }
-      
+      }
+
       console.log(this.drawerStorePropsData.isMulti, 'this.drawerStorePropsData.isMulti')
       this.num++
     },
@@ -1923,49 +1922,49 @@ export default {
         //   return;
         // }
         if (step == 2) {
-      if (this.propType == 1) {
-        if (!this.form.stockSingle[0].productName) {
-          this.$message({
-            message: this.$t('goodsEdit.商品名必须填写'),
-            type: "error"
-          })
-          return
-        }
-        if (!this.form.stockSingle[0].sku) {
-          this.$message({
-            message: this.$t('goodsEdit.SKU必须填写'),
-            type: "error"
-          })
-          return
-        }
-      } else {
-        //验证多属性
-        let error = false
-        let arr = this.form.stockMulti
-        for (let i = 0; arr.length > i; i++) {
-          error = true
-          if (!arr[i].productName) {
-            this.$message({
-              message: this.$t('goodsEdit.商品名必须填写'),
-              type: "error"
-            })
-            arr[i].error = true
-            break
+          if (this.propType == 1) {
+            if (!this.form.stockSingle[0].productName) {
+              this.$message({
+                message: this.$t('goodsEdit.商品名必须填写'),
+                type: "error"
+              })
+              return
+            }
+            if (!this.form.stockSingle[0].sku) {
+              this.$message({
+                message: this.$t('goodsEdit.SKU必须填写'),
+                type: "error"
+              })
+              return
+            }
+          } else {
+            //验证多属性
+            let error = false
+            let arr = this.form.stockMulti
+            for (let i = 0; arr.length > i; i++) {
+              error = true
+              if (!arr[i].productName) {
+                this.$message({
+                  message: this.$t('goodsEdit.商品名必须填写'),
+                  type: "error"
+                })
+                arr[i].error = true
+                break
+              }
+              if (!arr[i].sku) {
+                this.$message({
+                  message: this.$t('goodsEdit.多规格SKU必须全部填写'),
+                  type: "error"
+                })
+                arr[i].error = true
+                break
+              }
+              //全通过
+              arr[i].error = false
+              error = false
+            }
+            if (error) return
           }
-          if (!arr[i].sku) {
-            this.$message({
-              message: this.$t('goodsEdit.多规格SKU必须全部填写'),
-              type: "error"
-            })
-            arr[i].error = true
-            break
-          }
-          //全通过
-          arr[i].error = false
-          error = false
-        }
-        if (error) return
-      }
         }
         if (this.visibleRange == 2) {
           this.$apiCall('api.VendorShop.checkProductVisibleCustomers', {
@@ -2110,16 +2109,16 @@ export default {
           let del = () => { //删除方法。 单属性替换，多属性删
             if (this.propType == 1) { //单属性删除
               this.form.stockSingle.splice(i, 1, {
-                stockId: '',
-                price: undefined,
-                weight: undefined,
-                sku: '',
+          stockId: '',
+          price: undefined,
+          weight: undefined,
+          sku: '',
           combination: 1,
           inventory: undefined,
           propertyValue: 'default',
           propertyImage: '',
           propertyImageOriginal: '',
-                barCode: '',
+          barCode: '',
           cost: '0.00',
           currency: '',
           isCombination: 2,

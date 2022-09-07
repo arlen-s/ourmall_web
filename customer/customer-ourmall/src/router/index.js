@@ -92,6 +92,14 @@ const routes = [
     component: () => import(/* webpackChunkName: 'storesDetil' */ './../views/products-detail-home.vue'),
   },
   {
+    path: '/itemOld/:id/:name',
+    name: 'productsDetilHomeOld',
+    meta: {
+      title: 'Products Market',
+    },
+    component: () => import(/* webpackChunkName: 'storesDetil' */ './../views/products-detail-home-old.vue'),
+  },
+  {
     path: '/shopify',
     name: 'shopify',
     meta: {

@@ -8,12 +8,15 @@
     }"
   >
     <div class="page-header" style="border-bottom: none">
+      <div class="left-box">
       <h1
         v-if="data.logo"
         :style="{
           backgroundImage: `url(${data.logo})`,
           width: data.logoWidth ? `${data.logoWidth}px` : `60px`,
           height: data.logoWidth ? `${data.logoWidth}px` : `60px`,
+          maxWidth: '80px',
+          maxHeight: '80px'
         }"
         style="cursor: pointer"
         @click="goto('home')"
@@ -32,29 +35,219 @@
         style="cursor: pointer"
         @click="goto('home')"
       ></h1>
+      </div>
+
+      <div  v-if="data.isVisibleSearch" class="search-box">               
+            <el-input
+              class="search-input"
+              placeholder="Recommended hot search"
+              prefix-icon="el-icon-search"
+              style="width:70%"
+              v-model="searchInput"
+              @change="search()"
+            >
+              <el-link
+                :underline="false"
+                slot="suffix"
+                type="info"
+                @click="showInput = false"
+              >
+                <i class="el-icon-close" style="font-size: 16px"></i>
+              </el-link>
+            </el-input>
+          
+      </div>
       <div
         class="right"
         :style="{ marginRight: $route.meta.urlActive ? '200px' : '0' }"
       >
         <ul :class="{ mainMenu: $route.name != 'home' }">
-          <!-- <li>
-			  <router-link :style="{color: data.isTransparent ? data.transparentColor : data.color}" to="/" :class="{active: $route.name == 'home'}">Home</router-link>
-			</li>
-			<li>
-			  <router-link :style="{color: data.isTransparent ? data.transparentColor : data.color}" to="/products-market">Find Products</router-link>
-			</li> -->
-          <!-- <template v-if="$store.state.userInfo">
-				<li class="import-link">
-				  <router-link to="/import-list" :style="{color: data.isTransparent ? data.transparentColor : data.color}">
-				    <i>
-				      <i v-if="this.$root.$children[0].importNum" class="badge">{{this.$root.$children[0].importNum > 99 ? '99+' : this.$root.$children[0].importNum}}</i>
-				    </i>
-				    My Import List
-				  </router-link>  
-				</li>
-			</template> -->
-          <template v-for="m in headerMenu.menu">
-            <li class="dropmenu" :key="m.timestamp">
+          <li class="user-box">
+            <el-dropdown
+              @command="handleCommand"
+              @visible-change="visibleChange"
+              style="text-align:center"
+            >
+              <span
+                class="el-dropdown-link"
+                :style="{ color: data.isTransparent ? color : data.color }"
+              >
+                <i class="el-icon-user-solid"></i>
+                
+              </span>
+              <!-- <span style="display:block">Register/login</span> -->
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  v-if="$store.state.userInfo"
+                  class="align-items-endd-flex"
+                  style="width: 160px"
+                  command="dashboard"
+                >
+                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> My
+                  Profile
+                </el-dropdown-item>
+                <el-dropdown-item
+                  v-else
+                  class="d-flex"
+                  style="width: 160px"
+                  command="login"
+                >
+                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> Login/
+                  Register
+                </el-dropdown-item>
+                <el-dropdown-item
+                  class="lan-menu align-items-endd-flex"
+                  style="width: 160px"
+                >
+                  <div class="lan-box">
+                    <div class="d-flex" style="min-width: 150px">
+                      <i
+                        class="mg-r-15 iconfont icon-lan"
+                        style="position: relative; left: -2px;}"
+                        aria-hidden="true"
+                      ></i>
+                      <span class="tx-ellipsis1" style="max-width: 60px">{{
+                        activeLang
+                      }}</span>
+                      <span style="padding: 0 5px">/</span>
+                      <span class="tx-ellipsis1" style="max-width: 35px">{{
+                        $store.state.activeCurrency
+                      }}</span>
+                      <i class="el-icon-arrow-right" style=""></i>
+                    </div>
+                    <div v-if="isVisibleDropdown" class="lan-box-sub">
+                      <div class="lan-select c">
+                        <a
+                          class="country"
+                          href="javascript:;"
+                          @click.stop="selectLang($event)"
+                        >
+                          <span
+                            class="tx-ellipsis1 mg-r-5"
+                            style="max-width: 90px"
+                            >{{ activeLang }}</span
+                          >
+                          <i class="el-icon-arrow-down"></i>
+                        </a>
+                        <el-scrollbar
+                          ref="subMenu"
+                          class="sub-box"
+                          style="height: 308px"
+                        >
+                          <ul>
+                            <li v-for="lang in langArr" :key="lang.code2">
+                              <a
+                                href="javascript:;"
+                                class="tx-ellipsis1"
+                                :class="{
+                                  active:
+                                    lang.code2 == $store.state.activeLaguage,
+                                }"
+                                @click="changeLang(lang)"
+                                >{{ lang.name }}</a
+                              >
+                            </li>
+                          </ul>
+                        </el-scrollbar>
+                        <div id="google_translate_element2"></div>
+                      </div>
+                      <div class="lan-select">
+                        <a href="javascript:;" @click.stop="selectLang($event)">
+                          <span
+                            class="tx-ellipsis1 mg-r-5"
+                            style="max-width: 80px"
+                          >
+                            {{ $store.state.activeCurrency }}
+                          </span>
+                          <i class="el-icon-arrow-down"></i>
+                        </a>
+                        <el-scrollbar
+                          ref="subMenu2"
+                          class="sub-box"
+                          style="height: 308px"
+                        >
+                          <ul>
+                            <template v-for="ce in $store.state.ceArr">
+                              <li v-if="ce.rate" :key="ce.code3">
+                                <a
+                                  href="javascript:;"
+                                  :class="{
+                                    active:
+                                      ce.code3 == $store.state.activeCurrency,
+                                  }"
+                                  @click="changeCurrency(ce)"
+                                >
+                                  <span>{{ ce.code3 }}</span>
+                                  <span class="symbol">{{ ce.symbol }}</span>
+                                </a>
+                              </li>
+                            </template>
+                          </ul>
+                        </el-scrollbar>
+                      </div>
+                    </div>
+                  </div>
+                </el-dropdown-item>
+                <el-dropdown-item
+                  v-if="$store.state.userInfo"
+                  class="d-flex"
+                  style="width: 160px"
+                  command="exit"
+                >
+                  <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i>
+                  Logout
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </li>
+          <li class="import-link" style="cursor: pointer">
+            <a @click="opencartNum"  :style="{ color: data.isTransparent ? color : data.color }">
+              <i class="el-icon-shopping-cart-1"></i>
+              <!-- {{this.$root.$children[0].cartNum}} -->
+              <!-- 这里 -->
+              <span v-if="this.$root.$children[0].cartNum" class="badge top">{{
+                this.$root.$children[0].cartNum > 99
+                  ? "..."
+                  : this.$root.$children[0].cartNum
+              }}</span>
+            </a>
+            <!-- <span>shopping cart</span> -->
+          </li>
+          <li v-if="$store.state.userInfo" class="import-link">
+            <router-link
+              to="/importListHome"
+              :style="{ color: data.isTransparent ? color : data.color }"
+            >
+              <i class="iconfont icon-nav"></i>
+              <span v-if="this.$root.$children[0].importNum" class="badge">{{
+                this.$root.$children[0].importNum > 99
+                  ? "99+"
+                  : this.$root.$children[0].importNum
+              }}</span>
+            </router-link>
+          </li>
+          <li v-else class="import-link">
+            <a
+              :style="{ color: data.isTransparent ? color : data.color }"
+              href="javascript:;"
+              @click="openDialogLogin"
+            >
+              <i class="iconfont icon-nav"></i>
+              <span v-if="this.$root.$children[0].importNum" class="badge">{{
+                this.$root.$children[0].importNum > 99
+                  ? "99+"
+                  : this.$root.$children[0].importNum
+              }}</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    <el-row type="flex" justify="center" class="banner-box" v-if="isHome">
+      <el-col v-for="m in headerMenu.menu" class="dropmenu" :key="m.id"  :span="4">          
+          <!-- <template v-for="m in menu"> -->
+            <!-- <div class="dropmenu" :key="m.timestamp"> -->
               <a
                 v-if="m.value == '9999'"
                 href="javascript:;"
@@ -216,215 +409,11 @@
                   </ul>
                 </li>
               </ul>
-            </li>
-          </template>
-
-          <li v-if="data.isVisibleSearch" class="search-box">
-            <a
-              v-if="!showInput"
-              @click="showInput = true"
-              :style="{ color: data.isTransparent ? color : data.color }"
-              href="javascript:;"
-            >
-              <i class="el-icon-search"></i>
-            </a>
-            <el-input
-              v-if="showInput"
-              class="search-input"
-              placeholder="Recommended hot search"
-              prefix-icon="el-icon-search"
-              style="width: 260px"
-              v-model="searchInput"
-              @change="search()"
-            >
-              <el-link
-                :underline="false"
-                slot="suffix"
-                type="info"
-                @click="showInput = false"
-              >
-                <i class="el-icon-close" style="font-size: 16px"></i>
-              </el-link>
-            </el-input>
-          </li>
-          <li class="import-link" style="cursor: pointer">
-            <a @click="opencartNum">
-              <i class="el-icon-shopping-cart-1"></i>
-              <!-- {{this.$root.$children[0].cartNum}} -->
-              <!-- 这里 -->
-              <span v-if="this.$root.$children[0].cartNum" class="badge top">{{
-                this.$root.$children[0].cartNum > 99
-                  ? "..."
-                  : this.$root.$children[0].cartNum
-              }}</span>
-            </a>
-          </li>
-          <li v-if="$store.state.userInfo" class="import-link">
-            <router-link
-              to="/importListHome"
-              :style="{ color: data.isTransparent ? color : data.color }"
-            >
-              <i class="iconfont icon-nav"></i>
-              <span v-if="this.$root.$children[0].importNum" class="badge">{{
-                this.$root.$children[0].importNum > 99
-                  ? "99+"
-                  : this.$root.$children[0].importNum
-              }}</span>
-            </router-link>
-          </li>
-          <li v-else class="import-link">
-            <a
-              :style="{ color: data.isTransparent ? color : data.color }"
-              href="javascript:;"
-              @click="openDialogLogin"
-            >
-              <i class="iconfont icon-nav"></i>
-              <span v-if="this.$root.$children[0].importNum" class="badge">{{
-                this.$root.$children[0].importNum > 99
-                  ? "99+"
-                  : this.$root.$children[0].importNum
-              }}</span>
-            </a>
-          </li>
-
-          <li class="user-box">
-            <el-dropdown
-              @command="handleCommand"
-              @visible-change="visibleChange"
-            >
-              <span
-                class="el-dropdown-link"
-                :style="{ color: data.isTransparent ? color : data.color }"
-              >
-                <i class="el-icon-user-solid"></i>
-              </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item
-                  v-if="$store.state.userInfo"
-                  class="align-items-endd-flex"
-                  style="width: 160px"
-                  command="dashboard"
-                >
-                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> My
-                  Profile
-                </el-dropdown-item>
-                <el-dropdown-item
-                  v-else
-                  class="d-flex"
-                  style="width: 160px"
-                  command="login"
-                >
-                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> Login/
-                  Register
-                </el-dropdown-item>
-                <el-dropdown-item
-                  class="lan-menu align-items-endd-flex"
-                  style="width: 160px"
-                >
-                  <div class="lan-box">
-                    <div class="d-flex" style="min-width: 150px">
-                      <i
-                        class="mg-r-15 iconfont icon-lan"
-                        style="position: relative; left: -2px;}"
-                        aria-hidden="true"
-                      ></i>
-                      <span class="tx-ellipsis1" style="max-width: 60px">{{
-                        activeLang
-                      }}</span>
-                      <span style="padding: 0 5px">/</span>
-                      <span class="tx-ellipsis1" style="max-width: 35px">{{
-                        $store.state.activeCurrency
-                      }}</span>
-                      <i class="el-icon-arrow-right" style=""></i>
-                    </div>
-                    <div v-if="isVisibleDropdown" class="lan-box-sub">
-                      <div class="lan-select c">
-                        <a
-                          class="country"
-                          href="javascript:;"
-                          @click.stop="selectLang($event)"
-                        >
-                          <span
-                            class="tx-ellipsis1 mg-r-5"
-                            style="max-width: 90px"
-                            >{{ activeLang }}</span
-                          >
-                          <i class="el-icon-arrow-down"></i>
-                        </a>
-                        <el-scrollbar
-                          ref="subMenu"
-                          class="sub-box"
-                          style="height: 308px"
-                        >
-                          <ul>
-                            <li v-for="lang in langArr" :key="lang.code2">
-                              <a
-                                href="javascript:;"
-                                class="tx-ellipsis1"
-                                :class="{
-                                  active:
-                                    lang.code2 == $store.state.activeLaguage,
-                                }"
-                                @click="changeLang(lang)"
-                                >{{ lang.name }}</a
-                              >
-                            </li>
-                          </ul>
-                        </el-scrollbar>
-                        <div id="google_translate_element2"></div>
-                      </div>
-                      <div class="lan-select">
-                        <a href="javascript:;" @click.stop="selectLang($event)">
-                          <span
-                            class="tx-ellipsis1 mg-r-5"
-                            style="max-width: 80px"
-                          >
-                            {{ $store.state.activeCurrency }}
-                          </span>
-                          <i class="el-icon-arrow-down"></i>
-                        </a>
-                        <el-scrollbar
-                          ref="subMenu2"
-                          class="sub-box"
-                          style="height: 308px"
-                        >
-                          <ul>
-                            <template v-for="ce in $store.state.ceArr">
-                              <li v-if="ce.rate" :key="ce.code3">
-                                <a
-                                  href="javascript:;"
-                                  :class="{
-                                    active:
-                                      ce.code3 == $store.state.activeCurrency,
-                                  }"
-                                  @click="changeCurrency(ce)"
-                                >
-                                  <span>{{ ce.code3 }}</span>
-                                  <span class="symbol">{{ ce.symbol }}</span>
-                                </a>
-                              </li>
-                            </template>
-                          </ul>
-                        </el-scrollbar>
-                      </div>
-                    </div>
-                  </div>
-                </el-dropdown-item>
-                <el-dropdown-item
-                  v-if="$store.state.userInfo"
-                  class="d-flex"
-                  style="width: 160px"
-                  command="exit"
-                >
-                  <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i>
-                  Logout
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </li>
-        </ul>
-      </div>
-    </div>
+            <!-- </div> -->
+          <!-- </template> -->
+      
+      </el-col>
+    </el-row>
     <el-dialog
       class="isValidationCW-dialog"
       append-to-body
@@ -466,6 +455,57 @@ export default {
       langArr,
       isVisibleDropdown: false,
       isValidationCWDialog: false,
+      menu: [
+    {
+        "label": "首页",
+        "value": "home",
+        "url": "home",
+        "urlData": null,
+        "children": [],
+        "id": 1652355158251,
+        "level": 1
+    },
+    {
+        "label": "东南亚爆款",
+        "value": "category",
+        "url": "productsMarketMore",
+        "urlData": {
+            "description": "",
+            "id": "690",
+            "level": "1",
+            "name": "Bracelet",
+            "pid": "0",
+            "sort": null,
+            "status": "1",
+            "themeUrl": "",
+            "timeCreated": "1642068416",
+            "userId": "143232",
+            "productCnt": 0
+        },
+        "children": [],
+        "id": 1652355164146,
+        "level": 1
+    },
+    {
+        "label": "搜品报价",
+        "value": "search",
+        "url": "SearchProducts",
+        "urlData": null,
+        "children": [],
+        "id": 1660026954004,
+        "level": 1
+    },
+    {
+        "label": "新品爆款",
+        "value": "productDetails",
+        "url": "productsDetilHome",
+        "children": [],
+        "id": 1660113325360,
+        "urlData": null,
+        "level": 1
+    }
+      ],
+      isHome: true,
       // isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
     };
   },
@@ -493,7 +533,12 @@ export default {
       return name || "English";
     },
   },
-  mounted() {},
+  mounted() {
+      let name = this.$route.name
+      if (name == 'dashboard') {
+          this.isHome = false
+      }
+  },
   methods: {
     goToCustom(id) {
       console.log("id", id);
@@ -507,6 +552,7 @@ export default {
       );
     },
     goToDetail(item) {
+      console.log(item, 'tiem');
       window.open(
         `/item/${item.id}/${item.name
           .replace(/\s+/g, "-")
@@ -546,6 +592,7 @@ export default {
       }
     },
     goto(name) {
+      this.isHome = true
       if (this.$store.state.userInfo) {
         this.$router.push({
           name: name,
@@ -668,6 +715,11 @@ export default {
     }
   }
 }
+.search-box{
+  width: 60%;
+  display: flex;
+    justify-content: center;
+}
 .dropmenu {
   position: relative;
   padding: 10px 0;
@@ -734,7 +786,7 @@ export default {
 .dropmenu {
   position: relative;
   padding: 10px 0;
-  text-align: left;
+  text-align: center;
   &:hover .drop-sec {
     display: flex;
   }
@@ -799,8 +851,8 @@ export default {
   justify-content: space-between;
   margin: 0 auto;
   padding: 0;
-  width: 1420px;
-  height: 120px;
+  // width: 1420px;
+  height: 90px;
   h1 {
     width: 60px;
     height: 60px;
@@ -809,16 +861,19 @@ export default {
     background-repeat: no-repeat;
     background-size: contain;
   }
-
+.right {
+width: 20%;
+}
   .right {
     > ul {
       display: flex;
       align-items: center;
       list-style: none;
       margin: 14px 0;
+      justify-content: end;
       height: 44px;
       > li {
-        margin-right: 55px;
+        margin-right: 45px;
         // height: 26px;
         // line-height: 26px;
         > a {
@@ -874,7 +929,7 @@ export default {
 
 .search-input {
   ::v-deep .el-input__inner {
-    border-radius: 0;
+    // border-radius: 0;
     border: none;
     border-bottom: 1px solid #ddd;
   }
@@ -1004,5 +1059,13 @@ export default {
   ::v-deep .el-dialog__headerbtn {
     display: none;
   }
+}
+.left-box{
+  padding-left:50px;
+  width: 20%;
+}
+.banner-box a{
+font-size: 21px;
+    text-decoration: none
 }
 </style>
