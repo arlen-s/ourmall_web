@@ -851,6 +851,7 @@ const routes = [
       let hostList = [
         "https://app.fforder.com",
         "https://www.7dropshipping.com",
+        'https://www.dasuche.com',
       ]
       if(hostList.includes(location.origin)){
         return '/home'
