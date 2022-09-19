@@ -552,7 +552,7 @@ export default {
         },
         (r) => {
           if (r.ErrorCode == 9999) {
-            this.commodityTypeMoreList.forEach((item) => {
+            this.commodityTypeMoreList.products.forEach((item) => {
               if (item.id == this.categoryId) {
                 this.name = item.name;
                 this.categoryId = item.name;

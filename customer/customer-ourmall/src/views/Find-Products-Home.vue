@@ -942,7 +942,7 @@ export default {
           },
           (r) => {
             if (r.ErrorCode == 9999) {
-              this.productList = r.Data.Results;
+              this.productList = r.Data.Results.products;
               this.loading = false;
               this.fullscreenLoading = false;
             }
@@ -964,7 +964,7 @@ export default {
         (r) => {
           if (r.ErrorCode == 9999) {
             // this.productList = r.Data.Results;
-            this.commodityTypeAllList[index].proList = r.Data.Results;
+            this.commodityTypeAllList[index].proList = r.Data.Results.products;
             this.commodityTypeAllList = [...this.commodityTypeAllList];
             this.fullscreenLoading = false;
             this.loading = false;

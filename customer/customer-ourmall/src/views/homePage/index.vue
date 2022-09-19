@@ -77,7 +77,7 @@
 										}, r => {
 											if (r.ErrorCode == 9999) {
 												let arr = [];
-												r.Data.Results.forEach(e => {
+												r.Data.Results.products.forEach(e => {
 													if (e.status == 1) {
 														arr.push(e)
 													}
@@ -93,7 +93,7 @@
 											rowsPerPage: 10,
 										}, r => {
 											if (r.ErrorCode == 9999) {
-												let data = r.Data.Results;
+												let data = r.Data.Results.products;
 												// item.imgUrl = data[0].imgUrl;
 												// item.cost = data[0].cost;
 												// item.name = data[0].name;
