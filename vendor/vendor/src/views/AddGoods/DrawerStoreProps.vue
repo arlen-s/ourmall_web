@@ -15,35 +15,42 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="商品中文名" required>
+            <el-form-item :label="$t('goodsEdit.商品中文名')" required>
               <el-input v-model="data.form.productName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="出厂价($)">
+            <el-form-item :label="`${$t('goodsEdit.出厂价')}($)`">
               <el-input v-model="data.form.cost"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="重量(g)">
+            <el-form-item :label="`${$t('goodsEdit.商品重量')}(g)`">
               <el-input v-model="data.form.weight"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="海关编号">
+            <el-form-item :label="$t('goodsEdit.海关编号')">
               <el-input v-model="data.form.barCode"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="材质">
+            <el-form-item :label="$t('goodsEdit.材质')">
               <el-input v-model="data.form.material"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item :label="$t('goodsEdit.预估包装重量')">
+              <el-input v-model="data.form.packageWeight"></el-input>
+            </el-form-item>
+          </el-col>
+          </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item :label="$t('goodsEdit.包装尺寸')">

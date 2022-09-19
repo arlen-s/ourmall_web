@@ -837,6 +837,7 @@ export default {
           stockId: '',
           price: undefined,
           weight: undefined,
+          packageWeight: '',
           sku: '',
           combination: 1,
           inventory: undefined,
@@ -1361,7 +1362,6 @@ export default {
             }
 
           }, 200)
-          console.log('1111111', this.tableData, data.skuWarehouse)
           this.form.name = data.name //商品名称
           this.form.status = data.status == '1' //是否上架
           this.form.spu = data.sku //spu
@@ -1462,6 +1462,7 @@ export default {
                 productLength: e.productLength || 0.00,
                 productName: e.productName || '',
                 productType: e.productType || [],
+                packageWeight :e.packageWeight || 0.00,
                 productWidth: e.productWidth || 0.00,
                 propertyImageOriginal: e.propertyImageOriginal || '',
               }
@@ -1499,7 +1500,7 @@ export default {
             this.form.stockSingle[0].productName = data.stocks[0].productName || ''
             this.form.stockSingle[0].productType = data.stocks[0].productType
             this.form.stockSingle[0].weight = data.stocks[0].weight ? data.stocks[0].weight : undefined
-
+            this.form.stockSingle[0].packageWeight = data.stocks[0].packageWeight || 0.00,
             this.drawerStorePropsData.form = this.form.stockSingle[0]
             console.log(this.drawerStorePropsData.form, ' this.drawerStorePropsData.form')
           }
@@ -1682,6 +1683,7 @@ export default {
           productName: e.productName || '',
           productType: e.productType || [],
           productWidth: e.productWidth || 0.00,
+          packageWeight: e.packageWeight || 0.00,
         }
       })
       stocks.forEach((item) => {

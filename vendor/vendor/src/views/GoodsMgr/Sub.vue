@@ -180,29 +180,36 @@
           </template>
         </el-table-column>  
         <!-- 商品价格 -->
-        <el-table-column :label="$t('goods.商品价格(USD)')" width="150">
+        <!-- <el-table-column :label="$t('goods.商品价格(USD)')" width="150">
           <template slot-scope="scope">
             <b>{{scope.row.cost}}</b>
           </template>  
-        </el-table-column>
+        </el-table-column> -->
         <!-- 商品分类 -->
-        <el-table-column :label="$t('goods.商品分类')" width="150">
+        <!-- <el-table-column :label="$t('goods.商品分类')" width="150">
           <template slot-scope="scope">
             <p class=" tx-ellipsis3" style=" line-height: 22px;">{{showCategroyText(scope.row.categoryId)}}</p>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <!-- 库存 -->
-        <el-table-column :label="$t('goods.库存')" width="90">
+        <!-- <el-table-column :label="$t('goods.库存')" width="90">
            <template slot-scope="scope">
             {{ scope.row.allInventory || typeof scope.row.allInventory === 'number' ? scope.row.allInventory : '-' }}
           </template> 
-        </el-table-column>  
-		<el-table-column :label="$t('goods.可见范围')" width="150">
+        </el-table-column>   -->
+		<el-table-column :label="$t('goods.可见范围')">
 		   <template slot-scope="scope">
 			   <div v-if="scope.row.isAllVisible">{{$t('goods.全部可见')}}</div>
 			   <el-link type="primary" :underline="false" v-else @click="openVisiableCus(scope.row.id)">{{$t('goods.指定客户可见')}}</el-link>
 		  </template> 
 		</el-table-column>
+        <!-- 上架时间 -->
+        <el-table-column :label="`${$t('goods.创建时间')}/ ${$t('修改时间')}`" width="180">
+          <template slot-scope="scope">
+            <p>{{scope.row.timeCreated}}</p>
+            <p>{{scope.row.timeLastGet}}</p>
+          </template> 
+        </el-table-column>      
         <!-- 是否上架 -->
         <el-table-column :label="$t('goods.是否上架')" width="180">
           <template slot-scope="scope">
@@ -238,6 +245,10 @@ export default {
       isAllCheck: false,
       checkboxArr: [],
       productTypeArr: this.$dict.productTypeArr,
+      appUserId: localStorage.getItem('apiUserId'),
+      showLog: false,
+      dialogVisibleLog: false,
+        tableLogData: []      
     }  
   },
   watch: {

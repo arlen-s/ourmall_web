@@ -19,15 +19,16 @@
                   v-model="form.name"
                   maxlength="36"
                   minlength="3"
+                   :disabled="true"
                   show-word-limit
                   :placeholder="$t('shop.请输入店铺名称')"
                 ></el-input> 
-                <div class="tip">{{$t('shop.名称长度需在3~36之间，由字母或数字构成')}}</div>
+                <!-- <div class="tip">{{$t('shop.名称长度需在3~36之间，由字母或数字构成')}}</div> -->
                </el-form-item>
               <el-form-item :label="$t('shop.店铺链接')" style="width: 40%">
-                  <div class="changeLink" style="float: right;">
+                  <!-- <div class="changeLink" style="float: right;">
                       <el-link :underline="false" type="primary" @click="tip()">{{$t('shop.更换')}}</el-link>
-                  </div>
+                  </div> -->
                 <el-input
                   v-if="!form.url && apiSubUserId"
                   v-model="form.subDomain+'/home?invitationCode='+invitationCode"
@@ -57,9 +58,9 @@
                 </el-tooltip>
                </el-form-item>
               <el-form-item label="当前店铺在shopify应用" style="width: 40%">
-                  <div class="changeLink" style="float: right;">
+                  <!-- <div class="changeLink" style="float: right;">
                       <el-link :underline="false" type="primary" @click="tip('shopify')">{{$t('shop.更换')}}</el-link>
-                  </div>
+                  </div> -->
                 <el-input
                   v-model="form.accountStoreName"
                   disabled

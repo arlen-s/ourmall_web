@@ -31,8 +31,21 @@
         <el-table-column prop="createdAt" align="center" :label="$t('storehouse.创建时间')"></el-table-column>
         <el-table-column :label="$t('storehouse.操作')" align="center">
           <template slot-scope="scope">
-            <el-link type="primary" @click="edit(scope.row)" style="margin-right:5px">{{$t('storehouse.编辑')}}</el-link>
-            <el-link type="danger" v-if="scope.row.status== 1" @click="handleStatus(scope.row)">{{$t('storehouse.停用')}}</el-link>
+            <el-link
+              type="primary"
+              @click="edit(scope.row)"
+              style="margin-right:5px"
+            >{{$t('storehouse.编辑')}}</el-link>
+            <el-link
+              type="danger"
+              @click="deleteFun(scope.row)"
+              style="margin-right:5px"
+            >{{$t('storehouse.删除')}}</el-link>
+            <el-link
+              type="danger"
+              v-if="scope.row.status== 1"
+              @click="handleStatus(scope.row)"
+            >{{$t('storehouse.停用')}}</el-link>
             <el-link type="primary" v-else @click="handleStatus(scope.row)">{{$t('storehouse.启用')}}</el-link>
           </template>
         </el-table-column>
@@ -104,10 +117,34 @@ export default {
       this.$apiCall("api.Warehouse.finds", params, (r) => {
         this.loading = false
         if (r.ErrorCode == 9999) {
-          this.pagination.totalCount = Number(r.Data.Pagination.totalCount) 
+          this.pagination.totalCount = Number(r.Data.Pagination.totalCount)
           this.pagination.page = r.Data.Pagination.page
           this.pagination.rowsPerPage = r.Data.Pagination.rowsPerPage
           this.tableData = r.Data.Results
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })
+    },
+    deleteFun (row) {
+      if (row.stockQuantity > 0) {
+                  this.$message.error({
+            message: this.$t('storehouse.存在关联SKU，不能删除！')
+          })
+          return 
+      }
+      let params = { id: row.id }
+      this.$apiCall("api.Warehouse.delete", params, (r) => {
+        this.loading = false
+        if (r.ErrorCode == 9999) {
+          this.$message({
+            message: r.Message,
+            type: "success"
+          })
+          this.getInfo()
         } else {
           this.$message({
             message: r.Message,

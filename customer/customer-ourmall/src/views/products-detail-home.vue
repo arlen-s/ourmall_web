@@ -75,6 +75,14 @@
                 </div> 
               <!-- <div class="proCost">{{$showSybmol()}} {{ Number(price)!='0.00' ? $exchangeRate(Number(price).toFixed(2)) : (minPrice||maxPrice) ? `${$exchangeRate(minPrice)} - ${$exchangeRate(maxPrice)}` : $exchangeRate(price)}}</div> -->
               <!-- 选属性 -->
+              <div class="other-info" id="special-info" v-if="vatDom">
+                <div class="title">   VAT information :</div>
+                <div class="right-fit">
+                    <span class="tx-bold">you can click </span>
+                      <el-link type="primary" @click="showVatDom"> here </el-link>
+                      <span>for VAT information</span>
+                </div>  
+              </div>
               <div class="other-info">
                 <div class="title">   {{checkData.sku? 'SKU' : 'SPU'}} :</div>
                 <span class="tx-bold">{{checkData.sku || sku}}</span>
@@ -221,7 +229,7 @@
                 </div>
                 <div>
                   <span>Specification</span>
-                  <span>{{checkData.propertyValue}}</span>
+                  <span>{{checkData.propertyValue || '/'}}</span>
                 </div>
                 <div>
                   <span>material</span>
@@ -273,6 +281,49 @@
         <el-button @click="shoppingDialog = false">Close</el-button>
       </div>
     </el-dialog>
+    <el-dialog
+  title="VAT information"
+  :visible.sync="dialogVisibleHide"
+  width="40%">
+  <el-row>
+    <el-col>
+        <span class="pad-20">The tax-inclusive price of an item is calculated based on the item price set by the seller and the applicable tax rate. You can contact the seller for more details.</span>
+        <span class="pad-10">
+          VAT rate(Destination only in Germany): {{vatValue}} %
+        </span>
+        <div style="padding:20px">
+            <el-table
+    :data="VatTableData"
+    border
+    style="width: 100%">
+    <el-table-column
+      prop="price"
+      label="Excluding VAT amount"
+      align="center"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="VAT"
+      align="center"
+      label="VAT amount"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="Amount"
+      align="center"
+      label="Amount including VAT">
+    </el-table-column>
+  </el-table>
+        </div>
+    </el-col>
+ 
+  </el-row>
+ 
+
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogVisibleHide = false">enter</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -291,9 +342,11 @@ export default {
     return {
       keyValue: "",
       showTest: true,
+      vatValue: '0',
       suitRuleInfoClone: {},
       qualityNum: 0,
       checkData: {},
+      dialogVisibleHide: false,
       qualityDisabled: true,
       qualityNumClone: 0,
       shippingContry: "",
@@ -316,6 +369,11 @@ export default {
         header: [],
         footer: []
       },
+      VatTableData: [{
+          price: '0.00',
+          VAT: '0.00',
+          Amount: '0.00'
+      }],
       storeHouseCheck: 0,
       Specification: [
         {
@@ -411,7 +469,8 @@ export default {
       paginationFactor: 65,
       minPrice: '',
       maxPrice: '',
-      saleCost: '0.00'
+      saleCost: '0.00',
+      vatDom: true,
     }
   },
   watch: {
@@ -539,11 +598,22 @@ export default {
     document.title = `${this.name} How to find :: ${this.$root.$children[0].pName.b} App - ${this.$root.$children[0].pName.a}.com`
     // 1.9注释掉推荐
     // this.getRecommend();
-
+    this.getVat()
   },
   methods: {
-    testBlack () {
-      this.showTest = false
+
+    showVatDom(){
+          this.dialogVisibleHide = true
+    },
+    getVat(){
+      this.$apiCall(
+        "api.Product.getVatConfig", {}, (r) => {
+          if (r.ErrorCode == 9999) {
+            this.vatValue =  Number(r.Data.Results.vatList.DE.value)
+            this.vatDom = r.Data.Results.vatState== 1 ? true : false
+          }
+        }
+      )
     },
     addToCart (e) {
       if (!this.$store.state.userInfo) {
@@ -829,6 +899,11 @@ export default {
               if (info[0] && info[0].propertyImage)
                 this.typeImg.push(info[0].propertyImage)
             })
+          this.VatTableData[0] = {
+          price : this.price,
+          VAT: (Number(this.price)*(this.vatValue/100)).toFixed(2),
+          Amount: (Number(this.price)*(this.vatValue/100)+ Number(this.price)).toFixed(2),
+        }
             //  this.$nextTick(()=>{
             //   //默认先选美国第一个物流 
             //   if(this.$route.name == 'ProductDetail'){
@@ -901,11 +976,21 @@ export default {
           this.qualityNum = 0
           this.qualityDisabled = true
         }
+        this.VatTableData[0] = {
+          price : self.price,
+          VAT: (Number(self.price)*(this.vatValue/100)).toFixed(2),
+          Amount: (Number(self.price)*(this.vatValue/100)+ Number(self.price)).toFixed(2),
+        }
       } else {
         self.qualityNum = 0
         self.price = this.saleCost
         self.activeImg = self.defaultImg
         this.checkData = {}
+        this.VatTableData[0] = {
+          price : this.saleCost,
+          VAT: (Number(self.saleCost)*(this.vatValue/100)).toFixed(2),
+          Amount: (Number(self.saleCost)*(this.vatValue/100)+ Number(self.saleCost)).toFixed(2)
+        }
       }
 
       for (var i in option) {
@@ -1381,6 +1466,16 @@ margin-left: 5px;
     }
   }
 }
+#special-info .title{
+  width: 130px;
+}
+#special-info .right-fit{
+display: flex;
+align-items: center;
+span{
+  padding: 3px;
+}
+}
 .other-info {
   display: flex;
   height: 22px;
@@ -1573,5 +1668,13 @@ ul.tags {
       }
     }
   }
+}
+.pad-20{
+  display: block;
+  padding: 0 20px 20px 20px;
+}
+.pad-10{
+  display: block;
+  padding: 0 20px 10px 20px;
 }
 </style>
