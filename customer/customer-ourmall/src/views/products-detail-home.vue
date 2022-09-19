@@ -76,9 +76,9 @@
               <!-- <div class="proCost">{{$showSybmol()}} {{ Number(price)!='0.00' ? $exchangeRate(Number(price).toFixed(2)) : (minPrice||maxPrice) ? `${$exchangeRate(minPrice)} - ${$exchangeRate(maxPrice)}` : $exchangeRate(price)}}</div> -->
               <!-- 选属性 -->
               <div class="other-info" id="special-info" v-if="vatDom">
-                <div class="title">   VAT information :</div>
+                <div class="title">VAT information :</div>
                 <div class="right-fit">
-                    <span class="tx-bold">you can click </span>
+                    <span class="">you can click </span>
                       <el-link type="primary" @click="showVatDom"> here </el-link>
                       <span>for VAT information</span>
                 </div>  
@@ -1467,7 +1467,7 @@ margin-left: 5px;
   }
 }
 #special-info .title{
-  width: 130px;
+  width: 120px;
 }
 #special-info .right-fit{
 display: flex;
