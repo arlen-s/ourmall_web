@@ -178,6 +178,7 @@ export default {
     }
   },
   created(){
+    console.log(222222);
     this.$apiCall("api.VendorShop.getShopConfig", {}, r => {
       if (r.ErrorCode == 9999) {
         if(r.Data.Results.length !== 0){
