@@ -552,13 +552,13 @@ export default {
         },
         (r) => {
           if (r.ErrorCode == 9999) {
-            this.commodityTypeMoreList.products.forEach((item) => {
+            this.commodityTypeMoreList.forEach((item) => {
               if (item.id == this.categoryId) {
                 this.name = item.name;
                 this.categoryId = item.name;
               }
             });
-            this.items = r.Data.Results;
+            this.items = r.Data.Results.products;
             this.total = r.Data.Pagination.totalCount;
             this.totalPage = r.Data.Pagination.totalPage;
             this.allLoading = false;
