@@ -180,6 +180,7 @@
         <el-table-column :label="$t('goods.商品名称')">
           <template slot-scope="scope">
             <p class=" tx-ellipsis3" style=" line-height: 22px;">{{scope.row.name}}</p>
+            <p>{{scope.row.sku}}</p>
           </template>
         </el-table-column>  
         <!-- 商品价格 -->
