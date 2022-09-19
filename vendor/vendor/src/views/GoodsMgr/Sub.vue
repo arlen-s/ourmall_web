@@ -154,7 +154,10 @@
               <el-link type="primary" style="font-size: 12px;" :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${scope.row.shopId}.myourmall.com/item/${scope.row.id}/${scope.row.name}.html`" target="_blank">
                 {{$t('goods.预览')}}
               </el-link>
+
             </template>
+            <br/>
+             <el-link type="primary" style="font-size: 12px;" @click="lookLog(scope.row.id)">{{$t('goods.日志')}}</el-link>
           </template>
         </el-table-column>
         <!-- 商品图片 -->
@@ -232,7 +235,38 @@
         </div>
       </div>
     </div>
-    
+    <el-dialog
+  :title="$t('goods.商品日志')"
+  width="35%"
+   :visible.sync="dialogVisibleLog"
+  >
+  <el-card class="box-card">
+    <el-table
+    :data="tableLogData"
+    border
+    style="width: 100%"
+     height="350"
+    >
+    <el-table-column
+      prop="userName"
+      :label="$t('goods.操作者')"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="content"
+      :label="$t('goods.操作描述')"
+      >
+    </el-table-column>
+    <el-table-column
+      prop="timeCreated"
+      :label="$t('goods.操作时间')">
+    </el-table-column>
+  </el-table>
+</el-card>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogVisibleLog = false">{{$t('goods.确定')}}</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -272,6 +306,14 @@ export default {
         }
       })
       return this.$t(text);
+    },
+    lookLog(id){
+        this.dialogVisibleLog = true
+        							this.$apiCall("api.ProductLog.finds", {productId: id}, r => {
+								if (r.ErrorCode == 9999) {
+                    this.tableLogData = r.Data.Results
+								}
+							})
     },
     gotoEdit(id){ //跳转到
           let UserId = localStorage.getItem('apiUserId')

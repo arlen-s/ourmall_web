@@ -194,7 +194,7 @@ export default {
             rowsPerPage: 10,
         }, r => {
             if (r.ErrorCode == 9999) {
-              this.dialogProductList.item = r.Data.Results.map(e => {
+              this.dialogProductList.item = r.Data.Results.products.map(e => {
               e.imgUrlArr = JSON.parse(e.imgUrlJson);
               e.statusIpt = e.status == '1';
               return e

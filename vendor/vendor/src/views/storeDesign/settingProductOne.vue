@@ -230,7 +230,7 @@ export default {
         }, r => {
             this.loading = false;
             if (r.ErrorCode == 9999) {
-              let data = r.Data.Results;
+              let data = r.Data.Results.products;
 			  this.setting.product = data[0];
               if(s){
                 this.setting.imgUrl = data[0].imgUrl;

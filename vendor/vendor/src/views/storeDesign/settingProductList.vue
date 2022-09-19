@@ -251,7 +251,7 @@ export default {
       },r=>{
         if(r.ErrorCode == 9999){
           let Arr = [];
-          this.setting.productItems = r.Data.Results;
+          this.setting.productItems = r.Data.Results.products;
           this.setting.productItems.forEach(e=>{
              if(e.status == 1){
                Arr.push(e)

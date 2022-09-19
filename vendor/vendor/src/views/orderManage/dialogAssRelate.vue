@@ -134,7 +134,7 @@
 						this.totalPage = Number(r.Data.Pagination.totalPage);
 						this.items = [];
 						this.list = [];
-						r.Data.Results.forEach(item1=>{
+						r.Data.Results.products.forEach(item1=>{
 							if (item1.stocks && item1.stocks.length) {
 								item1.stocks.forEach(obj=>{
 									this.$set(obj,"name",item1.name);

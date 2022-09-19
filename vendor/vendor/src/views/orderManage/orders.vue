@@ -1873,14 +1873,14 @@ export default {
       }, (r) => {
         if (r.ErrorCode == "9999") {
           // this.$elementMessage(this.$t('orders.success'), "success");
-          if (!r.Data.Results || !r.Data.Results.length) return
+          if (!r.Data.Results.products || !r.Data.Results.products.length) return
           this.dialogRelateInfo = JSON.parse(this.dialogRelateInfoDefault)
           this.dialogRelateInfo.isShow = true
           this.dialogRelateInfo.item = item
           this.dialogRelateInfo.Pagination = r.Data.Pagination
           this.dialogRelateInfo.items = []
           this.dialogRelateInfo.list = []
-          r.Data.Results.forEach(item1 => {
+          r.Data.Results.products.forEach(item1 => {
             if (item1.stocks && item1.stocks.length) {
               item1.stocks.forEach(obj => {
                 this.$set(obj, "name", item1.name)
