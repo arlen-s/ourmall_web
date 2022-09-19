@@ -641,7 +641,7 @@ export default {
     },
     goto (name) {
       let id = localStorage.getItem('apiUserId')
-      if (id != 150488) {
+      if (id == 150488) {
         let name = 'AddGoods2'
         this.$router.push({ name })
       } else {
