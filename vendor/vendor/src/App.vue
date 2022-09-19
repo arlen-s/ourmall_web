@@ -1183,6 +1183,7 @@
 			}
 		},
 		mounted() {
+			console.log(1186);
 			document.getElementById("loading").remove();
 			if(this.$route.name == 'jump'){
 				return;
