@@ -15,6 +15,7 @@ export const lang = {
   '启用':'enable',
   '创建': 'Sure',
   '编辑': 'edit',
+  '删除': 'delete',
   '请选择国家': 'Please select a country',
   '请填写仓库名称': 'Please fill in the warehouse name',
   '货架数量': 'Number of shelves',
@@ -25,4 +26,5 @@ export const lang = {
   '请输入负责人姓名': 'Please enter the name of the person in charge',
   '请输入联系电话': 'Please type your phone number',
   '请输入仓库名称': 'Please enter a warehouse name',
+  '存在关联SKU，不能删除！': 'There is an associated SKU and cannot be deleted!'
 }
