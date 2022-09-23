@@ -89,8 +89,8 @@
 					</el-table-column>
 					<el-table-column
 						label="最近登录时间"
-						prop="timeLogin">
-						<template slot-scope="scope">{{ scope.row.timeLogin || '--' }}</template>
+						prop="timeLastOperate">
+						<template slot-scope="scope">{{ scope.row.timeLastOperate || '--' }}</template>
 					</el-table-column>
 					<el-table-column
 						label="操作">
