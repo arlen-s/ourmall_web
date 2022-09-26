@@ -50,6 +50,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "hohomepageme" */ '../views/shoppingCart.vue'),
   },
   {
+    path: '/shoppingCartHC',
+    name: 'shoppingCartHC',
+    meta: {
+      title: 'shoppingCart'
+    },
+    component: () => import(/* webpackChunkName: "hohomepageme" */ '../views/shoppingCartHC.vue'),
+  }, 
+  {
     path: '/search',
     name: 'SearchProducts',
     meta: {
