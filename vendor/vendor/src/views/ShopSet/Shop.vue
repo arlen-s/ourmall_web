@@ -81,6 +81,12 @@
                 v-model="form.phone"
                 ></el-input>
               </el-form-item>
+              <el-form-item :label="$t('shop.工信部备案号')" style="width: 40%" >
+                <el-input 
+                :placeholder="$t('shop.请输入')"
+                v-model="form.referenceNumber"
+                ></el-input>
+              </el-form-item>              
               <el-form-item :label="$t('shop.店铺头像')" style="width: 40%">
                   <div class="upload" @click="uploadOpen">
                     <i class="el-icon-plus" v-if="!form.logo"></i>
@@ -145,6 +151,7 @@ export default {
         email:'',
         phone:'',
         logo: '',
+        referenceNumber: '',
         financialEmail:'',//财务邮箱
         url:'', //供应商联系客服修改的完整域名
       },

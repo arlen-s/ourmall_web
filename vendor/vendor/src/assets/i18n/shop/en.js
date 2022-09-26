@@ -10,6 +10,8 @@ export const lang = {
     '店主手机号':"Store owner's phone number",
     '请输入店主手机号':'please enter the phone number of store owner',
     '店铺头像':'store icon',
+    '工信部备案号': 'record number',
+    '请输入': 'please enter',
     '财务邮箱':'financial email',
     '请输入财务邮箱':'please enter the financial email',
     '用于存在费用争议时联系的邮箱，请务必填':'please be sure to fill in the email address used to contact you in case of a fee dispute.',
