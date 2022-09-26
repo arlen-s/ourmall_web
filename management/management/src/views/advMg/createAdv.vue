@@ -4,19 +4,19 @@
     <el-dialog :title="$t('adv.发布公告')" width="40%" :visible.sync="data.show">
       <div>
         <el-form ref="form" :model="data.data" label-width="80px">
-          <el-form-item :label="$t('adv.公告标题')">
-            <el-input v-model="data.data.title"></el-input>
+          <el-form-item :label="$t('adv.公告标题')" required>
+            <el-input v-model="data.data.title" ></el-input>
           </el-form-item>
           <el-form-item :label="$t('adv.状态')">
             <el-radio-group v-model="data.data.status">
-              <el-radio :label="1"> {{$t('adv.启用')}} </el-radio>
-              <el-radio :label="2">{{$t('adv.停用')}}</el-radio>
+              <el-radio label="1"> {{$t('adv.启用')}} </el-radio>
+              <el-radio label="2">{{$t('adv.停用')}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item :label="$t('adv.发布对象')">
             <el-radio-group v-model="data.data.rType">
-              <el-radio :label="1">{{$t('adv.供应商')}}</el-radio>
-              <el-radio :label="2">{{$t('adv.站长(分销商)')}}</el-radio>
+              <el-radio label="1">{{$t('adv.供应商')}}</el-radio>
+              <el-radio label="2">{{$t('adv.站长(分销商)')}}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item :label="$t('adv.发布内容')">
@@ -25,9 +25,6 @@
                 ref="myQuillEditor"
                 v-model="data.data.content"
                 :options="options"
-                @blur="onEditorBlur($event)"
-                @focus="onEditorFocus($event)"
-                @ready="onEditorReady($event)"
               />
               <input
                 type="file"
@@ -156,46 +153,31 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    onEditorBlur (quill) {
-      console.log('editor blur!', quill)
-       document.querySelector('.ql-editor').setAttribute('data-placeholder', $t('adv.编辑公告描述'))
-       
-    },
-    onEditorFocus (quill) {
-       document.querySelector('.ql-editor').removeAttribute('data-placeholder', '')
-    },
-    onEditorReady (quill) {
-      console.log('editor ready!', quill)
-    },
-    handleEnter () {
-        console.log(this.data.data);
+    handleEnter () {   
+        if (this.data.data.title == '') {
+          this.$message.error( this.$t('adv.请填写标题'))
+          return
+        }
       let params = {
+        title: this.data.data.title,
         id: this.data.data.id,
         content: this.data.data.content,
         rType:this.data.data.rType,
         status:this.data.data.status 
       }
-      this.$apiCall("api.VendorShop.vendorChangeProducts", params, r => {
+      this.$apiCall("api.Notice.save", params, r => {
         if (r.ErrorCode == 9999) {
-              this.$message.success(r.message)
+              this.$message.success(r.Message)
               this.data.show = false
-          } 
+              this.$emit('black')
+          } else{
+              this.$message.error(r.Message)
+          }
       })
     },
     cancel(){
-        this.reset()
         this.data.show = false
-    },
-    reset(){
-      this.data = {
-        show: false,
-        data: {
-          rType: 1,
-          status: 1,
-          content: '',
-          title: '',
-        }
-      }
+        this.$emit('black')
     },
     uploadEditorImgFile ($event) { //文本编辑器2图片   210902改成多图片上传
       //上传
@@ -240,7 +222,7 @@ export default {
         if (r.ErrorCode == 9999) {
           let url = r.Data.Results.imgUrl
           // 获取到当前页面的富文本框
-          let quill = this.$refs.goodsEditor.quill
+          let quill = this.$refs.myQuillEditor.quill
           // 获取光标现在所在的位置上
           let length = quill.getSelection().index
           // quill插入我们刚刚上传成功之后的图片，arr是存在我们服务器上边的地址 
