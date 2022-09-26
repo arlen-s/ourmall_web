@@ -111,6 +111,39 @@
 
 		<div style="display: block;" class="pagebodytwo">
 			<el-row :gutter="20" class="mg-b-30 user-status-list">
+				<el-col :span="8">
+						<el-card class="box-card bg-box" :body-style="{height:'290px' }">
+								<div>
+									<el-image
+										style="width: 70px; height: 70px;border-radius:50%"
+										:src="this.$store.state.userInfo.logo"
+    								  fit="fit">
+											<div slot="error" class="image-slot" style="background:#f6e9e9;">
+															<i class="el-icon-picture-outline"></i>
+											</div>											
+									</el-image>
+								</div>
+								<div style="color:#fff; padding-top:10px">  <b> 嗨，{{this.$store.state.userInfo.username}}</b></div>
+								<div>
+									<p  style="color:#fff; padding-top:10px">用户编号:{{this.$store.state.userInfo.id}}</p>
+								</div>
+						</el-card>
+				</el-col>
+				<el-col :span="16">
+					<el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px', height:'232px' }">
+                <div slot="header" class="clearfix">
+                      <span>{{$t('dashboard.system notification')}}</span>
+                    </div>
+                    <div v-for="o in advData.slice(0,5)" :key="o.id" class="text item fit-box">
+                      <p class="text-style" @click="lookLog(o.id)" >
+                         <el-link type="primary"> <i class="round"></i> {{o.title}}</el-link>
+                         <span>{{o.createdAt}}</span>
+                        </p>
+                    </div>
+              </el-card>
+				</el-col>
+			</el-row>
+			<el-row :gutter="20" class="mg-b-30 user-status-list">
 				<el-col :span="8" :xs="24" :sm="12" :md="8" :lg="8" type="flex">
 					<div @click="gotoPage(1)" class="user-status-item">
 						<div class="status-icon">
@@ -364,6 +397,15 @@
 					{{$t('dashboard.save')}}</el-button>
 			</div>
 		</el-dialog>
+		    <el-dialog
+					:title="advLook.title"
+					:visible.sync="dialogVisibleLog"
+					width="40%">
+					<div v-html="advLook.content" style="padding:0 20px" class="set-css"></div>
+					<span slot="footer" class="dialog-footer">
+					<el-button type="primary" @click="dialogVisibleLog = false">{{$t('dashboard.save')}}</el-button>
+  </span>
+</el-dialog>
 	</div>
 </template>
 
@@ -377,6 +419,9 @@
 				statisticDateFrom: "",
 				statisticDateTo: "",
 				statisticDate: [],
+				advData: [],
+    	  advLook: {},
+				dialogVisibleLog: false,
 				dateArr: { // 选项
 					1: 'dashboard.今天',
 					2: 'dashboard.7天前',
@@ -445,6 +490,7 @@
 		mounted() {
 			this.initPageData();
 			this.getCharts();
+			this.getAdvList()
 			this.getVendorAllOrderCnt(),
 				this.addVendorDialogDefault = JSON.stringify(this.addVendorDialog);
 			this.createdNameDialogDefault = JSON.stringify(this.createdNameDialog);
@@ -482,6 +528,29 @@
 				}
 				return text;
 			},
+    getAdvList(){ //获取
+      this.$apiCall("api.Notice.finds", {rType:1}, r => {
+        if (r.ErrorCode == 9999) {
+            this.advData = r.Data.Results.filter((item)=>{
+                if (item.status == '1') {
+                 return  item
+              } 
+              })
+        }else{
+           this.$message.error(r.Message)
+        }
+      })
+    },
+    lookLog(id){ //公告详情
+    this.dialogVisibleLog = true
+      this.$apiCall("api.Notice.get", {id: id}, r => {
+      if (r.ErrorCode == 9999) {
+        this.advLook = r.Data.Results
+      }else{
+          this.$message.error(r.Message)
+      }
+      })
+    },
 			gotoPage(type) {
 				switch (type) {
 					case 1:
@@ -1169,4 +1238,38 @@
 	.user-status-list .status-icon {
 		min-width: 50px;
 	}
+</style>
+<style>
+.text-style{
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  /* border-bottom:1px solid #e1e1e1; */
+}
+.text-style .el-link--inner{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: contents;
+}
+
+.text-style .el-link--inner .round{
+  display: block;
+  width: 3px;
+  height: 3px;
+  background: #5c6ac4;
+  margin-right: 3px;
+  border-radius: 50%;
+}
+.bg-box{
+	background: #7d88d0;
+}
+.fit-box{
+	padding: 0 20px;
+    border-bottom: 1px solid #e1e1e1;
+}
+.set-css img{
+  max-width: 100%;
+  max-height: 100%;
+}
 </style>

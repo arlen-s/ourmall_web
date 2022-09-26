@@ -19,6 +19,7 @@ export const lang = {
 	modify: '更改',
 	add: '添加',
 	save: '确 定',
+	'system notification': '系统公告',
 	nameEnter: '公司名称必须输入',
   待完善报价的采购单: '待完善报价的采购单',
   待发货的采购单: '待发货的采购单',

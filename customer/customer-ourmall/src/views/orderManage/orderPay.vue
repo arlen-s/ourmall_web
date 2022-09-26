@@ -107,7 +107,7 @@
 							<div class="item-total" style="position: relative;">
 								<div style="position: absolute;left: 40px;">
 									Shipping days : {{item.agingDaysBegin ? item.agingDaysBegin : 0}} - {{item.agingDaysEnd ? item.agingDaysEnd : 0}} days
-								</div>
+								</div>							
 								<span>
 									Subtotal（$）:
 									<span class="tx-bold">{{item.itemAllAmount ? item.itemAllAmount : '---'}}</span>
@@ -175,6 +175,12 @@
 									</span>
 									<span class="tx-bold"> {{totalAllGoodsAmount ? mathTofixed(totalAllGoodsAmount) : '---'}}</span>
 								</div>
+								<div :class="couponInfo.type == 1 ? 'line-through' : ''">
+									<span class="left">
+										Tax Amount（$）:
+									</span>
+									<span class="tx-bold"> {{taxAmount ? mathTofixed(taxAmount) : '---'}}</span>
+								</div>								
 								<div v-show="couponInfo.type == 1">
 									<span class="left">
 										Discounted price of goods（$）:
@@ -285,6 +291,7 @@ import { arrayEach } from 'xe-utils/methods';
 				payTypes:[],
 				platformType:"",
 				totalAllGoodsAmount:0,
+				taxAmount: 0,
 				totalAllFreight:0,
 				totalAllGoodsAndFreight:0,
 				dialogCheckOut: {
@@ -821,7 +828,7 @@ import { arrayEach } from 'xe-utils/methods';
 							}
 						}
 						this.bonusStatus = r.Data.Results.bonusStatus;
-						this.credits = Number(r.Data.Results.creditAmount) - Number(r.Data.Results.usedCreditAmount);
+						this.credits =( Number(r.Data.Results.creditAmount) - Number(r.Data.Results.usedCreditAmount)).toFixed(2);
 					} else {}
 				})
 				// TODO支付
@@ -851,12 +858,13 @@ import { arrayEach } from 'xe-utils/methods';
 				this.items = items.items || [];
 				this.payparams.id = items.invoice.id;
 				this.items.forEach(item=>{
-					this.$set(item,"totalAllAmount",Number(item.itemAllAmount)+Number(item.shippingAllAmount));
+					this.$set(item,"totalAllAmount",Number(item.itemAllAmount)+Number(item.shippingAllAmount)+Number(item.itemTaxAmount));
 					this.$set(item,"shippingJsonInfo",item.shippingJson ? JSON.parse(item.shippingJson) : "");
 					this.$set(item,"shippingAllAmount",item.shippingAllAmount ? Number(item.shippingAllAmount) : "");
 				})
 				this.$set(this,"totalAllGoodsAmount",this.countTotal(this.items,'itemAllAmount'));//商品总价
 				this.$set(this,"totalAllFreight",this.countTotal(this.items,'shippingAllAmount'));//运费汇总
+				this.$set(this,"taxAmount",this.countTotal(this.items,'itemTaxAmount'));//费率汇总
 				this.$set(this,"totalAllGoodsAndFreight",this.countTotal(this.items,'totalAllAmount'));//商品总价+运费汇总
 				//重新支付时获取之前支付的时候有没有占用优惠券
 				if(this.openType == 'repay'){

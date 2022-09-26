@@ -421,6 +421,15 @@ export default {
             }
           ]
         },
+        {
+          id: 34,
+          text: "公告管理",
+          icon: "el-icon-discount",
+          path: "/announcement",
+          enabled: true,
+          role: 'announcement'
+        },        
+
       ],
       openeds: ["1"],
       dialogChangePsw: {
@@ -885,7 +894,7 @@ export default {
   text-align: 18px;
   font-size: 16px;
 }
-#app ::v-deep .el-alert__content {
+#app ::v-deep.el-alert__content {
   width: 100%;
   .el-alert__title {
     display: block;

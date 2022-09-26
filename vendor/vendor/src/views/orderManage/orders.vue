@@ -106,6 +106,11 @@
                             @clear="clearFilter('receiverName')"
                           ></el-input>
                         </el-form-item>
+							<el-table-column :label="$t('transaction.仓库')">
+								<template slot-scope="scope">
+									<span>{{scope.row.warehouseName || '--'}}</span>
+								</template>
+							</el-table-column>	                        
                         <el-form-item :label="$t('orders.verdorName') + ':' ">
                           <el-select
                             filterable
@@ -591,6 +596,11 @@
                         <span v-else>---</span>
                       </template>
                     </el-table-column>
+							<el-table-column :label="$t('transaction.仓库')">
+								<template slot-scope="scope">
+									<span>{{scope.row.warehouseName || '--'}}</span>
+								</template>
+							</el-table-column>	                    
                     <el-table-column :label="$t('orders.logisticsFee')" width="150">
                       <template slot-scope="scope">
                         <span v-if="scope.row.discountType == 3">
@@ -625,6 +635,11 @@
                       </template>
                     </el-table-column>
                   </template>
+							<el-table-column :label="$t('transaction.仓库')">
+								<template slot-scope="scope">
+									<span>{{scope.row.warehouseName || '--'}}</span>
+								</template>
+							</el-table-column>                     
                   <template v-if="status == 2 && activeName == 3">
                     <el-table-column :label="$t('orders.logistics')" width="250">
                       <template slot-scope="scope">
@@ -634,7 +649,7 @@
                           : `[${scope.row.agingDaysBegin?scope.row.agingDaysBegin:0}-${scope.row.agingDaysEnd?scope.row.agingDaysEnd:0}${$t('logistics.天')}]`}` : '---'}}
                         </span>
                       </template>
-                    </el-table-column>
+                    </el-table-column>                 
                     <el-table-column :label="$t('orders.logisticsFee')" width="150">
                       <template slot-scope="scope">
                         <span v-if="scope.row.discountType == 3">
@@ -1112,6 +1127,11 @@
                         </span>
                       </template>
                     </el-table-column>
+							<el-table-column :label="$t('transaction.仓库')">
+								<template slot-scope="scope">
+									<span>{{scope.row.warehouseName || '--'}}</span>
+								</template>
+							</el-table-column>                    
                     <el-table-column :label="$t('orders.logisticsFee')" width="150">
                       <template slot-scope="scope">
                         <span v-if="scope.row.status == 3">
@@ -2151,7 +2171,7 @@ export default {
               this.total = Number(r.Data.Pagination.totalCount)
               this.totalPage = Number(r.Data.Pagination.totalPage)
               this.page= r.Data.Pagination.page
-              if (r.Data.Results.noSearchList.length > 0) {
+              if (r.Data.Results.noSearchList) {
                 this.failData.isShowDialog = true
                 this.failData.obj = r.Data.Results.noSearchList
 								

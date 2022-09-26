@@ -180,7 +180,6 @@
         <el-table-column :label="$t('goods.商品名称')">
           <template slot-scope="scope">
             <p class=" tx-ellipsis3" style=" line-height: 22px;">{{scope.row.name}}</p>
-            <p>{{scope.row.sku}}</p>
           </template>
         </el-table-column>  
         <!-- 商品价格 -->
@@ -242,12 +241,10 @@
    :visible.sync="dialogVisibleLog"
   >
   <el-card class="box-card">
-    <el-table
+        <el-table
     :data="tableLogData"
     border
-    style="width: 100%"
-     height="350"
-    >
+    style="width: 100%">
     <el-table-column
       prop="userName"
       :label="$t('goods.操作者')"

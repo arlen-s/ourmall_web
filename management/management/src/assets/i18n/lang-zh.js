@@ -112,9 +112,11 @@ export const lang = {
 		"Youdon": "You don't have enough order QTY to create purchase order, please recharge your order QTY in Recharge Package page.",
 		'财务': '财务',
 		'钱包': '钱包',
-		'设置收款方式': '设置收款方式'
+		'设置收款方式': '设置收款方式',
+		'公告管理': '公告管理',
 	},
 	dashboard: require('./dashboard/zh').lang,
 	signin: require('./signin/zh').lang,
 	signup: require('./signup/zh').lang,
+  adv: require('./adv/zh').lang,
 }

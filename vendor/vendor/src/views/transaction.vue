@@ -123,6 +123,11 @@
 									<span>{{scope.row.customerName || '---'}}</span>
 								</template>
 							</el-table-column>
+							<el-table-column :label="$t('transaction.仓库')">
+								<template slot-scope="scope">
+									<span>{{scope.row.warehouseName || '--'}}</span>
+								</template>
+							</el-table-column>								
 							<el-table-column :label="$t('transaction.tradeType')">
 								<template slot-scope="scope">
 									<span>{{filterText('tradeType',scope.row.type)}}</span>
@@ -313,6 +318,11 @@
 									<span>{{filterText('tradeStatus',scope.row.status)}}</span>
 								</template>
 							</el-table-column>
+							<el-table-column :label="$t('transaction.仓库')">
+								<template slot-scope="scope">
+									<span>{{scope.row.warehouseName || '--'}}</span>
+								</template>
+							</el-table-column>							
 							<el-table-column :label="$t('transaction.paymentType')">
 								<template slot-scope="scope">
 									<span>{{filterText('platformType',scope.row.platformType)}}</span>

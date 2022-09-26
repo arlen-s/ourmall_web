@@ -694,6 +694,11 @@
                     </el-tooltip>
                   </template>
                 </el-table-column>
+                <el-table-column label="warehouse" width="150">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.warehouseName || "---" }}</span>
+                  </template>
+                </el-table-column>                  
                 <el-table-column label="Customer" width="150">
                   <template slot-scope="scope">
                     <span>{{ scope.row.receiverName || "---" }}</span>
@@ -1438,6 +1443,11 @@
                     <span>{{ scope.row.receiverName || "---" }}</span>
                   </template>
                 </el-table-column>
+                <el-table-column label="warehouse" width="150">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.warehouseName || "---" }}</span>
+                  </template>
+                </el-table-column>                
                 <!-- 1.6.0隐藏 -->
                 <el-table-column
                   v-if="status == 4 && (activeName == 2 || activeName == 3)"
@@ -3558,13 +3568,13 @@ export default {
                 item,
                 "totalAllAmount",
                 (item.itemAmount ? Number(item.itemAmount) : 0) +
-                  Number(item.shippingMethodItem.fee)
+                  Number(item.shippingMethodItem.fee) + Number(item.taxAmount)
               );
             } else {
               this.$set(
                 item,
                 "totalAllAmount",
-                item.itemAmount ? Number(item.itemAmount) : 0
+                item.itemAmount ? Number(item.itemAmount) + Number(item.taxAmount) : 0
               );
             }
           });

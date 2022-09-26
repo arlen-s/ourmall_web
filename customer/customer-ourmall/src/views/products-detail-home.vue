@@ -76,7 +76,7 @@
               <!-- <div class="proCost">{{$showSybmol()}} {{ Number(price)!='0.00' ? $exchangeRate(Number(price).toFixed(2)) : (minPrice||maxPrice) ? `${$exchangeRate(minPrice)} - ${$exchangeRate(maxPrice)}` : $exchangeRate(price)}}</div> -->
               <!-- 选属性 -->
               <div class="other-info" id="special-info" v-if="vatDom">
-                <div class="title">VAT information :</div>
+                <div class="title">   VAT information :</div>
                 <div class="right-fit">
                     <span class="">you can click </span>
                       <el-link type="primary" @click="showVatDom"> here </el-link>
@@ -623,7 +623,7 @@ export default {
       }
       let stockList = []
       // let quantity = this.defaultStocks.find((item) => item.propertyValue == this.choosePropVal.join("||"))
-      stockList.push({ stockId: this.checkData.id, quantity: this.qualityNumClone,stockWarehouseId: this.checkData.warehouseId })
+      stockList.push({ stockId: this.checkData.id, quantity: this.qualityNumClone,stockWarehouseId: this.checkData.vendorStockWarehouseId })
       let params = {
         stockList: stockList
       }

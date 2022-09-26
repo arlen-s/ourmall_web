@@ -36,6 +36,7 @@ export const lang = {
     '已付款待发货': 'Waiting for fulfill',
     '全部发货': 'All fulfilled',
     '有异常': 'Abnormal',
+		'公告管理': 'announcement',
   },
   app: {
     '未合作商品报价': 'Offer Price',
@@ -116,4 +117,5 @@ export const lang = {
   dashboard: require('./dashboard/en').lang,
   signin: require('./signin/en').lang,
   signup: require('./signup/en').lang,
+  adv: require('./adv/en').lang,
 }

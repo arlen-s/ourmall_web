@@ -32,7 +32,7 @@
         class="mg-b-30 user-status-list"
       >
               <el-col :span="8">
-                <el-card>
+                <el-card :body-style="{ height:'290px' }">
                   <div class="grid-content d-flex grid-dashboard">
                     <div class="grid-top">
                       <img class="walletIcon" src="../../public/images/qianbao.png" alt="">
@@ -43,6 +43,19 @@
                     </div>
                   </div>
                 </el-card>
+              </el-col>
+              <el-col :span="8" class="d-box">
+                <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px',height:'232px' }">
+                <div slot="header" class="clearfix">
+                      <span>system notification</span>
+                    </div>
+                    <div v-for="o in advData.slice(0,5)" :key="o.id" class="text item fit-box">
+                      <p class="text-style" @click="lookLog(o.id)">
+                         <el-link type="primary"> <i class="round"></i> {{o.title}}</el-link>
+                         <span>{{o.createdAt}}</span>
+                        </p>
+                    </div>
+              </el-card>
               </el-col>
       </el-row>
             <el-row :gutter="20">
@@ -967,6 +980,15 @@
         </el-button>
       </div>
     </el-dialog>
+    <el-dialog
+  :title="advLook.title"
+  :visible.sync="dialogVisibleLog"
+  width="40%">
+  <div v-html="advLook.content" style="padding:0 20px" class="set-css"></div>
+  <span slot="footer" class="dialog-footer">
+   <el-button type="primary" @click="dialogVisibleLog = false">enter</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -980,6 +1002,8 @@ export default {
       autoplay: true,
       activeIndex: 0,
       vendorsList: [],
+      dialogVisibleLog: false,
+      advLook: {},
       aliexpressVendorsStatus: !localStorage.getItem(
         "c_aliexpressVendorsStatus"
       ),
@@ -1064,6 +1088,7 @@ export default {
       dashBoardData: {},
       marketLoading: true,
       categorysList: [],
+      advData: []
     };
   },
   created() {
@@ -1139,7 +1164,8 @@ export default {
     this.myEcharts();
     this.getVnedors();
     this.getVendorShop();
-			this.getBalance()
+    this.getBalance()
+    this.getAdvList()
   },
   components: {},
   computed: {
@@ -1159,6 +1185,30 @@ export default {
 
         //  e==false
       }
+    },
+    getAdvList(){ //获取
+      this.$apiCall("api.Notice.finds", {rType:2}, r => {
+        if (r.ErrorCode == 9999) {
+          console.log(r.Data, 'dfsdfsd');
+          this.advData = r.Data.Results.filter((item)=>{
+                if (item.status == '1') {
+                 return  item
+              } 
+              })
+        }else{
+           this.$message.error(r.Message)
+        }
+      })
+    },
+    lookLog(id){ //公告详情
+    this.dialogVisibleLog = true
+      this.$apiCall("api.Notice.get", {id: id}, r => {
+      if (r.ErrorCode == 9999) {
+        this.advLook = r.Data.Results
+      }else{
+          this.$message.error(r.Message)
+      }
+      })
     },
     getBalance(){
 				this.$apiCall("api.Relationship.getUserBonus", {
@@ -2295,5 +2345,37 @@ export default {
 }
 .walletIcon{
   margin-top: -10px;
+}
+.text-style{
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  /* border-bottom:1px solid #e1e1e1; */
+}
+.text-style .el-link--inner{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: contents;
+}
+
+.text-style .el-link--inner .round{
+  display: block;
+  width: 3px;
+  height: 3px;
+  background: #5c6ac4;
+  margin-right: 3px;
+  border-radius: 50%;
+}
+.fit-box{
+	padding: 0 20px;
+    border-bottom: 1px solid #e1e1e1;
+}
+.set-css img{
+  max-width: 100%;
+  max-height: 100%;
+}
+.set-css .ql-align-center{
+  text-align: center;
 }
 </style>

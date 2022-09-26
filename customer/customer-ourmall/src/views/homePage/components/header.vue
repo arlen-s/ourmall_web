@@ -506,6 +506,7 @@ export default {
     }
       ],
       isHome: true,
+      appUserId: localStorage.getItem('apiUserId'),
       // isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
     };
   },
@@ -675,7 +676,12 @@ export default {
           this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
           if (r.ErrorCode == 9999) {
             if (r.Data.Results) {
-              this.$router.push({ name: "shoppingCart" })
+                  if (appUserId == '150488') {
+                      this.$router.push({ name: "shoppingCartHC" })
+                  }else{
+                      this.$router.push({ name: "shoppingCart" })
+                  }
+              
             } else {
               this.isValidationCWDialog = true;
             }
@@ -684,7 +690,11 @@ export default {
           }
         });
         } else {
-         this.$router.push({ name: "shoppingCart" })
+                  if (appUserId == '150488') {
+                      this.$router.push({ name: "shoppingCartHC" })
+                  }else{
+                      this.$router.push({ name: "shoppingCart" })
+                  }
         }
       }
     },

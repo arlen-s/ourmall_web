@@ -19,6 +19,7 @@ export const lang = {
 	modify: 'Modify',
 	add: 'Add',
 	save: 'Save',
+	'system notification': 'system notification',
 	nameEnter: 'Company name must be entered',
   '待完善报价的采购单': 'Waiting for offer price',
   '待发货的采购单': 'Unfulfilled Purchase Order',

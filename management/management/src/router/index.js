@@ -158,6 +158,18 @@ const routes = [
     component: () => import(/* webpackChunkName: 'dashboard' */ './../views/customerMg/detailPage.vue')
   },
   {
+    path: '/announcement',
+    name: 'announcement',
+    meta: {
+      title: '公告管理',
+      urlActive: '/announcement',
+      role: 'announcementView',
+      roleWrite: "announcementView",
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'dashboard' */ './../views/advMg/announcement.vue')
+  },
+  {
     path: '/financeMg',
     name: 'financeMg',
     meta: {

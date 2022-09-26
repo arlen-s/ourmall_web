@@ -15,6 +15,8 @@
     "element-ui": "^2.4.5",
     "html2canvas": "^1.0.0-rc.5",
     "moment": "^2.27.0",
+    "node-sass": "^7.0.3",
+    "quill-image-resize-module": "^3.0.0",
     "v-viewer": "^1.5.1",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
