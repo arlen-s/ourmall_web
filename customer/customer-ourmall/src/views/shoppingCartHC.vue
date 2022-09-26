@@ -760,7 +760,7 @@ export default {
     );
   },
   created() {
-   this.getInfoFromKasikornbank()
+  //  this.getInfoFromKasikornbank()
     this.initAddress();
     this.getBonus();
     this.initPayTypes();

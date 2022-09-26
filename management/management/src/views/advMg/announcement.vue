@@ -63,6 +63,7 @@ export default {
   computed: {},
   //监控data中的数据变化
   watch: {},
+  
   //方法集合
   methods: {
     handleShow () {
@@ -121,6 +122,7 @@ export default {
   //生命周期 - 创建完成（可以访问当前this实例）
   created () {
     this.getAdvList()
+    console.log(111111);
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted () {
