@@ -676,7 +676,7 @@ export default {
           this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
           if (r.ErrorCode == 9999) {
             if (r.Data.Results) {
-                  if (appUserId == '150488') {
+                  if (this.appUserId == '150488') {
                       this.$router.push({ name: "shoppingCartHC" })
                   }else{
                       this.$router.push({ name: "shoppingCart" })
@@ -690,7 +690,7 @@ export default {
           }
         });
         } else {
-                  if (appUserId == '150488') {
+                  if (this.appUserId == '150488') {
                       this.$router.push({ name: "shoppingCartHC" })
                   }else{
                       this.$router.push({ name: "shoppingCart" })
