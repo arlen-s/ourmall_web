@@ -151,9 +151,9 @@
 
     <div class="bottom-row-copyright" v-if="setting.ourmall">
       <span>© 2021 Supplier store name  Powered by OurMall.</span> |
-			<span class="ban"><a href="https://beian.miit.gov.cn" target="_blank">京ICP证{{
+			<span class="ban"><a href="https://beian.miit.gov.cn" target="_blank">{{
             number || ''
-          }}号</a></span> 
+          }}</a></span> 
 
     </div>
   </footer>
