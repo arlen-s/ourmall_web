@@ -150,7 +150,11 @@
     </div>
 
     <div class="bottom-row-copyright" v-if="setting.ourmall">
-      © 2021 Supplier store name  Powered by OurMall.
+      <span>© 2021 Supplier store name  Powered by OurMall.</span> |
+			<span class="ban"><a href="https://beian.miit.gov.cn" target="_blank">京ICP证{{
+            number || ''
+          }}号</a></span> 
+
     </div>
   </footer>
 </template>
@@ -160,7 +164,8 @@ export default {
 	props: ['setting'],
 	data() {
 		return {
-			email: ''
+			email: '',
+			number: sessionStorage.getItem('filingNumber')
 		}
 	},
 	mounted () {},
@@ -325,6 +330,13 @@ export default {
 			}
 		}
 	}
+}
+.ban{
+	padding: 0 2px;
+}
+.ban a{
+	color: #2F2F2F;
+
 }
 .bottom-row-2 {
 	padding-bottom: 56px;

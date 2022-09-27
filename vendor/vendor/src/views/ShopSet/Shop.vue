@@ -304,6 +304,7 @@ export default {
           this.form.accountStoreName = data.accountStoreName || 'ourmall app';
           this.form.logo = data.logo;
           this.form.financialEmail = data.financialEmail;
+          this.form.referenceNumber = data.referenceNumber;
         }else{
           this.$message({message: r.Message, type: "error"});
         }

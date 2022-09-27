@@ -1171,6 +1171,7 @@ export default {
       this.$apiCall("api.VendorShop.getVendorShop", {}, (r) => {
         if (r.ErrorCode == 9999) {
           this.shopName = r.Data.Results.name;
+          sessionStorage.setItem('filingNumber', r.Data.Results.referenceNumber)
         }
       });
     },
@@ -2035,7 +2036,7 @@ export default {
 }
 
 .box-store {
-  background-position: -21px -42px;
+  background-position: -21px ​-42px;
 }
 
 .box-bill {
