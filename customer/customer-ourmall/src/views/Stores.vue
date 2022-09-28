@@ -292,7 +292,7 @@
       v-loading="connectStoreLoading"
     >
       <el-divider></el-divider>
-      <el-form :label-position="'left'" label-width="100px">
+      <el-form :label-position="'left'" label-width="110px">
         <el-form-item label="Store type:">
           <div class="imgList">
             <template v-for="(platform, k) in platformArr">
@@ -394,6 +394,17 @@
             </el-row>
           </el-form-item>
         </template>
+        <el-form-item label="Api Permission:" v-if="activePlatform == 'shopify'">
+          <div>
+            <el-checkbox v-model="checkedOrder" disabled>order</el-checkbox>
+            <el-checkbox v-model="checkPublish">published 
+               <el-tooltip class="item" effect="dark" content="If you do not check the relevant permissions, it will affect the use of related functions, please operate with caution" placement="right">
+                 <i class="el-icon-info"></i> 
+              </el-tooltip>              
+              </el-checkbox>
+            
+          </div>            
+        </el-form-item>
       </el-form>
       <el-divider></el-divider>
       <div slot="footer" class="dialog-footer">
@@ -627,6 +638,31 @@
       :bottom="120"
     >
     </el-backtop>
+    <el-dialog
+  title="shopify store authorization"
+  :visible.sync="dialogVisibleShopify"
+   v-loading="connectStoreLoading"
+  width="30%">
+ <div>
+  <el-form>
+    <el-form-item label="Api Permission:">
+          <div>
+            <el-checkbox v-model="checkedOrder" disabled>order</el-checkbox>
+            <el-checkbox v-model="checkPublish">published 
+               <el-tooltip class="item" effect="dark" content="If you do not check the relevant permissions, it will affect the use of related functions, please operate with caution" placement="right">
+                 <i class="el-icon-info"></i> 
+              </el-tooltip>              
+              </el-checkbox>
+            
+          </div>            
+      </el-form-item>
+  </el-form>
+ </div>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisibleShopify = false">close</el-button>
+    <el-button type="primary" @click="againCertification()">Reauthorize</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -639,7 +675,10 @@ export default {
       userId: "",
       vipData: {},
       num: 0,
+      checkedOrder: true,
+      checkPublish:true,
       loading: false,
+      dialogVisibleShopify: false,
       tableHeight: 400,
       reSizeTime: 0,
       pageSizes: [10, 20, 50, 100],
@@ -705,7 +744,8 @@ export default {
       },
       depositDialogDefault: "{}",
       disabled: '',
-      ableClick:  false
+      ableClick:  false,
+      shopifyData:{},
     };
   },
   components: { shopCate },
@@ -972,29 +1012,75 @@ export default {
         })
         .catch(() => {});
     },
-    connectStoreAgain(item) {
-      if (item.platform != 2) {
+    againCertification(){
         this.shopifyWindow = window.open(
           "/blank.html",
           "shopifyAccount-window",
           undefined,
           true
         );
-      } else {
+      this.$showLoading();
+      let params = {};      
+        let authType = []
+        authType[0] = this.checkPublish ? 1 : ''
+        this.activePlatform = "shopify";
+        params = {
+          shopUrl: this.shopifyData.subShopUrl,
+          getAuth: 1,
+          fromList: 1,
+          platform: this.shopifyData.platform,
+          authType: authType
+        };   
+        // this.dialogVisibleShopify = false   
+      this.$apiCall("api.ShopifyAccount.addOtherAccount", params, (r) => {
+        // this.$hideLoading();
+         this.dialogVisibleShopify = false
+        if (r.ErrorCode == "9999") {
+          if (this.activePlatform == "shopify") {
+            this.shopifyWindow.location = r.Data.Results;
+            this.shopifyUrl = this.shopifyData.subShopUrl;
+            this.connectConfirmStart();
+          }
+          if (this.activePlatform == "lazada") {
+            let state = r.Data.Results.state;
+            this.shopifyWindow.location = r.Data.Results.url;
+            this.connectConfirmStart(state);
+          }
+        } else {
+          this.$elementMessage(r.Message, "error");
+        }
+      });          
+    },
+    connectStoreAgain(item) {
+      // console.log(item, 'sdasda');
+      if (item.platform != 2) {
+        this.shopifyData = item
+        this.dialogVisibleShopify = true
+        // this.shopifyWindow = window.open(
+        //   "/blank.html",
+        //   "shopifyAccount-window",
+        //   undefined,
+        //   true
+        // );
+        return false;
+      }   if(item.platform == 2) {
         this.activePlatform = "woo";
         this.openConnectStore("woo", item.shopUrl);
-        return;
+        return ;
       }
 
       this.$showLoading();
       let params = {};
       if (item.platform == "1") {
+        let authType = []
+        authType[0] = this.checkPublish ? 1 : ''
         this.activePlatform = "shopify";
         params = {
           shopUrl: item.subShopUrl,
           getAuth: 1,
           fromList: 1,
           platform: item.platform,
+          authType: authType
         };
       } else if (item.platform == "3") {
         this.activePlatform = "lazada";
@@ -1068,14 +1154,18 @@ export default {
     // add store
     connectStoreFn() {
       let params = {};
+        console.log(this.activePlatform);
       if (this.activePlatform == "shopify") {
         if (!this.shopifyUrl) {
           this.$elementMessage("Please enter Shopify store URL", "error");
           return;
         }
+        let authType = []
+        authType[0] = this.checkPublish ? 1 : ''        
         params = {
           shopUrl: this.shopifyUrl,
           platform: 1,
+          authType: authType
         };
       } else if (this.activePlatform == "woo") {
         if (!this.shopifyUrl) {
