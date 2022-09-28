@@ -277,7 +277,7 @@ export default {
       isAllCheck: false,
       checkboxArr: [],
       productTypeArr: this.$dict.productTypeArr,
-      appUserId: localStorage.getItem('apiUserId'),
+      vendorId: localStorage.getItem('vendorId'),
       showLog: false,
       dialogVisibleLog: false,
         tableLogData: []      
@@ -314,8 +314,7 @@ export default {
 							})
     },
     gotoEdit(id){ //跳转到
-          let UserId = localStorage.getItem('apiUserId')
-      if (UserId == 150488) {
+      if (  this.vendorId != 146428|| this.vendorId != 144875|| this.vendorId != 144843|| this.vendorId != 143779|| this.vendorId != 143654|| this.vendorId != 140694|| this.vendorId != 74) {
       this.$router.push({name: 'AddGoods2', query: {id}})
       }else{
       this.$router.push({name: 'AddGoods', query: {id}})

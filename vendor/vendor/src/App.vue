@@ -1734,6 +1734,7 @@
 						//r.Data.Results.canUseWallet = r.Data.Results.walletOpen = 1; //测试打开钱包
 						localStorage.setItem("apiUserToken", r.Data.Results.apiUserToken);
 						localStorage.setItem("apiUserId", r.Data.Results.id);
+						localStorage.setItem("vendorId", r.Data.Results.vendorId);
 						localStorage.setItem("userInfo", JSON.stringify(r.Data.Results));
 						if (localStorage.getItem("userInfo")) {
 							this.$store.commit(

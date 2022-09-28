@@ -26,7 +26,7 @@
         <el-link
           type="primary"
           class="mg-r-30"
-          v-if="appUserId != 150488"
+          v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74"
           @click="openDialogImport"
           :disabled="!$isRole($route.meta.roleWrite)"
         >{{$t('goods.导入产品')}}</el-link>
@@ -193,7 +193,7 @@ export default {
       offSale: 0,
       showVatDialog: false,
       vatFlag: false,
-      appUserId: localStorage.getItem('apiUserId'),
+      vendorId: localStorage.getItem('vendorId'),
       dialogVipUp: false,
       loading: false,
       pageKey: new Date().valueOf(),
@@ -640,8 +640,8 @@ export default {
       }
     },
     goto (name) {
-      let id = localStorage.getItem('apiUserId')
-      if (id == 150488) {
+      let id = localStorage.getItem('vendorId')
+      if ( id != 144875|| id != 144843|| id != 143779|| id != 143654|| id != 140694|| id != 74) {
         let name = 'AddGoods2'
         this.$router.push({ name })
       } else {
