@@ -1172,7 +1172,7 @@ export default {
       this.$apiCall("api.VendorShop.getVendorShop", {}, (r) => {
         if (r.ErrorCode == 9999) {
           this.shopName = r.Data.Results.name;
-          sessionStorage.setItem('filingNumber', r.Data.Results.referenceNumber)
+          // sessionStorage.setItem('filingNumber', r.Data.Results.referenceNumber)
         }
       });
     },
@@ -1203,6 +1203,7 @@ export default {
           if (r.ErrorCode == 9999) {
             this.$store.commit("setShopInfo", r.Data.Results);
             localStorage.setItem("c_apiShopId", r.Data.Results.shopId);
+            sessionStorage.setItem('filingNumber', r.Data.Results.referenceNumber)
             this.getVendorCurrency();
           } else {
             this.$elementMessage(r.Message, "error");
