@@ -694,7 +694,7 @@
                     </el-tooltip>
                   </template>
                 </el-table-column>
-                <el-table-column label="warehouse" width="150">
+                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>
@@ -1443,7 +1443,7 @@
                     <span>{{ scope.row.receiverName || "---" }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="warehouse" width="150">
+                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>
@@ -1905,6 +1905,7 @@ export default {
         max: "",
         min: "",
       },
+       vendorId: localStorage.getItem('vendorId'),
       // v1.6.0 异常订单新增参数 Start
       details: {},
       createVisible: false,

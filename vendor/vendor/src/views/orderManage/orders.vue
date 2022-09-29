@@ -106,7 +106,7 @@
                             @clear="clearFilter('receiverName')"
                           ></el-input>
                         </el-form-item>
-							<el-table-column :label="$t('transaction.仓库')">
+							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
 								<template slot-scope="scope">
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
@@ -596,7 +596,7 @@
                         <span v-else>---</span>
                       </template>
                     </el-table-column>
-							<el-table-column :label="$t('transaction.仓库')">
+							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
 								<template slot-scope="scope">
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
@@ -635,7 +635,7 @@
                       </template>
                     </el-table-column>
                   </template>
-							<el-table-column :label="$t('transaction.仓库')">
+							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
 								<template slot-scope="scope">
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
@@ -1127,7 +1127,7 @@
                         </span>
                       </template>
                     </el-table-column>
-							<el-table-column :label="$t('transaction.仓库')">
+							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
 								<template slot-scope="scope">
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
@@ -1288,6 +1288,7 @@ export default {
       vipOrderReserveDay: this.$root.$children[0].vipNowData.orderReserveDay,
       isVipUp: false,
       loading: false,
+       vendorId: localStorage.getItem('vendorId'),
       filterDialog: {
         isShowDialog: false,
         obj:{}
