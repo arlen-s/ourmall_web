@@ -1203,7 +1203,7 @@ export default {
           if (r.ErrorCode == 9999) {
             this.$store.commit("setShopInfo", r.Data.Results);
             localStorage.setItem("c_apiShopId", r.Data.Results.shopId);
-            sessionStorage.setItem('filingNumber', r.Data.Results.referenceNumber)
+            sessionStorage.setItem('filingNumber', r.Data.Results.vendorShop.referenceNumber == null? '' : r.Data.Results.vendorShop.referenceNumber)
             this.getVendorCurrency();
           } else {
             this.$elementMessage(r.Message, "error");
