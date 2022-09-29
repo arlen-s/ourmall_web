@@ -694,7 +694,7 @@
                     </el-tooltip>
                   </template>
                 </el-table-column>
-                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
+                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>
@@ -1443,7 +1443,7 @@
                     <span>{{ scope.row.receiverName || "---" }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
+                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>

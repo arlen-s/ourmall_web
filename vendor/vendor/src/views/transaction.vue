@@ -123,7 +123,7 @@
 									<span>{{scope.row.customerName || '---'}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
+							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
 								<template slot-scope="scope">
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
@@ -318,7 +318,7 @@
 									<span>{{filterText('tradeStatus',scope.row.status)}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
+							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
 								<template slot-scope="scope">
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
