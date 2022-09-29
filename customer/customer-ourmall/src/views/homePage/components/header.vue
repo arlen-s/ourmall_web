@@ -676,7 +676,7 @@ export default {
           this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
           if (r.ErrorCode == 9999) {
             if (r.Data.Results) {
-              if (this.vendorId != '148982' || this.vendorId != '146428'|| this.vendorId != '144875'|| this.vendorId != '144843'|| this.vendorId != '143779'|| this.vendorId != '143654'|| this.vendorId != '140694'|| this.vendorId != '74') {
+              if (this.vendorId != '148982' && this.vendorId != '146428' && this.vendorId != '144875' && this.vendorId != '144843'&& this.vendorId != '143779'&& this.vendorId != '143654'&& this.vendorId != '140694'&& this.vendorId != '74') {
                 this.$router.push({ name: "shoppingCartHC" })  
               }else{
                 this.$router.push({ name: "shoppingCart" })
@@ -690,7 +690,7 @@ export default {
           }
         });
         } else {
-              if ( this.vendorId != '148982' || this.vendorId != '146428'|| this.vendorId != '144875'|| this.vendorId != '144843'|| this.vendorId != '143779'|| this.vendorId != '143654'|| this.vendorId != '140694'|| this.vendorId != '74') {
+             if (this.vendorId != '148982' && this.vendorId != '146428' && this.vendorId != '144875' && this.vendorId != '144843'&& this.vendorId != '143779'&& this.vendorId != '143654'&& this.vendorId != '140694'&& this.vendorId != '74') {
                 this.$router.push({ name: "shoppingCartHC" })  
               }else{
                 this.$router.push({ name: "shoppingCart" })

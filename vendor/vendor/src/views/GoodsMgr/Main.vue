@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="right">
-          <el-button type="primary" v-if="vendorId != '148982' || vendorId != '146428'|| vendorId != '144875'|| vendorId != '144843'|| vendorId != '143779'|| vendorId != 143654|| vendorId != '140694'|| vendorId != '74'"  size="small" @click="handleVat" style="margin-right:10px"> {{$t('goods.vat税设置')}}</el-button>
+          <el-button type="primary" v-if="vendorId != '148982' && vendorId != '146428'&& vendorId != '144875'&& vendorId != '144843'&& vendorId != '143779'&& vendorId != 143654 && vendorId != '140694'&& vendorId != '74'"  size="small" @click="handleVat" style="margin-right:10px"> {{$t('goods.vat税设置')}}</el-button>
         <el-badge
           v-if="exportBtn.isShow"
           :hidden="!exportBtn.process.status"
@@ -26,7 +26,7 @@
         <el-link
           type="primary"
           class="mg-r-30"
-          v-if="vendorId != '148982' || vendorId != '146428'|| vendorId != '144875'|| vendorId != '144843'|| vendorId != '143779'|| vendorId != 143654|| vendorId != '140694'|| vendorId != '74'"
+          v-if="vendorId != '148982' && vendorId != '146428'&& vendorId != '144875'&& vendorId != '144843'&& vendorId != '143779'&& vendorId != 143654 && vendorId != '140694'&& vendorId != '74'"
           @click="openDialogImport"
           :disabled="!$isRole($route.meta.roleWrite)"
         >{{$t('goods.导入产品')}}</el-link>
@@ -641,7 +641,7 @@ export default {
     },
     goto (name) {
       let id = localStorage.getItem('vendorId')
-      if ( id != 144875|| id != 144843|| id != 143779|| id != 143654|| id != 140694|| id != 74) {
+      if ( id != 144875 && id != 144843 && id != 143779 && id != 143654 && id != 140694&& id != 74) {
         let name = 'AddGoods2'
         this.$router.push({ name })
       } else {
