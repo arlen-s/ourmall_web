@@ -736,10 +736,9 @@ export default {
     };
   },
   created() {
-    // console.log(this.$route)
     this.setting = JSON.parse(JSON.stringify(this.$store.state.configJson));
     this.getInfo();
-    // this.getShopName()
+    
     if (this.baseUrl != "/my") {
       this.navMenu = [
         {
@@ -1202,8 +1201,9 @@ export default {
         (r) => {
           if (r.ErrorCode == 9999) {
             this.$store.commit("setShopInfo", r.Data.Results);
+            this.$store.commit("referenceNumber", r.Data.Results.vendorShop.referenceNumber);
             localStorage.setItem("c_apiShopId", r.Data.Results.shopId);
-            sessionStorage.setItem('filingNumber', r.Data.Results.vendorShop.referenceNumber == null? '' : r.Data.Results.vendorShop.referenceNumber)
+            // sessionStorage.setItem('filingNumber', r.Data.Results.vendorShop.referenceNumber == null? '' : r.Data.Results.vendorShop.referenceNumber)
             this.getVendorCurrency();
           } else {
             this.$elementMessage(r.Message, "error");

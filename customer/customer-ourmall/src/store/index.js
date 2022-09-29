@@ -12,6 +12,7 @@ export default new Vuex.Store({
     userInfo: '',
     newMsgNum: 0,
     shopInfo: '',
+    referenceNumber: '',
     categroyList: [],
     configJson: { //店铺装修
       detailPage: {
@@ -174,6 +175,9 @@ export default new Vuex.Store({
     setShopInfo(state, shopInfo){
       state.shopInfo = shopInfo ? shopInfo : '';
     },
+    referenceNumber(state, referenceNumber){
+      state.referenceNumber = referenceNumber ? referenceNumber : '';
+    },    
     setCategroy(state, arr){
       state.categroyList = arr.map(e => e)
     },
