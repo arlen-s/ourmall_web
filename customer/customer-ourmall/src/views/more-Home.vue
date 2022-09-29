@@ -641,7 +641,7 @@ export default {
     },
     goToDetail(item){
             let id = localStorage.getItem('apiUserId')
-      if (id == 150488) {
+      if ( id != 144875 && id != 144843 && id != 143779 && id != 143654 && id != 140694&& id != 74) {
       window.open(`/item/${item.id}/${item.name.replace(/\s+/g,"-").replace(/[^\w]/g,'_')}.html`)
       }else{
      window.open(`/itemOld/${item.id}/${item.name.replace(/\s+/g,"-").replace(/[^\w]/g,'_')}.html`)  //非慧仓
