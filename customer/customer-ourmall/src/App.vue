@@ -739,7 +739,7 @@ export default {
     // console.log(this.$route)
     this.setting = JSON.parse(JSON.stringify(this.$store.state.configJson));
     this.getInfo();
-    this.getShopName()
+    // this.getShopName()
     if (this.baseUrl != "/my") {
       this.navMenu = [
         {
