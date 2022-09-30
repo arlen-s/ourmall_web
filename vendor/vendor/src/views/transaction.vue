@@ -405,7 +405,7 @@
 						</el-col>
 						<el-col :span="12">
 							<div class="grid-content">
-								{{$t('transaction.tradeAmount')}}：{{item.totalAmount}}
+								{{$t('transaction.tradeAmount')}}：{{item.totalAmount}}                            
 							</div>
 						</el-col>
 					</el-row>
