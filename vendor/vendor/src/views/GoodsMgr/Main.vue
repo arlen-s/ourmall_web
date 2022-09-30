@@ -641,7 +641,7 @@ export default {
     },
     goto (name) {
       let id = localStorage.getItem('vendorId')
-      if ( id != 144875 && id != 144843 && id != 143779 && id != 143654 && id != 140694&& id != 74) {
+      if ( id !=148982 && id!=146428 && id != 144875 && id != 144843 && id != 143779 && id != 143654 && id != 140694&& id != 74) {
         let name = 'AddGoods2'
         this.$router.push({ name })
       } else {
