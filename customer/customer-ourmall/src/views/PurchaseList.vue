@@ -126,7 +126,7 @@
                 class="product-row"
               >
                 <el-col :span="9" class="td-product-info">
-                  <a
+                  <a  v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74"
                     :href="`/item/${sku.productId}/${sku.name
                       .replace(/\s+/g, '-')
                       .replace(/[^\w]/g, '_')}.html`"
@@ -144,8 +144,26 @@
                       </div>
                     </el-image>
                   </a>
+                  <a v-else
+                    :href="`/itemOld/${sku.productId}/${sku.name
+                      .replace(/\s+/g, '-')
+                      .replace(/[^\w]/g, '_')}.html`"
+                    target="_blank"
+                  >
+                    <el-image
+                      class="product-img"
+                      :fit="'cover'"
+                      @click="productClick(sku.productId)"
+                      :src="sku.product ? sku.product.imgUrl : sku.propertyImage"
+                      lazy
+                    >
+                      <div slot="error" class="image-slot">
+                        <i class="el-icon-picture-outline"></i>
+                      </div>
+                    </el-image>
+                  </a>
                   <div class="right">
-                    <a
+                    <a   v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74"
                       @click="productClick(sku.productId)"
                       class="name tx-ellipsis2"
                       :href="`/item/${
@@ -157,6 +175,18 @@
                     >
                       {{ sku.name }}
                     </a>
+                    <a   v-else
+                      @click="productClick(sku.productId)"
+                      class="name tx-ellipsis2"
+                      :href="`/itemOld/${
+                        sku.productId
+                      }/${sku.name
+                        .replace(/\s+/g, '-')
+                        .replace(/[^\w]/g, '_')}.html`"
+                      target="_blank"
+                    >
+                      {{ sku.name }}
+                    </a>                    
                     <div>{{formatAttr(sku.stock ? sku.stock.propertyValue : sku.propertyValue)}}</div>
                     <div class="sku">
                       SKU
@@ -268,6 +298,7 @@ export default {
     return {
       loading: false,
       searchKey: "",
+        vendorId:  localStorage.getItem('vendorId'),
       pageSizes: [10, 20, 50, 100],
       page: this.$route.query.page ? Number(this.$route.query.page) : 1,
       rowsPerPage: localStorage.getItem("c_purchaseListPerPage")

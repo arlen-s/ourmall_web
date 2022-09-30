@@ -268,8 +268,8 @@
                               <el-link
                                 v-else
                                 type="primary"
-                                :href="
-                                  `/item/${item.vendorProductId}/${item.vendorProductName}.html`
+                                :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ? 
+                                  `/item/${item.vendorProductId}/${item.vendorProductName}.html` :  `/itemOld/${item.vendorProductId}/${item.vendorProductName}.html`
                                 "
                                 target="_blank"
                               >
@@ -465,8 +465,8 @@
                               <el-link
                                 v-else
                                 type="primary"
-                                :href="
-                                  `/item/${item.vendorProductId}/${item.vendorProductName}.html`
+                                :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ? 
+                                  `/item/${item.vendorProductId}/${item.vendorProductName}.html` :  `/itemOld/${item.vendorProductId}/${item.vendorProductName}.html`
                                 "
                                 target="_blank"
                               >
@@ -1057,8 +1057,8 @@
                               <el-link
                                 v-else
                                 type="primary"
-                                :href="
-                                  `/item/${item.vendorProductId}/${item.vendorProductName}.html`
+                                :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ? 
+                                  `/item/${item.vendorProductId}/${item.vendorProductName}.html` :  `/itemOld/${item.vendorProductId}/${item.vendorProductName}.html`
                                 "
                                 target="_blank"
                               >
@@ -1230,8 +1230,8 @@
                               <el-link
                                 v-else
                                 type="primary"
-                                :href="
-                                  `/item/${item.vendorProductId}/${item.vendorProductName}.html`
+                                   :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ? 
+                                  `/item/${item.vendorProductId}/${item.vendorProductName}.html` :  `/itemOld/${item.vendorProductId}/${item.vendorProductName}.html`
                                 "
                                 target="_blank"
                               >

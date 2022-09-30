@@ -33,7 +33,7 @@
           <el-row :gutter="10" class="table-body" v-for="(sku, si)  in item.items" :key="sku.id">
             <el-col :span="8" class=" td">
               <div class="product-info">
-                <a
+                <a v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74"
                   :href="`/item/${sku.product.id}/${sku.product.name
                     .replace(/\s+/g, '-')
                     .replace(/[^\w]/g, '_')}.html`"
@@ -50,10 +50,38 @@
                     </div>
                   </el-image>
                 </a>
+                <a v-else
+                  :href="`/itemOld/${sku.product.id}/${sku.product.name
+                    .replace(/\s+/g, '-')
+                    .replace(/[^\w]/g, '_')}.html`"
+                  target="_blank"
+                >
+                  <el-image
+                    class="product-img"
+                    :fit="'cover'"
+                    :src="sku.product.imgUrl"
+                    lazy
+                  >
+                    <div slot="error" class="image-slot">
+                      <i class="el-icon-picture-outline"></i>
+                    </div>
+                  </el-image>
+                </a>
                 <div class="right">
-                  <a
+                 <a  v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74"
                     class="name tx-ellipsis2"
                     :href="`/item/${
+                      sku.product.id
+                    }/${sku.product.name
+                      .replace(/\s+/g, '-')
+                      .replace(/[^\w]/g, '_')}.html`"
+                    target="_blank"
+                  >
+                    {{ sku.product.name }}
+                  </a>
+                  <a v-else
+                    class="name tx-ellipsis2"
+                    :href="`/itemOld/${
                       sku.product.id
                     }/${sku.product.name
                       .replace(/\s+/g, '-')
@@ -112,6 +140,7 @@ export default {
     return {
       loading: false,
       item: null,
+    vendorId:  localStorage.getItem('vendorId')
     }
   },
   mounted(){

@@ -1059,7 +1059,14 @@ export default {
       )
     },
     goToDetail (item) {
-      window.open(`/item/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g, '_')}.html`)
+      // window.open(`/item/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g, '_')}.html`)
+      let id = localStorage.getItem('vendorId')
+      if ( id != 148982 && id != 146428 && id != 144875 && id != 144843 && id != 143779 && id != 143654 && id != 140694&& id != 74) {
+     window.open(`/item/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g, '_')}.html`)
+      }else{
+    window.open(`/itemOld/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g,'_')}.html`)
+
+      }
       document.title = `${item.name.replace('.html', '')} How to find :: ${this.$root.$children[0].pName.b} App - ${this.$root.$children[0].pName.a}.com`
 
     },

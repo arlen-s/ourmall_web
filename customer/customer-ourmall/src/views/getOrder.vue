@@ -132,7 +132,7 @@
                 >
                   <template slot-scope="scope">
                     <div class="product-info">
-                      <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank">
+                      <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
                         <el-image
                           class="product-img"
                           :fit="'cover'"
@@ -144,8 +144,21 @@
                           </div>
                         </el-image>
                       </a>
+                      <a :href="`/itemOld/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank">
+                        <el-image
+                          class="product-img"
+                          :fit="'cover'"
+                          :src="scope.row.propertyImage"
+                          lazy
+                        >
+                          <div slot="error" class="image-slot">
+                            <i class="el-icon-picture-outline"></i>
+                          </div>
+                        </el-image>
+                      </a>                      
                       <div class="right">
-                        <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank">{{scope.row.name}}</a>
+                        <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">{{scope.row.name}}</a>
+                         <a :href="`/itemOld/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-else>{{scope.row.name}}</a>
                         <div class="tx-ellipsis1">{{formatAttr(scope.row.propertyValue)}}</div>
                         <div class="sku">SKU: <span>{{scope.row.sku}}</span></div>
                       </div>
@@ -216,6 +229,7 @@ export default {
     return {
       loading: false,
       countryArr: [],
+      vendorId:localStorage.getItem('vendorId'),
       swiperOptions: {
         slidesPerView: 3,
         spaceBetween: 30,

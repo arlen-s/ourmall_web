@@ -44,6 +44,7 @@ export default {
             cost:'88.88',
             imgUrl:require("../../../../public/images/productList.png")
         },
+          vendorId: localStorage.getItem('vendorId'),
         };
     },
     computed:{
@@ -74,7 +75,12 @@ export default {
 		    object: '3011',
 		    objectId: item.id
 		  })
+      if ( this.vendorId != 148982 && this.vendorId != 146428 && this.vendorId != 144875 && this.vendorId != 144843 && this.vendorId != 143779 && this.vendorId != 143654 && this.vendorId != 140694&& this.vendorId != 74) {
 		  window.open(`/item/${item.id}/${item.name.replace(/\s+/g,"-").replace(/\//g,'_')}.html`)
+      }else{
+        		  window.open(`/itemOld/${item.id}/${item.name.replace(/\s+/g,"-").replace(/\//g,'_')}.html`)
+      }
+
 		  // this.$router.push({
 		  //   path: `/item/${item.id}/${item.name.replace(/\s+/g,"-").replace(/\//g,'_')}.html`,
 		  // })

@@ -67,7 +67,13 @@
 					<el-table-column label="Reply link">
 						<template slot-scope="scope">
 							<span v-if="scope.row.vendorProduct">
-								{{`${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`}}
+								<span v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
+										{{`${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`}}
+								</span>
+								<span v-else>
+
+								</span>
+								
 							</span>
 							<span v-else>--</span>
 						</template>
@@ -123,6 +129,7 @@ export default {
 		}
 		return {
 			host: window.location.origin,
+			vendorId: localStorage.getItem('vendorId'),
 			filterParams: {
 				name: '',
 				status: '',
