@@ -668,7 +668,7 @@
     </div>
     <upload-Pictures-Drawer :setting="uploadPicturesSetting" @addPictures="addPictures"></upload-Pictures-Drawer>
     <DrawerAddProps :data="drawerAddPropsData" @setMulitProps="setMulitProps"></DrawerAddProps>
-    <DrawerStoreProps :data="drawerStorePropsData" @callBackProps="callBackProps"></DrawerStoreProps>
+    <DrawerStoreProps :dataMAG="drawerStorePropsData" @callBackProps="callBackProps"></DrawerStoreProps>
     <dialogVisiableCus
       :keyData="dialogVisibleCustomers"
       @checkVisibleCustomers="checkVisibleCustomers"
@@ -839,6 +839,8 @@ export default {
           weight: undefined,
           packageWeight: '',
           sku: '',
+          specification: [],
+          attachment:[],
           combination: 1,
           inventory: undefined,
           propertyValue: 'default',
@@ -866,6 +868,7 @@ export default {
         height: undefined,
         vwCoefficient: '6000',
       },
+      specFlag: true,
       filterData: {},
       drawerAddPropsData: {
         isShow: false,
@@ -1185,6 +1188,7 @@ export default {
       } else {
         this.drawerStorePropsData.form = row
       }
+      console.log(this.drawerStorePropsData, 'this.drawerStorePropsData');
     },
     addPictures (data, value) {
       this.specifications = value
@@ -1463,6 +1467,8 @@ export default {
                 productName: e.productName || '',
                 productType: e.productType || [],
                 packageWeight :e.packageWeight || 0.00,
+                specification: e.specification ||[],
+                attachment: e.attachment  || [],
                 productWidth: e.productWidth || 0.00,
                 propertyImageOriginal: e.propertyImageOriginal || '',
               }
@@ -1502,7 +1508,8 @@ export default {
             this.form.stockSingle[0].weight = data.stocks[0].weight ? data.stocks[0].weight : undefined
             this.form.stockSingle[0].packageWeight = data.stocks[0].packageWeight || 0.00,
             this.drawerStorePropsData.form = this.form.stockSingle[0]
-            console.log(this.drawerStorePropsData.form, ' this.drawerStorePropsData.form')
+            this.form.stockSingle[0].specification= data.stocks[0].specification ||[]
+            this.form.stockSingle[0].attachment= data.stocks[0].attachment || []
           }
 
 
@@ -1684,6 +1691,8 @@ export default {
           productType: e.productType || [],
           productWidth: e.productWidth || 0.00,
           packageWeight: e.packageWeight || 0.00,
+          specification:  e.specification ||[],
+          attachment:  e.attachment || [],
         }
       })
       stocks.forEach((item) => {
@@ -1818,16 +1827,17 @@ export default {
           productType: [],
           productWidth: 0.00,
           propertyImageOriginal: '',
-          weight: 0.00
+          weight: 0.00,
+          specification: [],
+          attachment:  [],
         })
 
       })
       console.log(this.tableData)
     },
-    callBackProps (v) { //编辑单一规格
-      console.log(v, 'v00000')
-      console.log(this.index, 'ss22');
-      console.log(this.tableData, 'this.tableData')
+    callBackProps (v,specification) { //编辑单一规格
+    console.log(specification, 'asdads');
+    // this.specFlag = specification
       if (this.drawerStorePropsData.isMulti) {
         this.form.stockMulti[this.index] = v
         this.form.stockMulti[this.index].propertyImage = v.propertyImageOriginal

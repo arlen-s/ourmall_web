@@ -78,7 +78,7 @@
               <div class="other-info" id="special-info" v-if="vatDom">
                 <div class="title">   VAT information :</div>
                 <div class="right-fit">
-                    <span class="">you can click </span>
+                    <span class="tx-bold">you can click </span>
                       <el-link type="primary" @click="showVatDom"> here </el-link>
                       <span>for VAT information</span>
                 </div>  
@@ -172,7 +172,7 @@
                     v-model="qualityNumClone"
                     :min="1"
                     :max="qualityNum"
-                    label="描述文字"
+                    label="description text"
                   ></el-input-number>
                   <div class="mg-l-20 d-flex">
                     <div>inventory :</div>
@@ -213,7 +213,14 @@
         <el-col>
           <el-tabs v-model="activeTabsBom" @tab-click="handleClick">
             <el-tab-pane label="Specifications" name="first">
-              <h3>product information</h3>
+              <div v-if="showSpace">
+               <h3>Download the attachment</h3>
+              <div class="product-information2">
+                <span class="fly-box"  v-for="(item, c) in checkData.attachment" :key="c" @click="downFile(item.url,item.name)"><i class="el-icon-document"></i>{{item.name}}</span>
+              </div>   
+              </div>
+              <div style="margin-top:30px"  v-if="showSpace">
+              <h3 >product information</h3>
               <div class="product-information">
                 <div>
                   <span>sku</span>
@@ -244,12 +251,29 @@
                   <span>{{checkData.weight}}</span>
                 </div>
               </div>
-              <h3 style="margin-top:30px">Package dimensions</h3>
+              </div>
+
+              <!-- <h3 style="margin-top:30px">Package dimensions</h3>
               <div class="product-information">
                 <div>
                   <span>sku:{{checkData.sku || ''}}</span>
                   <span>{{checkData.packageLength}}*{{checkData.packageWidth}}*{{checkData.packageHeight}} （V{{ Number(checkData.packageLength*Number(checkData.packageWidth))*Number(checkData.packageHeight)}} cm³）</span>
                 </div>
+              </div> -->
+              <div>
+              <div style="margin-top:30px" v-for="(dimensions,i) in checkData.specification" :key="i">
+                <div v-if="showSpace">
+              <h3 >{{dimensions.name}}</h3>
+              <div class="product-information" >
+                <div v-for="(dime, b) in dimensions.table" :key="b">
+                  <span>{{dime.Specification || ''}}:</span>
+                  <span>{{dime.SpecificationVal}}</span>
+                </div>
+              </div>  
+                </div>
+
+              </div>
+              
               </div>
             </el-tab-pane>
             <el-tab-pane label="product description" name="second">
@@ -341,6 +365,7 @@ export default {
   data () {
     return {
       keyValue: "",
+      showSpace: false,
       showTest: true,
       vatValue: '0',
       suitRuleInfoClone: {},
@@ -482,6 +507,17 @@ export default {
       },
       deep: true
     },
+    checkData(val){
+          if (val) {
+              if (val.specification ) {                  
+                this.showSpace  = val.specification[0].isShow == '1'? true : false
+              }else if(val.attachment){
+                  this.showSpace  = val.attachment[0].isShow == '1'? true : false
+              } else {
+                this.showSpace = false
+              }
+          }
+    },
     pid () {
       //reset
       this.countryArr = []
@@ -601,8 +637,7 @@ export default {
     this.getVat()
   },
   methods: {
-
-    showVatDom(){
+  showVatDom(){
           this.dialogVisibleHide = true
     },
     getVat(){
@@ -614,6 +649,18 @@ export default {
           }
         }
       )
+    },
+    downFile(url,name){
+        // let url = res.success.url
+        console.log(2222, name);
+        const a = document.createElement('a')
+        a.href = url
+        a.download = name // 下载后文件名
+        a.style.display = 'none'
+        document.body.appendChild(a)
+        a.click() // 点击下载
+        document.body.removeChild(a) // 下载完成移除元素    
+
     },
     addToCart (e) {
       if (!this.$store.state.userInfo) {
@@ -1062,7 +1109,7 @@ export default {
       // window.open(`/item/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g, '_')}.html`)
       let id = localStorage.getItem('vendorId')
       if ( id != 148982 && id != 146428 && id != 144875 && id != 144843 && id != 143779 && id != 143654 && id != 140694&& id != 74) {
-     window.open(`/item/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g, '_')}.html`)
+      window.open(`/item/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g, '_')}.html`)
       }else{
     window.open(`/itemOld/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g,'_')}.html`)
 
@@ -1119,6 +1166,26 @@ export default {
 }
 .product-information {
   border: 1px solid #c0bfbf;
+  width: 60%;
+  margin-top: 20px;
+  div {
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #c0bfbf;
+    display: flex;
+    span:first-child {
+      background: rgb(230, 227, 227);
+      border-right: 1px solid #c0bfbf;
+      width: 30%;
+      padding-left: 15px;
+    }
+    span:last-child {
+      padding-left: 10px;
+    }
+  }
+}
+.product-information2 {
+  display: flex;
   width: 60%;
   margin-top: 20px;
   div {
@@ -1474,7 +1541,7 @@ margin-left: 5px;
   }
 }
 #special-info .title{
-  width: 120px;
+  width: 130px;
 }
 #special-info .right-fit{
 display: flex;
@@ -1482,6 +1549,19 @@ align-items: center;
 span{
   padding: 3px;
 }
+}
+.fly-box{
+height: 26px;
+display: block;
+margin-right:5px;
+padding-left: 5px;
+border: 1px solid #e1e1e1;
+cursor: pointer;
+width: 100px;
+overflow: hidden; //超出的文本隐藏
+text-overflow: ellipsis; //溢出用省略号显示
+white-space: nowrap;  // 默认不换行；
+
 }
 .other-info {
   display: flex;
@@ -1495,6 +1575,7 @@ span{
     margin-right: 10px;
     // min-width: 66px;
     width: 90px;
+
   }
   .tx-bold {
     font-weight: 400;
