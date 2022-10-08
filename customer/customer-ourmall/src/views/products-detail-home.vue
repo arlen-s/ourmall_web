@@ -213,7 +213,7 @@
         <el-col>
           <el-tabs v-model="activeTabsBom" @tab-click="handleClick">
             <el-tab-pane label="Specifications" name="first">
-              <div v-if="showSpace">
+              <div v-if="showSpace &&  checkData.attachment.length> 0">
                <h3>Download the attachment</h3>
               <div class="product-information2">
                 <span class="fly-box"  v-for="(item, c) in checkData.attachment" :key="c" @click="downFile(item.url,item.name)"><i class="el-icon-document"></i>{{item.name}}</span>
@@ -262,7 +262,7 @@
               </div> -->
               <div>
               <div style="margin-top:30px" v-for="(dimensions,i) in checkData.specification" :key="i">
-                <div v-if="showSpace">
+                <div v-if="showSpace&&  checkData.specification.length> 0">
               <h3 >{{dimensions.name}}</h3>
               <div class="product-information" >
                 <div v-for="(dime, b) in dimensions.table" :key="b">
@@ -509,13 +509,20 @@ export default {
     },
     checkData(val){
           if (val) {
-              if (val.specification ) {                  
-                this.showSpace  = val.specification[0].isShow == '1'? true : false
-              }else if(val.attachment){
-                  this.showSpace  = val.attachment[0].isShow == '1'? true : false
-              } else {
-                this.showSpace = false
+              if (val.specification || val.attachment) {  
+                if ( val.specification.length>0) {
+                 this.showSpace  = val.specification[0]?.isShow == '1'? true : false    
+                }                
+                if (val.attachment.length>0) {
+                 this.showSpace  = val.attachment[0]?.isShow == '1'? true : false    
+                }
+                // this.showSpace  = val.specification[0]?.isShow == '1'? true : false 
               }
+              
+              // if(val.attachment){
+              //     this.showSpace  = val.attachment[0]?.isShow == '1'? true : false
+                 
+              // }
           }
     },
     pid () {

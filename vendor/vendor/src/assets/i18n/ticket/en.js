@@ -14,4 +14,5 @@ export const lang = {
   contentCannotEmpty: 'Content cannot be empty',
   issueCannotEmpty: 'Issue cannot be empty',
   success: 'success!',
+  upload: 'upload'
 }

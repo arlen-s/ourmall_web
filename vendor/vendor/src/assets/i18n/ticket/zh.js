@@ -14,4 +14,5 @@ export const lang = {
   contentCannotEmpty: '信息不能为空',
   issueCannotEmpty: '问题不能为空！',
   success: '保存成功！',
+  upload: '上传'
 }
