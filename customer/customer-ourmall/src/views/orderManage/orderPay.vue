@@ -858,13 +858,13 @@ import { arrayEach } from 'xe-utils/methods';
 				this.items = items.items || [];
 				this.payparams.id = items.invoice.id;
 				this.items.forEach(item=>{
-					this.$set(item,"totalAllAmount",Number(item.itemAllAmount)+Number(item.shippingAllAmount)+Number(item.itemTaxAmount));
+					this.$set(item,"totalAllAmount",Number(item.itemAllAmount)+Number(item.shippingAllAmount));
 					this.$set(item,"shippingJsonInfo",item.shippingJson ? JSON.parse(item.shippingJson) : "");
 					this.$set(item,"shippingAllAmount",item.shippingAllAmount ? Number(item.shippingAllAmount) : "");
 				})
 				this.$set(this,"totalAllGoodsAmount",this.countTotal(this.items,'itemAllAmount'));//商品总价
 				this.$set(this,"totalAllFreight",this.countTotal(this.items,'shippingAllAmount'));//运费汇总
-				this.$set(this,"taxAmount",this.countTotal(this.items,'itemTaxAmount'));//费率汇总
+				this.$set(this,"taxAmount",this.countTotal(this.items,'itemTaxAmount'));//运费汇总
 				this.$set(this,"totalAllGoodsAndFreight",this.countTotal(this.items,'totalAllAmount'));//商品总价+运费汇总
 				//重新支付时获取之前支付的时候有没有占用优惠券
 				if(this.openType == 'repay'){

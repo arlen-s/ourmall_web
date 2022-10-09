@@ -354,7 +354,7 @@
                         <br />
                         <el-link
                           type="primary"
-                          @click="editStore(scope.row,'multi', scope.$index)"
+                          @click="editStore(scope.row,'multi', scope.$index, scope.row.id)"
                         >{{$t('goodsEdit.编辑')}}</el-link>
                         <br />
                         <el-link type="primary" @click="handleCombination(scope.row)">
@@ -777,6 +777,7 @@ export default {
 
       },
       num: 0,
+      SkuId: '',
       houseNum: 0,
       childNum: 0,
       checkStoreList: [],
@@ -841,6 +842,7 @@ export default {
           sku: '',
           specification: [],
           attachment:[],
+          specificationSwitch: '1',
           combination: 1,
           inventory: undefined,
           propertyValue: 'default',
@@ -1179,12 +1181,13 @@ export default {
       this.houseNum++
       this.childNum++
     },
-    editStore (row, type, index) {
+    editStore (row, type, index, id) {
       this.drawerStorePropsData.isShow = true
       if (type == 'multi') {
         this.drawerStorePropsData.isMulti = true
         this.drawerStorePropsData.form = row
         this.index = index
+        this.SkuId = id
       } else {
         this.drawerStorePropsData.form = row
       }
@@ -1469,6 +1472,7 @@ export default {
                 packageWeight :e.packageWeight || 0.00,
                 specification: e.specification ||[],
                 attachment: e.attachment  || [],
+                specificationSwitch: e.specificationSwitch  || '1',
                 productWidth: e.productWidth || 0.00,
                 propertyImageOriginal: e.propertyImageOriginal || '',
               }
@@ -1495,7 +1499,6 @@ export default {
               }
             })
           } else {
-            console.log(data.stocks, 'data.stocks')
             // 单属性
             if (!data.stocks.length) {
               return
@@ -1510,9 +1513,8 @@ export default {
             this.drawerStorePropsData.form = this.form.stockSingle[0]
             this.form.stockSingle[0].specification= data.stocks[0].specification ||[]
             this.form.stockSingle[0].attachment= data.stocks[0].attachment || []
+            this.form.stockSingle[0].specificationSwitch =data.stocks[0].specificationSwitch || '1'
           }
-
-
         } else {
           this.$message({
             message: r.Message,
@@ -1693,6 +1695,7 @@ export default {
           packageWeight: e.packageWeight || 0.00,
           specification:  e.specification ||[],
           attachment:  e.attachment || [],
+          specificationSwitch: e.specificationSwitch || '1',
         }
       })
       stocks.forEach((item) => {
@@ -1787,8 +1790,6 @@ export default {
         this.multiStorehouse = a1
         this.tableData = this.multiStorehouse
       }
-
-      console.log(this.tableData, 'this.tableData')
       arr.forEach(e => {
         let pValue = []
         if (propValues.length > 1) {
@@ -1830,23 +1831,32 @@ export default {
           weight: 0.00,
           specification: [],
           attachment:  [],
+          specificationSwitch: '1'
         })
 
       })
-      console.log(this.tableData)
     },
-    callBackProps (v,specification) { //编辑单一规格
-    console.log(specification, 'asdads');
+    callBackProps (v,specification) { //编辑规格
+
     // this.specFlag = specification
       if (this.drawerStorePropsData.isMulti) {
         this.form.stockMulti[this.index] = v
         this.form.stockMulti[this.index].propertyImage = v.propertyImageOriginal
-
-        this.tableData[this.index] = {
-          productName: this.form.stockMulti[this.index].productName,
-          sku: this.form.stockMulti[this.index].sku,
-          childArr: this.tableData[this.index].childArr.length > 0 ? this.tableData[this.index].childArr : []
+        for (let i = 0; i < this.tableData.length; i++) {
+          if (this.SkuId == this.tableData[i].id) {
+                   this.tableData[i] = {
+          productName: this.form.stockMulti[i].productName,
+          sku: this.form.stockMulti[i].sku,
+          childArr: this.tableData[i].childArr.length > 0 ? this.tableData[i].childArr : []
         }
+          }
+          
+        }
+        // this.tableData[this.index] = {
+        //   productName: this.form.stockMulti[this.index].productName,
+        //   sku: this.form.stockMulti[this.index].sku,
+        //   childArr: this.tableData[this.index].childArr.length > 0 ? this.tableData[this.index].childArr : []
+        // }
         // if (!this.productId) {
         //   this.tableData[this.index].childArr = []
         // }
@@ -1864,7 +1874,7 @@ export default {
         // }
       }
 
-      console.log(this.drawerStorePropsData.isMulti, 'this.drawerStorePropsData.isMulti')
+      console.log( this.tableData, 'this.drawerStorePropsData.isMulti')
       this.num++
     },
     getCategroy (status) {

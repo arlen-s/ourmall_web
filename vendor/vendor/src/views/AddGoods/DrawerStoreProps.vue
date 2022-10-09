@@ -320,26 +320,10 @@ export default {
   },
   watch: {
     texFlag (newVal, oldVal) {
-      let  SpeData = this.dataMAG.form.specification
-      let ImgData =   this.dataMAG.form.attachment
       if (newVal == true) {
-          for (let index = 0; index < SpeData.length; index++) {
-              SpeData[index].isShow = '1'
-            
-          }
-      for (let a = 0; a < ImgData.length; a++) {
-          ImgData[a].isShow = '1'
-        
-      }
+            this.dataMAG.form.specificationSwitch = '1'
       } else {
-          for (let index = 0; index < SpeData.length; index++) {
-              SpeData[index].isShow = '2'
-            
-          }
-          for (let a = 0; a < ImgData.length; a++) {
-              ImgData[a].isShow = '2'
-            
-          }          
+            this.dataMAG.form.specificationSwitch = '2'        
       }
     }
   },
@@ -348,9 +332,11 @@ export default {
         this.customDialog = true
     },
     open(){
-    if (this.dataMAG.form.specification.length>0) {
-      this.texFlag = this.dataMAG.form.specification[0].isShow == 1 ? true : false
-    }
+      console.log(
+        this.dataMAG.form, 'this.dataMAG.form'
+      );
+      this.texFlag = this.dataMAG.form.specificationSwitch == '1' ? true : false
+    
     },
     addColumn(i){ // 新增行
     console.log(this.dataMAG.form.specification, 'this.dataMAG.form.Specification');
@@ -373,7 +359,6 @@ export default {
       }
       let obj = {
       name: this.CategoryName,
-      isShow: 1,
       table: [
           {
             Specification: '',
@@ -391,7 +376,6 @@ export default {
       console.log(this.dataMAG.form.specification, 'this.customList');
     },
     handleChangeOtherERPDialog(file) {
-      console.log(file, 'aasdas');
       this.setFileDialog.loading = true;
       this.setFileDialog.uploadLoading = true;
       this.$apiCall(
@@ -406,7 +390,6 @@ export default {
             let item = {
               name: file.name,
               url:r.Data.Results.url,
-              isShow: '1',
               uid: file.uid
             }
             this.dataMAG.form.attachment

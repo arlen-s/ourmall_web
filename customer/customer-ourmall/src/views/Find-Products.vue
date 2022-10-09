@@ -126,7 +126,7 @@
                   :scroll-container="'.main-scroll .el-scrollbar__wrap'"
                   style="position: absolute; width: 100%;cursor: pointer;
                   height: 100%;"
-                  :fit="'cover'"
+                  :fit="'contain'"
                   :src="item.imgUrl"
                   @click="goToDetail(item,titName)"
                 >
@@ -234,7 +234,7 @@
                   :scroll-container="'.main-scroll .el-scrollbar__wrap'"
                   style="position: absolute; width: 100%;cursor: pointer;
                   height: 100%;"
-                  :fit="'cover'"
+                  :fit="'contain'"
                   :src="item.imgUrl"
                   @click="goToDetail(item,info.name)"
                 >
@@ -702,7 +702,7 @@ h1 {
       img {
         width: 100%;
         height: 194px;
-        object-fit: cover;
+        object-fit: contain;
         cursor: pointer;
       }
     }

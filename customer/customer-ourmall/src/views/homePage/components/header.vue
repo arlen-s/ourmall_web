@@ -59,7 +59,6 @@
       </div>
       <div
         class="right"
-        :style="{ marginRight: $route.meta.urlActive ? '200px' : '0' }"
       >
         <ul :class="{ mainMenu: $route.name != 'home' }">
           <li class="user-box">
@@ -638,10 +637,8 @@ export default {
           });
           break;
         case "dashboard":
-          
           // eslint-disable-next-line no-case-declarations
           let c_apiShopId = JSON.parse(localStorage.getItem("c_apiShopId"))
-          console.log(c_apiShopId)
           if (c_apiShopId == 121173) {
             this.release();
           } else {
@@ -659,7 +656,6 @@ export default {
         console.log('123131231qweqweqwe23123')
         this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
           if (r.ErrorCode == 9999) {
-            console.log('12313123')
             if (r.Data.Results) {
               this.$router.push({
                 name: "dashboard",
@@ -1084,7 +1080,7 @@ width: 20%;
   width: 20%;
 }
 .banner-box a{
-font-size: 21px;
+font-size: 16px;
     text-decoration: none
 }
 </style>

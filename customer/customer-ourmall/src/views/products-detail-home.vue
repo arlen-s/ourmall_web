@@ -509,19 +509,11 @@ export default {
     },
     checkData(val){
           if (val) {
-              if (val.specification || val.attachment) {  
-                if ( val.specification.length>0) {
-                 this.showSpace  = val.specification[0]?.isShow == '1'? true : false    
-                }                
-                if (val.attachment.length>0) {
-                 this.showSpace  = val.attachment[0]?.isShow == '1'? true : false    
-                }
-                // this.showSpace  = val.specification[0]?.isShow == '1'? true : false 
-              }
-              
-              // if(val.attachment){
-              //     this.showSpace  = val.attachment[0]?.isShow == '1'? true : false
-                 
+              this.showSpace = val.specificationSwitch == '1' ? true : false
+              // if (!this.showSpace) {
+              //   this.showDef = false
+              // }else{
+              //     this.showDef = false
               // }
           }
     },

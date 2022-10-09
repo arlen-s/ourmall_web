@@ -1171,7 +1171,7 @@ export default {
       this.$apiCall("api.VendorShop.getVendorShop", {}, (r) => {
         if (r.ErrorCode == 9999) {
           this.shopName = r.Data.Results.name;
-          // sessionStorage.setItem('filingNumber', r.Data.Results.referenceNumber)
+          sessionStorage.setItem('filingNumber', r.Data.Results.referenceNumber)
         }
       });
     },
@@ -1203,7 +1203,6 @@ export default {
             this.$store.commit("setShopInfo", r.Data.Results);
             this.$store.commit("referenceNumber", r.Data.Results.vendorShop.referenceNumber);
             localStorage.setItem("c_apiShopId", r.Data.Results.shopId);
-            localStorage.setItem("vendorId", r.Data.Results.vendorId);
             // sessionStorage.setItem('filingNumber', r.Data.Results.vendorShop.referenceNumber == null? '' : r.Data.Results.vendorShop.referenceNumber)
             this.getVendorCurrency();
           } else {

@@ -5,7 +5,7 @@
 		</template>
 		<div style="position:relative;">
 			<DHeader :data="setting && setting.header || ''"  :headerMenu="headerMenu" />
-			<demoBody :data="setting" style="min-height: 120px;"/>
+			<demoBody :data="setting" style="min-height: 120px;padding-top:180px"/>
 			<Footer :setting="$store.state.configJson && $store.state.configJson.footer || ''"/>
 		</div>
 		<template v-if="code && code.footer && code.footer.length > 0">

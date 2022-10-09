@@ -8,28 +8,90 @@
     <div class="right">
       <h1 class="logo"></h1>
       <div class="box">
+    <!-- <div v-if="needMasterSelectShop" class="shop-box">
+      <div class="shop-title">
+        <h2>活跃店铺</h2>
+        <el-link type="primary" :underline="false" @click="logout"
+          >退出</el-link
+        >
+      </div>
+      <div class="shop-list">
+        <ul>
+          <li
+            v-for="item in selectShopList"
+            :key="item.firstUrl"
+            @click="selectShopLogin(item)"
+          >
+            <el-card>
+              <div class="shop-r1">{{ item.shopName }}</div>
+              <div class="shop-r2">店铺域名： {{ item.firstUrl }}</div>
+            </el-card>
+          </li>
+        </ul>
+      </div>
+    </div> -->
+
         <div v-if="needSelectShop" class="shop-box">
           <div class="shop-title">
-            <h2>活跃店铺</h2>
-            <el-link type="primary" :underline="false" @click="logout"
-              >退出</el-link
+            <h2>创建店铺</h2>
+            <el-button type="primary" size="small" @click="shopCodeChange(2)"
+              >创建店铺</el-button
             >
+            <!-- <el-link type="primary" :underline="false" @click="logout"
+              >退出</el-link
+            > -->
           </div>
-          <div class="shop-list">
+          <div class="shop-list" v-if="shopCode == 1">
             <ul>
               <li
                 v-for="item in selectShopList"
-                :key="item.firstUrl"
-                @click="selectShopLogin(item)"
+                :key="item.id"
+                @click="linkItem(item, 2)"
               >
-                <el-card>
-                  <div class="shop-r1">{{ item.shopName }}</div>
-                  <div class="shop-r2">店铺域名： {{ item.firstUrl }}</div>
+                <el-card class="flex">
+                  <div class="flex-left">
+                    <div><i class="el-icon-s-shop"></i></div>
+                    <div>
+                      <div class="shop-r1">{{ item.name }}</div>
+                      <div class="shop-r2">{{ item.name }}.myourmall.com</div>
+                    </div>
+                  </div>
+                  <div><i class="el-icon-arrow-right"></i></div>
                 </el-card>
               </li>
             </ul>
           </div>
+          <div class="shop-add" v-if="shopCode == 2">
+            <el-page-header
+              @back="shopCodeChange(1)"
+              title=""
+              content="创建店铺"
+            >
+            </el-page-header>
+            <div class="shop-name">店铺名称</div>
+            <el-form :model="shopForm" class="" ref="shopForm" :rules="shopRules">
+              <el-form-item prop="shopName">
+                <el-input
+                  v-model="shopForm.shopName"
+                  :placeholder="$t('signin.* 请输入店铺名称')"
+                ></el-input>
+              </el-form-item>
+            </el-form>
+            <el-radio v-model="shopType" label="1">全球店铺</el-radio>
+            <el-radio v-model="shopType" label="2">本土店铺</el-radio>
+            <p class="shop-name">
+              全球店铺，订单根据美金结算，且如果分销商如果需要其他币种支付时，需要自主维护汇率支付
+            </p>
+            <el-button
+              type="primary"
+              size="small"
+              class="addShop"
+              @click="addShop()"
+              >创建店铺</el-button
+            >
+          </div>
         </div>
+
         <div v-else class="box-content">
           <!-- 登录 -->
           <template v-if="isReg == '1'">
@@ -58,7 +120,7 @@
                 >
               </div>
               <!-- 密码登录 -->
-              <div v-show="tabAction == 'login'" class="login-box">
+              <div v-if="tabAction == 'login'" class="login-box">
                 <el-form
                   ref="loginForm"
                   :model="loginForm"
@@ -91,7 +153,7 @@
                 </el-form>
               </div>
               <!-- 验证码登录 -->
-              <div v-show="tabAction == 'codeLogin'" class="login-box">
+              <div v-if="tabAction == 'codeLogin'" class="login-box">
                 <el-form
                   ref="loginForm2"
                   :model="loginForm"
@@ -108,9 +170,12 @@
                     >
                     </el-input>
                   </el-form-item>
-                  <!-- <el-form-item>
-                    <JcRange  status="regStatus.confirmSuccess" :successFun="success('login')" :errorFun="onMpanelError"></JcRange>
-                  </el-form-item> -->
+                  <el-form-item prop="token">
+                    <silder-verify
+                      @success="handleSuccess(1)"
+                      @failed="handleError"
+                    ></silder-verify>
+                  </el-form-item>
                   <!-- <el-form-item>
                     <vue-simple-verify
                       ref="verify2"
@@ -125,7 +190,7 @@
                             })
                       }`"
                       movedColor="#5c6ac4"
-                    />
+                    /> 
                   </el-form-item> -->
                   <el-form-item>
                     <el-input
@@ -216,8 +281,13 @@
                   </p>
                 </el-form-item>
 
-                <div style="margin-top: 20px; margin-bottom: 20px">
-                  <vue-simple-verify
+                <el-form-item prop="tokenSilder">
+                  <silder-verify
+                    @success="handleSuccess(2)"
+                    @failed="handleError"
+                  ></silder-verify>
+                </el-form-item>
+                <!-- <vue-simple-verify
                     ref="verify"
                     @success="success"
                     :width="360"
@@ -230,9 +300,7 @@
                           })
                     }`"
                     movedColor="#5c6ac4"
-                  />
-                </div>
-
+                  /> -->
                 <el-form-item prop="token">
                   <el-input
                     v-model="regForm.token"
@@ -240,7 +308,7 @@
                     :placeholder="$t('signin.* 请输入验证码')"
                   ></el-input>
                 </el-form-item>
-                <el-form-item prop="shopName">
+                <!-- <el-form-item prop="shopName">
                   <el-input
                     v-model="regForm.shopName"
                     :placeholder="$t('signin.* 请输入店铺名称')"
@@ -251,7 +319,7 @@
                       $t("signin.（名称长度需在3~36之间，由字母或数字构成）")
                     }}
                   </p>
-                </el-form-item>
+                </el-form-item> -->
 
                 <div v-if="regStatus.error" class="error">
                   {{ regStatus.error }}
@@ -328,7 +396,12 @@
                   ></el-input>
                 </el-form-item>
                 <div style="margin-top: 20px; margin-bottom: 20px">
-                  <vue-simple-verify
+                  <silder-verify
+                    @success="handleSuccess(3)"
+                    @failed="handleError"
+                  ></silder-verify>
+
+                  <!-- <vue-simple-verify
                     ref="verify3"
                     @success="success2"
                     :width="360"
@@ -339,7 +412,7 @@
                         : $t('signin.重新获取验证码', { second: mobileSeconds })
                     }`"
                     movedColor="#5c6ac4"
-                  />
+                  /> -->
                 </div>
                 <el-form-item prop="token">
                   <el-input
@@ -399,7 +472,7 @@
 <script>
 import UserAgreementDialog from "@/components/userAgreementDialog";
 import RetrievePasswordDialog from "@/components/RetrievePasswordDialog";
-// import JcRange from "@/components/JcRange.vue";
+import SilderVerify from "@/components/silderVerify";
 export default {
   data() {
     const validatePass2 = (rule, value, callback) => {
@@ -411,11 +484,18 @@ export default {
         callback();
       }
     };
+    const validatestatus = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error("请拖动滑块完成验证"));
+      } else {
+        callback();
+      }
+    };
     return {
       timer: null,
       labelWidth: "0px",
-      status: false,
       loading: false,
+      needMasterSelectShop: false,
       formValue: {
         username: "",
         token: "",
@@ -480,6 +560,15 @@ export default {
         timer: null,
         isGetToken: false,
       },
+      loginForm2: {
+        userName: "",
+        password: "",
+        token: "",
+        isSubUser: false,
+        time: 60,
+        timer: null,
+        isGetToken: false,
+      },
       loginRules: {
         userName: [
           {
@@ -488,6 +577,7 @@ export default {
             trigger: "blur",
           },
         ],
+        token: [{ validator: validatestatus, trigger: "change" }],
         password: [
           {
             required: true,
@@ -508,6 +598,7 @@ export default {
         password: "",
         rePassword: "",
         token: "",
+        tokenSilder: "",
       },
       regRules: {
         userName: [
@@ -563,6 +654,28 @@ export default {
           },
         ],
       },
+      shopForm: {
+        shopName: "",
+      },
+      shopRules: {
+        shopName: [
+          {
+            required: true,
+            message: this.$t("signin.请输入店铺名称"),
+            trigger: "blur",
+          },
+          {
+            min: 3,
+            message: this.$t("signin.店铺名称格式错误"),
+            trigger: "blur",
+          },
+          {
+            pattern: /^[A-Za-z0-9]{3,35}$/,
+            message: this.$t("signin.店铺名称格式错误"),
+            trigger: "blur",
+          },
+        ],
+      },
       regStatus: {
         showReSend: true,
         mobileSeconds: 60, // 倒计时
@@ -579,6 +692,8 @@ export default {
       needSelectShop: false,
       selectShopList: [],
       selectShopToken: "",
+      shopType: "",
+      shopCode: 1,
     };
   },
   components: {
@@ -586,9 +701,10 @@ export default {
     // homeAlert,
     // Footer,
     UserAgreementDialog,
-    // JcRange
+    SilderVerify,
   },
-  computed: {
+
+  SilderVerifycomputed: {
     lang() {
       let l = "CN";
       if (navigator.appName == "Netscape") {
@@ -667,7 +783,7 @@ export default {
           this.error = "";
           this.loading = true;
           this.$apiCall(
-            "api.User.resetPassword",
+            "api.CompanyUser.resetPassword",
             {
               mobile: this.formValue.userName,
               password: this.formValue.password,
@@ -768,12 +884,15 @@ export default {
     },
     handleTab(type) {
       this.tabAction = type;
+      console.log(type, "111");
       setTimeout(() => {
         if (type == "login") {
           if (this.$refs.loginForm) this.$refs.loginForm.resetFields();
         } else {
-          console.log(this.$refs.loginForm2.resetFields);
-          if (this.$refs.loginForm2) this.$refs.loginForm2.resetFields();
+          console.log(this.$refs.loginForm2);
+          if (this.$refs.loginForm2) {
+            this.$refs.loginForm2.resetFields();
+          }
         }
       }, 200);
     },
@@ -786,9 +905,6 @@ export default {
         object: "2002",
       });
       this.sendToken();
-    },
-    onMpanelError(){
-
     },
     openUserAgreement() {
       this.$refs.userAgreementDialog.open();
@@ -820,7 +936,16 @@ export default {
         }
       );
     },
-    handleLogin(Results) {
+    linkItem(Results, type) {
+      localStorage.setItem("apiUserId", Results.id);
+
+      this.$apiCall("api.CompanyUser.getNewTk", {}, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.handleLogin(r.Data.Results, type);
+        }
+      });
+    },
+    handleLogin(Results, type) {
       localStorage.setItem("apiUserToken", Results.apiUserToken);
       localStorage.setItem("apiUserId", Results.id);
       localStorage.setItem(
@@ -829,16 +954,21 @@ export default {
       );
       localStorage.setItem("userInfo", JSON.stringify(Results));
       this.$store.commit("setUserInfo", Results);
+      if (type == 1) {
+        return;
+      } else {
+        localStorage.setItem("apiShopId", Results.shop?.id);
+      }
       this.$root.$children[0].getCnt();
       let reg = /^localhost:/;
       let reg2 = /^sandbox/;
       // alert(`Results=${JSON.stringify(Results)}`)
       //登录后跳转页面
       let admin = ".myourmall.com";
-	  let commonAdmin = this.$store.state.userInfo.shop.url;
+      let commonAdmin = this.$store.state.userInfo.shop?.url;
       if (this.$root.$children[0].baseUrl != "/admin") {
         admin = ".myourmall.com/admin";
-		commonAdmin = `${commonAdmin}/admin`
+        commonAdmin = `${commonAdmin}/admin`;
       }
       //todo1 如果有仪表盘的路径
       if (localStorage.getItem("wantVisitPathSu")) {
@@ -873,8 +1003,11 @@ export default {
                 `//sandbox${this.$store.state.userInfo.shop.name}${admin}`
               );
             } else {
-              if (this.$store.state.userInfo.service && this.$store.state.userInfo.shop.url) {
-				url = window.location.href.replace(
+              if (
+                this.$store.state.userInfo.service &&
+                this.$store.state.userInfo.shop.url
+              ) {
+                url = window.location.href.replace(
                   window.location.host,
                   `//${commonAdmin}`
                 );
@@ -914,7 +1047,10 @@ export default {
                     `//sandbox${this.$store.state.userInfo.shop.name}${admin}`
                   );
                 } else {
-                  if (this.$store.state.userInfo.service && this.$store.state.userInfo.shop.url) {
+                  if (
+                    this.$store.state.userInfo.service &&
+                    this.$store.state.userInfo.shop.url
+                  ) {
                     url = window.location.href.replace(
                       window.location.host,
                       `//${commonAdmin}`
@@ -960,7 +1096,10 @@ export default {
                 `//sandbox${this.$store.state.userInfo.shop.name}${admin}`
               );
             } else {
-              if (this.$store.state.userInfo.service && this.$store.state.userInfo.shop.url) {
+              if (
+                this.$store.state.userInfo.service &&
+                this.$store.state.userInfo.shop.url
+              ) {
                 url = window.location.href.replace(
                   window.location.host,
                   `//${commonAdmin}`
@@ -990,7 +1129,8 @@ export default {
       //  this.clearCookie()
       // }
       if (this.tabAction == "login") {
-        this.$refs.loginForm.validate((valid) => {
+
+        this.$refs["loginForm"].validate((valid) => {
           if (valid) {
             this.loginStatus.error = "";
             this.loginStatus.loading = true;
@@ -1008,22 +1148,19 @@ export default {
             this.$Burying({
               object: "1002",
             });
-            this.toLogin();
+            this.codeLogin();
           }
         });
       }
     },
     toLogin() {
-      const rid = this.$route.query.rid || "";
+      //登录
       this.$apiCall(
-        "api.User.login",
+        "api.CompanyUser.login",
         {
-          // isSubUser:this.loginForm.isSubUser, //是否子账号
           username: this.loginForm.userName,
           password: this.loginForm.password,
-          token: this.loginForm.token, //验证码
           type: 2,
-          relationshipId: rid,
         },
         (r) => {
           if (r.ErrorCode == 9999) {
@@ -1031,12 +1168,14 @@ export default {
               object: "1005",
             });
             if (!r.Data.Results.chooseStore) {
-              this.handleLogin(r.Data.Results);
-            } else {
               this.needSelectShop = true;
-              this.selectShopList = r.Data.Results.shops || [];
-              this.selectShopToken = r.Data.Results.token;
+              this.needMasterSelectShop = false;
+              this.handleLogin(r.Data.Results, 1);
+              this.getShopList();
+            } else {
+                this.handleLogin(r.Data.Results);
             }
+
           } else {
             this.$Burying({
               object: "1006",
@@ -1051,8 +1190,52 @@ export default {
         }
       );
     },
+    codeLogin() {
+      //验证码登录
+      this.$apiCall(
+        "api.CompanyUser.login",
+        {
+          username: this.loginForm.userName,
+          // password: this.loginForm.password,
+          token: this.loginForm.token, //验证码
+        },
+        (r) => {
+          if (r.ErrorCode == 9999) {
+            this.$Burying({
+              object: "1005",
+            });
+            this.needSelectShop = true;
+            this.handleLogin(r.Data.Results, 1);
+            this.getShopList();
+          } else {
+            this.$Burying({
+              object: "1006",
+            });
+            this.loginStatus.loading = false;
+            clearInterval(this.loginStatus.errorT);
+            this.loginStatus.error = r.Message;
+            this.loginStatus.errorT = setInterval(() => {
+              this.loginStatus.error = "";
+            }, 5000);
+          }
+        }
+      );
+    },
+    getShopList() {
+      this.$apiCall(
+        "api.CompanyUser.getShopList",
+        {
+          companyUserId: localStorage.getItem("apiUserId"),
+        },
+        (r) => {
+          if (r.ErrorCode == 9999) {
+            this.selectShopList = r.Data.Results;
+          }
+        }
+      );
+    },
     registers() {
-      const rid = this.$route.query.rid || "";
+      // const rid = this.$route.query.rid || "";
       if (!this.regStatus.isAgree) {
         clearInterval(this.regStatus.errorT);
         this.regStatus.error = this.$t("signin.read");
@@ -1069,17 +1252,18 @@ export default {
             object: "2001",
           });
           this.$apiCall(
-            "api.User.register",
+            "api.CompanyUser.register",
             {
-              shopName: this.regForm.shopName,
+              // shopName: this.regForm.shopName,
               username: this.regForm.userName,
               password: this.regForm.password,
+              // notCheckCode: this.regForm.token,
               code: this.regForm.token,
-              type: 2,
-              ivc: this.$route.query.ivc,
-              relationshipId: rid,
-              isLogin: true,
-              lang: this.lang,
+              // type: 2,
+              // ivc: this.$route.query.ivc,
+              // relationshipId: rid,
+              // isLogin: true,
+              // lang: this.lang,
             },
             (r) => {
               this.regStatus.loading = false;
@@ -1087,14 +1271,13 @@ export default {
                 this.$Burying({
                   object: "2004",
                 });
-                this.handleLogin(r.Data.Results);
-                // clearInterval(this.successT);
-                // this.regStatus.success = this.$t('signin.successful');
-                // this.regStatus.successT = setInterval(() => {
-                //   this.regStatus.success = "";
-                // }, 5000);
-                // this.$message({ message: this.$t("signin.successful"), type: "success" });
-                // this.tabAction = "login"
+                // localStorage.setItem(
+                //   "apiUserToken",
+                //   r.Data.Results.apiUserToken
+                // );
+                this.needSelectShop = true;
+                this.handleLogin(r.Data.Results, 1);
+                this.getShopList();
               } else {
                 this.$Burying({
                   object: "2005",
@@ -1170,6 +1353,77 @@ export default {
       this.tabAction = "login";
       this.isReg = "1";
     },
+    shopCodeChange(type) {
+      if (type == 2) {
+        this.regForm.shopName = "";
+        this.shopType = "";
+        this.shopCode = 2;
+      } else {
+        this.shopCode = 1;
+      }
+    },
+    addShop() {    
+      this.$refs.shopForm.validate((valid) => {
+        if (valid) {
+          this.addShopLoading = true;
+          let name = this.shopForm.shopName;
+          let cut = name.indexOf('shop')
+          if (!isNaN(Number(name))) {
+            if(name.slice(cut+4, cut+5) != ''){
+           if (cut != -1 && !isNaN(name.slice(cut+4, cut+5))) {
+            this.$message.error('格式有误，请勿输入shop+数字结尾')
+          return
+          }else{
+            console.log('success');
+          }              
+          }            
+          }
+          this.$apiCall(
+            "api.CompanyUser.createShop",
+            {
+              shopName: this.shopForm.shopName,
+              CompanyUserId: localStorage.getItem("apiUserId"),
+              shopType: this.shopType,
+            },
+            (r) => {
+              this.addShopLoading = false;
+              if (r.ErrorCode == 9999) {
+                this.$message({ message: "创建成功", type: "success" });
+                this.shopCode = 1;
+                this.shopForm.shopName = ''
+                this.getShopList();
+              } else {
+                this.$message({
+                  message: r.Message,
+                  type: "error",
+                });
+              }
+            }
+          );
+        }
+      });
+    },
+    handleSuccess(num) {
+      let name = {
+        1: this.loginForm.userName,
+        2: this.regForm.userName,
+        3: this.formValue.userName,
+      }[num];
+      this.$apiCall(
+        "api.CompanyUser.sendToken",
+        {
+          mobile: name,
+        },
+        (r) => {
+          if (r.ErrorCode == 9999) {
+            this.$message({ message: "请查收验证码", type: "success" });
+          } else {
+            this.$message({ message: r.Message, type: "error" });
+          }
+        }
+      );
+    },
+    handleError() {},
   },
 };
 </script>
@@ -1373,19 +1627,21 @@ export default {
     }
   }
   .shop-list {
+    height: 100%;
+    overflow: auto;
     ul {
       margin: 0;
       padding: 0;
       li {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         cursor: pointer;
         .shop-r1 {
-          margin-bottom: 10px;
           color: #4e4e4e;
           font-weight: bold;
           font-size: 14px;
         }
         .shop-r2 {
+          margin-top: 5px;
           color: #a3a3a3;
           font-size: 12px;
         }
@@ -1417,5 +1673,27 @@ export default {
       text-decoration: none;
     }
   }
+}
+::v-deep .el-card__body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex-left {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+.el-icon-s-shop {
+  margin-right: 9px;
+  font-size: 16px;
+}
+.shop-name {
+  margin: 10px 0 5px 0;
+  color: #a3a3a3;
+  font-size: 12px;
+}
+.addShop {
+  margin-top: 20px;
 }
 </style>

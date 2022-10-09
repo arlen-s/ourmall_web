@@ -112,7 +112,7 @@
                       lazy
                       style="position: absolute; width: 100%;cursor: pointer;
                       height: 100%;"
-                      :fit="'cover'"
+                      :fit="'contain'"
                       :src="item.imgUrl"
                       @click="goToDetail(item)"
                     >
@@ -219,7 +219,7 @@
                       lazy
                       style="position: absolute; width: 100%;cursor: pointer;
                       height: 100%;"
-                      :fit="'cover'"
+                      :fit="'contain'"
                       :src="item.imgUrl"
                       @click="goToDetail(item)"
                     >
@@ -1227,7 +1227,7 @@ h1 {
       img {
         width: 100%;
         height: 194px;
-        object-fit: cover;
+        object-fit: contain;
         cursor: pointer;
       }
     }
