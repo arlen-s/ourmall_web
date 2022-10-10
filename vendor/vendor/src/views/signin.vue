@@ -434,6 +434,7 @@
 				object: '1001'
 			});
 			// this.getCookie()
+			console.log('my name is john437');
 		},
 		methods: {
 			//设置cookie

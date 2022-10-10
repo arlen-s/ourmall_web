@@ -726,6 +726,7 @@ export default {
     });
     this.isReg = this.$getParams("isReg") ? this.$getParams("isReg") : "1";
     // this.getCookie()
+    console.log('my name is home');
   },
   methods: {
     //设置cookie
