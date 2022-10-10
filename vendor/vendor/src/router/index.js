@@ -136,15 +136,15 @@ const routes = [
       checkLogin: true,
     }, 
   },
-  {
-    path: '/old',
-    name: 'signin',
-    component: () => import(/* webpackChunkName: 'home' */ '../views/signin.vue'),
-    meta: {
-      title: 'router.signin',
-      checkLogin: true,
-    }, 
-  },
+  // {
+  //   path: '/old',
+  //   name: 'signin',
+  //   component: () => import(/* webpackChunkName: 'home' */ '../views/signin.vue'),
+  //   meta: {
+  //     title: 'router.signin',
+  //     checkLogin: true,
+  //   }, 
+  // },
   {
     path: '/jump',
     name: 'jump',
