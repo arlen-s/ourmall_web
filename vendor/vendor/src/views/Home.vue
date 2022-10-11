@@ -1168,7 +1168,7 @@ export default {
             this.$Burying({
               object: "1005",
             });
-            if (!r.Data.Results.chooseStore) {
+            if (r.Data.Results.isSubUser && !r.Data.Results.isSubUser ) {
               this.needSelectShop = true;
               this.needMasterSelectShop = false;
               this.handleLogin(r.Data.Results, 1);
