@@ -1369,7 +1369,7 @@ export default {
           this.addShopLoading = true;
           let name = this.shopForm.shopName;
           let cut = name.indexOf('shop')
-          if (!isNaN(Number(name))) {
+          // if (!isNaN(Number(name))) {
             if(name.slice(cut+4, cut+5) != ''){
            if (cut != -1 && !isNaN(name.slice(cut+4, cut+5))) {
             this.$message.error('格式有误，请勿输入shop+数字结尾')
@@ -1378,7 +1378,7 @@ export default {
             console.log('success');
           }              
           }            
-          }
+          // }
           this.$apiCall(
             "api.CompanyUser.createShop",
             {
