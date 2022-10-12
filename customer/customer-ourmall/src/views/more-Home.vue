@@ -96,7 +96,7 @@
                       <div class="pro_name" @click="goToDetail(item)">
                         <a href="javascript:;">{{ item.name }}</a>
                       </div>
-                      <b class="pro_cost">{{$showSybmol()}} {{$exchangeRate(item.cost)}}</b>
+                      <b class="pro_cost">{{$showSybmol()}} {{$exchangeRate(item.minPrice)}}~{{$exchangeRate(item.maxPrice)}}</b>
                       <!-- <div class="imports">
                         <span>Imports:
                            <span style="color:#525FB0">{{ item.imports }}</span>
