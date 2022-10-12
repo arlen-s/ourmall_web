@@ -1989,7 +1989,8 @@ export default {
           }
         }
         if (this.visibleRange == 2) {
-          this.$apiCall('api.VendorShop.checkProductVisibleCustomers', {
+          if (this.productId) {
+           this.$apiCall('api.VendorShop.checkProductVisibleCustomers', {
             productId: this.productId,
           }, r => {
             if (r.ErrorCode == 9999) {
@@ -2007,6 +2008,8 @@ export default {
               })
             }
           })
+          }
+
         } else {
           this.stepsActive = step
         }

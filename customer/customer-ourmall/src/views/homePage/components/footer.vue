@@ -150,7 +150,6 @@
     </div>
 
     <div class="bottom-row-copyright" v-if="setting.ourmall">
-      <span>© 2021 Supplier store name  Powered by OurMall.</span> |
 			<span class="ban"><a href="https://beian.miit.gov.cn" target="_blank">{{
              $store.state.referenceNumber || ''
           }}</a></span> 
