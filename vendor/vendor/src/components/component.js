@@ -67,8 +67,11 @@ export const userFailure = (t) => {
   localStorage.removeItem('apiSubUserId');
   localStorage.removeItem('apiShopId');
   localStorage.removeItem('userInfo');
-  window.location.href = process.env.VUE_APP_BASEURL;
   ApiCall('api.User.logout',{},r=>{});
+  setTimeout(() => {
+    window.location.href = 'https://supplier.ourmall.com/';  
+  }, 300);
+  
 };
 
 export const getTableHeight = (v)=>{
