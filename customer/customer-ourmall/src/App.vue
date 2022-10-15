@@ -1103,6 +1103,7 @@ export default {
       });
     },
     getShopConfig() {
+      console.log(111)
       this.$apiCall("api.VendorShop.getShopConfig", {}, (r) => {
         if (r.ErrorCode == 9999) {
           if (r.Data.Results.length !== 0) {
@@ -1203,6 +1204,7 @@ export default {
             this.$store.commit("setShopInfo", r.Data.Results);
             this.$store.commit("referenceNumber", r.Data.Results.vendorShop.referenceNumber);
             localStorage.setItem("c_apiShopId", r.Data.Results.shopId);
+            localStorage.setItem("vendorId", r.Data.Results.vendorId);
             // sessionStorage.setItem('filingNumber', r.Data.Results.vendorShop.referenceNumber == null? '' : r.Data.Results.vendorShop.referenceNumber)
             this.getVendorCurrency();
           } else {
