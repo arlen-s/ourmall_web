@@ -1263,11 +1263,11 @@
 
 				let userAgent = window.navigator.userAgent;
 				let isFireFox = /(?:Firefox)/.test(userAgent);
+				let isAndroid = /(Android)/i.test(userAgent);
 				let isTablet =
 					/(?:iPad|PlayBook)/.test(userAgent) ||
 					(isAndroid && !/(?:Mobile)/.test(userAgent)) ||
 					(isFireFox && /(?:Tablet)/.test(userAgent));
-				let isAndroid = /(Android)/i.test(userAgent);
 				let isIPhone = /(iPhone|iPod|iOS)/i.test(userAgent);
 				let device = 1;
 				if (isIPhone) {
