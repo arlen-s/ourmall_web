@@ -673,6 +673,7 @@
 				vendorAllOrderCnt: {},
 				vipDetail: {},
 				vipList: {},
+				userId:1,
 				vipNowDetail:{
 					subUserCnt:'', //当前套餐版本可用子员工num
 					productCnt:'',//当前套餐版本可用上架商品num
@@ -1044,12 +1045,12 @@
 								role:"onlineShopDecoView",
 								enabled: true,
 							},
-							// {
-							// 	name: "app.票类设置",
-							// 	path: "/TicketSetting",
-							// 	role: 'onlineShopTicketSettingView',
-							// 	enabled: true,
-							// },							
+							{
+								name: "app.票类设置",
+								path: "/TicketSetting",
+								role: 'onlineShopTicketSettingView',
+								enabled: true,
+							},							
 							{
 								name: 'storeSetting.菜单导航',
 								path: "/menu-setting",
@@ -1277,11 +1278,11 @@
 				let userAgent = window.navigator.userAgent;
 				let isFireFox = /(?:Firefox)/.test(userAgent);
 				let isAndroid = /(Android)/i.test(userAgent);
+				let isIPhone = /(iPhone|iPod|iOS)/i.test(userAgent);
 				let isTablet =
 					/(?:iPad|PlayBook)/.test(userAgent) ||
 					(isAndroid && !/(?:Mobile)/.test(userAgent)) ||
 					(isFireFox && /(?:Tablet)/.test(userAgent));
-				let isIPhone = /(iPhone|iPod|iOS)/i.test(userAgent);
 				let device = 1;
 				if (isIPhone) {
 					// iphone
@@ -1468,6 +1469,7 @@
 				}
 				// location.host
 				let url = location.host;
+				// let url = 'shop242.myourmall.com'
 				if (location.host.indexOf('localhost') > -1) { //测试
 					url = 'shop242.myourmall.com'
 				}
@@ -1755,6 +1757,15 @@
 							symbol: r.Data.Results.shopCurrencySymbol || '$',
 							name: r.Data.Results.shopCountry|| '',
 							shopCurrency:r.Data.Results.shopCurrency|| 'USD'
+						})
+						let vendorId = r.Data.Results.vendorId
+						this.navMenu.find((e)=>{
+							if (e.id == 2) {
+									let indexI =	e.subItem.map((item)=>{return item.id}).indexOf(15)
+									if (vendorId != 148982 && vendorId != 146428 && vendorId != 144875 && vendorId != 144843 && vendorId != 143779 && vendorId != 143654 && vendorId != 140694 && vendorId != 74) {
+										e.subItem.splice(indexI,1)
+									}
+							}
 						})
 						if (localStorage.getItem("userInfo")) {
 							this.$store.commit(
