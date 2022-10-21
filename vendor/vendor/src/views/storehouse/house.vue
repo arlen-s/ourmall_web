@@ -90,6 +90,7 @@ export default {
           role: '',
           tel: '',
           id: '',
+          address:''
         }
       },
       pagination: {
@@ -174,7 +175,8 @@ export default {
           nationName: item.countryName,
           role: item.contact,
           tel: item.telephone,
-          id: item.id
+          id: item.id,
+          address:item.address
         }
       }
     },
@@ -207,6 +209,7 @@ export default {
           nation: '',
           role: '',
           tel: '',
+          address: '',
         }
       }
       this.getInfo()

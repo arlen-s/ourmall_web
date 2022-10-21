@@ -134,8 +134,12 @@
             </s-table>  
           </div>     
       </div> -->
-      <div class="main" >
-        <div class="address_box">
+      <div class="main" style="margin-top:40px">
+        <div style="height:40px">
+          <el-radio v-model="orderType" label="1">Wholesale order</el-radio>
+          <el-radio v-model="orderType" label="2">offline order</el-radio>
+        </div>
+        <div class="address_box" v-if="orderType==1">
           <div class="title mr-l-30">Shipping Address</div>
           <div class="swiperBox">
             <div class="swiper-button-next">
@@ -257,7 +261,7 @@
                 </el-table-column>
                 <el-table-column prop="address" label="Price" align="center">
                   <template slot-scope="scope">
-                    <div class="title">${{ scope.row.stockInfo.price }}</div>
+                    <div class="title">{{$store.state.country.symbol}}{{ scope.row.stockInfo.price }}</div>
                   </template>
                 </el-table-column>
                 <el-table-column label="Quantity" align="center">
@@ -305,7 +309,7 @@
                 <el-table-column label="Subtotal(vat)" align="center">
                   <template slot-scope="scope">
                     <div class="title">
-                      ${{
+                      {{$store.state.country.symbol}}{{
                    (  Number(
                           scope.row.stockInfo.price *
                             scope.row.stockInfo.chooseInventory
@@ -333,8 +337,15 @@
           </div>
         </el-card>
         <el-card style="margin-top: 20px; padding-bottom: 100px" shadow="never">
+          <div class="desc" v-if="orderType==2">
+            <strong>
+              <span>Delivery Address:</span>
+              <span>{{pickAddress}}</span>
+            </strong>
+              
+            </div>
           <div class="d-flex-between">
-            <div>
+            <div v-if="orderType == 1">
               <span>Shipping Method :</span>
               <el-select
                 @change="logisticChange"
@@ -357,13 +368,14 @@
               </span>
               <el-button type="text" :loading="logLoading"></el-button>
             </div>
+            <div v-else></div>
             <div>
               <span
-                >Subtotal（$）:
+                >Subtotal（{{$store.state.country.symbol}}）:
                 <span class="font_bold">{{ subtotal }}</span></span
               >
               <span style="margin-left: 20px"
-                >Freight（$）:
+                >Freight（{{$store.state.country.symbol}}）:
                 <span class="font_bold">{{ freight }}</span></span
               >
             </div>
@@ -385,7 +397,7 @@
         </div> -->
           <div class="bonus">
             <span style="margin-right: 20px"
-              >Bonus:<span class="font_bold"> ($ {{ bonus }})</span></span
+              >Bonus:<span class="font_bold"> ({{$store.state.country.symbol}} {{ bonus }})</span></span
             >
             <el-tooltip class="item" effect="dark" content="The supplier has opened a credit limit for you. When your account balance is insufficient, you can deduct the credit limit" placement="top">
       						<i class="el-icon-question" style="color:red;line-height:80px;margin-right:5px"></i>
@@ -393,7 +405,7 @@
 								
 						<span style="margin-right: 30px;">
 									Credits:
-							<span class="tx-bold"> ($ {{credits}})</span>
+							<span class="tx-bold"> ({{$store.state.country.symbol}} {{credits}})</span>
 						</span>
             <el-switch
               :disabled="disableSwitchBonus && bonusStatus == '2'"
@@ -431,7 +443,7 @@
         </el-card>
         <div class="pay-submit">
           <span class="left">
-            Amount due (including freight)（$）:
+            Amount due (including freight)（{{$store.state.country.symbol}}）:
             <span class="font_bold"> {{ sum }} </span>
           </span>
           <el-button type="primary" :disabled="platformType == '13'" @click="orderPay()"
@@ -512,8 +524,10 @@ export default {
       payPalSessionId:'',
       payPalId:"",
       delLoading: false,
+      orderType: '1',
       newWin: null,
       paystatus: 0,
+      pickAddress: '',
       defVat: 0,
       firstBox: true,
 			credits: 0,
@@ -707,6 +721,16 @@ export default {
         this.getMenu();
       },
       deep: true,
+    },
+    orderType(val){
+        if (val == 2) {
+            this.sum =(this.sum -this.freight).toFixed(2)
+            this.freight = 0
+        }else{
+          // this.$router.go(0)
+          this.multipleSelection = []
+            this.$refs.multipleTable.clearSelection();
+        }
     },
     sum: {
       deep: true,
@@ -1060,21 +1084,37 @@ export default {
         });
         this.getLogisticArr(stockInfo);
         this.subtotal = Number(this.subtotal).toFixed(2);
-        this.sum = Number(this.subtotal) + Number(this.freight);
+        if (this.orderType == 2) {
+          this.sum = Number(this.subtotal);          
+        }else{
+          this.sum = Number(this.subtotal) + Number(this.freight);
+        }        
         this.sum = Number(this.sum).toFixed(2);
       } else {
         this.subtotal = 0;
-        this.sum = Number(this.subtotal) + Number(this.freight);
+        if (this.orderType == 2) {
+          this.sum = Number(this.subtotal);          
+        }else{
+          this.sum = Number(this.subtotal) + Number(this.freight);
+        }
         this.sum = Number(this.sum).toFixed(2);
         this.logisticArr = [];
         this.logistic = "";
+      }
+      this.pickAddress = this.multipleSelection[0]?.warehouseInfo.address
+      if (this.orderType == 2) {
+        this.country = this.multipleSelection[0].warehouseInfo.countryCode
       }
     },
     logisticChange() {
       this.freight = this.logisticArr.find(
         (item) => item.id == this.logistic
       ).fee;
-      this.sum = Number(this.subtotal) + Number(this.freight);
+        if (this.orderType == 2) {
+          this.sum = Number(this.subtotal);          
+        }else{
+          this.sum = Number(this.subtotal) + Number(this.freight);
+        }      
       this.sum = Number(this.sum).toFixed(2);
     },
     getLogisticArr(stockInfo) {
@@ -1113,11 +1153,19 @@ export default {
         });
         this.getLogisticArr(stockInfo);
         this.subtotal = Number(this.subtotal).toFixed(2);
-        this.sum = Number(this.subtotal) + Number(this.freight);
+        if (this.orderType == 2) {
+          this.sum = Number(this.subtotal);          
+        }else{
+          this.sum = Number(this.subtotal) + Number(this.freight);
+        }          
         this.sum = Number(this.sum).toFixed(2);
       } else {
         this.subtotal = 0;
-        this.sum = Number(this.subtotal) + Number(this.freight);
+        if (this.orderType == 2) {
+          this.sum = Number(this.subtotal);          
+        }else{
+          this.sum = Number(this.subtotal) + Number(this.freight);
+        }          
         this.sum = Number(this.sum).toFixed(2);
         this.logisticArr = [];
         this.logistic = "";
@@ -1154,11 +1202,13 @@ export default {
         this.$message.error("Please select the goods first!");
         return;
       }
-      
-      if (this.logistic == "") {
+      if (this.orderType == 1) {
+              if (this.logistic == "") {
         this.$message.error("Please choose the logistics channel");
         return;
       }
+      }
+
       if (this.switchBonus == false && this.platformType == "") {
         this.$message.error("Please select payment method");
         return;
@@ -1250,7 +1300,8 @@ export default {
       stockWareHouse[0] = {
           warehouseId:  this.multipleSelection[0].warehouseInfo?.id,
             shippingId:  this.logistic,
-            stockWarehouseList: []
+            stockWarehouseList: [],
+            shippingType: this.orderType
       }
         stockWareHouse[0].stockWarehouseList =  this.multipleSelection.map((item)=>{
               let  temp =  {
@@ -1359,7 +1410,8 @@ console.log(stockWareHouse, 'stockWareHouse');
       stockWareHouse[0] = {
           warehouseId:  this.multipleSelection[0].warehouseInfo?.id,
             shippingId:  this.logistic,
-            stockWarehouseList: []
+            stockWarehouseList: [],
+            shippingType: this.orderType
       }
         stockWareHouse[0].stockWarehouseList =  this.multipleSelection.map((item)=>{
               let  temp =  {
@@ -1522,6 +1574,13 @@ console.log(stockWareHouse, 'stockWareHouse');
     line-height: 22px;
     margin: 35px 5px 15px 5px;
     font-weight: 500;
+  }
+  .desc{
+    font-size: 14px;
+    font-weight: 500px;
+    padding: 20px;
+    
+  
   }
 .pay-status-body {
   border: 1px solid #dfdfdf;

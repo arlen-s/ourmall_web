@@ -37,7 +37,7 @@
                 <div class="mg-b-20" style="font-size:20px">{{$t('shop.已选币种')}}</div>
                 <div v-if="currencyList.length>0" class="selected-currency">
                     <div v-for="info in currencyList" :key="info.id" class="mg-b-30 d-flex">
-                        <span class="mg-r-10">1 $USD = </span>
+                        <span class="mg-r-10">1 {{$store.state.country.symbol}}{{$store.state.country.shopCurrency}} = </span>
                         <el-input-number :precision="2" :min="0" :controls="false"  style="width: 120px;" v-model="info.rate"></el-input-number>
                         <span class="mg-l-5">{{$CE[info.name].code3}}</span>
                         <i class="el-icon-circle-close close" @click="delCurrency(info)"></i>

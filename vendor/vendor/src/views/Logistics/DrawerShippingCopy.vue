@@ -175,7 +175,7 @@
                       style="width: 75px"
                     ></el-input-number>
                     <span style="margin-left: 6px; margin-right: 6px"
-                      >USD/</span
+                      >{{$store.state.country.symbol}}/</span
                     >
                   </el-col>
                   <el-col :span="2">
@@ -193,7 +193,7 @@
                       :placeholder="$t('logistics.挂号费')"
                       style="margin-left: 25px; width: 75px"
                     ></el-input-number>
-                    USD
+                    {{$store.state.country.symbol}}
                   </el-col>
                   <el-col :span="4">
                     <el-input-number
@@ -204,7 +204,7 @@
                       :placeholder="$t('logistics.附加费（选填）')"
                       style="width: 125px"
                     ></el-input-number>
-                    USD
+                    {{$store.state.country.symbol}}
                   </el-col>
                   <el-col :span="3">
                     <span
@@ -235,7 +235,7 @@
                       style="width: 130px"
 					  ref="inputNumber"
                     ></el-input-number>
-                    USD
+                    {{$store.state.country.symbol}}
                   </el-col>
                   <el-col :span="1"></el-col>
                   <el-col :span="8">
@@ -268,7 +268,7 @@
                       :placeholder="$t('logistics.续重运费')"
                       style="width: 130px"
                     ></el-input-number>
-                    USD
+                    {{$store.state.country.symbol}}
                   </el-col>
                   <el-col :span="1"></el-col>
                   <el-col :span="8">
@@ -301,7 +301,7 @@
                 style="width: 130px"
 				ref="inputNumber"
               ></el-input-number>
-              USD
+              {{$store.state.country.symbol}}
             </template>
           </el-form-item>
         </template>
@@ -354,7 +354,7 @@
               placeholder="0"
               style="width: 200px"
             ></el-input-number>
-            USD
+            {{$store.state.country.symbol}}
           </el-form-item>
         </template>
         <template v-if="data.form.type == 3">
@@ -409,7 +409,7 @@
               :placeholder="$t('logistics.固定运费')"
               style="width: 130px"
             ></el-input-number>
-            USD
+            {{$store.state.country.symbol}}
           </el-form-item>
         </template>
       </el-form>

@@ -4,7 +4,7 @@
 	<template v-if="code && code.header && code.header.length > 0">
 		<div v-for="(item, index) in code.header" :key="index" v-html="item"></div>
 	</template>
-	<div style="position: relative;height: 120px;">
+	<div style="position: relative;height: 130px;">
 		   <DHeader :data="setting && setting.header || ''" :headerMenu="headerMenu"/>
 	</div>
     <div>
@@ -96,7 +96,7 @@
                       <div class="pro_name" @click="goToDetail(item)">
                         <a href="javascript:;">{{ item.name }}</a>
                       </div>
-                      <b class="pro_cost">{{$showSybmol()}} {{item.minPrice == item.maxPrice ? $exchangeRate(item.minPrice) : `${$exchangeRate(item.minPrice)}~${$exchangeRate(item.maxPrice)} `}}</b>
+                      <b class="pro_cost">{{$store.state.country.symbol}} {{item.minPrice == item.maxPrice ? $exchangeRate(item.minPrice) : `${$exchangeRate(item.minPrice)}~${$exchangeRate(item.maxPrice)} `}}</b>
                       
                       <!-- <div class="imports">
                         <span>Imports:

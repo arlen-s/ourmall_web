@@ -54,13 +54,13 @@
 					</el-table-column>
 					<el-table-column label="Expected price">
 						<template slot-scope="scope">
-							{{$showSybmol()}} {{ $exchangeRate(scope.row.minPrice) }} - {{ $exchangeRate(scope.row.maxPrice) }}
+							{{$store.state.country.symbol}} {{ $exchangeRate(scope.row.minPrice) }} - {{ $exchangeRate(scope.row.maxPrice) }}
 						</template>
 					</el-table-column>
 					<el-table-column label="Reply price" v-if="activeName == '2'">
 						<template slot-scope="scope">
 							<span v-if="scope.row.vendorProduct">
-								{{$showSybmol()}} {{$exchangeRate(scope.row.vendorProduct.cost)}}
+								{{$store.state.country.symbol}} {{$exchangeRate(scope.row.vendorProduct.cost)}}
 							</span>
 							<span v-else>
 								--

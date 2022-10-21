@@ -90,7 +90,7 @@
 								</el-table-column>
 								<el-table-column label="Supply unit price" width="200">
 									<template slot-scope="scope">
-										<span >$ {{Number(scope.row.vendorPrice).toFixed(2)}}</span>
+										<span >{{$store.state.country.symbol}} {{Number(scope.row.vendorPrice).toFixed(2)}}</span>
 									</template>
 								</el-table-column>
 								<el-table-column label="Quantity" width="150">
@@ -98,7 +98,7 @@
 										{{scope.row.quantity}}
 									</template>
 								</el-table-column>
-								<el-table-column label="Subtotal（$） " width="200">
+								<el-table-column :label="`Subtotal(${$store.state.country.symbol})` " width="200">
 									<template slot-scope="scope">
 										{{Number(scope.row.quantity * scope.row.vendorPrice).toFixed(2)}}
 									</template>
@@ -109,11 +109,11 @@
 									Shipping days : {{item.agingDaysBegin ? item.agingDaysBegin : 0}} - {{item.agingDaysEnd ? item.agingDaysEnd : 0}} days
 								</div>							
 								<span>
-									Subtotal（$）:
+									Subtotal（{{$store.state.country.symbol}}）:
 									<span class="tx-bold">{{item.itemAllAmount ? item.itemAllAmount : '---'}}</span>
 								</span>
 								<span>
-									Freight（$）:
+									Freight（{{$store.state.country.symbol}}）:
 									<span class="tx-bold">{{item.shippingAllAmount ? item.shippingAllAmount : '---'}}</span>
 								</span>
 							</div>
@@ -130,7 +130,7 @@
 							<div class="pay-bouns" v-if="bonusStatus == 1" :class="{ dis: bonus + credits< totalAllGoodsAndFreight}" @click="changeBonusPlatform(6)">
 								<span style="margin-right: 30px;">
 									Bonus:
-									<span class="tx-bold"> ($ {{bonus}})</span>
+									<span class="tx-bold"> ({{$store.state.country.symbol}} {{bonus}})</span>
 								</span>
 								<el-tooltip class="item" effect="dark" content="The supplier has opened a credit limit for you. When your account balance is insufficient, you can deduct the credit limit" placement="top">
       						<i class="el-icon-question" style="color:red;line-height:80px;margin-right:5px"></i>
@@ -138,7 +138,7 @@
 								
 								<span style="margin-right: 30px;">
 									Credits:
-									<span class="tx-bold"> ($ {{credits}})</span>
+									<span class="tx-bold"> ({{$store.state.country.symbol}} {{credits}})</span>
 								</span>
 								<div class="active" v-show="platformType != 6 ||  bonus + credits < totalAllGoodsAndFreight">
 									<img src="../../assets/pay/Basic.png" alt="" height="25">
@@ -171,31 +171,31 @@
 								</div>
 								<div :class="couponInfo.type == 1 ? 'line-through' : ''">
 									<span class="left">
-										Total amount of goods（$）:
+										Total amount of goods（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{totalAllGoodsAmount ? mathTofixed(totalAllGoodsAmount) : '---'}}</span>
 								</div>
 								<div :class="couponInfo.type == 1 ? 'line-through' : ''">
 									<span class="left">
-										Tax Amount（$）:
+										Tax Amount（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{taxAmount ? mathTofixed(taxAmount) : '---'}}</span>
 								</div>								
 								<div v-show="couponInfo.type == 1">
 									<span class="left">
-										Discounted price of goods（$）:
+										Discounted price of goods（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{couponInfo.disItemAmount ? mathTofixed(couponInfo.disItemAmount) : '---'}}</span>
 								</div>
 								<div :class="couponInfo.type == 3 ? 'line-through' : ''">
 									<span class="left">
-										Total freight amount（$）:
+										Total freight amount（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{totalAllFreight ? mathTofixed(totalAllFreight) : '---'}}</span>
 								</div>
 								<div v-show="couponInfo.type == 2">
 									<span class="left">
-										Shop discount（$）:
+										Shop discount（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold" style="color:#FF0000;"> {{couponInfo.discountAmount ? - couponInfo.discountAmount : '---'}}</span>
 								</div>
@@ -204,7 +204,7 @@
 								</div>
 								<div class="">
 									<span class="left">
-										Amount due (including freight)（$）:
+										Amount due (including freight)（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
 								</div>
@@ -215,7 +215,7 @@
 			</el-row>
 			<div v-if="!paystatus>0" class="pay-submit" :style="{width: width}">
 				<span class="left">
-					Amount due (including freight)（$）:
+					Amount due (including freight)（{{$store.state.country.symbol}}）:
 					<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
 				</span>
 				 <el-button  type="primary" :disabled="platformType == '13'" @click="orderPay(openType)">Submit orders</el-button>
@@ -858,13 +858,13 @@ import { arrayEach } from 'xe-utils/methods';
 				this.items = items.items || [];
 				this.payparams.id = items.invoice.id;
 				this.items.forEach(item=>{
-					this.$set(item,"totalAllAmount",Number(item.itemAllAmount)+Number(item.shippingAllAmount));
+					this.$set(item,"totalAllAmount",Number(item.itemAllAmount)+Number(item.shippingAllAmount)+Number(item.itemTaxAmount));
 					this.$set(item,"shippingJsonInfo",item.shippingJson ? JSON.parse(item.shippingJson) : "");
 					this.$set(item,"shippingAllAmount",item.shippingAllAmount ? Number(item.shippingAllAmount) : "");
 				})
 				this.$set(this,"totalAllGoodsAmount",this.countTotal(this.items,'itemAllAmount'));//商品总价
 				this.$set(this,"totalAllFreight",this.countTotal(this.items,'shippingAllAmount'));//运费汇总
-				this.$set(this,"taxAmount",this.countTotal(this.items,'itemTaxAmount'));//运费汇总
+				this.$set(this,"taxAmount",this.countTotal(this.items,'itemTaxAmount'));//费率汇总
 				this.$set(this,"totalAllGoodsAndFreight",this.countTotal(this.items,'totalAllAmount'));//商品总价+运费汇总
 				//重新支付时获取之前支付的时候有没有占用优惠券
 				if(this.openType == 'repay'){

@@ -219,7 +219,7 @@
 </el-switch>
       </div> 
 <el-form status-icon  ref="ruleForm" label-width="100px" class="demo-ruleForm">
-  <el-form-item :label="$t('mycustomer.信用额度($)')">
+  <el-form-item :label="`${$t('mycustomer.信用额度')}${$store.state.country.symbol}`">
     <el-input type="number" v-model="addVendorDialog.creditAmount" autocomplete="off"></el-input>
   </el-form-item>
 </el-form>

@@ -8,7 +8,7 @@
             {{data.name}}
         </div>
         <div class="product-price" v-if="data.displayPrice">
-          {{$showSybmol()}} {{$exchangeRate(data.cost)}}
+          {{$store.state.country.symbol}} {{$exchangeRate(data.cost)}}
         </div>
         <div class="add-list" :style="{color: data.btnColor, backgroundColor: data.btnBackground}" @click="import_pro(data.product)">
             {{ data.buttonText || 'Add to list' }}

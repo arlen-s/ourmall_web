@@ -6,6 +6,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userInfo: "",
+    country:{
+      symbol: '$',
+      name:'',
+      shopCurrency: '',
+    },
     cnt: {
       customerCnt: 0,
       customerAuthCnt: 0, //已授权Shopify的客户
@@ -184,6 +189,10 @@ export default new Vuex.Store({
     },
     noThenAdd (state, obj) {
       state.configJson.customPage = obj
+    },
+    setCountry(state,currency){
+      state.country.symbol = currency.symbol
+      state.country.shopCurrency = currency.shopCurrency
     },
     delMenu(state, id){ //删除菜单
       if(state.configJson.menu.findIndex(e => e.id == id) > 0)

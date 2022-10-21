@@ -48,7 +48,7 @@
 							<span>{{scope.row.trackCompany ? `${scope.row.trackCompany}${scope.row.trackNumber ? '：'+scope.row.trackNumber : ''}` : '---'}}</span>
 						</template>
 					</el-table-column>
-					<el-table-column :label="$t('orders.logisticsFee')" width="150">
+					<el-table-column :label="`${$t('orders.logisticsFee')}(${$store.state.country.symbol})`" width="150">
 						<template slot-scope="scope">
 							<span v-if="scope.row.discountType == 3">
 								<span>0&nbsp;</span>
@@ -59,7 +59,7 @@
 							<span v-else>{{scope.row.trackFee || '---'}}</span>
 						</template>
 					</el-table-column>
-					<el-table-column :label="$t('orders.tradeAmount')" width="100">
+					<el-table-column :label="`${$t('orders.tradeAmount')}(${$store.state.country.symbol})`" width="100">
 						<template slot-scope="scope">
 							<span v-if="scope.row.discountType">
 								<span>{{scope.row.payAmount || '---'}}&nbsp;</span>

@@ -25,7 +25,7 @@
                 </div>
                 <div :style="{ 'text-align':data.textAlign}">
                 <div class="product-name tx-ellipsis1">{{item.name}}</div>
-                <div v-if="data.displayPrice" class="product-cost">{{$showSybmol()}} {{$exchangeRate(item.cost)}}</div>
+                <div v-if="data.displayPrice" class="product-cost">{{$store.state.country.symbol}} {{$exchangeRate(item.cost)}}</div>
                 </div>
             </div>
         </div>

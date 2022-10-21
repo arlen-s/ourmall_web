@@ -53,7 +53,7 @@
                     <div><i class="el-icon-s-shop"></i></div>
                     <div>
                       <div class="shop-r1">{{ item.name }}</div>
-                      <div class="shop-r2">{{ item.name }}.myourmall.com</div>
+                      <div class="shop-r2">{{item.countryName? `[${item.countryName}]` : ''}} {{ item.name }}.myourmall.com</div>
                     </div>
                   </div>
                   <div><i class="el-icon-arrow-right"></i></div>
@@ -79,9 +79,14 @@
             </el-form>
             <el-radio v-model="shopType" label="1">全球店铺</el-radio>
             <el-radio v-model="shopType" label="2">本土店铺</el-radio>
-            <p class="shop-name">
-              全球店铺，订单根据美金结算，且如果分销商如果需要其他币种支付时，需要自主维护汇率支付
-            </p>
+
+            <div style="margin: 10px 0;" v-if="shopType == 2">
+            <el-radio-group v-model="countryId">
+                <el-radio v-for="(val, key, index) in countryList" :key="index" :label="key">{{val.name}}</el-radio>
+           </el-radio-group>
+           <!-- <p style="line-height:36px">本土店铺，语言仅支持本土，货币仅支持本土货币</p> -->
+            </div>
+            <p class="shop-name">本土店铺，语言仅支持本土，货币仅支持本土货币</p>
             <el-button
               type="primary"
               size="small"
@@ -502,6 +507,7 @@ export default {
         password: "",
         rePassword: "",
       },
+      countryId: '',
       showReSend: true,
       mobileSeconds: 60, // 倒计时
       confirmSuccess: false, // 是否通过滑动验证
@@ -629,6 +635,7 @@ export default {
             trigger: "blur",
           },
         ],
+        countryList:{},
         token: [
           {
             required: true,
@@ -726,7 +733,7 @@ export default {
     });
     this.isReg = this.$getParams("isReg") ? this.$getParams("isReg") : "1";
     // this.getCookie()
-    console.log('my name is home');
+
   },
   methods: {
     //设置cookie
@@ -1173,6 +1180,7 @@ export default {
               this.needMasterSelectShop = false;
               this.handleLogin(r.Data.Results, 1);
               this.getShopList();
+              this.getCountry();
             } else {
                 this.handleLogin(r.Data.Results);
             }
@@ -1187,6 +1195,18 @@ export default {
             this.loginStatus.errorT = setInterval(() => {
               this.loginStatus.error = "";
             }, 5000);
+          }
+        }
+      );
+    },
+    getCountry(){
+              this.$apiCall(
+        "api.CompanyUser.getShopCountryList",
+        {
+        },
+        (r) => {
+          if (r.ErrorCode == 9999) {
+              this.countryList = r.Data.Results
           }
         }
       );
@@ -1208,6 +1228,7 @@ export default {
             this.needSelectShop = true;
             this.handleLogin(r.Data.Results, 1);
             this.getShopList();
+              this.getCountry();
           } else {
             this.$Burying({
               object: "1006",
@@ -1369,7 +1390,6 @@ export default {
           this.addShopLoading = true;
           let name = this.shopForm.shopName;
           let cut = name.indexOf('shop')
-          // if (!isNaN(Number(name))) {
             if(name.slice(cut+4, cut+5) != ''){
            if (cut != -1 && !isNaN(name.slice(cut+4, cut+5))) {
             this.$message.error('格式有误，请勿输入shop+数字结尾')
@@ -1377,14 +1397,15 @@ export default {
           }else{
             console.log('success');
           }              
-          }            
-          // }
+                   
+          }
           this.$apiCall(
             "api.CompanyUser.createShop",
             {
               shopName: this.shopForm.shopName,
               CompanyUserId: localStorage.getItem("apiUserId"),
               shopType: this.shopType,
+              country: this.countryId
             },
             (r) => {
               this.addShopLoading = false;
@@ -1628,7 +1649,7 @@ export default {
     }
   }
   .shop-list {
-    height: 100%;
+    height: 500px;
     overflow: auto;
     ul {
       margin: 0;

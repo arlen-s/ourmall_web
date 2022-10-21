@@ -239,6 +239,11 @@
                   :reserve-selection="true"
                 >
                 </el-table-column>
+                <el-table-column label="order type" v-if="status == 3">
+                    <template slot-scope="scope">
+                        <p>{{scope.row.shippingType== 1? 'Wholesale order' : 'offline order'}}</p>
+                    </template>
+                </el-table-column>                
                 <el-table-column label="Your shop order num" width="100">
                   <template slot-scope="scope">
                     <el-popover
@@ -698,7 +703,14 @@
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>
-                </el-table-column>                  
+                </el-table-column>    
+                <el-table-column label="address" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
+                  <template slot-scope="scope">                
+                    <el-tooltip class="item" effect="dark" :content="scope.row.warehouseAddress" placement="top-start">
+                       <i class="el-icon-chat-dot-square"></i>
+                     </el-tooltip>
+                  </template>
+                </el-table-column>                                
                 <el-table-column label="Customer" width="150">
                   <template slot-scope="scope">
                     <span>{{ scope.row.receiverName || "---" }}</span>
@@ -759,7 +771,7 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    :label="`Shipping cost(${$showSybmol()})`"
+                    :label="`Shipping cost(${$store.state.country.symbol})`"
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -783,7 +795,7 @@
                 </template>
                 <template v-if="status == 2">
                   <el-table-column
-                    :label="`Total(${$showSybmol()})`"
+                    :label="`Total(${$store.state.country.symbol})`"
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -797,7 +809,7 @@
                 </template>
                 <template v-if="status == 4">
                   <el-table-column
-                    :label="`pay total(${$showSybmol()})`"
+                    :label="`pay total(${$store.state.country.symbol})`"
                     width="100"
                   >
                     <template slot-scope="scope">
@@ -913,7 +925,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  :label="`Payment amount(${$showSybmol()})`"
+                  :label="`Payment amount(${$store.state.country.symbol})`"
                   width="200"
                 >
                   <template slot-scope="scope">
@@ -1033,6 +1045,11 @@
                   width="55"
                   :reserve-selection="true"
                 >
+                </el-table-column>
+                <el-table-column label="order type" v-if="status == 3">
+                    <template slot-scope="scope">
+                        <p>{{scope.row.shippingType== 1? 'Wholesale order' : 'offline order'}}</p>
+                    </template>
                 </el-table-column>
                 <el-table-column label="Your shop order num" width="100">
                   <template slot-scope="scope">
@@ -1447,6 +1464,13 @@
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>
+                </el-table-column>   
+                <el-table-column label="address" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
+                  <template slot-scope="scope">                
+                    <el-tooltip class="item" effect="dark" :content="scope.row.warehouseAddress" placement="top-start">
+                       <i class="el-icon-chat-dot-square"></i>
+                     </el-tooltip>
+                  </template>
                 </el-table-column>                
                 <!-- 1.6.0隐藏 -->
                 <el-table-column
@@ -1523,7 +1547,7 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    :label="`Shipping cost(${$showSybmol()})`"
+                    :label="`Shipping cost(${$store.state.country.symbol})`"
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1545,7 +1569,7 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    :label="`pay total(${$showSybmol()})`"
+                    :label="`pay total(${$store.state.country.symbol})`"
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1592,6 +1616,11 @@
                       </div>
                     </template>
                   </el-table-column>
+                  <!-- <el-table-column label="action" v-if="status== 3" width="150">
+                      <el-link>
+                        Download documentation
+                      </el-link>
+                  </el-table-column> -->
                 </template>
               </el-table>
             </template>
@@ -1643,7 +1672,7 @@
           Total Amount:
           <b class="tx-danger"
             >{{ $exchangeRate(dialogPay.amount.toFixed(2)) }}
-            {{ $showSybmol() }}</b
+            {{ $store.state.country.symbol }}</b
           >
         </div>
       </div>
@@ -1859,22 +1888,22 @@
           action=""
         >
           <el-button slot="trigger" size="small" type="primary"
-            >选取文件</el-button
+            >select file</el-button
           >
           <div class="el-upload__tip" slot="tip">
             <div>
-              点击下载
-              <a class="template" @click="downloadFile">订单导入模板</a>
+              click to download
+              <a class="template" @click="downloadFile">Order Import Template</a>
             </div>
-            请按规范填写表格，仅支持xlsx格式文件<br />
-            上传的文件不能超过2M，只处理前99条数据
+            Please fill in the form according to the specification, only support xlsx format file<br />
+            The uploaded file cannot exceed 2M, and only the first 99 pieces of data are processed
           </div>
         </el-upload>
       </div>
       <div slot="footer">
-        <el-button size="mini" @click="ImportCancel">取消</el-button>
+        <el-button size="mini" @click="ImportCancel">cancel</el-button>
         <el-button size="mini" type="primary" @click="createUpload"
-          >提交</el-button
+          >submit</el-button
         >
       </div>
     </el-dialog>
@@ -1905,6 +1934,10 @@ export default {
         max: "",
         min: "",
       },
+      formHouse: {
+          type: []
+      },
+      dialogVisibleHouse: false,
        vendorId: localStorage.getItem('vendorId'),
       // v1.6.0 异常订单新增参数 Start
       details: {},
@@ -1998,6 +2031,7 @@ export default {
       payTime: 0,
       payAmount: 0,
       newWin: null,
+      storehouseList: [],
       invoiceInfo: {
         id: "",
         relationship: {
@@ -2255,6 +2289,46 @@ export default {
     },
     ImportFn() {
       this.createVisible = true;
+    },
+    batchWareHouse(){        
+        if (this.checkIds.length == 0) {
+          this.$message.error('Please select an order')
+          return
+        }
+        this.dialogVisibleHouse = true
+    },
+    buildOrder(){
+          let params = {
+            id: this.checkIds,
+            warehouseId: this.formHouse.type
+          }
+      this.$apiCall("api.ShopifyOrder.orderChooseWarehouse", params, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.$message.success('Binding succeeded!');
+          this.dialogVisibleHouse = false
+          this.formHouse.type = []
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })
+    },
+    openStorehouse(){
+      this.$apiCall("api.Warehouse.finds", {}, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.storehouseList = r.Data.Results
+          if (r.Data.Results.length == 0) {
+            this.$message.error('There is no warehouse, please go to add！')
+          }
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })
     },
     ImportCancel() {
       this.createVisible = false;

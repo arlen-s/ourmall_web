@@ -49,7 +49,7 @@
 					</el-table-column>
 					<el-table-column label="Expected Price">
 						<template slot-scope="scope">
-							{{$showSybmol()}} {{ $exchangeRate(scope.row.minPrice) }} - {{ $exchangeRate(scope.row.maxPrice) }}
+							{{$store.state.country.symbol}} {{ $exchangeRate(scope.row.minPrice) }} - {{ $exchangeRate(scope.row.maxPrice) }}
 						</template>
 					</el-table-column>
 					<el-table-column label="Product link" prop="url"></el-table-column>

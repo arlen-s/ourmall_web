@@ -38,7 +38,7 @@
                       <img class="walletIcon" src="../../public/images/qianbao.png" alt="">
                     </div>
                     <div class="grid-bottom">
-                      <h2 class="tx-primary">balance($): {{balance || '0.00'}}</h2>
+                      <h2 class="tx-primary">balance({{$store.state.country.symbol}}): {{balance || '0.00'}}</h2>
                       <p>wallet</p>
                     </div>
                   </div>
@@ -81,7 +81,7 @@
                       </div>
                       <div class="grid-bottom">
                         <h2 class="tx-primary">
-                          {{ $showSybmol() }}
+                          {{$store.state.country.symbol}}
                           {{ $exchangeRate(dashBoardData.orderRevenue) }}
                         </h2>
                         <p>This month Revenue</p>
@@ -116,7 +116,7 @@
                       </div>
                       <div class="grid-bottom">
                         <h2 class="tx-primary">
-                          {{ $showSybmol() }}
+                          {{$store.state.country.symbol}}
                           {{ $exchangeRate(dashBoardData.orderCost) }}
                         </h2>
                         <p>This month Cost</p>
@@ -210,7 +210,7 @@
                       <el-table-column prop="orderCnt" label="Total Orders">
                       </el-table-column>
                       <el-table-column
-                        :label="`Revenue (${$showSybmol()})`"
+                        :label="`Revenue (${$store.state.country.symbol})`"
                         width="180"
                       >
                         <template slot-scope="scope">
@@ -218,7 +218,7 @@
                         </template>
                       </el-table-column>
                       <el-table-column
-                        :label="`Cost (${$showSybmol()})`"
+                        :label="`Cost (${$store.state.country.symbol})`"
                         width="180"
                       >
                         <template slot-scope="scope">
@@ -393,7 +393,7 @@
                             >
                               Purchase price:
                               <span
-                                >{{ $showSybmol() }}
+                                >{{ $store.state.country.symbol }}
                                 {{ $exchangeRate(item.price) }}</span
                               >
                               /piece
@@ -454,7 +454,7 @@
                     <div v-if="vendor.vendorCnt.invoiceAmount" class="mg-b-20">
                       <span style="color: #909399">Valid Amount Due:</span>
                       <span
-                        >{{ $showSybmol() }}
+                        >{{ $store.state.country.symbol }}
                         {{
                           $exchangeRate(vendor.vendorCnt.invoiceAmount)
                         }}</span
@@ -851,7 +851,7 @@
           </el-table-column>
           <el-table-column
             prop="revenue"
-            :label="`Revenue (${$showSybmol()})`"
+            :label="`Revenue (${$store.state.country.symbol})`"
             width="180"
           >
             <template slot-scope="scope">
@@ -860,7 +860,7 @@
           </el-table-column>
           <el-table-column
             prop="cost"
-            :label="`Cost (${$showSybmol()})`"
+            :label="`Cost (${$store.state.country.symbol})`"
             width="180"
           >
             <template slot-scope="scope">
@@ -1579,7 +1579,7 @@ export default {
                 trigger: "axis",
               },
               legend: {
-                data: [`Total Revenue ${this.$showSybmol()}`, "Total Cost"],
+                data: [`Total Revenue ${this.$store.state.country.symbol}`, "Total Cost"],
               },
               grid: {
                 left: "3%",
@@ -1602,7 +1602,7 @@ export default {
               },
               series: [
                 {
-                  name: `Total Revenue ${this.$showSybmol()}`,
+                  name: `Total Revenue ${this.$store.state.country.symbol}`,
                   type: "line",
                   stack: "Total Revenue",
                   data: arr.map((item) => this.$exchangeRate(item.revenue)),

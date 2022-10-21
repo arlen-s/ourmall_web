@@ -4,7 +4,7 @@
 	<template v-if="code && code.header && code.header.length > 0">
 		<div v-for="(item, index) in code.header" :key="index" v-html="item"></div>
 	</template>
-	<div style="position: relative;height: 120px;">
+	<div style="position: relative;height: 130px;">
 		   <DHeader :data="setting && setting.header || ''" :headerMenu="headerMenu" />
 	</div>
     <div class="contentpanel find-product">
@@ -124,7 +124,7 @@
                     <div class="pro_name" @click="goToDetail(item)">
                       <a href="javascript:;">{{ item.name }}</a>
                     </div>
-                    <b class="pro_cost">{{$showSybmol()}} {{$exchangeRate(item.cost)}}</b>
+                    <b class="pro_cost">{{$store.state.country.symbol}} {{$exchangeRate(item.cost)}}</b>
                     <!-- <div class="imports">
                       <span>Imports: {{ item.imports }}</span>
                       <span
@@ -230,7 +230,7 @@
                       <div class="pro_name" @click="goToDetail(item)">
                         <a href="javascript:;">{{ item.name }}</a>
                       </div>
-                      <b class="pro_cost">{{$showSybmol()}} {{$exchangeRate(item.cost)}}</b>
+                      <b class="pro_cost">{{$store.state.country.symbol}} {{$exchangeRate(item.cost)}}</b>
                       <!-- <div class="imports">
                         <span>Imports:
                            <span style="color:#525FB0">{{ item.imports }}</span>

@@ -4,7 +4,7 @@
    <template v-if="code && code.header && code.header.length > 0">
    	<div v-for="(item, index) in code.header" :key="index" v-html="item"></div>
    </template>
-   <div style="position: relative;height: 120px;">
+   <div style="position: relative;height: 130px;">
 	   <DHeader :data="setting && setting.header || ''" :headerMenu="headerMenu" />
    </div>
   <div class="detail" v-loading=loading>
@@ -70,7 +70,7 @@
           <!-- 详情数据 -->
           <div class="pro_detail">
             <div class="pro_name_w">{{ products.name }}</div>
-            <div class="proCost">{{$showSybmol()}} {{ Number(activeSelect.price) ? $exchangeRate(Number(activeSelect.price).toFixed(2)) : (minPrice||maxPrice) ? `${$exchangeRate(minPrice)} - ${$exchangeRate(maxPrice)}` : $exchangeRate(price)}}</div>
+            <div class="proCost">{{$store.state.country.symbol}} {{ Number(activeSelect.price) ? $exchangeRate(Number(activeSelect.price).toFixed(2)) : (minPrice||maxPrice) ? `${$exchangeRate(minPrice)} - ${$exchangeRate(maxPrice)}` : $exchangeRate(price)}}</div>
             <!-- 选属性 -->
 			<!-- <div class="pro_property">
 				<p>Variants</p>

@@ -1758,6 +1758,11 @@ export default {
             }
             localStorage.setItem("c_apiUserId", r.Data.Results.id);
             localStorage.setItem("c_apiUserToken", r.Data.Results.apiUserToken);
+						this.$store.commit("setCountry", {
+							symbol: r.Data.Results.shopCurrencySymbol || '$',
+							name: r.Data.Results.shopCountry|| '',
+							shopCurrency:r.Data.Results.shopCurrency || 'USD'
+						})            
             if (r.Data.Results) {
               if (r.Data.Results.configJson)
                 r.Data.Results.config = JSON.parse(r.Data.Results.configJson);

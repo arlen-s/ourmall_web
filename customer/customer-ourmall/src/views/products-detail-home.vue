@@ -4,7 +4,7 @@
     <template v-if="code && code.header && code.header.length > 0">
       <div v-for="(item, index) in code.header" :key="index" v-html="item"></div>
     </template>
-    <div style="position: relative;height: 120px;">
+    <div style="position: relative;height: 130px;">
       <DHeader :data="setting && setting.header || ''" :headerMenu="headerMenu" />
     </div>
     <div class="detail" v-loading="loading">
@@ -68,7 +68,7 @@
             <div class="pro_detail">           
               <div class="pro_name_w">{{name }}</div> 
             <div class="title-box">
-              <div class="proCost">{{$showSybmol()}} {{ $exchangeRate(Number(price).toFixed(2)) }}</div>
+              <div class="proCost">{{$store.state.country.symbol}} {{ $exchangeRate(Number(price).toFixed(2)) }}</div>
                 <el-tooltip class="item" effect="dark" content="Combo" placement="top">
                     <i v-show="checkData.isCombination ==1" class="combo">C</i>
                  </el-tooltip>
@@ -366,6 +366,7 @@ export default {
     return {
       keyValue: "",
       showSpace: false,
+      showDef: false,
       showTest: true,
       vatValue: '0',
       suitRuleInfoClone: {},

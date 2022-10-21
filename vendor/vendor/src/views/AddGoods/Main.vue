@@ -303,7 +303,7 @@
                     <span v-else>组合</span>
                   </template>
                 </el-table-column>
-                <el-table-column align="center" :label="`${$t('goodsEdit.出厂价')}($)`">
+                <el-table-column align="center" :label="`${$t('goodsEdit.出厂价')}(${$store.state.country.symbol})`">
                   <template slot-scope="scope">
                     <!-- <el-input-number
                       size="mini"
@@ -637,10 +637,10 @@
                 <el-table-column align="center" width="180">
                   <template slot="header">
                     <span class="tx-danger">*</span>
-                    <span>{{ `${$t('goodsEdit.售价')}($)`}}</span>
+                    <span>{{ `${$t('goodsEdit.售价')} (${$store.state.country.symbol})`}}</span>
                   </template>
                 </el-table-column>
-                <el-table-column align="center" :label="$t('goodsEdit.成本价')" width="180"></el-table-column>
+                <el-table-column align="center" :label="`${$t('goodsEdit.成本价')}(${$store.state.country.symbol})`" width="180"></el-table-column>
                 <el-table-column align="center" :label="$t('goodsEdit.条形码')" width="180"></el-table-column>
                 <el-table-column align="center" :label="$t('goodsEdit.库存')" width="180"></el-table-column>
               </el-table>
@@ -705,13 +705,13 @@
       <div class="tx-center dialog-content" style="padding:20px">
         <p style="text-align: left;margin: -30px 0 30px;">
           {{$t('goodsEdit.批量设置')}}
-          <span v-if="dialogVolumeSet.type == 1">{{$t('goodsEdit.售价')}}</span>
+          <span v-if="dialogVolumeSet.type == 1">{{$t('goodsEdit.售价') ($store.state.country.symbol)}}</span>
           <span v-else-if="dialogVolumeSet.type == 2">{{$t('goodsEdit.成本价')}}</span>
           <span v-else>{{$t('goodsEdit.重量')}}</span>
         </p>
         <div class="d-flex">
-          <span v-if="dialogVolumeSet.type == 1">{{$t('goodsEdit.售价')}} ($) :</span>
-          <span v-else-if="dialogVolumeSet.type == 2">{{$t('goodsEdit.成本价')}} ($) :</span>
+          <span v-if="dialogVolumeSet.type == 1">{{$t('goodsEdit.售价')($store.state.country.symbol)}} :</span>
+          <span v-else-if="dialogVolumeSet.type == 2">{{$t('goodsEdit.成本价')($store.state.country.symbol)}} :</span>
           <span v-else>{{$t('goodsEdit.重量')}} (kg) :</span>
           <el-input-number
             size="mini"

@@ -243,7 +243,7 @@
               <!-- 新增客户bonus余额列-->
               <el-table-column v-if="$store.state.userInfo.walletOpen != 1">
                 <template slot="header">
-                  <span>{{ $t("mycustomer.客户Bonus余额") }}（$）</span>
+                  <span>{{ $t("mycustomer.客户Bonus余额") }}({{$store.state.country.symbol}})</span>
                   <el-tooltip
                     :content="$t('mycustomer.您客户账户的预充值金额，如客户线下提前支付给您100美金，您可为其Bonus账户充值100美金，且开启Bonus功能后，您的客户即可在支付订单是用Bonus直接抵扣。')"
                     placement="bottom"

@@ -742,6 +742,13 @@
 								id:2
 							},
 							{
+								name: "app.待分配仓库",
+								path: "/ordersManage/15/1",
+								role: 'invoiceWaitOfferView',
+								enabled: true,
+								id:15
+							},							
+							{
 								name: "app.待客户付款",
 								path: "/ordersManage/311/1",
 								role: 'invoiceWaitPayView',
@@ -1009,7 +1016,7 @@
 								path: "/Staff",
 								role: 'staffView',
 								enabled: true,
-							},
+							},							
 							{
 								name: "app.角色管理",
 								path: "/Role",
@@ -1037,6 +1044,12 @@
 								role:"onlineShopDecoView",
 								enabled: true,
 							},
+							// {
+							// 	name: "app.票类设置",
+							// 	path: "/TicketSetting",
+							// 	role: 'onlineShopTicketSettingView',
+							// 	enabled: true,
+							// },							
 							{
 								name: 'storeSetting.菜单导航',
 								path: "/menu-setting",
@@ -1379,7 +1392,20 @@
 						}
 					})
 				}
-				console.log(this.navMenu[7].subItem[0].path);
+			},
+			getVendorAllOrderCnt() {
+				
+				this.$apiCall("api.ShopifyOrder.getVendorAllOrderCnt", {}, (r) => {
+					if (r.ErrorCode == 9999) {
+						this.vendorAllOrderCnt = r.Data.Results;
+					} else {
+						if (r.ErrorCode != 10086)
+							this.$message({
+								message: r.Message,
+								type: "error"
+							});
+					}
+				});
 			},
 			vendorAllOrderCntText(id){
 				let text = 0;
@@ -1455,19 +1481,7 @@
 					}
 				})
 			},
-			getVendorAllOrderCnt() {
-				this.$apiCall("api.ShopifyOrder.getVendorAllOrderCnt", {}, (r) => {
-					if (r.ErrorCode == 9999) {
-						this.vendorAllOrderCnt = r.Data.Results;
-					} else {
-						if (r.ErrorCode != 10086)
-							this.$message({
-								message: r.Message,
-								type: "error"
-							});
-					}
-				});
-			},
+
 			hasSubRole(sub) {
 				if (sub && sub.length) {
 					let s = false;
@@ -1732,10 +1746,16 @@
 				this.$apiCall("api.User.checkLoginStatus", {}, (r) => {
 					if (r.ErrorCode == "9999") {
 						//r.Data.Results.canUseWallet = r.Data.Results.walletOpen = 1; //测试打开钱包
+
 						localStorage.setItem("apiUserToken", r.Data.Results.apiUserToken);
 						localStorage.setItem("apiUserId", r.Data.Results.id);
 						localStorage.setItem("vendorId", r.Data.Results.vendorId);
 						localStorage.setItem("userInfo", JSON.stringify(r.Data.Results));
+						this.$store.commit("setCountry", {
+							symbol: r.Data.Results.shopCurrencySymbol || '$',
+							name: r.Data.Results.shopCountry|| '',
+							shopCurrency:r.Data.Results.shopCurrency|| 'USD'
+						})
 						if (localStorage.getItem("userInfo")) {
 							this.$store.commit(
 								"setUserInfo",

@@ -77,7 +77,7 @@
 							<el-col :span="8" :offset="1">
 							  <el-input v-model="setting.firstPrice" @input="setting.firstPrice = oninput(setting.firstPrice)">
 							      <template slot="prepend">{{$t('logistics.首重价格')}}</template>
-							  	  <template slot="append">USD</template>
+							  	  <template slot="append">{{$store.state.country.symbol}}</template>
 							    </el-input>
 							</el-col>
 						</el-row>
@@ -94,7 +94,7 @@
 							<el-col :span="8" :offset="1">
 							  <el-input v-model="setting.nextPrice" @input="setting.nextPrice = oninput(setting.nextPrice)">
 							      <template slot="prepend">{{$t('logistics.续重价格')}}</template>
-							  	  <template slot="append">USD</template>
+							  	  <template slot="append">{{$store.state.country.symbol}}</template>
 							    </el-input>
 							</el-col>
 						</el-row>
@@ -104,7 +104,7 @@
 							</el-col>
 							<el-col :span="8">
 							  <el-input :placeholder="$t('logistics.挂号费')" v-model="setting.registrationFee">
-								  <template slot="append">USD</template>
+								  <template slot="append">{{$store.state.country.symbol}}</template>
 							    </el-input>
 							</el-col>
 						</el-row>
@@ -133,7 +133,7 @@
 						</el-col>
 						<el-col :span="8">
 						  <el-input :placeholder="$t('logistics.附加费')" v-model="freightObj.operatingFee">
-							  <template slot="append">USD</template>
+							  <template slot="append">{{$store.state.country.symbol}}</template>
 						    </el-input>
 						</el-col>
 					</el-row>

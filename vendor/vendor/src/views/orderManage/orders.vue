@@ -36,10 +36,26 @@
             @click="splitOrder"
             :disabled="!$isRole('invoiceWaitPayEdit')"
           >{{$t('orders.拆分订单')}}</el-button>
+
+        </template>
+        <template v-if="status== 15">
+          <el-button
+            type="primary"
+            @click="batchWareHouse"
+            :disabled="!$isRole('invoiceWaitPayEdit')"
+          >{{$t('orders.批量关联仓库')}}</el-button>          
         </template>
       </div>
     </div>
-    <div class="pagebody" v-loading="loading">
+    <div class="pagebody" v-loading="loading" >
+      <el-row :gutter="15" class="mg-b-20" type="flex" v-if="status==2 && (activeName == 3)&&(vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74)">
+          <el-col :span="2">
+             <el-button @click="handleTypeOrder(1)">{{$t('orders.批发单')}}({{batchNum}})</el-button>
+          </el-col>
+          <el-col :span="2">
+            <el-button @click="handleTypeOrder(2)">{{$t('orders.自提单')}}({{offlineNum}})</el-button>            
+          </el-col>
+      </el-row>
       <el-row :gutter="15" class="mg-b-20">
         <el-col :span="24">
           <el-card>
@@ -601,7 +617,7 @@
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
 							</el-table-column>	                    
-                    <el-table-column :label="$t('orders.logisticsFee')" width="150">
+                    <el-table-column :label="`${$t('orders.logisticsFee')}(${$store.state.country.symbol})`" width="150">
                       <template slot-scope="scope">
                         <span v-if="scope.row.discountType == 3">
                           <span>0&nbsp;</span>
@@ -616,7 +632,7 @@
                         >{{scope.row.shippingMethodItem ? scope.row.shippingMethodItem.fee : '---'}}</span>
                       </template>
                     </el-table-column>
-                    <el-table-column :label="$t('orders.tradeAmount')" width="100">
+                    <el-table-column :label="`${$t('orders.tradeAmount')}(${$store.state.country.symbol})`" width="100">
                       <template slot-scope="scope">
                         <span v-if="scope.row.discountType">
                           <span>{{scope.row.payAmount || '---'}}&nbsp;</span>
@@ -650,7 +666,7 @@
                         </span>
                       </template>
                     </el-table-column>                 
-                    <el-table-column :label="$t('orders.logisticsFee')" width="150">
+                    <el-table-column :label="`${$t('orders.logisticsFee')}(${$store.state.country.symbol})`" width="150">
                       <template slot-scope="scope">
                         <span v-if="scope.row.discountType == 3">
                           <span>0&nbsp;</span>
@@ -661,7 +677,7 @@
                         <span v-else>{{scope.row.trackFee || '---'}}</span>
                       </template>
                     </el-table-column>
-                    <el-table-column :label="$t('orders.tradeAmount')" width="100">
+                    <el-table-column :label="`${$t('orders.tradeAmount')}(${$store.state.country.symbol})`" width="100">
                       <template slot-scope="scope">
                         <span v-if="scope.row.discountType">
                           <span>{{scope.row.payAmount || '---'}}&nbsp;</span>
@@ -733,7 +749,7 @@
                       <span>{{$moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss") || '---'}}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column :label="$t('orders.tradeAmount')" width="200">
+                  <el-table-column :label="`${$t('orders.tradeAmount')}(${$store.state.country.symbol})`" width="200">
                     <template slot-scope="scope">
                       <span v-if="scope.row.discountType">
                         <span>{{scope.row.payAmount || '---'}}&nbsp;</span>
@@ -873,11 +889,11 @@
                                     <template
                                       v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
                                     >
-                                      <span>$ {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
+                                      <span>{{$store.state.country.shopCurrency}} {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
                                       <span style="color: red; text-decoration:line-through;">
                                         <span
                                           style="color: #606266;"
-                                        >$ {{Number(item.vendorPrice).toFixed(2)}}</span>
+                                        >{{$store.state.country.shopCurrency}} {{Number(item.vendorPrice).toFixed(2)}}</span>
                                       </span>
                                     </template>
                                     <template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
@@ -892,16 +908,16 @@
                                   <template
                                     v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
                                   >
-                                    <span>$ {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
+                                    <span>{{$store.state.country.shopCurrency}} {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
                                     <span style="color: red; text-decoration:line-through;">
                                       <span
                                         style="color: #606266;"
-                                      >$ {{Number(item.amount).toFixed(2)}}</span>
+                                      > {{$store.state.country.shopCurrency}} {{Number(item.amount).toFixed(2)}}</span>
                                     </span>
                                   </template>
                                   <template
                                     v-else
-                                  >$ {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
+                                  >{{$store.state.country.shopCurrency}} {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
                                 </span>
                                 <span
                                   v-if="item.isManage == 2"
@@ -991,11 +1007,11 @@
                                     <template
                                       v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
                                     >
-                                      <span>$ {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
+                                      <span>{{$store.state.country.shopCurrency}} {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
                                       <span style="color: red; text-decoration:line-through;">
                                         <span
                                           style="color: #606266;"
-                                        >$ {{Number(item.vendorPrice).toFixed(2)}}</span>
+                                        >{{$store.state.country.shopCurrency}} {{Number(item.vendorPrice).toFixed(2)}}</span>
                                       </span>
                                     </template>
                                     <template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
@@ -1010,16 +1026,16 @@
                                   <template
                                     v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
                                   >
-                                    <span>$ {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
+                                    <span>{{$store.state.country.shopCurrency}} {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
                                     <span style="color: red; text-decoration:line-through;">
                                       <span
                                         style="color: #606266;"
-                                      >$ {{Number(item.amount).toFixed(2)}}</span>
+                                      >{{$store.state.country.shopCurrency}} {{Number(item.amount).toFixed(2)}}</span>
                                     </span>
                                   </template>
                                   <template
                                     v-else
-                                  >$ {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
+                                  >{{$store.state.country.shopCurrency}} {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
                                 </span>
                                 <span
                                   v-if="item.isManage == 2"
@@ -1132,7 +1148,7 @@
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
 							</el-table-column>                    
-                    <el-table-column :label="$t('orders.logisticsFee')" width="150">
+                    <el-table-column :label="`${$t('orders.logisticsFee')}(${$store.state.country.symbol})`" width="150">
                       <template slot-scope="scope">
                         <span v-if="scope.row.status == 3">
                           <span
@@ -1150,7 +1166,7 @@
                         </span>
                       </template>
                     </el-table-column>
-                    <el-table-column :label="$t('orders.tradeAmount')" width="150">
+                    <el-table-column :label="`${$t('orders.tradeAmount')}(${$store.state.country.symbol})`" width="150">
                       <template slot-scope="scope">
                         <span v-if="scope.row.status == 3">
                           <span v-if="scope.row.shippingMethodArr">
@@ -1249,6 +1265,29 @@
       :right="20"
       :bottom="120"
     ></el-backtop>
+        <el-dialog
+      :title="$t('orders.选择仓库')"
+      :close-on-click-modal="false"	
+      :visible.sync="dialogVisibleHouse"
+      width="30%"
+      @open="openStorehouse()">
+    <el-row>
+        <el-col>
+            <el-form ref="form" :model="formHouse" label-width="100px">
+  <el-form-item :label="`${$t('orders.仓库')}:`">
+          <el-radio-group v-model="formHouse.type">
+            <el-radio style="padding:10px;width: 100px;overflow: hidden;text-overflow: ellipsis;" v-for="item in storehouseList" :key="item.id" :label="item.id" name="type">{{item.name}}</el-radio>
+          </el-radio-group>
+
+  </el-form-item>
+</el-form>
+        </el-col>
+    </el-row>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="cancelHouseDialog">{{$t('orders.取消')}}</el-button>
+    <el-button type="primary" @click="buildOrder">{{$t('orders.提交')}}</el-button>
+  </span>
+</el-dialog>
     <dialogQuote :quoteData="dialogQuoteInfo" @openRelate="openRelate"></dialogQuote>
     <dialogRelate :relateData="dialogRelateInfo" @relateFn="relateFn"></dialogRelate>
     <dialogImport :importData="dialoImportInfo" @submitUpload="submitUpload"></dialogImport>
@@ -1285,6 +1324,13 @@ export default {
   data () {
     return {
       host: location.host,
+      dialogVisibleHouse:false,
+      formHouse: {
+          type: ''
+      
+      },
+      batchNum: 0,
+      offlineNum: 0,
       vipOrderReserveDay: this.$root.$children[0].vipNowData.orderReserveDay,
       isVipUp: false,
       loading: false,
@@ -1300,6 +1346,7 @@ export default {
       billStatus: 1,
       tableHeight: 400,
       reSizeTime: 0,
+      batchType: 1,
       pageSizes: [10, 20, 50, 100],
       page: this.$route.query.page ? Number(this.$route.query.page) : 1,
       rowsPerPage: localStorage.getItem("ordersRowsPerPage") ?
@@ -1427,6 +1474,8 @@ export default {
         12: { text: this.$t('orders.tabBar12'), type: 'info', val: 12, },
         14: { text: this.$t('orders.tabBar144'), type: 'info', val: 14, },
       },
+      storehouseList: [],
+
       statusPayArr: { //状态
         1: { text: this.$t('orders.obligation'), type: 'danger', val: 1, },
         4: { text: this.$t('orders.payFail'), type: 'warning', val: 4, },
@@ -1535,6 +1584,51 @@ export default {
         })
       })
       this.dialogSplitInfo.items = this.checkItems
+    },
+    batchWareHouse(){        
+        if (this.checkIds.length == 0) {
+          this.$message.error('Please select an order')
+          return
+        }
+        this.dialogVisibleHouse = true
+    },
+    cancelHouseDialog(){
+          this.dialogVisibleHouse = false
+          this.formHouse.type = []
+    },
+    buildOrder(){
+          let params = {
+            id: this.checkIds,
+            warehouseId: Number(this.formHouse.type) 
+          }
+      this.$apiCall("api.ShopifyOrder.orderChooseWarehouse", params, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.$message.success('Binding succeeded!');
+          this.dialogVisibleHouse = false
+          this.formHouse.type = []
+          this.getItem()
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })
+    },
+    openStorehouse(){
+      this.$apiCall("api.Warehouse.finds", {}, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.storehouseList = r.Data.Results
+          if (r.Data.Results.length == 0) {
+            this.$message.error('There is no warehouse, please go to add！')
+          }
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })
     },
     splitOrderFn (params) {
       this.$showLoading()
@@ -1674,6 +1768,10 @@ export default {
       } else if (this.$route.params.status == 6) {
         this.$route.meta.roleWrite = 'invoiceAllEdit'
       }
+    },
+    handleTypeOrder(type){
+        this.batchType = type
+        this.getItem()
     },
     GetDateStr (AddDayCount) {
       var dd = new Date()
@@ -2128,6 +2226,8 @@ export default {
         status = ""
       } else if (this.status == 311) { //查询页面
         status = 311
+      }  else if (this.status == 15) { //查询页面
+        status = 15
       } else {
         let item = this.tabList.filter(item => {
           return item.name == this.activeName
@@ -2381,6 +2481,23 @@ export default {
         }
       })
     },
+    getVendorOrderCnt (type) {      
+      this.$apiCall("api.ShopifyOrder.getVendorAllOrderCnt", {status:5,shippingType: type}, (r) => {
+        if (r.ErrorCode == 9999) {
+          if (type == 1) {
+            this.batchNum = r.Data.Results[5]
+          }else{
+            this.offlineNum = r.Data.Results[5]
+          }
+          this.vendorAllOrderCnt = r.Data.Results
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })
+    },    
     vendorAllOrderCntText (id) {
       let text = 0
       if (id == 22) {
@@ -2430,6 +2547,8 @@ export default {
         params = Object.assign(params1, params2)
       } else if (this.status == 311) { //查询页面
         status = 311
+      } else if (this.status == 15) { //查询页面
+        status = 15
       } else {
         let item = this.tabList.filter(item => {
           return item.name == this.activeName
@@ -2444,7 +2563,11 @@ export default {
         }
       }
       this.billStatus = status
- 
+      if (status == 5) {
+           params.shippingType = this.batchType
+      }else{
+        params.shippingType = ''
+      }
       this.loading = true
       params.status = status
       this.$apiCall(url, params, (r) => {
@@ -2469,6 +2592,10 @@ export default {
           })
         }
       })
+    if (this.status==2 && (this.activeName == 3)) {
+          this.getVendorOrderCnt(1)
+          this.getVendorOrderCnt(2)
+    }      
     },
     toPage (val) {
       if(this.isFitterOrder) {

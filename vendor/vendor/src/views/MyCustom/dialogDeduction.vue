@@ -11,7 +11,7 @@
 						<el-form-item :label="$t('mycustomer.扣款')" required>
 							<el-input v-model="dialogData.amount" placeholder="">
 							</el-input>
-							<span>({{ $t("mycustomer.客户Bonus余额") }}（$）: {{ data.item.bonus || 0 }})</span>
+							<span>({{ $t("mycustomer.客户Bonus余额") }}({{$store.state.country.symbol}})({{$store.state.country.symbol}}): {{ data.item.bonus || 0 }})</span>
 						</el-form-item>
 						<el-form-item :label="$t('mycustomer.扣款说明')" required>
 							<el-input v-model="dialogData.remark" placeholder="" type="textarea" :rows="3">

@@ -1,25 +1,27 @@
 <template>
   <el-dialog :title="$t('transaction.支付明细')"
     :visible.sync="data.isShow"
-    width="960px"
+    width="990px"
     :custom-class="'d-detail'"
   >
     <el-divider></el-divider>
     <div class="d-body">
       <div class="t-table">
         <div class="t-header">
+           <div class="c c1">{{$t('transaction.订单类型')}}</div>
           <div class="c c1">{{$t('transaction.第三方订单')}}</div>
           <div class="c c2">{{$t('transaction.平台订单号')}}</div>
-          <div class="c c3">{{$t('transaction.实际支付总额')}}($)</div>
-          <div class="c c4">{{$t('transaction.实际支付运费')}}($)</div>
-          <div class="c c5">{{$t('transaction.实际支付商品总额')}}($)</div>
+          <div class="c c3">{{$t('transaction.实际支付总额')}}({{$store.state.country.shopCurrency}})</div>
+          <div class="c c4">{{$t('transaction.实际支付运费')}}({{$store.state.country.shopCurrency}})</div>
+          <div class="c c5">{{$t('transaction.实际支付商品总额')}}({{$store.state.country.shopCurrency}})</div>
           <div class="c c6">{{$t('transaction.SKU明细')}}</div>
-          <div class="c c7">{{$t('transaction.实际支付商品单价')}}($)</div>
+          <div class="c c7">{{$t('transaction.实际支付商品单价')}}({{$store.state.country.shopCurrency}})</div>
           <div class="c c8">{{$t('transaction.商品数量')}}</div>
           <div class="c c9">{{$t('transaction.重量')}}(g)</div>
         </div>
         <div class="t-body">
           <div v-for="item in data.items" :key="item.id" class="t-row" >
+             <div class="c c1">{{item.shippingType == 1? $t('transaction.批发单') : $t('transaction.自提单')}}</div>
             <div class="c c1">{{item.codeName}}</div>
             <div class="c c2">{{item.orderId}}</div>
             <div class="c c3">{{item.payTotalAmount}}</div>
@@ -86,10 +88,11 @@ export default {
   overflow-y: scroll;
 }
 .t-table{
-  width: 910px;
+  width: 1000px;
   .c{
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 0 5px;
     line-height: 22px;
     border-right: 1px #DCDFE6 solid;

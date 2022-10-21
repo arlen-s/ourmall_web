@@ -111,7 +111,7 @@
 									<span>{{filterText('tradeType',scope.row.type)}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Trade amount($)" width="150">
+							<el-table-column :label="`Trade amount(${$store.state.country.symbol})`" width="150">
 								<template slot-scope="scope">
 									<span v-if="scope.row.status == 3" class="tx-danger">-
 										{{scope.row.totalAmount}}</span>
@@ -353,7 +353,7 @@
 						</el-col>
 						<el-col :span="12">
 							<div class="grid-content">
-								Trade amount({{$showSybmol()}})：{{$exchangeRate(item.totalAmount)}}
+								Trade amount({{$store.state.country.symbol}})：{{$exchangeRate(item.totalAmount)}}
 							</div>
 						</el-col>
 					</el-row>

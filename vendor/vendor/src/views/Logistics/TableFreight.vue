@@ -37,10 +37,10 @@
 					<span style="font-weight: bold;">{{index == items.length - 1 ? `${price.noHeavy && price.noHeavy.length ? `${price.rangeBegin?price.rangeBegin:0}g ${$t("logistics.以上")}` : `${price.rangeBegin}~${price.rangeEnd} g`}` : `${price.rangeBegin}~${price.rangeEnd} g` }}</span>
 				</template>
 				<p>
-					<span>{{ $t("logistics.首重")}}USD{{ price.firstPrice }}/{{price.firstWeight}}g；</span>
-					<span>{{ $t("logistics.续重") }}USD{{ price.nextPrice }}/{{price.nextWeight}}g；</span>
-					<span>{{ $t("logistics.挂号费") }}USD{{ price.registrationFee }}；</span>
-					<span>{{ $t("logistics.附加费")}}USD{{ item.operatingFee }}；</span>
+					<span>{{ $t("logistics.首重")}} {{$store.state.country.shopCurrency}}{{ price.firstPrice }}/{{price.firstWeight}}g；</span>
+					<span>{{ $t("logistics.续重") }}{{$store.state.country.shopCurrency}}{{ price.nextPrice }}/{{price.nextWeight}}g；</span>
+					<span>{{ $t("logistics.挂号费") }}{{$store.state.country.shopCurrency}}{{ price.registrationFee }}；</span>
+					<span>{{ $t("logistics.附加费")}}{{$store.state.country.shopCurrency}}{{ item.operatingFee }}；</span>
 				</p>
 			</div>
 		</template>

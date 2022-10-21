@@ -11,7 +11,7 @@
 		>
       <div class="pay-info">
 				<div v-if="dialogPay.orderNum">Order Number: <b>{{dialogPay.orderNum}}</b></div>
-				<div v-if="dialogPay.amount">Total Amount: <b class=" tx-danger">{{dialogPay.amount.toFixed(2)}} {{$showSybmol()}}</b></div>
+				<div v-if="dialogPay.amount">Total Amount: <b class=" tx-danger">{{dialogPay.amount.toFixed(2)}}{{$store.state.country.symbol}}</b></div>
 			</div>
       <template v-if="dialogPay.step == 1">
 				<div class="pay-platform">

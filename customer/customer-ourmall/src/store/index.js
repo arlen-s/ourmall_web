@@ -14,12 +14,18 @@ export default new Vuex.Store({
     shopInfo: '',
     referenceNumber: '',
     categroyList: [],
+    country:{
+      symbol: '$',
+      name:'',
+      shopCurrency: '',
+    },    
     configJson: { //店铺装修
       detailPage: {
         imgSize: 'Thumbnail',
         tags: [],
       },
       menu:[],
+
 		  customCode:[],
       customPage: [],
       header: { //默认页头配置
@@ -172,6 +178,10 @@ export default new Vuex.Store({
     setNewMsgNum(state, num) {
       state.newMsgNum = num;
     },
+    setCountry(state,currency){
+      state.country.symbol = currency.symbol
+      state.country.shopCurrency = currency.shopCurrency
+    },    
     setShopInfo(state, shopInfo){
       state.shopInfo = shopInfo ? shopInfo : '';
     },

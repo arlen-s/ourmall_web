@@ -232,9 +232,9 @@
 									<div class="tableTiop">{{$t('dashboard.订单数')}}</div>
 								</template>
 							</el-table-column>
-							<el-table-column prop="amount" :label="$t('dashboard.销售额US$')">
+							<el-table-column prop="amount" :label="`${$t('dashboard.销售额')}${$store.state.country.shopCurrency}${$store.state.country.symbol}`">
 								<template #header>
-									<div class="tableTiop">{{$t('dashboard.销售额US$')}} </div>
+									<div class="tableTiop">{{$t('dashboard.销售额')}}{{$store.state.country.shopCurrency}}{{$store.state.country.symbol}} </div>
 								</template>
 							</el-table-column>
 						</el-table>
@@ -319,7 +319,7 @@
 									<i class="fa fa-exchange"></i>
 								</div>
 								<div class="text">
-									<div>{{$t('dashboard.销售额US$')}}:
+									<div>{{$t('dashboard.销售额')}}{{$store.state.country.shopCurrency}}{{$store.state.country.symbol}}:
 										<b>{{ Number(vendorDashboardSummary.orderTotalAmount).toFixed(2) || '0' }}</b>
 									</div>
 								</div>
@@ -344,7 +344,7 @@
 					</el-table-column>
 					<el-table-column prop="orderCnt" :label="$t('dashboard.订单数')" width="180">
 					</el-table-column>
-					<el-table-column prop="amount" :label="$t('dashboard.销售额US$')" width="180">
+					<el-table-column prop="amount" :label="`${$t('dashboard.销售额')}${$store.state.country.shopCurrency}${$store.state.country.symbol}`" width="180">
 					</el-table-column>
 				</el-table>
 			</div>
@@ -437,7 +437,7 @@
 				},
 				tableData: [],
 				chartData: {
-					columns: [this.$t('dashboard.日期'), this.$t('dashboard.销售额US$'), this.$t('dashboard.订单数')],
+					columns: [this.$t('dashboard.日期'), `${this.$t('dashboard.销售额')}${this.$store.state.country.shopCurrency}${this.$store.state.country.symbol}`, this.$t('dashboard.订单数')],
 					rows: []
 				},
 				moreReference: {
@@ -781,7 +781,7 @@
 								trigger: 'axis'
 							},
 							legend: {
-								data: [this.$t('dashboard.销售额US$'), this.$t('dashboard.订单数')]
+								data: [`${this.$t('dashboard.销售额')}${this.$store.state.country.shopCurrency}${this.$store.state.country.symbol}`, this.$t('dashboard.订单数')]
 							},
 							grid: {
 								left: '3%',
@@ -798,9 +798,9 @@
 								type: 'value'
 							},
 							series: [{
-									name: this.$t('dashboard.销售额US$'),
+									name: `${this.$t('dashboard.销售额')}${this.$store.state.country.shopCurrency}${this.$store.state.country.symbol}`,
 									type: 'line',
-									stack: this.$t('dashboard.销售额US$'),
+									stack: `${this.$t('dashboard.销售额')}${this.$store.state.country.shopCurrency}${this.$store.state.country.symbol}`,
 									data: arr.map(item => item.amount),
 									smooth: true
 								},

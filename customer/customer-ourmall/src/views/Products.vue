@@ -205,8 +205,8 @@
                     class=" mg-r-10"
                     style="color: #909399;"
                   >Supplier price:</span>
-                  <span v-if="item.minPrice == item.maxPrice">{{$showSybmol()}} {{$exchangeRate(item.minPrice)}}</span>
-                  <span v-else>{{$showSybmol()}} {{$exchangeRate(item.minPrice)}} - {{$showSybmol()}} {{$exchangeRate(item.maxPrice)}}</span>
+                  <span v-if="item.minPrice == item.maxPrice">{{$store.state.country.symbol}} {{$exchangeRate(item.minPrice)}}</span>
+                  <span v-else>{{$store.state.country.symbol}} {{$exchangeRate(item.minPrice)}} - {{$store.state.country.symbol}} {{$exchangeRate(item.maxPrice)}}</span>
                 </div>
                 <div v-else>
                   <span

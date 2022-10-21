@@ -102,7 +102,7 @@
                 <a href="javescript:;">{{ item.name }}</a>
               </div>
               <div class="price">
-                <span class="pro_cost">{{$showSybmol()}} {{$exchangeRate(item.cost)}}</span>
+                <span class="pro_cost">{{$store.state.country.symbol}} {{$exchangeRate(item.cost)}}</span>
               </div>
               
               <div class="imports">
