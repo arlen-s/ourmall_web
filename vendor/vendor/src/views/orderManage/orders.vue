@@ -2509,6 +2509,7 @@ export default {
     },
     getItem (s) {
       this.isFitterOrder = false
+       this.batchType = 1
       this.gettabList()
       this.remoteMethodCustom()
       this.getShopName()
