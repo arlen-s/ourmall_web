@@ -533,6 +533,17 @@ export default {
       return name || "English";
     },
   },
+  watch: {
+$route: {
+    handler: function(val, oldVal){
+      if (val.name == 'dashboard') {
+          this.isHome = false
+      }      
+    },
+    // 深度观察监听
+    deep: true
+  }
+  },
   mounted() {
       let name = this.$route.name
       if (name == 'dashboard') {
