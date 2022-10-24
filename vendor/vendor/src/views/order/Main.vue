@@ -61,6 +61,15 @@
                 </span>
               </el-tab-pane>
               <el-tab-pane
+                :label="$t('myinvoice.待分配仓库')"
+                name="waitingForOffer"
+              >
+                <span slot="label">
+                  {{ $t("myinvoice.待分配仓库") }}
+                  <span class="tx-danger">({{ cnt.waitCompleteCnt }})</span>
+                </span>
+              </el-tab-pane>
+              <el-tab-pane
                 :label="$t('myinvoice.待客户付款')"
                 name="waitingForPayment"
               >
