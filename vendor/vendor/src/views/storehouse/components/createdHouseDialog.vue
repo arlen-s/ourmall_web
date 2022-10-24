@@ -16,11 +16,20 @@
             <el-select v-model="dialogAddData.form.nation" filterable placeholder="请选择">
             <el-option
               v-for="item in options"
-                      :key="item.code"
-                      :label="item.name"
-                      :value="item.code"
-                    ></el-option>
+              :key="item.code"
+              :label="item.name"
+              :value="item.code"
+            ></el-option>
         </el-select>
+        </el-form-item>
+        <el-form-item :label="$t('storehouse.详细地址')" :required="true">
+          <el-input
+            type="textarea"
+            :rows="2"
+            :placeholder="$t('storehouse.请输入')"
+            v-model="dialogAddData.form.address">
+          </el-input>
+          <p style="color:#ccc">{{$t('storehouse.用于告知分销商自提地址')}}</p>
         </el-form-item>
         <el-form-item :label="$t('storehouse.负责人')">
           <el-input v-model="dialogAddData.form.role" style="width:50%" :placeholder="$t('storehouse.请输入负责人姓名') "></el-input>
@@ -53,6 +62,9 @@ export default {
         password: [
           { required: true, message: 'error', trigger: 'blur' },
         ],
+        address: [
+          { required: true, message: '请输入详细地址', trigger: 'blur' },
+        ],        
       },
       options: [],
     }
@@ -69,19 +81,24 @@ export default {
   methods: {
     save () {
       if (this.dialogAddData.form.name == '') {
-        this.$message.error($t('storehouse.请填写仓库名称'))
+        this.$message.error(this.$t('storehouse.请填写仓库名称'))
         return false
       }
       if (this.dialogAddData.form.nation == '') {
-        this.$message.error($t('storehouse.请选择国家'))
+        this.$message.error(this.$t('storehouse.请选择国家'))
         return false
       }
+      if (this.dialogAddData.form.address == '') {
+        this.$message.error(this.$t('storehouse.请填写详细地址'))
+        return false
+      }      
       let params = {
         name: this.dialogAddData.form.name,
         countryCode: this.dialogAddData.form.nation,
         contact: this.dialogAddData.form.role,
         telephone: this.dialogAddData.form.tel,
-        id: this.dialogAddData.form.id
+        id: this.dialogAddData.form.id,
+        address:this.dialogAddData.form.address
       }
       this.$apiCall('api.Warehouse.save', params, (r) => {
         if (r.ErrorCode == 9999) {
