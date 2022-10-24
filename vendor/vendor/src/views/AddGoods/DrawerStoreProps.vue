@@ -19,7 +19,7 @@
             </el-form-item>            
           </el-col>
           <el-col :span="12" class="flex-r" >
-            <el-form-item :label="`${$t('goodsEdit.出厂价')}($)`">
+            <el-form-item :label="`${$t('goodsEdit.出厂价')}(${$store.state.country.symbol})`">
               <el-input v-model="dataMAG.form.cost" ></el-input>
             </el-form-item>
             <el-form-item :label="`${$t('goodsEdit.商品重量')}(g)`">

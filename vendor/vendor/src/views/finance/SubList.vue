@@ -210,35 +210,35 @@
         </el-table-column>
         <el-table-column
           v-if="activeName == 'list-withhold'"
-          label="扣除金额($)"
+          :label="`扣除金额(${$store.state.country.symbol})`"
         >
           <template slot-scope="scope">
             {{ scope.row.totalAmount | amount }}
           </template>
         </el-table-column>
-        <el-table-column v-if="activeName != 'list-frozen'" label="结算金额($)">
+        <el-table-column v-if="activeName != 'list-frozen'" :label="`结算金额(${$store.state.country.symbol})`">
           <template slot-scope="scope">
             {{ scope.row.totalAmount | amount }}
           </template>
         </el-table-column>
-        <el-table-column v-if="activeName == 'list-frozen'" label="冻结金额($)">
+        <el-table-column v-if="activeName == 'list-frozen'" :label="`冻结金额(${$store.state.country.symbol})`">
           <template slot-scope="scope">
             {{ scope.row.totalAmount | amount }}
           </template>
         </el-table-column>
-        <el-table-column v-if="activeName == 'list-settle'" label="佣金($)">
+        <el-table-column v-if="activeName == 'list-settle'" :label="`佣金(${$store.state.country.symbol})`">
           <template slot-scope="scope">
             {{ scope.row.platformFee | amount }}
           </template>
         </el-table-column>
-        <el-table-column v-if="activeName == 'list-settle'" label="钱包余额($)">
+        <el-table-column v-if="activeName == 'list-settle'" :label="`钱包余额(${$store.state.country.symbol})`" >
           <template slot-scope="scope">
             {{ scope.row.surplus | amount }}
           </template>
         </el-table-column>
         <el-table-column
           v-if="activeName == 'list-frozen'"
-          label="可提现金额结余($)"
+          :label="`可提现金额结余(${$store.state.country.symbol})`"
         >
           <template slot-scope="scope">
             {{ scope.row.surplus | amount }}
@@ -273,7 +273,9 @@
             }}
           </template>
         </el-table-column>
-        <el-table-column label="交易金额($)">
+        <el-table-column 
+           :label="`交易金额(${$store.state.country.symbol})`"
+        >
           <template slot-scope="scope">
             <span
               :class="{
@@ -286,7 +288,7 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column label="钱包余额($)">
+        <el-table-column :label="`钱包余额(${$store.state.country.symbol})`">
           <template slot-scope="scope">
             {{ scope.row.surplus | amount }}
           </template>

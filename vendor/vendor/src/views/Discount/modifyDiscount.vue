@@ -71,7 +71,7 @@
 						<br/>
 						<el-radio-group v-model="countForm.limit" @change="radioInital">
 							<el-radio key="1" :label="1">{{ $t('discount.无') }}</el-radio><br/>
-							<el-radio key="2" :label="2">{{ $t('discount.最低购买金额') }}($)</el-radio><br/>
+							<el-radio key="2" :label="2">{{ $t('discount.最低购买金额') }}({{$store.state.country.symbol}})</el-radio><br/>
 							<el-radio key="3" :label="3">{{ $t('discount.最低商品数量') }} </el-radio>
 						</el-radio-group>
 					</el-form-item>
@@ -141,7 +141,7 @@
 							<span v-if="countForm.type == 1">{{ countForm.discount }}%</span>
 							<span v-if="countForm.type == 2">$ {{ countForm.discount }}</span>
 						</li>
-						<li v-if="countForm.minTotalAmount">{{ $t('discount.最低购买金额') }}($): {{countForm.minTotalAmount}}</li>
+						<li v-if="countForm.minTotalAmount">{{ $t('discount.最低购买金额') }}({{$store.state.country.symbol}}): {{countForm.minTotalAmount}}</li>
 						<li v-if="countForm.minItemCnt">{{ $t('discount.最低购买数量') }}: {{countForm.minItemCnt}}</li>
 						<li v-if="countForm.person == 1">{{ $t('discount.适用人群') }}: {{ $t('discount.所有人') }}</li>
 						<li v-if="countForm.person == 2">{{ $t('discount.适用人群') }}: {{ countForm.cPerson }}</li>

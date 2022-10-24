@@ -471,7 +471,7 @@
                     <el-table-column width="150">
                       <template slot="header">
                         <!-- <span class="tx-danger">*</span> -->
-                        <span>{{$t('goodsEdit.成本价($)')}}</span>
+                        <span>{{$t('goodsEdit.成本')}} {{$store.state.country.symbol}}</span>
                         <!-- <span
                           @click="volumeSet(2)"
                           style="color: #5c6ac4;margin-left: 5px;font-weight: normal;cursor: pointer;"

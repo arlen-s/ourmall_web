@@ -459,7 +459,7 @@
           <el-form-item :label="$t('quotation.描述')" label-width="150px">
             <span>{{ nowItem.detail }}</span>
           </el-form-item>
-          <el-form-item :label="$t('quotation.期望价格US($)')" label-width="150px">
+          <el-form-item :label="$t('quotation.期望价格')" label-width="150px">
             <span v-if="nowItem.expectPrice && nowItem.expectPrice!='0.00'">
               {{ nowItem.expectPrice }}</span>
               <span v-else>/</span>
@@ -709,7 +709,7 @@
           <el-form-item :label="$t('quotation.描述')" label-width="150px">
             <span>{{ nowItemDetail.detail }}</span>
           </el-form-item>
-          <el-form-item :label="$t('quotation.期望价格US($)')" label-width="150px">
+          <el-form-item :label="$t('quotation.期望价格')" label-width="150px">
             <span v-if="nowItemDetail.expectPrice && nowItemDetail.expectPrice!='0.00'">
               {{ nowItemDetail.expectPrice }}</span>
               <span v-else>/</span>
@@ -784,7 +784,7 @@
               :label="$t('quotation.描述')"
               prop="detail"
             ></el-table-column>
-            <el-table-column :label="$t('quotation.期望价格US($)')" prop="expectPrice">
+            <el-table-column :label="$t('quotation.期望价格')" prop="expectPrice">
               <template slot-scope="scope">
                 <span v-if="scope.row.expectPrice&&scope.row.expectPrice!= '0.00'">
                   {{scope.row.expectPrice}}

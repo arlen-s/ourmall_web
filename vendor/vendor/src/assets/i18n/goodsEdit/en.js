@@ -6,6 +6,7 @@ export const lang = {
   '下一步': 'Last step',
   '上一步': 'Next step',
   '保存': 'Save',
+  '规格分类': 'Specification classification',
   '基本信息 & 商品描述': 'Basic information & Product descriptions',
   '图片 & 商品规格': 'Basic information & Product descriptions',
   '商品名称': 'Product name',

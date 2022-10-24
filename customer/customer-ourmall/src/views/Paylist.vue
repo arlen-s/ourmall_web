@@ -38,7 +38,7 @@
               </el-table-column>
               <el-table-column label="Payment Amount" prop="amount">
                 <template slot-scope="scope">
-                  US$ {{ scope.row.amount }}
+                  {{$store.state.country.shopCurrency}}{{$store.state.country.symbol}} {{ scope.row.amount }}
                 </template>
               </el-table-column>
               <el-table-column label="Payment Status" prop="status">

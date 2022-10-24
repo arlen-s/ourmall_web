@@ -361,14 +361,14 @@
                                     <template
                                       v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
                                     >
-                                      <span>$ {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
+                                      <span>{{$store.state.country.symbol}}{{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
                                       <span style="color: red; text-decoration:line-through;">
                                         <span
                                           style="color: #606266;"
-                                        >$ {{Number(item.vendorPrice).toFixed(2)}}</span>
+                                        >{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</span>
                                       </span>
                                     </template>
-                                    <template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
+                                    <template v-else>{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</template>
                                   </span>
                                   <span style="color: #F56C6C;" v-else>Please make an offer</span>
                                 </span>
@@ -380,16 +380,16 @@
                                   <template
                                     v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
                                   >
-                                    <span>$ {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
+                                    <span>{{$store.state.country.symbol}} {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
                                     <span style="color: red; text-decoration:line-through;">
                                       <span
                                         style="color: #606266;"
-                                      >$ {{Number(item.amount).toFixed(2)}}</span>
+                                      >{{$store.state.country.symbol}} {{Number(item.amount).toFixed(2)}}</span>
                                     </span>
                                   </template>
                                   <template
                                     v-else
-                                  >$ {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
+                                  >{{$store.state.country.symbol}} {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
                                 </span>
                                 <span
                                   v-if="item.isManage == 2"
@@ -479,14 +479,14 @@
                                     <template
                                       v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
                                     >
-                                      <span>$ {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
+                                      <span>{{$store.state.country.symbol}} {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
                                       <span style="color: red; text-decoration:line-through;">
                                         <span
                                           style="color: #606266;"
-                                        >$ {{Number(item.vendorPrice).toFixed(2)}}</span>
+                                        >{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</span>
                                       </span>
                                     </template>
-                                    <template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
+                                    <template v-else>{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</template>
                                   </span>
                                   <span style="color: #F56C6C;" v-else>Please make an offer</span>
                                 </span>
@@ -498,16 +498,16 @@
                                   <template
                                     v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
                                   >
-                                    <span>$ {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
+                                    <span>{{$store.state.country.symbol}} {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
                                     <span style="color: red; text-decoration:line-through;">
                                       <span
                                         style="color: #606266;"
-                                      >$ {{Number(item.amount).toFixed(2)}}</span>
+                                      >{{$store.state.country.symbol}} {{Number(item.amount).toFixed(2)}}</span>
                                     </span>
                                   </template>
                                   <template
                                     v-else
-                                  >$ {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
+                                  >{{$store.state.country.symbol}} {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
                                 </span>
                                 <span
                                   v-if="item.isManage == 2"
@@ -896,7 +896,7 @@
                                         >{{$store.state.country.shopCurrency}} {{Number(item.vendorPrice).toFixed(2)}}</span>
                                       </span>
                                     </template>
-                                    <template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
+                                    <template v-else>{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</template>
                                   </span>
                                   <span style="color: #F56C6C;" v-else>Please make an offer</span>
                                 </span>
@@ -1014,7 +1014,7 @@
                                         >{{$store.state.country.shopCurrency}} {{Number(item.vendorPrice).toFixed(2)}}</span>
                                       </span>
                                     </template>
-                                    <template v-else>$ {{Number(item.vendorPrice).toFixed(2)}}</template>
+                                    <template v-else>{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</template>
                                   </span>
                                   <span style="color: #F56C6C;" v-else>Please make an offer</span>
                                 </span>
@@ -1532,6 +1532,7 @@ export default {
       this.status = this.$route.params.status ? Number(this.$route.params.status) : 1
       if (to.params.status !== from.params.status) {//切换左边菜单清空搜索条件
         this.filterParams = JSON.parse(this.filterParamsDefault)
+      this.batchType =1
       }
       this.vipOrderReserveDay = this.$root.$children[0].vipNowData.orderReserveDay
       this.changeRole()
@@ -1553,6 +1554,7 @@ export default {
         // console.log(this.getStatus(), 'sdadaadda1474');
     this.activeName = this.$route.params.active
     this.changeRole()
+    this.batchType = 1
     // this.getVipArray();
     this.filterParamsDefault = JSON.stringify(this.filterParams)
     this.dialogAssociationDefault = JSON.stringify(this.dialogAssociation)

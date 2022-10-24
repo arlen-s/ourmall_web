@@ -507,7 +507,7 @@ export default {
         password: "",
         rePassword: "",
       },
-      countryId: '',
+      countryId: 'TH',
       showReSend: true,
       mobileSeconds: 60, // 倒计时
       confirmSuccess: false, // 是否通过滑动验证
@@ -1405,7 +1405,7 @@ export default {
               shopName: this.shopForm.shopName,
               CompanyUserId: localStorage.getItem("apiUserId"),
               shopType: this.shopType,
-              country: this.countryId
+              country: this.shopType == 2 ? this.countryId: ''
             },
             (r) => {
               this.addShopLoading = false;
@@ -1413,6 +1413,7 @@ export default {
                 this.$message({ message: "创建成功", type: "success" });
                 this.shopCode = 1;
                 this.shopForm.shopName = ''
+                this.countryId = 'TH'
                 this.getShopList();
               } else {
                 this.$message({

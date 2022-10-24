@@ -73,7 +73,7 @@
                 <el-col :span="12" class="amount">
                   <div class="label-title">Paypal Payment Amount:</div>
                   <div class="field">
-                    <span>$</span>
+                    <span>{{$store.state.country.symbol}}</span>
                     <el-input
                       v-model="walletParams.amount"
                       placeholder="Please input"

@@ -136,7 +136,7 @@
                 <div class="pro_name" @click="goToDetail(item,titName)">
                   <a href="javascript:;">{{ item.name }}</a>
                 </div>
-                <b class="pro_cost">US ${{ item.cost }}</b>
+                <b class="pro_cost">{{$store.state.country.shopCurrency}} {{$store.state.country.symbol}}{{ item.cost }}</b>
                 <div class="imports">
                   <!-- <span>Imports: {{ item.imports }}</span> -->
                   <!-- <span
@@ -244,7 +244,7 @@
                   <div class="pro_name" @click="goToDetail(item,info.name)">
                     <a href="javascript:;">{{ item.name }}</a>
                   </div>
-                  <b class="pro_cost">US ${{ item.cost }}</b>
+                  <b class="pro_cost">{{$store.state.country.shopCurrency}} {{$store.state.country.symbol}}{{ item.cost }}</b>
                   <div class="imports">
                     <!-- <span>Imports: {{ item.imports }}</span> -->
                     <!-- <span

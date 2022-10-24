@@ -308,14 +308,27 @@
                 </el-table-column>                
                 <el-table-column label="Subtotal(vat)" align="center">
                   <template slot-scope="scope">
-                    <div class="title">
+                    <div class="title" v-if="orderType == 1">
+                      {{$store.state.country.symbol}}{{
+                        (  Number(
+                                scope.row.stockInfo.price *
+                                  scope.row.stockInfo.chooseInventory
+                              )  +   Number(
+                                scope.row.stockInfo.price *
+                                  scope.row.stockInfo.chooseInventory*(vatValue/100)
+                              )).toFixed(2) 
+                      }}
+                    </div>
+                    <div class="title" v-else>
                       {{$store.state.country.symbol}}{{
                    (  Number(
                           scope.row.stockInfo.price *
                             scope.row.stockInfo.chooseInventory
-                        )  + Number(
+                        )  +   Number(
+                          scope.row.warehouseInfo.countryCode== 'DE'? Number(
                           scope.row.stockInfo.price *
                             scope.row.stockInfo.chooseInventory*(vatValue/100)
+                        ) : 0
                         )).toFixed(2) 
                       }}
                     </div>
@@ -722,14 +735,30 @@ export default {
       },
       deep: true,
     },
-    orderType(val){
+    orderType(val){      
+        
+        this.multipleSelection = []
+        this.$refs.multipleTable.clearSelection();
         if (val == 2) {
-            this.sum =(this.sum -this.freight).toFixed(2)
-            this.freight = 0
+          this.country = ''
+        if (this.country != 'DE') {
+          this.vatValue = 0
         }else{
-          // this.$router.go(0)
-          this.multipleSelection = []
-            this.$refs.multipleTable.clearSelection();
+          this.vatValue = this.defVat
+        }           
+            this.sum =0
+            this.freight = 0
+            
+        }else{
+          this.country = this.addressList.find(
+            (item) => item.isDefault == "1"
+          ).country;
+        if (this.country != 'DE') {
+          this.vatValue = 0
+        }else{
+          this.vatValue = this.defVat
+        }                     
+
         }
     },
     sum: {
@@ -802,7 +831,6 @@ export default {
   },
   methods: {
     returnPay(){
-       console.log(this.platformType,'平台类型2')
       let params = {
         id: this.payPalId,
         sessionId: this.payPalSessionId
@@ -1071,6 +1099,15 @@ export default {
   
         }
       this.multipleSelection = val;
+      if (this.orderType == 2) {
+        this.country = this.multipleSelection[0].warehouseInfo.countryCode
+        if (this.country != 'DE') {
+          this.vatValue = 0
+        }else{
+          this.vatValue = this.defVat
+        }         
+      }      
+
       if (val.length) {
         this.multipleSelection.forEach((item) => {
           this.subtotal += Number(
@@ -1102,9 +1139,7 @@ export default {
         this.logistic = "";
       }
       this.pickAddress = this.multipleSelection[0]?.warehouseInfo.address
-      if (this.orderType == 2) {
-        this.country = this.multipleSelection[0].warehouseInfo.countryCode
-      }
+
     },
     logisticChange() {
       this.freight = this.logisticArr.find(
@@ -1311,7 +1346,6 @@ export default {
                 }  
                 return temp      
          })
-console.log(stockWareHouse, 'stockWareHouse');
       let params = {
         success_url: window.location.origin + "/shoppingCart?paystatus=2",
         cancel_url: window.location.origin + "/shoppingCart?paystatus=3",

@@ -8,7 +8,7 @@
 	  <div class="pd-x-20 mg-y-30 underline-payment">
 		  <el-row :gutter="20" class=" mg-y-20">
 		    <el-col :span="7" style="text-align: right;">
-		  	  Payment amount ($)：
+		  	  Payment amount ({{$store.state.country.symbol}})：
 		    </el-col>
 		    <el-col :span="16">
 		  	  {{data.payAmount}}

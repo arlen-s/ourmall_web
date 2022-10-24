@@ -21,7 +21,7 @@
               <i class="el-icon-s-finance"></i>
             </div>
             <div class="info">
-              <p class="type">钱包余额($)</p>
+              <p class="type">钱包余额({{$store.state.country.symbol}})</p>
               <div class="amount">{{balance}}</div>
             </div>
           </el-card>
@@ -40,7 +40,7 @@
               <i class="iconfont icon-withdraw"></i>
             </div>
             <div class="info">
-              <p class="type">可提现金额($)</p>
+              <p class="type">可提现金额({{$store.state.country.symbol}})</p>
               <div class="amount">{{withdrawAmount}}</div>
             </div>
           </el-card>
@@ -59,7 +59,7 @@
               <i class="iconfont icon-withdrawaing"></i>
             </div>
             <div class="info">
-              <p class="type">提现中金额($)</p>
+              <p class="type">提现中金额({{$store.state.country.symbol}})</p>
               <div class="amount">{{withdrawing}}</div>
             </div>
           </el-card>
@@ -78,7 +78,7 @@
               <i class="el-icon-circle-check"></i>
             </div>
             <div class="info">
-              <p class="type">已提现金额($)</p>
+              <p class="type">已提现金额({{$store.state.country.symbol}})</p>
               <div class="amount">{{withdraw}}</div>
             </div>
           </el-card>
@@ -97,7 +97,7 @@
               <i class="iconfont icon-freeze"></i>
             </div>
             <div class="info">
-              <p class="type">冻结金额($)</p>
+              <p class="type">冻结金额({{$store.state.country.symbol}})</p>
               <div class="amount">{{frozen}}</div>
             </div>
           </el-card>
@@ -164,7 +164,7 @@
                 ></span>
               </el-radio>
             </div>
-            <el-form-item label="提现金额($)" required class="mg-b-10">
+            <el-form-item :label="`提现金额(${$store.state.country.symbol})`" required class="mg-b-10">
               <el-input-number
                 :min="50"
                 :max="withdrawAmount"
@@ -220,7 +220,7 @@
           <p>提现方式：<span>{{dialogWithdraw.accountType == 1 ? 'PayPal' : 'AliPay'}}</span></p>
           <p>收款人：<span>{{dialogWithdraw.name}}</span></p>
           <p>收款账号：<span>{{dialogWithdraw.account}}</span></p>
-          <p>金额($)：<span>{{dialogWithdraw.amount}}</span></p>
+          <p>金额({{$store.state.country.symbol}})：<span>{{dialogWithdraw.amount}}</span></p>
         </div>
       </div>  
       <el-divider></el-divider>

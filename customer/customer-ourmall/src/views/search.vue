@@ -43,7 +43,7 @@
             <el-form-item label="——" prop="priceTo">
               <el-input @focus="loginOrNot" v-model="publishForm.priceTo" type="number" style="width: 100px" size="small"></el-input>
               <span style="color: #ccc">
-                $ *Price units default to US dollars
+                {{$store.state.country.symbol}} *Price units default to {{$store.state.country.shopCurrency}}
               </span>
             </el-form-item>
           </el-col>

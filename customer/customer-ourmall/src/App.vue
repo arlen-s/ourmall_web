@@ -1205,6 +1205,11 @@ export default {
             this.$store.commit("referenceNumber", r.Data.Results.vendorShop.referenceNumber);
             localStorage.setItem("c_apiShopId", r.Data.Results.shopId);
             localStorage.setItem("vendorId", r.Data.Results.vendorId);
+            						this.$store.commit("setCountry", {
+							symbol: r.Data.Results.vendorShop.shopCurrencySymbol || '$',
+							name: '',
+							shopCurrency:r.Data.Results.vendorShop.currency|| 'usd'
+						})
             // sessionStorage.setItem('filingNumber', r.Data.Results.vendorShop.referenceNumber == null? '' : r.Data.Results.vendorShop.referenceNumber)
             this.getVendorCurrency();
           } else {

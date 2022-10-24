@@ -337,7 +337,7 @@
                                     "
                                   >
                                     <span
-                                      >$
+                                      >{{$store.state.country.symbol}}
                                       {{
                                         Number(
                                           (item.amount -
@@ -352,7 +352,7 @@
                                       style="color: red; text-decoration:line-through;"
                                     >
                                       <span style="color: #606266;"
-                                        >$
+                                        >{{$store.state.country.symbol}}
                                         {{
                                           Number(item.vendorPrice).toFixed(2)
                                         }}</span
@@ -360,7 +360,7 @@
                                     </span>
                                   </template>
                                   <template v-else
-                                    >$
+                                    >{{$store.state.country.symbol}}
                                     {{
                                       Number(item.vendorPrice).toFixed(2)
                                     }}</template
@@ -385,7 +385,7 @@
                                   "
                                 >
                                   <span
-                                    >$
+                                    >{{$store.state.country.symbol}}
                                     {{
                                       Number(
                                         item.amount -
@@ -399,13 +399,13 @@
                                     style="color: red; text-decoration:line-through;"
                                   >
                                     <span style="color: #606266;"
-                                      >$
+                                      >{{$store.state.country.symbol}}
                                       {{ Number(item.amount).toFixed(2) }}</span
                                     >
                                   </span>
                                 </template>
                                 <template v-else
-                                  >$
+                                  >{{$store.state.country.symbol}}
                                   {{
                                     Number(
                                       item.quantity * item.vendorPrice
@@ -534,7 +534,7 @@
                                     "
                                   >
                                     <span
-                                      >$
+                                      >{{$store.state.country.symbol}}
                                       {{
                                         Number(
                                           (item.amount -
@@ -549,7 +549,7 @@
                                       style="color: red; text-decoration:line-through;"
                                     >
                                       <span style="color: #606266;"
-                                        >$
+                                        >{{$store.state.country.symbol}}
                                         {{
                                           Number(item.vendorPrice).toFixed(2)
                                         }}</span
@@ -557,7 +557,7 @@
                                     </span>
                                   </template>
                                   <template v-else
-                                    >$
+                                    >{{$store.state.country.symbol}}
                                     {{
                                       Number(item.vendorPrice).toFixed(2)
                                     }}</template
@@ -582,7 +582,7 @@
                                   "
                                 >
                                   <span
-                                    >$
+                                    >{{$store.state.country.symbol}}
                                     {{
                                       Number(
                                         item.amount -
@@ -596,13 +596,13 @@
                                     style="color: red; text-decoration:line-through;"
                                   >
                                     <span style="color: #606266;"
-                                      >$
+                                      >{{$store.state.country.symbol}}
                                       {{ Number(item.amount).toFixed(2) }}</span
                                     >
                                   </span>
                                 </template>
                                 <template v-else
-                                  >$
+                                  >{{$store.state.country.symbol}}
                                   {{
                                     Number(
                                       item.quantity * item.vendorPrice
@@ -1132,7 +1132,7 @@
                                     "
                                   >
                                     <span
-                                      >$
+                                      >{{$store.state.country.symbol}}
                                       {{
                                         Number(
                                           (item.amount -
@@ -1147,7 +1147,7 @@
                                       style="color: red; text-decoration:line-through;"
                                     >
                                       <span style="color: #606266;"
-                                        >$
+                                        >{{$store.state.country.symbol}}
                                         {{
                                           Number(item.vendorPrice).toFixed(2)
                                         }}</span
@@ -1155,7 +1155,7 @@
                                     </span>
                                   </template>
                                   <template v-else
-                                    >$
+                                    >{{$store.state.country.symbol}}
                                     {{
                                       Number(item.vendorPrice).toFixed(2)
                                     }}</template
@@ -1180,7 +1180,7 @@
                                   "
                                 >
                                   <span
-                                    >$
+                                    >{{$store.state.country.symbol}}
                                     {{
                                       Number(
                                         item.amount -
@@ -1194,13 +1194,13 @@
                                     style="color: red; text-decoration:line-through;"
                                   >
                                     <span style="color: #606266;"
-                                      >$
+                                      >{{$store.state.country.symbol}}
                                       {{ Number(item.amount).toFixed(2) }}</span
                                     >
                                   </span>
                                 </template>
                                 <template v-else
-                                  >$
+                                  >{{$store.state.country.symbol}}
                                   {{
                                     Number(
                                       item.quantity * item.vendorPrice
@@ -1305,7 +1305,7 @@
                                     "
                                   >
                                     <span
-                                      >$
+                                      >{{$store.state.country.symbol}}
                                       {{
                                         Number(
                                           (item.amount -
@@ -1320,7 +1320,7 @@
                                       style="color: red; text-decoration:line-through;"
                                     >
                                       <span style="color: #606266;"
-                                        >$
+                                        >{{$store.state.country.symbol}}
                                         {{
                                           Number(item.vendorPrice).toFixed(2)
                                         }}</span
@@ -1328,7 +1328,7 @@
                                     </span>
                                   </template>
                                   <template v-else
-                                    >$
+                                    >{{$store.state.country.symbol}}
                                     {{
                                       Number(item.vendorPrice).toFixed(2)
                                     }}</template
@@ -1353,7 +1353,7 @@
                                   "
                                 >
                                   <span
-                                    >$
+                                    >{{$store.state.country.symbol}}
                                     {{
                                       Number(
                                         item.amount -
@@ -1367,13 +1367,13 @@
                                     style="color: red; text-decoration:line-through;"
                                   >
                                     <span style="color: #606266;"
-                                      >$
+                                      >{{$store.state.country.symbol}}
                                       {{ Number(item.amount).toFixed(2) }}</span
                                     >
                                   </span>
                                 </template>
                                 <template v-else
-                                  >$
+                                  >{{$store.state.country.symbol}}
                                   {{
                                     Number(
                                       item.quantity * item.vendorPrice
