@@ -272,7 +272,7 @@
                       v-model="scope.row.stockInfo.chooseInventory"
                       :min="1"
                       :max="Number(scope.row.stockInfo.inventory)"
-                      @change="switchHandleChange()"
+                      @change="switchHandleChange(scope.row.stockInfo.chooseInventory)"
                     ></el-input-number>
                     <div
                       class="text-danger"
@@ -1172,11 +1172,12 @@ export default {
         }
       });
     },
-    switchHandleChange() {
+    switchHandleChange(val) {
       this.subtotal = 0;
       let stockInfo = {};
       if (this.multipleSelection.length) {
         this.multipleSelection.forEach((item) => {
+          item.quantity = val
           this.subtotal += Number(
             item.stockInfo.price * item.stockInfo.chooseInventory
           )+Number(
