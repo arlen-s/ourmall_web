@@ -33,7 +33,7 @@
                   <div class="check-title">Check All</div>
                 </template>
                 <template slot-scope="scope">
-                  <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
+                  <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
                     <el-image
                       class="product-img"
                       @click="productClick(scope.row.productId)"
@@ -69,7 +69,7 @@
                 <template slot-scope="scope">
                   <div class="product-info">
                     <div class="name tx-ellipsis1" @click="productClick(scope.row.productId)">
-                      <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`"  target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">Digital Themrmometer Hygrometer Living Ro Digital Themrmometer Hygrometer Living Ro</a>
+                      <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`"  target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">Digital Themrmometer Hygrometer Living Ro Digital Themrmometer Hygrometer Living Ro</a>
                        <a :href="`/itemOld/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`"  target="_blank" v-else>Digital Themrmometer Hygrometer Living Ro Digital Themrmometer Hygrometer Living Ro</a>
                     </div>
                     <div class="tx-ellipsis1">{{formatAttr(scope.row.propertyValue)}}</div>

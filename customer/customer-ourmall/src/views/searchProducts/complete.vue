@@ -69,8 +69,8 @@
 					</el-table-column>
 					<el-table-column label="Reply link" v-if="activeName == '2'">
 						<template slot-scope="scope">
-							<a target="_blank" v-if="scope.row.vendorProduct" :href="(vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ? `${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` : `${host}/itemOld/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`">
-								{{ (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ?  `${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` :  `${host}/itemOld/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` || '--'}}
+							<a target="_blank" v-if="scope.row.vendorProduct" :href="(vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74) ? `${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` : `${host}/itemOld/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`">
+								{{ (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&&  vendorId != 74) ?  `${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` :  `${host}/itemOld/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` || '--'}}
 							</a>
 							<span v-else> --</span>
 						</template>

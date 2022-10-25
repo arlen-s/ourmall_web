@@ -152,7 +152,7 @@
             <template v-if="scope.row.status == '1'">
               <br>
               
-                <el-link type="primary" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74" style="font-size: 12px;" :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${scope.row.shopId}.myourmall.com/item/${scope.row.id}/${scope.row.name}.html`" target="_blank">
+                <el-link type="primary" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74" style="font-size: 12px;" :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${scope.row.shopId}.myourmall.com/item/${scope.row.id}/${scope.row.name}.html`" target="_blank">
                 {{$t('goods.预览')}}
               </el-link>
               <el-link type="primary" v-else style="font-size: 12px;" :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${scope.row.shopId}.myourmall.com/itemOld/${scope.row.id}/${scope.row.name}.html`" target="_blank">
@@ -318,7 +318,7 @@ export default {
 							})
     },
     gotoEdit(id){ //跳转到
-      if (  this.vendorId != '148982'&& this.vendorId != '146428'&& this.vendorId != '144875'&& this.vendorId != '144843'&& this.vendorId != '143779'&& this.vendorId != '143654'&& this.vendorId != '140694'&& this.vendorId != '74') {
+      if (  this.vendorId != '148982'&& this.vendorId != '146428'&& this.vendorId != '144875'&& this.vendorId != '144843'&& this.vendorId != '143779'&& this.vendorId != '143654'&& this.vendorId != '74') {
       this.$router.push({name: 'AddGoods2', query: {id}})
       }else{
       this.$router.push({name: 'AddGoods', query: {id}})

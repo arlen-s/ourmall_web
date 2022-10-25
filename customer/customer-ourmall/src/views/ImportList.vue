@@ -305,7 +305,7 @@
                 </div>
                 <div @click="viewDetail(item.itemId)">
                   <!-- item.originUrl -->
-                  <a :href="`/item/${item.itemId}/${item.name ? item.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_') : '_'}.html`" target="_blank" title="Origin url" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">>
+                  <a :href="`/item/${item.itemId}/${item.name ? item.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_') : '_'}.html`" target="_blank" title="Origin url" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">>
                     <i class="el-icon-link"></i>
                   </a>
                   <a :href="`/itemOld/${item.itemId}/${item.name ? item.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_') : '_'}.html`" target="_blank" title="Origin url" v-else>

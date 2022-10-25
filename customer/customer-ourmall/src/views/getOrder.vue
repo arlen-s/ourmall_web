@@ -132,7 +132,7 @@
                 >
                   <template slot-scope="scope">
                     <div class="product-info">
-                      <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
+                      <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
                         <el-image
                           class="product-img"
                           :fit="'cover'"
@@ -157,7 +157,7 @@
                         </el-image>
                       </a>                      
                       <div class="right">
-                        <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">{{scope.row.name}}</a>
+                        <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">{{scope.row.name}}</a>
                          <a :href="`/itemOld/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-else>{{scope.row.name}}</a>
                         <div class="tx-ellipsis1">{{formatAttr(scope.row.propertyValue)}}</div>
                         <div class="sku">SKU: <span>{{scope.row.sku}}</span></div>

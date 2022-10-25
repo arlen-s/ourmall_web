@@ -54,7 +54,7 @@
 							$ {{ publishDetail.vendorProduct.cost }}
 						</el-form-item>
 						<el-form-item label="Product Link:" prop="title">
-							<a target="_blank"  v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74" :href="`${host}/item/${publishDetail.vendorProduct.id}/${publishDetail.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`">{{`${host}/item/${publishDetail.vendorProduct.id}/${publishDetail.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`}}</a>
+							<a target="_blank"  v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74" :href="`${host}/item/${publishDetail.vendorProduct.id}/${publishDetail.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`">{{`${host}/item/${publishDetail.vendorProduct.id}/${publishDetail.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`}}</a>
 							<a target="_blank" v-else :href="`${host}/itemOld/${publishDetail.vendorProduct.id}/${publishDetail.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`">{{`${host}/itemOld/${publishDetail.vendorProduct.id}/${publishDetail.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`}}</a>
 						</el-form-item>
 						<el-form-item label="Product Description:" prop="priceFrom">

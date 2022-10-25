@@ -126,7 +126,7 @@
                 class="product-row"
               >
                 <el-col :span="9" class="td-product-info">
-                  <a  v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74"
+                  <a  v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74"
                     :href="`/item/${sku.productId}/${sku.name
                       .replace(/\s+/g, '-')
                       .replace(/[^\w]/g, '_')}.html`"
@@ -163,7 +163,7 @@
                     </el-image>
                   </a>
                   <div class="right">
-                    <a   v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74"
+                    <a   v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74"
                       @click="productClick(sku.productId)"
                       class="name tx-ellipsis2"
                       :href="`/item/${

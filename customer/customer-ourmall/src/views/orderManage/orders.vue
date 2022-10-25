@@ -273,7 +273,7 @@
                               <el-link
                                 v-else
                                 type="primary"
-                                :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ? 
+                                :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&&vendorId != 74) ? 
                                   `/item/${item.vendorProductId}/${item.vendorProductName}.html` :  `/itemOld/${item.vendorProductId}/${item.vendorProductName}.html`
                                 "
                                 target="_blank"
@@ -470,7 +470,7 @@
                               <el-link
                                 v-else
                                 type="primary"
-                                :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ? 
+                                :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&&  vendorId != 74) ? 
                                   `/item/${item.vendorProductId}/${item.vendorProductName}.html` :  `/itemOld/${item.vendorProductId}/${item.vendorProductName}.html`
                                 "
                                 target="_blank"
@@ -699,12 +699,12 @@
                     </el-tooltip>
                   </template>
                 </el-table-column>
-                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
+                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>
                 </el-table-column>    
-                <el-table-column label="address" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
+                <el-table-column label="address" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
                   <template slot-scope="scope">                
                     <el-tooltip class="item" effect="dark" :content="scope.row.warehouseAddress" placement="top-start">
                        <i class="el-icon-chat-dot-square"></i>
@@ -1074,7 +1074,7 @@
                               <el-link
                                 v-else
                                 type="primary"
-                                :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ? 
+                                :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&&  vendorId != 74) ? 
                                   `/item/${item.vendorProductId}/${item.vendorProductName}.html` :  `/itemOld/${item.vendorProductId}/${item.vendorProductName}.html`
                                 "
                                 target="_blank"
@@ -1247,7 +1247,7 @@
                               <el-link
                                 v-else
                                 type="primary"
-                                   :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74) ? 
+                                   :href=" (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74) ? 
                                   `/item/${item.vendorProductId}/${item.vendorProductName}.html` :  `/itemOld/${item.vendorProductId}/${item.vendorProductName}.html`
                                 "
                                 target="_blank"
@@ -1460,12 +1460,12 @@
                     <span>{{ scope.row.receiverName || "---" }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 140694&& vendorId != 74">
+                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>
                 </el-table-column>   
-                <el-table-column label="address" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
+                <el-table-column label="address" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
                   <template slot-scope="scope">                
                     <el-tooltip class="item" effect="dark" :content="scope.row.warehouseAddress" placement="top-start">
                        <i class="el-icon-chat-dot-square"></i>

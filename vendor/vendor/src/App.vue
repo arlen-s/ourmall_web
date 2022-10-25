@@ -1761,7 +1761,7 @@
 						this.navMenu.find((e)=>{
 							if (e.id == 2) {
 									let indexI =	e.subItem.map((item)=>{return item.id}).indexOf(15)
-									if (vendorId == 148982 && vendorId == 146428 && vendorId == 144875 && vendorId == 144843 && vendorId == 143779 && vendorId == 143654 && vendorId == 140694 && vendorId == 74) {
+									if (vendorId == 148982 && vendorId == 146428 && vendorId == 144875 && vendorId == 144843 && vendorId == 143779 && vendorId == 143654 && vendorId == 74) {
 										e.subItem.splice(indexI,1)
 									}
 							}
