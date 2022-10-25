@@ -8,7 +8,7 @@
     <div class="right">
       <h1 class="logo"></h1>
       <div class="box">
-    <!-- <div v-if="needMasterSelectShop" class="shop-box">
+    <div v-if="needChildSelectShop" class="shop-box">
       <div class="shop-title">
         <h2>活跃店铺</h2>
         <el-link type="primary" :underline="false" @click="logout"
@@ -18,7 +18,7 @@
       <div class="shop-list">
         <ul>
           <li
-            v-for="item in selectShopList"
+            v-for="item in selectChildShopList"
             :key="item.firstUrl"
             @click="selectShopLogin(item)"
           >
@@ -29,9 +29,9 @@
           </li>
         </ul>
       </div>
-    </div> -->
+    </div>
 
-        <div v-if="needSelectShop" class="shop-box">
+        <div v-else-if="needSelectShop" class="shop-box">
           <div class="shop-title">
             <h2>创建店铺</h2>
             <el-button type="primary" size="small" @click="shopCodeChange(2)"
@@ -507,6 +507,7 @@ export default {
         password: "",
         rePassword: "",
       },
+      needChildSelectShop: false,
       countryId: 'TH',
       showReSend: true,
       mobileSeconds: 60, // 倒计时
@@ -698,6 +699,7 @@ export default {
       },
       needSelectShop: false,
       selectShopList: [],
+      selectChildShopList: [],
       selectShopToken: "",
       shopType: "",
       shopCode: 1,
@@ -892,7 +894,6 @@ export default {
     },
     handleTab(type) {
       this.tabAction = type;
-      console.log(type, "111");
       setTimeout(() => {
         if (type == "login") {
           if (this.$refs.loginForm) this.$refs.loginForm.resetFields();
@@ -1170,19 +1171,25 @@ export default {
           password: this.loginForm.password,
           type: 2,
         },
-        (r) => {
+        (r) => {  
           if (r.ErrorCode == 9999) {
             this.$Burying({
               object: "1005",
-            });
-            if (!r.Data.Results.isSubUser) {
+            }); 
+
+            if (!r.Data.Results.isSubUser ) {
               this.needSelectShop = true;
+              this.needChildSelectShop =false
               this.needMasterSelectShop = false;
               this.handleLogin(r.Data.Results, 1);
               this.getShopList();
               this.getCountry();
             } else {
-                this.handleLogin(r.Data.Results);
+              this.selectChildShopList = r.Data.Results.shops
+              this.selectShopToken = r.Data.Results.token
+              this.needChildSelectShop =true
+               this.needSelectShop = false;
+                // this.handleLogin(r.Data.Results);
             }
 
           } else {
