@@ -431,7 +431,7 @@ import { arrayEach } from 'xe-utils/methods';
 				let success_url = window.location.origin + '/orderPay?paystatus=2&payType=13'
 				let id = this.payparams.id;
 				let apiUserId = localStorage.getItem("c_apiUserId")?localStorage.getItem("c_apiUserId"):"";
-				let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=${formType}`
+				let url = `https://api.myourmall.com/kaitaiCheckout.php?id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=${formType}`
 				if(Object.keys(this.KasikornbankInfo).length && this.shopName !== ''){
 								let obj = {
 									sessionId:seId,
