@@ -413,6 +413,10 @@
 								params.terminalId = this.ruleForm.terminalId;
 								params.merchantId = this.ruleForm.merchantId
 								params.smartpayId = this.ruleForm.smartpayId
+								params.terminalId_Installment = this.ruleForm.terminalId_Installment
+								params.terminalId_FullPayment = this.ruleForm.terminalId_FullPayment
+								params.merchantId_Installment = this.ruleForm.merchantId_Installment
+								params.merchantId_FullPayment = this.ruleForm.merchantId_FullPayment
 								break;
 								//paypal
 							case 3:
