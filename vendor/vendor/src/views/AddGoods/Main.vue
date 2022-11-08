@@ -1143,7 +1143,6 @@ export default {
       })
     },
     handleHouseList () { //仓库选择
-      console.log(this.tableData, 'this.tableData')
       this.dialogStorehouse.show = false
       let lists = []
       this.checkStoreList.forEach((chid, ind) => {
@@ -1361,11 +1360,37 @@ export default {
           }
           setTimeout(() => {
             if (data.stocks.length > 1) {
-              this.multiStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse))
-              this.tableData = this.multiStorehouse
+              if (data.skuWarehouse.length>0) {
+                this.multiStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse))
+                this.tableData = this.multiStorehouse
+              }else{
+                this.tableData = data.stocks.map((item)=>{
+                  let objSt = {
+                     productName: item.productName,
+                     sku: item.sku,
+                      childArr:[]
+ 
+                  }
+                  return objSt
+                })
+              }
+
             } else {
-              this.singleStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse))
-              this.tableData = this.singleStorehouse
+              if (data.skuWarehouse.length > 0) {
+                this.singleStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse))
+              this.tableData = this.singleStorehouse  
+              }else{
+                  this.tableData = data.stocks.map((item)=>{
+                  let objSt = {
+                     productName: item.productName,
+                     sku: item.sku,
+                      childArr:[]
+ 
+                  }
+                  return objSt
+                })
+              }
+              
             }
 
           }, 200)
@@ -2095,6 +2120,7 @@ export default {
     },
     uploadImgFile (e) {
       //上传
+
       if (!e.target.files[0].size) return
       this.fileList(e.target)
       e.target.value = ""
