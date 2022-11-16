@@ -56,7 +56,7 @@ const routes = [
       title: 'shoppingCart'
     },
     component: () => import(/* webpackChunkName: "hohomepageme" */ '../views/shoppingCartHC.vue'),
-  }, 
+  },  
   {
     path: '/search',
     name: 'SearchProducts',
@@ -66,6 +66,14 @@ const routes = [
       // checkLogin: true,
     },
     component: () => import(/* webpackChunkName: 'search' */'./../views/search.vue')
+  },
+  {
+    path: '/categories',
+    name: 'CategoriesProducts',
+    meta: {
+      title: 'Categories Products',
+    },
+    component: () => import('./../views/Categories.vue')
   },
   {
     path: '/products-market',

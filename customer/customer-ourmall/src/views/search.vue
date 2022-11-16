@@ -234,6 +234,7 @@ export default {
               r.Data.Results.menu.forEach((item) => {
                 if (item.id == r.Data.Results.header.activeMenu) {
                   this.headerMenu = item
+                 
                 }
               })
             }

@@ -233,9 +233,9 @@ export default {
         this.dialogEditCategoryData.id = obj.id;
         this.dialogEditCategoryData.name = obj.name;
         this.dialogEditCategoryData.description = obj.description;
-        if(obj.level == '1'){
+        // if(obj.level == '1'){
           this.dialogEditCategoryData.themeUrl = obj.themeUrl;
-        }
+        // }
       }
     },
   }

@@ -15,7 +15,7 @@
         )
         }else if(html.dataPaymentMethods == 'debit'){
           document.writeln(
-          `<form data-v-7e7ca540="" method="POST" id="formPay" action="${html.action_url}" style=""><script type="text/javascript" src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js" data-apikey="${html.dataApikey}" data-amount="${html.dataAmount}" data-currency="THB" data-payment-methods="card" data-mid="${html.merchantId_FullPayment}"><\/script></form>`
+          `<form data-v-7e7ca540="" method="POST" id="formPay" action="${html.action_url}" style=""><script type="text/javascript" src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js" data-apikey="${html.dataApikey}" data-amount="${html.dataAmount}"  data-smartpay-id="${html.dataSmartpayId}" data-currency="THB" data-payment-methods="${html.dataPaymentMethods}" data-mid="${html.merchantId_FullPayment}"><\/script></form>`
         )
         }else{
           document.writeln(

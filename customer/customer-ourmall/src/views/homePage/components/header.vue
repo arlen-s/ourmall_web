@@ -244,7 +244,7 @@
       </div>
     </div>
     <el-row type="flex" justify="center" class="banner-box" v-if="isHome">
-      <el-col v-for="m in headerMenu.menu" class="dropmenu" :key="m.id"  :span="4">          
+      <el-col v-for="m in headerMenu.menu" class="dropmenu" :key="m.id"  :span="2">          
           <!-- <template v-for="m in menu"> -->
             <!-- <div class="dropmenu" :key="m.timestamp"> -->
               <a
@@ -664,7 +664,6 @@ $route: {
       }
     },
     release() {
-        console.log('123131231qweqweqwe23123')
         this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
           if (r.ErrorCode == 9999) {
             if (r.Data.Results) {
@@ -1089,6 +1088,10 @@ width: 20%;
 .left-box{
   padding-left:50px;
   width: 20%;
+}
+.banner-box {
+  padding: 0 20px;
+  flex-wrap: wrap;
 }
 .banner-box a{
 font-size: 16px;

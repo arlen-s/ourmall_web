@@ -34,7 +34,7 @@
               <span :class="{'tx-danger': data.description && data.description.length > 200}">{{data.description && data.description.length || 0}}</span>/200
             </span>
           </el-form-item>  
-          <el-form-item v-if="!data.path.length" :label="$t('category.类目封面')">
+          <el-form-item  :label="$t('category.类目封面')">
             <div v-if="!data.themeUrl" class="el-upload el-upload--picture-card" @click="openUploadImg">
               <i class="el-icon-plus"></i>
             </div>
@@ -96,7 +96,7 @@ export default {
         name: this.data.name,
         level: this.data.path.length + 1,
         description: this.data.description,
-        themeUrl: this.data.path.length ? '' : this.data.themeUrl,
+        themeUrl: this.data.themeUrl,
       }, r => {
         this.data.loading = false;
         if(r.ErrorCode == 9999){

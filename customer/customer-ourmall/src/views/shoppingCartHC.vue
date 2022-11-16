@@ -788,10 +788,8 @@ export default {
         setTimeout(() => {
           this.closePayPage();
           if(this.platformType == '3'){
-             console.log(this.platformType,'平台类型1')
             this.returnPay()
           }
-          console.log(this.platformType,'平台类型')
         }, 300);
       }
     });
@@ -1332,7 +1330,6 @@ export default {
         stockInfo[item.stockInfo.id] = item.stockInfo.chooseInventory;
       });
       let stockWareHouse =[]
-      console.log(this.multipleSelection, 'this.multipleSelection');
       stockWareHouse[0] = {
           warehouseId:  this.multipleSelection[0].warehouseInfo?.id,
             shippingId:  this.logistic,
@@ -1582,7 +1579,7 @@ export default {
         stockWarehouseList:stockWareHouse,
         shippingId: this.logistic,
         addressId: this.addressList.find((item) => item.isDefault == "1").id,
-        code: this.coupon,
+        // code: this.coupon,暂时去除
         platformType: 4,
         token,
       };
