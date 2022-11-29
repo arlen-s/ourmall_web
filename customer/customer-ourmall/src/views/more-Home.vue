@@ -1,61 +1,45 @@
 <template>
   <div class="home-page">
-   <!-- <homeHeader ref="homeHeader"/> -->
-	<template v-if="code && code.header && code.header.length > 0">
-		<div v-for="(item, index) in code.header" :key="index" v-html="item"></div>
-	</template>
-	<div style="position: relative;height: 130px;">
-		   <DHeader :data="setting && setting.header || ''" :headerMenu="headerMenu"/>
-	</div>
+    <!-- <homeHeader ref="homeHeader"/> -->
+    <template v-if="code && code.header && code.header.length > 0">
+      <div v-for="(item, index) in code.header" :key="index" v-html="item"></div>
+    </template>
+    <div style="position: relative;height: 130px;">
+      <DHeader :data="setting && setting.header || ''" :headerMenu="headerMenu" />
+    </div>
     <div>
       <div class="contentpanel box" v-loading="allLoading">
-        <div class="pagetitle" ref="pageHeader" style="padding-right:0">
-            <div style="width:100%" class="d-flex">
-              <el-select
-                  style="width:264px;margin-right:-1px"
-                  v-model="categoryId"
-                  slot="append"
-                  placeholder="IN ALL CATEGORIES"
-                >
-                  <el-option label="IN ALL CATEGORIES" value=""></el-option>
-                  <el-option
-                      v-for="item in commodityTypeMoreList"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                </el-select>
-              <el-input
-                placeholder="Search products"
-                v-model="input"
-                class="input-with-select"
-                @keyup.enter.native="search"
-              >
-              </el-input>
+        <!-- <div class="pagetitle" ref="pageHeader" style="padding-right:0">
+          <div style="width:100%" class="d-flex">
+            <el-select style="width:264px;margin-right:-1px" v-model="categoryId" slot="append" placeholder="IN ALL CATEGORIES">
+              <el-option label="IN ALL CATEGORIES" value=""></el-option>
+              <el-option v-for="item in commodityTypeMoreList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            </el-select>
+            <el-input placeholder="Search products" v-model="input" class="input-with-select" @keyup.enter.native="search">
+            </el-input>
             <div class="search-but" @click="search()">
               SEARCH
             </div>
           </div>
-      </div>
+        </div> -->
         <!-- 面包屑 -->
         <div class="pagetitle">
           <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/products-market' }"
-              >
+            <el-breadcrumb-item :to="{ path: '/products-market' }">
               <!-- {{$root.$children[0].pName.a}} -->
-               Products Market</el-breadcrumb-item
-            >
+              Products Market
+            </el-breadcrumb-item>
             <el-breadcrumb-item v-if="activeCategory.l1">
               <a v-if="activeCategory.L > 1" @click="gotoCategory(1)">
-              {{ activeCategory.l1.name }}
-            </a>
-            <a v-else href="javascript:;">{{ activeCategory.l1.name }}</a>
+                {{ activeCategory.l1.name }}
+              </a>
+              <a v-else href="javascript:;">{{ activeCategory.l1.name }}</a>
             </el-breadcrumb-item>
             <el-breadcrumb-item v-if="activeCategory.l2">
               <a v-if="activeCategory.L > 2" @click="gotoCategory(2)">
-              {{ activeCategory.l2.name }}
-            </a>
-            <a v-else href="javascript:;">{{ activeCategory.l2.name }}</a>
+                {{ activeCategory.l2.name }}
+              </a>
+              <a v-else href="javascript:;">{{ activeCategory.l2.name }}</a>
             </el-breadcrumb-item>
             <el-breadcrumb-item v-if="activeCategory.l3">
               <a href="javascript:;">{{ activeCategory.l3.name }}</a>
@@ -63,145 +47,98 @@
           </el-breadcrumb>
         </div>
         <!-- 列表 -->
-        
-      <div style="display:flex;width:100%">
-        <Categories :categories="commodityTypeMoreList" />
-        <div v-if="items && items.length == 0" style="flex:1">
-          <el-card class="mg-l-20" style="width:auto">
-            <div class="noProduct">
-              <img src="../../public/images/productShop/none.png">
-              <b class="mg-t-10">There are no products in this category</b>
-            </div>
-          </el-card>
-        </div>
-        <div v-loading="loading"  style="flex:1" v-else>
-          <div class="list">
-            
-               <div class="pro_box" v-for="item in items"
-              :key="item.id"
-              style="margin-bottom: 20px">
-                      <div class="pro_img" style="height:194px">
-                    <el-image
-                      
-                      style="position: absolute; width: 100%;cursor: pointer;
-                      height: 100%;"
-                      :fit="'contain'"
-                      :src="item.imgUrl"
-                      @click="goToDetail(item)"
-                    >
-                    </el-image>
-                      
-                    </div>
-                    <div style="padding:16px 10px">
-                      <div class="pro_name" @click="goToDetail(item)">
-                        <a href="javascript:;">{{ item.name }}</a>
-                      </div>
-                      <b class="pro_cost">{{$store.state.country.symbol}} {{item.minPrice == item.maxPrice ? $exchangeRate(item.minPrice) : `${$exchangeRate(item.minPrice)}~${$exchangeRate(item.maxPrice)} `}}</b>
-                      
-                      <!-- <div class="imports">
+
+        <div style="display:flex;width:100%">
+          <Categories :categories="commodityTypeMoreList" />
+          <div v-if="items && items.length == 0" style="flex:1">
+            <el-card class="mg-l-20" style="width:auto">
+              <div class="noProduct">
+                <img src="../../public/images/productShop/none.png">
+                <b class="mg-t-10">There are no products in this category</b>
+              </div>
+            </el-card>
+          </div>
+          <div v-loading="loading" style="flex:1" v-else>
+            <div class="list">
+
+              <div class="pro_box" v-for="item in items" :key="item.id" style="margin-bottom: 10px">
+                <div class="pro_img" style="height:194px">
+                  <el-image style=" width: 100%;cursor: pointer;
+                      height: 100%;" :fit="'contain'" :src="item.imgUrl" @click="goToDetail(item)">
+                  </el-image>
+
+                </div>
+                <div style="padding:16px 10px">
+                  <div class="pro_name" @click="goToDetail(item)">
+                    <a href="javascript:;">{{ item.name }}</a>
+                  </div>
+                  <b class="pro_cost">{{$store.state.country.symbol}} {{item.minPrice == item.maxPrice ? $exchangeRate(item.minPrice) : `${$exchangeRate(item.minPrice)}~${$exchangeRate(item.maxPrice)} `}}</b>
+
+                  <!-- <div class="imports">
                         <span>Imports:
                            <span style="color:#525FB0">{{ item.imports }}</span>
                         </span>
                       </div> -->
-                      <div
-                        style="
+                  <!-- <div style="
                           display: flex;
                           width: 100%;
                           justify-content: center;
                           margin-top: 12px;
-                        "
-                      >
-                        <!-- <el-button
-                          type="primary"
-                          class="importBut"
-                          @click="import_pro(item, $event)"
-                          :disabled="item.hasImport == 1"
-                          >Add to Import List</el-button
-                        > -->
-                        <!-- 这里 -->
-                        <el-dropdown>
-                          <el-button type="primary">
-                            Add to Import List<i class="el-icon-arrow-down el-icon--right"></i>
-                          </el-button>
-                          <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">Add to Import List</el-dropdown-item>
-                            <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
-                          </el-dropdown-menu>
-                        </el-dropdown>
-                      </div>
-                    </div>
-               </div>
+                        ">
+                    <el-dropdown>
+                      <el-button type="primary">
+                        Add to Import List<i class="el-icon-arrow-down el-icon--right"></i>
+                      </el-button>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">Add to Import List</el-dropdown-item>
+                        <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </div> -->
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
         </div>
       </div>
       <el-row v-if="items.length" :gutter="20" style="margin: 20px 0">
         <el-col :span="24" class="d-flex justify-content-center">
           <div>
-            <el-pagination
-              :current-page="Number(page)"
-              :background="true"
-              layout="sizes, total, prev, pager, next, jumper"
-              :page-sizes="pageSizes"
-              :page-size="rowsPerPage"
-              :total="Number(total)"
-              @current-change="toPage"
-              @size-change="changePageSize"
-            >
+            <el-pagination :current-page="Number(page)" :background="true" layout="sizes, total, prev, pager, next, jumper" :page-sizes="pageSizes" :page-size="rowsPerPage" :total="Number(total)" @current-change="toPage"
+              @size-change="changePageSize">
             </el-pagination>
           </div>
         </el-col>
       </el-row>
-      <div
-        class="ball"
-        :style="{
+      <div class="ball" :style="{
           top: `${ball.y}px`,
           left: `${ball.x}px`,
           opacity: ball.opacity,
-        }"
-      ></div>
-      <el-backtop
-      class="goto-top"
-      :right="32"
-      :bottom="120"
-    >
-    </el-backtop>
+        }"></div>
+      <el-backtop class="goto-top" :right="32" :bottom="120">
+      </el-backtop>
     </div>
-   <!-- <Footer /> -->
-	<DFooter :setting="$store.state.configJson && $store.state.configJson.footer || ''"/>
-	<template v-if="code && code.footer && code.footer.length > 0">
-		<div v-for="(item, index) in code.footer" :key="index" v-html="item"></div>
-	</template>
-     <el-dialog
-      :visible.sync="centerDialogVisible"
-      @close="closeLogin"
-        width="30%" 
-       center >
-    <div class="login-page">
-     <div class="login-box">
-      <div class="box mg-b-5">
-        <p>Please enter your shopify store name to connect the dashboard page:</p>
-        <div class=" mg-b-30">
-          <input
-            type="text"
-            placeholder="Shopify store name"
-            @input="storeInput($event.target.value)"
-            v-model="shopUrl"
-            @keyup.enter="goLogin"
-          >
-          <span>.myshopify.com</span>
-        </div>
-        <div>
-          <el-button
-            class="login-btn"
-            :loading="loginLoading"
-            @click="goLogin"
-          >{{loginLoading ? 'Please Wait' : 'LOGIN'}}</el-button>
+    <!-- <Footer /> -->
+    <DFooter :setting="$store.state.configJson && $store.state.configJson.footer || ''" />
+    <template v-if="code && code.footer && code.footer.length > 0">
+      <div v-for="(item, index) in code.footer" :key="index" v-html="item"></div>
+    </template>
+    <el-dialog :visible.sync="centerDialogVisible" @close="closeLogin" width="30%" center>
+      <div class="login-page">
+        <div class="login-box">
+          <div class="box mg-b-5">
+            <p>Please enter your shopify store name to connect the dashboard page:</p>
+            <div class=" mg-b-30">
+              <input type="text" placeholder="Shopify store name" @input="storeInput($event.target.value)" v-model="shopUrl" @keyup.enter="goLogin">
+              <span>.myshopify.com</span>
+            </div>
+            <div>
+              <el-button class="login-btn" :loading="loginLoading" @click="goLogin">{{loginLoading ? 'Please Wait' : 'LOGIN'}}</el-button>
+            </div>
+          </div>
         </div>
       </div>
-     </div>
-    </div>
-</el-dialog>
+    </el-dialog>
   </div>
 </template>
 
@@ -213,21 +150,21 @@ import DHeader from '@/views/homePage/components/header'
 import DFooter from '@/views/homePage/components/footer'
 export default {
   props: {},
-  data() {
+  data () {
     return {
-		setting: null,
-    headerMenu:[],
-		code: {
-			header: [],
-			footer: []
-		},
-      nameS:'',
+      setting: null,
+      headerMenu: [],
+      code: {
+        header: [],
+        footer: []
+      },
+      nameS: '',
       header2Visible: false,
       time: 0,
-      loginLoading:false,
+      loginLoading: false,
       shopUrl: "",
       categoryId: null,
-      centerDialogVisible:false,
+      centerDialogVisible: false,
       name: "",
       items: [],
       commodityTypeMoreList: [],
@@ -251,7 +188,7 @@ export default {
     };
   },
   computed: {
-    product() {
+    product () {
       let text = "";
       this.commodityTypeMoreList.forEach((item) => {
         if (item.id == this.categoryId) {
@@ -260,7 +197,7 @@ export default {
       });
       return text;
     },
-  activeCategory() {
+    activeCategory () {
       if (!this.commodityTypeMoreList) {
         return false;
       }
@@ -314,62 +251,62 @@ export default {
       };
     },
   },
-  beforeDestroy(){
+  beforeDestroy () {
     clearInterval(this.time);
-  },   
-  created() {
-  	this.setting = localStorage.getItem("c_shopConfigJson") ? JSON.parse(localStorage.getItem("c_shopConfigJson")) : null;
-  	if(!this.setting || !this.setting.customCode || !this.setting.customCode.length) return;
-  	this.setting.customCode.forEach((item) => {
-  		if (item.pages.includes('搜索结果页')) {
-  			if (item.position == '底部') {
-  				this.code.footer.push(item.desc)
-  			}
-  			if (item.position == '顶部') {
-  				this.code.header.push(item.desc)
-  			}
-  		}
-  	})
   },
-  mounted() {
-    if(this.$root.$children[0].getParentUrl() && this.$root.$children[0].getParentUrl().indexOf("vendor") >= 0) {
-		}else{
-			this.$root.$children[0].checkLogin();
-		}
+  created () {
+    this.setting = localStorage.getItem("c_shopConfigJson") ? JSON.parse(localStorage.getItem("c_shopConfigJson")) : null;
+    if (!this.setting || !this.setting.customCode || !this.setting.customCode.length) return;
+    this.setting.customCode.forEach((item) => {
+      if (item.pages.includes('搜索结果页')) {
+        if (item.position == '底部') {
+          this.code.footer.push(item.desc)
+        }
+        if (item.position == '顶部') {
+          this.code.header.push(item.desc)
+        }
+      }
+    })
+  },
+  mounted () {
+    if (this.$root.$children[0].getParentUrl() && this.$root.$children[0].getParentUrl().indexOf("vendor") >= 0) {
+    } else {
+      this.$root.$children[0].checkLogin();
+    }
     this.header2Visible = $(window).scrollTop() > 70;
     $(window).scroll(() => {
       this.header2Visible = $(window).scrollTop() > 70;
     });
-    if(this.$route.query.search){
+    if (this.$route.query.search) {
       this.categoryId = this.$route.params.id;
     }
     this.input = this.$route.query.input;
     this.content = this.input;
     this.getCategory();
-    document.title = `${this.$route.params.name.replace('.html','')} How to find :: ${this.$root.$children[0].pName.b} - Easy Dropshipping`;
+    document.title = `${this.$route.params.name.replace('.html', '')} How to find :: ${this.$root.$children[0].pName.b} - Easy Dropshipping`;
   },
-  components:{
+  components: {
     homeHeader,
     Footer,
     Categories,
-	DHeader,
-	DFooter,
+    DHeader,
+    DFooter,
   },
   watch: {
-	  
-			'setting.header.activeMenu': {
-				handler() {
-					this.getMenu()
-				},
-				deep: true
-			},
+
+    'setting.header.activeMenu': {
+      handler () {
+        this.getMenu()
+      },
+      deep: true
+    },
     $route: "gotoPage",
   },
- 
+
   methods: {
-	  
-    getMenu(){
-      if(this.setting.header.activeMenu){ //有启用头部菜单
+
+    getMenu () {
+      if (this.setting.header.activeMenu) { //有启用头部菜单
         this.setting.menu.forEach((item) => {
           if (item.id == this.setting.header.activeMenu) {
             this.headerMenu = item
@@ -377,23 +314,21 @@ export default {
         })
       }
     },
-    gotoCategory(i) {
+    gotoCategory (i) {
       if (i == 1) {
         this.$router.push(
-          `/category/${
-            this.activeCategory.l1.id
+          `/category/${this.activeCategory.l1.id
           }/${this.activeCategory.l1.name.replace(/\s+/g, "-")}.html`
         );
       } else {
         this.$router.push(
-          `/category/${
-            this.activeCategory.l2.id
+          `/category/${this.activeCategory.l2.id
           }/${this.activeCategory.l2.name.replace(/\s+/g, "-")}.html`
         );
       }
     },
     // 登录
-    storeInput(val) {
+    storeInput (val) {
       let codeReg = new RegExp("[A-Za-z0-9-_]+"), //正则 英文+数字；
         len = val.length,
         str = "";
@@ -404,7 +339,7 @@ export default {
       }
       this.shopUrl = str;
     },
-     getLoginStatus() {
+    getLoginStatus () {
       this.$apiCall(
         "api.ShopifyAccount.getShopAuthStatus",
         {
@@ -415,11 +350,11 @@ export default {
             if (r.Data.Results.status) {
               clearInterval(this.time);
               if (r.Data.Results.status == 1) {
-              	if(!localStorage.getItem("c_ourMallFirstLogin")){
-				      		localStorage.setItem("c_ourMallFirstLogin",1);
-				      	}else{
-				      		localStorage.setItem("c_ourMallFirstLogin",2);
-				      	}
+                if (!localStorage.getItem("c_ourMallFirstLogin")) {
+                  localStorage.setItem("c_ourMallFirstLogin", 1);
+                } else {
+                  localStorage.setItem("c_ourMallFirstLogin", 2);
+                }
                 localStorage.setItem("c_apiUserId", r.Data.Results.userInfo.id);
                 localStorage.setItem("c_apiUserToken",
                   r.Data.Results.userInfo.apiUserToken
@@ -428,15 +363,15 @@ export default {
                   JSON.stringify(r.Data.Results.userInfo)
                 );
                 this.$store.commit("setUserInfo", r.Data.Results.userInfo);
-                this.$router.push({name: 'more', query:this.$route.query})
-                
+                this.$router.push({ name: 'more', query: this.$route.query })
+
                 this.win.close();
               } else {
                 this.loginLoading = false;
                 this.$elementMessage(r.Data.Results.errorMessage, "error");
-                setTimeout(()=>{
+                setTimeout(() => {
                   window.location.reload();
-                },1000)
+                }, 1000)
                 this.win.close();
               }
             }
@@ -447,7 +382,7 @@ export default {
         }
       );
     },
-    goLogin() {
+    goLogin () {
       if (!this.shopUrl) {
         this.$elementMessage("Please enter Shopify store name", "error");
         return false;
@@ -459,8 +394,8 @@ export default {
         {
           shopUrl: this.shopUrl,
           getAuth: 1,
-          ivc:localStorage.getItem('c_ivc') ? localStorage.getItem('c_ivc') : '',
-          utmSource:localStorage.getItem('c_utm'),
+          ivc: localStorage.getItem('c_ivc') ? localStorage.getItem('c_ivc') : '',
+          utmSource: localStorage.getItem('c_utm'),
         },
         r => {
           if (r.ErrorCode == "9999") {
@@ -474,11 +409,11 @@ export default {
         }
       );
     },
-    closeLogin(){
-    this.shopUrl ='';
-    this.loginLoading = false;
+    closeLogin () {
+      this.shopUrl = '';
+      this.loginLoading = false;
     },
-    handleCommand(command) {
+    handleCommand (command) {
       switch (command) {
         case "exit":
           this.$Logout("/");
@@ -488,13 +423,13 @@ export default {
           break;
         case "dashboard":
           // this.$router.push({ name: "dashboard" });
-          if(this.c_apiShopId == 121173) {
+          if (this.c_apiShopId == 121173) {
             let isValidationCW = JSON.parse(localStorage.getItem('isValidationCW'))
             // console.log(isValidationCW)
             if (!isValidationCW) {
               this.isValidationCWDialog = true
               return
-            } 
+            }
           }
           this.$router.push({
             name: "dashboard",
@@ -502,14 +437,14 @@ export default {
           break;
       }
     },
-    login() {
+    login () {
       if (localStorage.getItem("c_ourMallUserInfo")) {
         this.$router.push({ name: "dashboard" });
       } else {
         this.$router.push({ name: "login" });
       }
     },
-    gotoLogin() {
+    gotoLogin () {
       if (!this.shopUrl) {
         this.$elementMessage("Please enter Shopify store name", "error");
         return false;
@@ -523,7 +458,7 @@ export default {
         this.$router.push({ name: "login", params: { shopUrl: this.shopUrl } });
       }
     },
-    getCategory() {
+    getCategory () {
       this.$apiCall("api.ProductCategory.findByVendorRelateCategory", {}, (r) => {
         if (r.ErrorCode == 9999) {
           this.commodityTypeMoreList = r.Data.Results;
@@ -531,10 +466,10 @@ export default {
         }
       });
     },
-    getItems() {
+    getItems () {
       this.loading = true;
       this.allLoading = true;
-      if(this.categoryId == "ALL-CATEGORIES"){
+      if (this.categoryId == "ALL-CATEGORIES") {
         this.categoryId = ''
       }
       this.commodityTypeMoreList.forEach((item) => {
@@ -549,7 +484,7 @@ export default {
           categoryId: this.$route.params.id,
           page: this.page,
           rowsPerPage: this.rowsPerPage,
-          status:1
+          status: 1
         },
         (r) => {
           if (r.ErrorCode == 9999) {
@@ -572,86 +507,86 @@ export default {
         }
       );
     },
-    search() {
+    search () {
       this.content = this.input;
       // if(this.categoryId)
       this.commodityTypeMoreList.forEach((item) => {
-            if (item.name == this.categoryId) {
-              this.nameS = item.id;  
-            }
-        });
-      if(!this.nameS){
+        if (item.name == this.categoryId) {
+          this.nameS = item.id;
+        }
+      });
+      if (!this.nameS) {
         this.nameS = this.categoryId;
       }
-      if(this.categoryId == ''){
+      if (this.categoryId == '') {
         this.$router.push({
-        path: `/category/ALL-CATEGORIES/${this.content}.html`,
-        query:{
-          input:this.content,
-          search:true
-        }
-      });
-      }else{
+          path: `/category/ALL-CATEGORIES/${this.content}.html`,
+          query: {
+            input: this.content,
+            search: true
+          }
+        });
+      } else {
         this.$router.push({
-        path: `/category/${this.nameS}/${this.content}.html`,
-        query:{
-          input:this.content
-        }
-      });
+          path: `/category/${this.nameS}/${this.content}.html`,
+          query: {
+            input: this.content
+          }
+        });
       }
       this.page = 1;
       // this.categoryId = this.nameS;
       this.nameS = '';
     },
-    changePageSize(val) {
+    changePageSize (val) {
       this.rowsPerPage = val;
       localStorage.setItem("c_importPerPage", val);
       this.getItems();
     },
-    gotoPage() {
+    gotoPage () {
       this.page = this.$route.query.page ? this.$route.query.page : 1;
       // this.categoryId = this.$route.params.id;
       this.input = this.$route.query.input;
       this.getItems();
     },
-    toPage(val) {
+    toPage (val) {
       if (val != this.$route.query.page) {
         let query = {};
         let id = '';
-      //    this.commodityTypeMoreList.forEach((item) => {
-      //   if (item.name == this.categoryId) {
-      //     id = item.id;
-      //   }
-      // });
+        //    this.commodityTypeMoreList.forEach((item) => {
+        //   if (item.name == this.categoryId) {
+        //     id = item.id;
+        //   }
+        // });
         id = this.$route.params.id
         query.page = val;
         query.input = this.content
-      if(this.categoryId == ''){
-        this.$router.push({
-        path: `/category/ALL-CATEGORIES/.html`,
-        query,
-      })
-      }else{
-        // this.categoryId.replace(/\s+/g,"-")
-        this.$router.push({
-          path: `/category/${id}/${this.$route.params.name}`,
-          query,
-        });
-      }
+        if (this.categoryId == '') {
+          this.$router.push({
+            path: `/category/ALL-CATEGORIES/.html`,
+            query,
+          })
+        } else {
+          // this.categoryId.replace(/\s+/g,"-")
+          this.$router.push({
+            path: `/category/${id}/${this.$route.params.name}`,
+            query,
+          });
+        }
       }
     },
-    goToDetail(item){
-            let id = localStorage.getItem('vendorId')
-      if ( id != 148982 && id != 146428 && id != 144875 && id != 144843 && id != 143779 && id != 143654 && id != 74) {
-      window.open(`/item/${item.id}/${item.name.replace(/\s+/g,"-").replace(/[^\w]/g,'_')}.html`)
-      }else{
-     window.open(`/itemOld/${item.id}/${item.name.replace(/\s+/g,"-").replace(/[^\w]/g,'_')}.html`)  //非慧仓
+    goToDetail (item) {
+      let id = localStorage.getItem('vendorId')
+      if (id != 148982 && id != 146428 && id != 144875 && id != 144843 && id != 143779 && id != 143654 && id != 74) {
+        window.open(`/item/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g, '_')}.html`)
+      } else {
+        window.open(`/itemOld/${item.id}/${item.name.replace(/\s+/g, "-").replace(/[^\w]/g, '_')}.html`)  //非慧仓
 
       }
 
     },
-    import_pro(item, e) {
-      if(!this.$store.state.userInfo){
+    import_pro (item, e) {
+      if (!this.$store.state.userInfo) {
         this.$root.$children[0].openDialogLogin();
         return;
       }
@@ -673,7 +608,7 @@ export default {
       );
     },
   },
- 
+
 };
 </script>
 
@@ -686,13 +621,13 @@ export default {
 </style>
 
 <style scoped lang="scss">
-.contentpanel.box{
-  margin: 70px auto 0;
-  width: 1300px;
+.contentpanel.box {
+  margin: 0px auto 0;
+  width: 1440px;
   padding: 15px 0;
-  .pagetitle{
-  justify-content: flex-start;
-}
+  .pagetitle {
+    justify-content: flex-start;
+  }
 }
 .ball {
   position: fixed;
@@ -721,22 +656,28 @@ export default {
 .pro_img {
   width: 100%;
   position: relative;
+  padding: 16px;
+  padding-bottom: 0;
+  box-sizing: border-box;
   .img-wrap {
     margin-bottom: 15px;
     position: relative;
     padding-bottom: 100%;
     cursor: pointer;
   }
-  
 }
 .pro_box {
-  width: 23%;
+  width: 24%;
   font-weight: 500;
-  margin-left: 2%;
+  margin-left: 1%;
   position: relative;
-  background: #FFFFFF;
-  box-shadow: 0px 2px 9px 0px rgba(180, 180, 180, 0.5);
+  background: #ffffff;
+  // box-shadow: 0px 2px 9px 0px rgba(180, 180, 180, 0.5);
+  border: 1px solid #e6e6e6;
   border-radius: 2px;
+}
+.pro_box:hover {
+  box-shadow: 0 0 8px rgb(0 0 0 / 20%);
 }
 .pro_name {
   height: 40px;
@@ -748,15 +689,15 @@ export default {
   -webkit-line-clamp: 2;
   /*! autoprefixer: off */
   -webkit-box-orient: vertical;
-  a{
+  a {
     color: #333333;
   }
 }
 .pro_cost {
-    padding: 12px 0;
-    font-size: 14px;
-    color: #5c6ac4;
-  }
+  padding: 12px 0;
+  font-size: 14px;
+  color: #5c6ac4;
+}
 
 .imports {
   display: flex;
@@ -764,7 +705,7 @@ export default {
   font-size: 12px;
   color: rgb(144, 147, 153);
 }
-.importBut{
+.importBut {
   width: 206px;
   height: 40px;
   border-radius: 2px;
@@ -775,22 +716,21 @@ export default {
 .el-select .el-input {
   width: 180px;
 }
-.input-with-select{
-   min-width: 550px;
-   flex:1;
+.input-with-select {
+  min-width: 550px;
+  flex: 1;
   .el-input-group__prepend {
     background-color: #ccc;
   }
- 
-} 
-.pagetitle{
+}
+.pagetitle {
   width: 100%;
   justify-content: flex-start;
   ::v-deep .el-input__inner {
     border-radius: 0 !important;
   }
   ::v-deep .el-input__inner:last-child {
-    background-image: url('../../public/images/productShop/search.png') !important;
+    background-image: url("../../public/images/productShop/search.png") !important;
     background-repeat: no-repeat;
     background-position: 20px center;
     background-color: #fff;
@@ -798,16 +738,16 @@ export default {
     padding-left: 50px;
   }
 }
-.search-but{
-    width: 208px;
-    height: 40px;
-    background: linear-gradient(213deg, #6995F1 0%, #525FB0 100%);
-    border-radius: 0px 4px 4px 0px;
-    color: #fff;
-    text-align: center;
-    line-height: 40px;
-    font-weight: 700;
-    cursor: pointer;
+.search-but {
+  width: 208px;
+  height: 40px;
+  background: linear-gradient(213deg, #6995f1 0%, #525fb0 100%);
+  border-radius: 0px 4px 4px 0px;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 700;
+  cursor: pointer;
 }
 .commodity-type-wrapper {
   display: flex;
@@ -843,13 +783,13 @@ export default {
     }
   }
 }
-.noProduct{
+.noProduct {
   width: 100%;
   height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top:60px;
+  margin-top: 60px;
 }
 </style>
 <style lang="scss" scoped>
@@ -857,8 +797,7 @@ export default {
   position: relative;
   height: 100%;
   .login-box {
-    
-    h2{
+    h2 {
       margin: 0 auto 5px;
       width: 286px;
       color: #fff;
@@ -923,40 +862,41 @@ export default {
     }
   }
 }
-.el-backtop{
+.el-backtop {
   right: 32px !important;
   transform: none;
 }
-ul,li{
+ul,
+li {
   list-style: none;
 }
 .headerNav {
-    background: #fff;
-    position: absolute;
-    top: 58px;
-    left: -40px;
-    padding: 15px 0;
-    border-radius: 5px;
-    z-index: 201;
-    width: fit-content;
-    box-shadow: 0px 0px 29px -17px rgba(0,0, 0,.57);
-    text-align: left;
-    box-sizing: content-box;
+  background: #fff;
+  position: absolute;
+  top: 58px;
+  left: -40px;
+  padding: 15px 0;
+  border-radius: 5px;
+  z-index: 201;
+  width: fit-content;
+  box-shadow: 0px 0px 29px -17px rgba(0, 0, 0, 0.57);
+  text-align: left;
+  box-sizing: content-box;
 }
 .headerNav .firstMenu {
-    position: relative;
-    width: 254px;
-    padding-left: 22px;
-    height: 34px;
-    font-size: 12px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #333333;
-    line-height: 34px;
+  position: relative;
+  width: 254px;
+  padding-left: 22px;
+  height: 34px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
+  line-height: 34px;
 }
 .headerNav .firstMenu .align-category {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 </style>
 
