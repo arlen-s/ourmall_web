@@ -1,110 +1,59 @@
 <template>
-  <div
-    class="page-header-wrap"
-    :style="{
+  <div class="page-header-wrap" :style="{
       backgroundColor: data.isTransparent
         ? 'transparent'
         : data.backgroundColor,
-    }"
-  >
+    }">
     <div class="page-header" style="border-bottom: none">
       <div class="left-box">
-      <h1
-        v-if="data.logo"
-        :style="{
+        <h1 v-if="data.logo" :style="{
           backgroundImage: `url(${data.logo})`,
           width: data.logoWidth ? `${data.logoWidth}px` : `60px`,
           height: data.logoWidth ? `${data.logoWidth}px` : `60px`,
           maxWidth: '80px',
           maxHeight: '80px'
-        }"
-        style="cursor: pointer"
-        @click="goto('home')"
-      ></h1>
-      <h1
-        v-else-if="this.$store.state.shopInfo.shopName"
-        class="logo-name tx-ellipsis1"
-        style="cursor: pointer"
-        @click="goto('home')"
-      >
-        {{ this.$store.state.shopInfo.shopName }}
-      </h1>
-      <h1
-        v-else
-        :style="{ backgroundImage: `url(${defaultLogo})` }"
-        style="cursor: pointer"
-        @click="goto('home')"
-      ></h1>
+        }" style="cursor: pointer" @click="goto('home')"></h1>
+        <h1 v-else-if="this.$store.state.shopInfo.shopName" class="logo-name tx-ellipsis1" style="cursor: pointer" @click="goto('home')">
+          {{ this.$store.state.shopInfo.shopName }}
+        </h1>
+        <h1 v-else :style="{ backgroundImage: `url(${defaultLogo})` }" style="cursor: pointer" @click="goto('home')"></h1>
       </div>
 
-      <div  v-if="data.isVisibleSearch" class="search-box">               
-            <el-input
-              class="search-input"
-              placeholder="Recommended hot search"
-              prefix-icon="el-icon-search"
-              style="width:70%"
-              v-model="searchInput"
-              @change="search()"
-            >
-              <el-link
-                :underline="false"
-                slot="suffix"
-                type="info"
-                @click="showInput = false"
-              >
-                <i class="el-icon-close" style="font-size: 16px"></i>
-              </el-link>
-            </el-input>
-          
+      <div v-if="data.isVisibleSearch" class="search-box">
+        <el-input placeholder="Recommended hot search" v-model="searchInput" class="input-with-select" @keyup.enter.native="search">
+        </el-input>
+        <div class="search-but" @click="search()">
+          <i class="el-icon-search"></i>
+        </div>
+        <!-- <el-input class="search-input" placeholder="Recommended hot search" prefix-icon="el-icon-search" style="width:70%" v-model="searchInput" @change="search()">
+          <el-link :underline="false" slot="suffix" type="info" @click="showInput = false">
+            <i class="el-icon-close" style="font-size: 16px"></i>
+          </el-link>
+        </el-input> -->
+
       </div>
-      <div
-        class="right"
-      >
+      <div class="right">
         <ul :class="{ mainMenu: $route.name != 'home' }">
           <li class="user-box">
-            <el-dropdown
-              @command="handleCommand"
-              @visible-change="visibleChange"
-              style="text-align:center"
-            >
-              <span
-                class="el-dropdown-link"
-                :style="{ color: data.isTransparent ? color : data.color }"
-              >
+            <el-dropdown @command="handleCommand" @visible-change="visibleChange" style="text-align:center">
+              <span class="el-dropdown-link" :style="{ color: data.isTransparent ? color : data.color }">
                 <i class="el-icon-user-solid"></i>
-                
+
               </span>
               <!-- <span style="display:block">Register/login</span> -->
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item
-                  v-if="$store.state.userInfo"
-                  class="align-items-endd-flex"
-                  style="width: 160px"
-                  command="dashboard"
-                >
+                <el-dropdown-item v-if="$store.state.userInfo" class="align-items-endd-flex" style="width: 160px" command="dashboard">
                   <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> My
                   Profile
                 </el-dropdown-item>
-                <el-dropdown-item
-                  v-else
-                  class="d-flex"
-                  style="width: 160px"
-                  command="login"
-                >
+                <el-dropdown-item v-else class="d-flex" style="width: 160px" command="login">
                   <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> Login/
                   Register
                 </el-dropdown-item>
-                <el-dropdown-item
-                  class="lan-menu align-items-endd-flex"
-                  style="width: 160px"
-                >
+                <el-dropdown-item class="lan-menu align-items-endd-flex" style="width: 160px">
                   <div class="lan-box">
                     <div class="d-flex" style="min-width: 150px">
-                      <i
-                        class="mg-r-15 iconfont icon-lan"
-                        style="position: relative; left: -2px;}"
-                        aria-hidden="true"
-                      ></i>
+                      <i class="mg-r-15 iconfont icon-lan" style="position: relative; left: -2px;}" aria-hidden="true"></i>
                       <span class="tx-ellipsis1" style="max-width: 60px">{{
                         activeLang
                       }}</span>
@@ -116,35 +65,17 @@
                     </div>
                     <div v-if="isVisibleDropdown" class="lan-box-sub">
                       <div class="lan-select c">
-                        <a
-                          class="country"
-                          href="javascript:;"
-                          @click.stop="selectLang($event)"
-                        >
-                          <span
-                            class="tx-ellipsis1 mg-r-5"
-                            style="max-width: 90px"
-                            >{{ activeLang }}</span
-                          >
+                        <a class="country" href="javascript:;" @click.stop="selectLang($event)">
+                          <span class="tx-ellipsis1 mg-r-5" style="max-width: 90px">{{ activeLang }}</span>
                           <i class="el-icon-arrow-down"></i>
                         </a>
-                        <el-scrollbar
-                          ref="subMenu"
-                          class="sub-box"
-                          style="height: 308px"
-                        >
+                        <el-scrollbar ref="subMenu" class="sub-box" style="height: 308px">
                           <ul>
                             <li v-for="lang in langArr" :key="lang.code2">
-                              <a
-                                href="javascript:;"
-                                class="tx-ellipsis1"
-                                :class="{
+                              <a href="javascript:;" class="tx-ellipsis1" :class="{
                                   active:
                                     lang.code2 == $store.state.activeLaguage,
-                                }"
-                                @click="changeLang(lang)"
-                                >{{ lang.name }}</a
-                              >
+                                }" @click="changeLang(lang)">{{ lang.name }}</a>
                             </li>
                           </ul>
                         </el-scrollbar>
@@ -152,30 +83,19 @@
                       </div>
                       <div class="lan-select">
                         <a href="javascript:;" @click.stop="selectLang($event)">
-                          <span
-                            class="tx-ellipsis1 mg-r-5"
-                            style="max-width: 80px"
-                          >
+                          <span class="tx-ellipsis1 mg-r-5" style="max-width: 80px">
                             {{ $store.state.activeCurrency }}
                           </span>
                           <i class="el-icon-arrow-down"></i>
                         </a>
-                        <el-scrollbar
-                          ref="subMenu2"
-                          class="sub-box"
-                          style="height: 308px"
-                        >
+                        <el-scrollbar ref="subMenu2" class="sub-box" style="height: 308px">
                           <ul>
                             <template v-for="ce in $store.state.ceArr">
                               <li v-if="ce.rate" :key="ce.code3">
-                                <a
-                                  href="javascript:;"
-                                  :class="{
+                                <a href="javascript:;" :class="{
                                     active:
                                       ce.code3 == $store.state.activeCurrency,
-                                  }"
-                                  @click="changeCurrency(ce)"
-                                >
+                                  }" @click="changeCurrency(ce)">
                                   <span>{{ ce.code3 }}</span>
                                   <span class="symbol">{{ ce.symbol }}</span>
                                 </a>
@@ -187,12 +107,7 @@
                     </div>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item
-                  v-if="$store.state.userInfo"
-                  class="d-flex"
-                  style="width: 160px"
-                  command="exit"
-                >
+                <el-dropdown-item v-if="$store.state.userInfo" class="d-flex" style="width: 160px" command="exit">
                   <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i>
                   Logout
                 </el-dropdown-item>
@@ -200,7 +115,7 @@
             </el-dropdown>
           </li>
           <li class="import-link" style="cursor: pointer">
-            <a @click="opencartNum"  :style="{ color: data.isTransparent ? color : data.color }">
+            <a @click="opencartNum" :style="{ color: data.isTransparent ? color : data.color }">
               <i class="el-icon-shopping-cart-1"></i>
               <!-- {{this.$root.$children[0].cartNum}} -->
               <!-- 这里 -->
@@ -213,10 +128,7 @@
             <!-- <span>shopping cart</span> -->
           </li>
           <li v-if="$store.state.userInfo" class="import-link">
-            <router-link
-              to="/importListHome"
-              :style="{ color: data.isTransparent ? color : data.color }"
-            >
+            <router-link to="/importListHome" :style="{ color: data.isTransparent ? color : data.color }">
               <i class="iconfont icon-nav"></i>
               <span v-if="this.$root.$children[0].importNum" class="badge">{{
                 this.$root.$children[0].importNum > 99
@@ -225,12 +137,8 @@
               }}</span>
             </router-link>
           </li>
-          <li v-else class="import-link">
-            <a
-              :style="{ color: data.isTransparent ? color : data.color }"
-              href="javascript:;"
-              @click="openDialogLogin"
-            >
+          <li v-else class="import-link" style="margin-right:0">
+            <a :style="{ color: data.isTransparent ? color : data.color }" href="javascript:;" @click="openDialogLogin">
               <i class="iconfont icon-nav"></i>
               <span v-if="this.$root.$children[0].importNum" class="badge">{{
                 this.$root.$children[0].importNum > 99
@@ -243,196 +151,94 @@
         </ul>
       </div>
     </div>
-    <el-row type="flex" justify="center" class="banner-box" v-if="isHome">
-      <el-col v-for="m in headerMenu.menu" class="dropmenu" :key="m.id"  :span="2">          
-          <!-- <template v-for="m in menu"> -->
-            <!-- <div class="dropmenu" :key="m.timestamp"> -->
-              <a
-                v-if="m.value == '9999'"
-                href="javascript:;"
-                :style="{ color: data.isTransparent ? color : data.color }"
-              >
-                {{ m.label }}
-              </a>
-              <a
-                v-else-if="m.value == '9998'"
-                @click="gotoUrl(m.url)"
-                href="javascript:;"
-                :style="{ color: data.isTransparent ? color : data.color }"
-              >
-                {{ m.label }}
-              </a>
-              <a
-                v-else-if="m.value == 'productDetails'"
-                @click="goToDetail(m.urlData)"
-                href="javascript:;"
-                :style="{ color: data.isTransparent ? color : data.color }"
-              >
-                {{ m.label }}
-              </a>
-              <a
-                v-else-if="m.value == 'category'"
-                @click="goToCategory(m.urlData)"
-                href="javascript:;"
-                :style="{ color: data.isTransparent ? color : data.color }"
-              >
-                {{ m.label }}
-              </a>
-              <a
-                v-else-if="m.value == 'customPage'"
-                @click="goToCustom(m.urlData.id)"
-                href="javascript:;"
-                :style="{ color: data.isTransparent ? color : data.color }"
-              >
-                {{ m.label }}
-              </a>
-              <a
-                v-else
-                @click="goto(m.url)"
-                href="javascript:;"
-                :style="{ color: data.isTransparent ? color : data.color }"
-              >
-                {{ m.label }}
-              </a>
-              <ul class="drop-sec" v-if="m.children && m.children.length > 0">
-                <li class="sec-item" v-for="sec in m.children" :key="sec.id">
-                  <a
-                    v-if="sec.value == '9999'"
-                    href="javascript:;"
-                    :style="{ color: data.isTransparent ? color : data.color }"
-                  >
-                    {{ sec.label }}
-                  </a>
-                  <a
-                    v-else-if="sec.value == '9998'"
-                    @click="gotoUrl(sec.url)"
-                    href="javascript:;"
-                    :style="{ color: data.isTransparent ? color : data.color }"
-                  >
-                    {{ sec.label }}
-                  </a>
-                  <a
-                    v-else-if="sec.value == 'productDetails'"
-                    @click="goToDetail(sec.urlData)"
-                    href="javascript:;"
-                    :style="{ color: data.isTransparent ? color : data.color }"
-                  >
-                    {{ sec.label }}
-                  </a>
-                  <a
-                    v-else-if="sec.value == 'category'"
-                    @click="goToCategory(sec.urlData)"
-                    href="javascript:;"
-                    :style="{ color: data.isTransparent ? color : data.color }"
-                  >
-                    {{ sec.label }}
-                  </a>
-                  <a
-                    v-else-if="sec.value == 'customPage'"
-                    @click="goToCustom(sec.urlData.id)"
-                    href="javascript:;"
-                    :style="{ color: data.isTransparent ? color : data.color }"
-                  >
-                    {{ sec.label }}
-                  </a>
-                  <a
-                    v-else
-                    @click="goto(sec.url)"
-                    href="javascript:;"
-                    :style="{ color: data.isTransparent ? color : data.color }"
-                  >
-                    {{ sec.label }}
-                  </a>
-                  <ul class="drop-third">
-                    <li v-for="thi in sec.children" :key="thi.id">
-                      <a
-                        v-if="thi.value == '9999'"
-                        href="javascript:;"
-                        :style="{
+    <el-row type="flex" class="banner-box" v-if="isHome">
+      <el-col v-for="m in headerMenu.menu" class="dropmenu" :key="m.id" :span="2">
+        <!-- <template v-for="m in menu"> -->
+        <!-- <div class="dropmenu" :key="m.timestamp"> -->
+        <a v-if="m.value == '9999'" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+          {{ m.label }}
+        </a>
+        <a v-else-if="m.value == '9998'" @click="gotoUrl(m.url)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+          {{ m.label }}
+        </a>
+        <a v-else-if="m.value == 'productDetails'" @click="goToDetail(m.urlData)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+          {{ m.label }}
+        </a>
+        <a v-else-if="m.value == 'category'" @click="goToCategory(m.urlData)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+          {{ m.label }}
+        </a>
+        <a v-else-if="m.value == 'customPage'" @click="goToCustom(m.urlData.id)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+          {{ m.label }}
+        </a>
+        <a v-else @click="goto(m.url)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+          {{ m.label }}
+        </a>
+        <ul class="drop-sec" v-if="m.children && m.children.length > 0">
+          <li class="sec-item" v-for="sec in m.children" :key="sec.id">
+            <a v-if="sec.value == '9999'" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+              {{ sec.label }}
+            </a>
+            <a v-else-if="sec.value == '9998'" @click="gotoUrl(sec.url)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+              {{ sec.label }}
+            </a>
+            <a v-else-if="sec.value == 'productDetails'" @click="goToDetail(sec.urlData)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+              {{ sec.label }}
+            </a>
+            <a v-else-if="sec.value == 'category'" @click="goToCategory(sec.urlData)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+              {{ sec.label }}
+            </a>
+            <a v-else-if="sec.value == 'customPage'" @click="goToCustom(sec.urlData.id)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+              {{ sec.label }}
+            </a>
+            <a v-else @click="goto(sec.url)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+              {{ sec.label }}
+            </a>
+            <ul class="drop-third">
+              <li v-for="thi in sec.children" :key="thi.id">
+                <a v-if="thi.value == '9999'" href="javascript:;" :style="{
                           color: data.isTransparent ? color : data.color,
-                        }"
-                      >
-                        {{ thi.label }}
-                      </a>
-                      <a
-                        v-else-if="thi.value == '9998'"
-                        @click="gotoUrl(thi.url)"
-                        href="javascript:;"
-                        :style="{
+                        }">
+                  {{ thi.label }}
+                </a>
+                <a v-else-if="thi.value == '9998'" @click="gotoUrl(thi.url)" href="javascript:;" :style="{
                           color: data.isTransparent ? color : data.color,
-                        }"
-                      >
-                        {{ thi.label }}
-                      </a>
-                      <a
-                        v-else-if="thi.value == 'productDetails'"
-                        @click="goToDetail(thi.urlData)"
-                        href="javascript:;"
-                        :style="{
+                        }">
+                  {{ thi.label }}
+                </a>
+                <a v-else-if="thi.value == 'productDetails'" @click="goToDetail(thi.urlData)" href="javascript:;" :style="{
                           color: data.isTransparent ? color : data.color,
-                        }"
-                      >
-                        {{ thi.label }}
-                      </a>
-                      <a
-                        v-else-if="thi.value == 'category'"
-                        @click="goToCategory(thi.urlData)"
-                        href="javascript:;"
-                        :style="{
+                        }">
+                  {{ thi.label }}
+                </a>
+                <a v-else-if="thi.value == 'category'" @click="goToCategory(thi.urlData)" href="javascript:;" :style="{
                           color: data.isTransparent ? color : data.color,
-                        }"
-                      >
-                        {{ thi.label }}
-                      </a>
-                      <a
-                        v-else-if="thi.value == 'customPage'"
-                        @click="goToCustom(thi.urlData.id)"
-                        href="javascript:;"
-                        :style="{
+                        }">
+                  {{ thi.label }}
+                </a>
+                <a v-else-if="thi.value == 'customPage'" @click="goToCustom(thi.urlData.id)" href="javascript:;" :style="{
                           color: data.isTransparent ? color : data.color,
-                        }"
-                      >
-                        {{ thi.label }}
-                      </a>
-                      <a
-                        v-else
-                        @click="goto(thi.url)"
-                        href="javascript:;"
-                        :style="{
+                        }">
+                  {{ thi.label }}
+                </a>
+                <a v-else @click="goto(thi.url)" href="javascript:;" :style="{
                           color: data.isTransparent ? color : data.color,
-                        }"
-                      >
-                        {{ thi.label }}
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            <!-- </div> -->
-          <!-- </template> -->
-      
+                        }">
+                  {{ thi.label }}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- </div> -->
+        <!-- </template> -->
+
       </el-col>
     </el-row>
-    <el-dialog
-      class="isValidationCW-dialog"
-      append-to-body
-      title=""
-      :visible.sync="isValidationCWDialog"
-      width="50%"
-    >
+    <el-dialog class="isValidationCW-dialog" append-to-body title="" :visible.sync="isValidationCWDialog" width="50%">
       <div>
-        <el-result
-          icon="warning"
-          title="警告提示"
-          subTitle="请联系供应商，完善站长外部编号"
-        >
+        <el-result icon="warning" title="警告提示" subTitle="请联系供应商，完善站长外部编号">
           <template slot="extra">
-            <el-button
-              type="primary"
-              size="medium"
-              @click="isValidationCWDialog = false"
-              >返回</el-button
-            >
+            <el-button type="primary" size="medium" @click="isValidationCWDialog = false">返回</el-button>
           </template>
         </el-result>
       </div>
@@ -446,7 +252,7 @@ import langArr from "@/views/homePage/components/lang.js";
 import { get } from "xe-utils/methods";
 export default {
   props: ["data", "headerMenu"],
-  data() {
+  data () {
     return {
       defaultLogo,
       searchInput: "",
@@ -455,20 +261,20 @@ export default {
       isVisibleDropdown: false,
       isValidationCWDialog: false,
       menu: [
-    {
-        "label": "首页",
-        "value": "home",
-        "url": "home",
-        "urlData": null,
-        "children": [],
-        "id": 1652355158251,
-        "level": 1
-    },
-    {
-        "label": "东南亚爆款",
-        "value": "category",
-        "url": "productsMarketMore",
-        "urlData": {
+        {
+          "label": "首页",
+          "value": "home",
+          "url": "home",
+          "urlData": null,
+          "children": [],
+          "id": 1652355158251,
+          "level": 1
+        },
+        {
+          "label": "东南亚爆款",
+          "value": "category",
+          "url": "productsMarketMore",
+          "urlData": {
             "description": "",
             "id": "690",
             "level": "1",
@@ -480,29 +286,29 @@ export default {
             "timeCreated": "1642068416",
             "userId": "143232",
             "productCnt": 0
+          },
+          "children": [],
+          "id": 1652355164146,
+          "level": 1
         },
-        "children": [],
-        "id": 1652355164146,
-        "level": 1
-    },
-    {
-        "label": "搜品报价",
-        "value": "search",
-        "url": "SearchProducts",
-        "urlData": null,
-        "children": [],
-        "id": 1660026954004,
-        "level": 1
-    },
-    {
-        "label": "新品爆款",
-        "value": "productDetails",
-        "url": "productsDetilHome",
-        "children": [],
-        "id": 1660113325360,
-        "urlData": null,
-        "level": 1
-    }
+        {
+          "label": "搜品报价",
+          "value": "search",
+          "url": "SearchProducts",
+          "urlData": null,
+          "children": [],
+          "id": 1660026954004,
+          "level": 1
+        },
+        {
+          "label": "新品爆款",
+          "value": "productDetails",
+          "url": "productsDetilHome",
+          "children": [],
+          "id": 1660113325360,
+          "urlData": null,
+          "level": 1
+        }
       ],
       isHome: true,
       vendorId: localStorage.getItem('vendorId'),   //150488慧仓
@@ -510,20 +316,20 @@ export default {
     };
   },
   computed: {
-    color() {
+    color () {
       let color;
       if (this.$route.name == "home") {
         color = this.data.transparentColor;
       } else {
         color =
           this.data.isTransparent &&
-          this.data.transparentColor != "rgba(255, 255, 255, 1)"
+            this.data.transparentColor != "rgba(255, 255, 255, 1)"
             ? this.data.transparentColor
             : "rgba(0, 0, 0, 1)";
       }
       return color;
     },
-    activeLang() {
+    activeLang () {
       let name = "";
       this.langArr.forEach((lang) => {
         if (lang.code2 == this.$store.state.activeLaguage) {
@@ -534,69 +340,69 @@ export default {
     },
   },
   watch: {
-$route: {
-    handler: function(val, oldVal){
-      if (val.name == 'dashboard') {
+    $route: {
+      handler: function (val, oldVal) {
+        if (val.name == 'dashboard') {
           this.isHome = false
-      }      
-    },
-    // 深度观察监听
-    deep: true
-  }
+        }
+      },
+      // 深度观察监听
+      deep: true
+    }
   },
-  mounted() {
-      let name = this.$route.name
-      if (name == 'dashboard') {
-          this.isHome = false
-      }
+  mounted () {
+    let name = this.$route.name
+    if (name == 'dashboard') {
+      this.isHome = false
+    }
   },
   methods: {
-    goToCustom(id) {
+    goToCustom (id) {
       console.log("id", id);
       this.$router.push({ path: "/cpage" + `/${id}` });
     },
-    goToCategory(item) {
+    goToCategory (item) {
       window.open(
         `/category/${item.id}/${item.name
           .replace(/\s+/g, "-")
           .replace(/[^\w]/g, "_")}.html`
       );
     },
-    goToDetail(item) {
+    goToDetail (item) {
       console.log(item, 'tiem');
-      if ( this.vendorId != 148982 && this.vendorId != 146428 && this.vendorId != 144875 && this.vendorId != 144843 && this.vendorId != 143779 && this.vendorId != 143654 && this.vendorId != 74) {
-      window.open(
-        `/item/${item.id}/${item.name
-          .replace(/\s+/g, "-")
-          .replace(/[^\w]/g, "_")}.html`
-      );
-      }else{
-              window.open(
-        `/itemOld/${item.id}/${item.name
-          .replace(/\s+/g, "-")
-          .replace(/[^\w]/g, "_")}.html`
-      );
+      if (this.vendorId != 148982 && this.vendorId != 146428 && this.vendorId != 144875 && this.vendorId != 144843 && this.vendorId != 143779 && this.vendorId != 143654 && this.vendorId != 74) {
+        window.open(
+          `/item/${item.id}/${item.name
+            .replace(/\s+/g, "-")
+            .replace(/[^\w]/g, "_")}.html`
+        );
+      } else {
+        window.open(
+          `/itemOld/${item.id}/${item.name
+            .replace(/\s+/g, "-")
+            .replace(/[^\w]/g, "_")}.html`
+        );
       }
 
     },
-    changeCurrency(ce) {
+    changeCurrency (ce) {
       //点击选择货币
       this.$store.commit("setCurrency", ce.code3);
     },
-    changeLang(lang) {
+    changeLang (lang) {
       //点击选择语言
       doGTranslate(`en|${lang.code2}`);
       //默认语言 设不了
       this.$store.commit("setLanguage", lang.code2);
     },
-    selectLang($event) {
+    selectLang ($event) {
       console.log($event);
     },
-    visibleChange(status) {
+    visibleChange (status) {
       //下拉菜单隐藏后 复位滚动条
       this.isVisibleDropdown = status;
     },
-    gotoUrl(url) {
+    gotoUrl (url) {
       if (this.$store.state.userInfo) {
         window.location.href = url;
       } else {
@@ -611,7 +417,7 @@ $route: {
         }
       }
     },
-    goto(name) {
+    goto (name) {
       this.isHome = true
       if (this.$store.state.userInfo) {
         this.$router.push({
@@ -627,7 +433,7 @@ $route: {
         }
       }
     },
-    search() {
+    search () {
       this.$router.push({
         path: `/category/ALL-CATEGORIES/${this.searchInput}.html`,
         query: {
@@ -636,7 +442,7 @@ $route: {
         },
       });
     },
-    handleCommand(command) {
+    handleCommand (command) {
       switch (command) {
         case "exit":
           localStorage.removeItem("c_wantVisitPath");
@@ -663,25 +469,25 @@ $route: {
           break;
       }
     },
-    release() {
-        this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
-          if (r.ErrorCode == 9999) {
-            if (r.Data.Results) {
-              this.$router.push({
-                name: "dashboard",
-              });
-            } else {
-              this.isValidationCWDialog = true;
-            }
+    release () {
+      this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
+        if (r.ErrorCode == 9999) {
+          if (r.Data.Results) {
+            this.$router.push({
+              name: "dashboard",
+            });
           } else {
-            this.$message.error(r.Message);
+            this.isValidationCWDialog = true;
           }
-        });
+        } else {
+          this.$message.error(r.Message);
+        }
+      });
     },
-    openDialogLogin() {
+    openDialogLogin () {
       this.$root.$children[0].openDialogLogin();
     },
-    opencartNum() {
+    opencartNum () {
       if (!this.$store.state.userInfo) {
         this.$root.$children[0].openDialogLogin();
       } else {
@@ -689,31 +495,31 @@ $route: {
         console.log(c_apiShopId)
         if (c_apiShopId == 121173) {
           this.$apiCall("api.Relationship.checkCustomCode", {}, (r) => {
-          if (r.ErrorCode == 9999) {
-            if (r.Data.Results) {
-              if (this.vendorId != '148982' && this.vendorId != '146428' && this.vendorId != '144875' && this.vendorId != '144843'&& this.vendorId != '143779'&& this.vendorId != '143654'&& this.vendorId != '74') {
-                this.$router.push({ name: "shoppingCartHC" })  
-              }else{
-                this.$router.push({ name: "shoppingCart" })
+            if (r.ErrorCode == 9999) {
+              if (r.Data.Results) {
+                if (this.vendorId != '148982' && this.vendorId != '146428' && this.vendorId != '144875' && this.vendorId != '144843' && this.vendorId != '143779' && this.vendorId != '143654' && this.vendorId != '74') {
+                  this.$router.push({ name: "shoppingCartHC" })
+                } else {
+                  this.$router.push({ name: "shoppingCart" })
+                }
+
+              } else {
+                this.isValidationCWDialog = true;
               }
-             
             } else {
-              this.isValidationCWDialog = true;
+              this.$message.error(r.Message);
             }
-          } else {
-            this.$message.error(r.Message);
-          }
-        });
+          });
         } else {
-             if (this.vendorId != '148982' && this.vendorId != '146428' && this.vendorId != '144875' && this.vendorId != '144843'&& this.vendorId != '143779'&& this.vendorId != '143654'&& this.vendorId != '74') {
-                this.$router.push({ name: "shoppingCartHC" })  
-              }else{
-                this.$router.push({ name: "shoppingCart" })
-              }
+          if (this.vendorId != '148982' && this.vendorId != '146428' && this.vendorId != '144875' && this.vendorId != '144843' && this.vendorId != '143779' && this.vendorId != '143654' && this.vendorId != '74') {
+            this.$router.push({ name: "shoppingCartHC" })
+          } else {
+            this.$router.push({ name: "shoppingCart" })
+          }
         }
       }
     },
-    openRegister() {
+    openRegister () {
       this.$root.$children[0].openDialogRegister();
     },
   },
@@ -740,10 +546,11 @@ $route: {
     }
   }
 }
-.search-box{
-  width: 60%;
+.search-box {
+  width: calc(100% - 234px);
   display: flex;
-    justify-content: center;
+  justify-content: center;
+  margin-left: 4%;
 }
 .dropmenu {
   position: relative;
@@ -811,7 +618,7 @@ $route: {
 .dropmenu {
   position: relative;
   padding: 10px 0;
-  text-align: center;
+  text-align: left;
   &:hover .drop-sec {
     display: flex;
   }
@@ -876,7 +683,7 @@ $route: {
   justify-content: space-between;
   margin: 0 auto;
   padding: 0;
-  // width: 1420px;
+  width: 1440px;
   height: 90px;
   h1 {
     width: 60px;
@@ -886,9 +693,9 @@ $route: {
     background-repeat: no-repeat;
     background-size: contain;
   }
-.right {
-width: 20%;
-}
+  .right {
+    width: 20%;
+  }
   .right {
     > ul {
       display: flex;
@@ -1085,16 +892,48 @@ width: 20%;
     display: none;
   }
 }
-.left-box{
-  padding-left:50px;
-  width: 20%;
+.left-box {
+  // padding-left:50px;
+  // width: 20%;
+  width: 234px;
 }
 .banner-box {
-  padding: 0 20px;
+  padding: 0;
   flex-wrap: wrap;
+  width: 1440px;
+  margin: 0 auto;
+  padding-left: calc(234px + 1%);
 }
-.banner-box a{
-font-size: 16px;
-    text-decoration: none
+.banner-box a {
+  font-size: 16px;
+  text-decoration: none;
+}
+.search-but {
+  width: 100px;
+  height: 40px;
+  background: linear-gradient(213deg, #6995f1 0%, #525fb0 100%);
+  border-radius: 0px 4px 4px 0px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  cursor: pointer;
+  i {
+    font-size: 18px;
+  }
+}
+.input-with-select {
+  min-width: 550px;
+  flex: 1;
+  border: 1px solid #5a6cc4;
+  border-radius: 4px 0px 0px 4px;
+}
+.page-header {
+  ::v-deep .el-input__inner {
+    height: 38px;
+    line-height: 38px;
+    border-radius: 4px 0px 0px 4px;
+  }
 }
 </style>
