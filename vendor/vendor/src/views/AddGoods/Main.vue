@@ -110,6 +110,19 @@
               <el-form-item :label="$t('goodsEdit.是否上架')" style="width: 100%;">
                 <el-switch v-model="form.status"></el-switch>
               </el-form-item>
+            
+            </el-col>
+            <el-col :span="12">
+              <el-form-item :label="$t('goodsEdit.预计交付周期')" style="width: 100%;">
+                <el-input  v-model.number="form.min" style="width:70px;margin-right:5px"></el-input>
+                <span>到</span>
+                <el-input  v-model.number="form.max" style="width:70px;margin:0 5px"> </el-input>
+                    <el-select v-model="form.deliveryTime"  style="width:70px">
+                      <el-option :label="$t('goodsEdit.天')" value="day"></el-option>
+                      <el-option  :label="$t('goodsEdit.周')" value="week"></el-option>
+                      <el-option :label="$t('goodsEdit.月')" value="month"></el-option>
+                    </el-select>                
+              </el-form-item>  
             </el-col>
             <el-col :span="24" v-show="visibleRange == 2">
               <el-form-item :label="$t('goods.可见用户信息')">
@@ -162,6 +175,18 @@
               <p style="color: #909399;">{{$t('goodsEdit.建议上传图片 800*800像素，大小为2MB以内。 最多添加9张图片')}}</p>
             </div>
           </el-form-item>
+          <el-form-item :label="$t('goodsEdit.售后质保时间')" style="width: 400px;margin-top:50px;">
+            <div style="display:flex">
+                  <el-input placeholder="请选择" v-model.number="form.days" class="input-with-select" style="width:270px" ty>
+                    <el-select v-model="form.selectTime" slot="prepend" placeholder="请选择" style="width:70px">
+                      <el-option :label="$t('goodsEdit.天')" value="day"></el-option>
+                      <el-option :label="$t('goodsEdit.月')" value="month"></el-option>
+                      <el-option  :label="$t('goodsEdit.年')" value="year"></el-option>
+                    </el-select>
+                  </el-input>
+            </div>
+            
+          </el-form-item>          
           <el-form-item :label="$t('goodsEdit.商品描述')">
             <quill-editor
               ref="goodsEditor"
@@ -181,9 +206,7 @@
             multiple
             @change="uploadEditorImgFile($event,)"
           />
-          <!-- <el-form-item :label="$t('goodsEdit.海关编号')" style="width: 400px;margin-top:50px;">
-            <el-input v-model="form.customCode"></el-input>
-          </el-form-item>-->
+
         </el-form>
         <div v-else-if="stepsActive == 1">
           <div v-loading="stocksLoading" class="props">
@@ -826,6 +849,11 @@ export default {
         ]
       }],
       form: { //填写数据
+        selectTime: 'day',
+        days: '',
+        deliveryTime: 'day',
+        min: '',
+        max: '',
         name: '',
         status: true,
         spu: '',
@@ -1395,7 +1423,13 @@ export default {
 
           }, 200)
           this.form.name = data.name //商品名称
+          this.form.days = data.day || ''
           this.form.status = data.status == '1' //是否上架
+          this.form.selectTime = data.salesGuaranteeTimeType
+          this.form.days = data.salesGuaranteeTimeValue
+          this.form.deliveryTime = data.estimatedLeadTimeType
+          this.form.min = data.estimatedLeadTimeMinValue
+          this.form.max = data.estimatedLeadTimeMaxValue
           this.form.spu = data.sku //spu
           if (data.categoryId) { //商品类目
             if (this.selectCategroyArr.length) {
@@ -1731,6 +1765,11 @@ export default {
       let params = {
         productId: this.$route.query.isCopy == 1 ? "" : this.productId,
         name: this.form.name,
+        salesGuaranteeTimeType: this.form.selectTime,
+        salesGuaranteeTimeValue: this.form.days,
+        estimatedLeadTimeType: this.form.deliveryTime,
+        estimatedLeadTimeMinValue: this.form.min,
+        estimatedLeadTimeMaxValue: this.form.max,
         status: this.form.status ? '1' : '2',
         categoryId: this.categoryId,
         spu: this.form.spu,

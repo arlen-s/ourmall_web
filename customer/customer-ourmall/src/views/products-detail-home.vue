@@ -279,6 +279,17 @@
             <el-tab-pane label="product description" name="second">
               <div v-html="web"></div>
             </el-tab-pane>
+            <el-tab-pane label="After Sales Service" name="three" v-if="salesGuaranteeTimeValue">
+              <div class="sel-box">
+              <el-image
+                style="width: 30px; height: 30px"
+                :src="returnImg"
+                fit="contain"></el-image>
+                <strong class="sp" v-if="!salesGuaranteeTimeValue"></strong>
+                <strong class="sp" v-else>Returnable within{{salesGuaranteeTimeValue}}{{timeType}}</strong>
+                  
+              </div>
+            </el-tab-pane>
           </el-tabs>
         </el-col>
       </el-row>
@@ -367,6 +378,7 @@ export default {
       keyValue: "",
       showSpace: false,
       showDef: false,
+      returnImg: require('../assets/images/store-design/back.png'),
       showTest: true,
       vatValue: '0',
       suitRuleInfoClone: {},
@@ -375,6 +387,9 @@ export default {
       dialogVisibleHide: false,
       qualityDisabled: true,
       qualityNumClone: 0,
+      salesGuaranteeTimeValue: '',
+      salesGuaranteeTime: '',
+      timeType: '',
       shippingContry: "",
       selectArr: [], //存放被选中的值
       showAttr: "",
@@ -421,6 +436,7 @@ export default {
         isShowAlert: false,
         selectShipping: '',
       },
+      saleDay: {},
       modalShippingMethodDefault: '{}',
       activeShipping: null,
       radio: '',
@@ -911,6 +927,9 @@ export default {
             this.videoUrl = r.Data.Results.videoUrl
             this.products = r.Data.Results
             this.isAdd = r.Data.Results.hasImport
+            this.salesGuaranteeTime = r.Data.Results.salesGuaranteeTime
+            this.salesGuaranteeTimeValue = r.Data.Results.salesGuaranteeTimeValue
+            this.timeType = r.Data.Results.salesGuaranteeTimeType
             this.web = r.Data.Results.description.web
             this.web = this.web.replace(/\n/g, '<br/>')
             const num = r.Data.Results.categorys.length - 1
@@ -1764,5 +1783,15 @@ ul.tags {
 .pad-10{
   display: block;
   padding: 0 20px 10px 20px;
+}
+.sel-box{
+  display: flex;
+    // justify-content: center;
+    align-items: center;
+    .sp{
+      margin-left:5px;
+      font-weight:500;
+      font-size:20px;
+    }
 }
 </style>

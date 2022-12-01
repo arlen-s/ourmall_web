@@ -96,9 +96,9 @@
                       <div class="pro_name" @click="goToDetail(item)">
                         <a href="javascript:;">{{ item.name }}</a>
                       </div>
-                      <b class="pro_cost">{{$store.state.country.symbol}} {{item.minPrice == item.maxPrice ? $exchangeRate(item.minPrice) : `${$exchangeRate(item.minPrice)}~${$exchangeRate(item.maxPrice)} `}}</b>
-                      
-                      <!-- <div class="imports">
+                  <b class="pro_cost">{{$store.state.country.symbol}} {{item.minPrice == item.maxPrice ? $exchangeRate(item.minPrice) : `${$exchangeRate(item.minPrice)}~${$exchangeRate(item.maxPrice)} `}}</b>                  
+                  <p v-if="item.estimatedLeadTimeType">about: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{item.estimatedLeadTimeType}}</p>
+                  <!-- <div class="imports">
                         <span>Imports:
                            <span style="color:#525FB0">{{ item.imports }}</span>
                         </span>
