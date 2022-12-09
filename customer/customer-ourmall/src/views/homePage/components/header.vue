@@ -151,8 +151,13 @@
         </ul>
       </div>
     </div>
-    <el-row type="flex" class="banner-box" v-if="isHome">
-      <el-col v-for="m in headerMenu.menu" class="dropmenu" :key="m.id" :span="2">
+    <div style="display:flex" class="banner-box" v-if="isHome" :gutter="20">
+        <div  v-for="m in headerMenu.menu" class="dropmenu" :key="m.id">
+
+        <!-- </div>
+    </div> -->
+    <!-- <el-row type="flex" class="banner-box" v-if="isHome" :gutter="20">
+      <el-col v-for="m in headerMenu.menu" class="dropmenu" :key="m.id" :span="2"> -->
         <!-- <template v-for="m in menu"> -->
         <!-- <div class="dropmenu" :key="m.timestamp"> -->
         <a v-if="m.value == '9999'" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
@@ -232,8 +237,10 @@
         <!-- </div> -->
         <!-- </template> -->
 
-      </el-col>
-    </el-row>
+      <!-- </el-col>
+    </el-row> -->
+            </div>
+    </div>
     <el-dialog class="isValidationCW-dialog" append-to-body title="" :visible.sync="isValidationCWDialog" width="50%">
       <div>
         <el-result icon="warning" title="警告提示" subTitle="请联系供应商，完善站长外部编号">
@@ -554,7 +561,7 @@ export default {
 }
 .dropmenu {
   position: relative;
-  padding: 10px 0;
+  padding: 5px 10px 0 0;
   text-align: left;
   &:hover .drop-sec {
     display: flex;
@@ -617,7 +624,7 @@ export default {
 }
 .dropmenu {
   position: relative;
-  padding: 10px 0;
+  padding: 5px 10px 0 0;
   text-align: left;
   &:hover .drop-sec {
     display: flex;
@@ -900,7 +907,7 @@ export default {
 .banner-box {
   padding: 0;
   flex-wrap: wrap;
-  width: 1440px;
+  width: 945px;
   margin: 0 auto;
   padding-left: calc(234px + 1%);
 }
