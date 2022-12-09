@@ -909,7 +909,7 @@ export default {
   flex-wrap: wrap;
   width: 945px;
   margin: 0 auto;
-  padding-left: calc(234px + 1%);
+  // padding-left: calc(234px + 1%);
 }
 .banner-box a {
   font-size: 16px;
