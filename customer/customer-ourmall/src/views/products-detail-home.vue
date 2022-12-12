@@ -108,7 +108,7 @@
                 <div class="title">Shipping :</div>
                 <div class>
                   <div class="d-flex text mg-b-15">
-                    <div class="mg-l-20 title" style="width: 100px;">Shipping to</div>
+                    <div class="mg-l-10 " style="width: 100px;">Shipping to</div>
                     <el-select
                       size="small"
                       v-model="shippingContry"
@@ -128,7 +128,7 @@
                     </el-select>
                   </div>
                   <div class="d-flex text">
-                    <div class="mg-l-20 title" style="width: 100px;">Shipping fee</div>
+                    <div class="mg-l-10" style="width: 100px;">Shipping fee</div>
                     <el-select
                       size="small"
                       v-model="shippingFee"
@@ -668,7 +668,6 @@ export default {
     },
     downFile(url,name){
         // let url = res.success.url
-        console.log(2222, name);
         const a = document.createElement('a')
         a.href = url
         a.download = name // 下载后文件名
@@ -1227,6 +1226,7 @@ export default {
   flex: 1;
   display: flex;
   justify-content: left;
+  flex-wrap: wrap;
   div {
     padding: 0 10px;
     background: #f6f4f5;
@@ -1586,7 +1586,7 @@ white-space: nowrap;  // 默认不换行；
 
 }
 .warehouse-sty .title{
-  width: 90px;
+  width: 110px;
   text-align:right;
 }
 .other-info {
