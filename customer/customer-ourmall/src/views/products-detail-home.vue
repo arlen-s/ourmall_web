@@ -104,7 +104,7 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex" style="align-items: baseline;">
+              <div class="d-flex warehouse-sty" style="align-items: baseline;">
                 <div class="title">Shipping :</div>
                 <div class>
                   <div class="d-flex text mg-b-15">
@@ -163,7 +163,7 @@
                 </li>
               </ul>
               <!-- 这里 -->
-              <div class="d-flex" style="align-items: baseline; margin:20px 0 10px 0;">
+              <div class="d-flex  warehouse-sty" style="align-items: baseline; margin:20px 0 10px 0;">
                 <div class="title">Quality :</div>
                 <div class="mg-l-20 d-flex">
                   <el-input-number
@@ -1224,6 +1224,7 @@ export default {
   }
 }
 .house-box {
+  flex: 1;
   display: flex;
   justify-content: left;
   div {
@@ -1234,10 +1235,11 @@ export default {
     line-height: 26px;
     margin-bottom: 6px;
     cursor: pointer;
+     margin-right: 6px;
   }
-  div:nth-child(n + 2) {
-    margin-left: 6px;
-  }
+  // div:nth-child(n + 2) {
+  //   margin-left: 6px;
+  // }
 }
 
 .breadName {
@@ -1560,7 +1562,8 @@ margin-left: 5px;
   }
 }
 #special-info .title{
-  width: 130px;
+  width: 110px;
+  text-align: right;
 }
 #special-info .right-fit{
 display: flex;
@@ -1582,9 +1585,13 @@ text-overflow: ellipsis; //溢出用省略号显示
 white-space: nowrap;  // 默认不换行；
 
 }
+.warehouse-sty .title{
+  width: 90px;
+  text-align:right;
+}
 .other-info {
   display: flex;
-  height: 22px;
+  min-height: 22px;
   font-size: 14px;
   font-weight: 400;
   color: #303133;
@@ -1593,7 +1600,8 @@ white-space: nowrap;  // 默认不换行；
   .title {
     margin-right: 10px;
     // min-width: 66px;
-    width: 90px;
+    width: 110px;
+    text-align: right;
 
   }
   .tx-bold {
