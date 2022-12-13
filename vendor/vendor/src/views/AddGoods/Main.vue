@@ -112,6 +112,15 @@
               </el-form-item>
             
             </el-col>
+            <el-col :span="24">
+              <el-form-item :label="$t('goodsEdit.库存扣减方式')" style="width: 100%;">
+                  <el-radio-group v-model="form.InventoryDedType">
+                  <el-radio label="1">{{$t('不扣减')}}</el-radio>
+                  <el-radio label="2">{{$t('出库之后')}}</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            
+            </el-col>            
             <el-col :span="12">
               <el-form-item :label="$t('goodsEdit.预计交付周期')" style="width: 100%;">
                 <el-input  v-model.number="form.min" style="width:70px;margin-right:5px"></el-input>
@@ -563,6 +572,8 @@
           <el-row>
             <el-col style="padding:20px">
               <el-button type="primary" @click="handleHouse">{{$t('goodsEdit.仓库查询')}}</el-button>
+              <router-link target="_blank" :to="{path:'/storehouse/house'}"><el-button type="primary" style="margin-left:10px">添加仓库</el-button></router-link>
+              
             </el-col>
             <el-col>
               <el-table
@@ -852,6 +863,7 @@ export default {
         selectTime: 'day',
         days: '',
         deliveryTime: 'day',
+        InventoryDedType: '1',
         min: '',
         max: '',
         name: '',
@@ -1424,6 +1436,7 @@ export default {
           }, 200)
           this.form.name = data.name //商品名称
           this.form.days = data.day || ''
+          this.form.InventoryDedType = data.inventoryDeduction
           this.form.status = data.status == '1' //是否上架
           this.form.selectTime = data.salesGuaranteeTimeType
           this.form.days = data.salesGuaranteeTimeValue
@@ -1768,6 +1781,7 @@ export default {
         salesGuaranteeTimeType: this.form.selectTime,
         salesGuaranteeTimeValue: this.form.days,
         estimatedLeadTimeType: this.form.deliveryTime,
+        inventoryDeduction: this.form.InventoryDedType,
         estimatedLeadTimeMinValue: this.form.min,
         estimatedLeadTimeMaxValue: this.form.max,
         status: this.form.status ? '1' : '2',
