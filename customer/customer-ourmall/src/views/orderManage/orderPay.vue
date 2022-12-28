@@ -273,7 +273,7 @@ import { arrayEach } from 'xe-utils/methods';
 				bonus:0,
 				KTpayList: [
 					{
-						name: 'credit card',
+						name: 'credit&debit card',
 						id: 13,
 
 					},
@@ -281,12 +281,12 @@ import { arrayEach } from 'xe-utils/methods';
 						name: 'qr payment',
 						id: 14
 					},
-					{
-						name: 'debit card',
-						id: 15
-					}
+					// {
+					// 	name: 'debit card',
+					// 	id: 15
+					// }
 				],
-				KTType: 'credit card',
+				KTType: 'credit&debit card',
 				bonusStatus:"",
 				payTypes:[],
 				platformType:"",
@@ -334,7 +334,6 @@ import { arrayEach } from 'xe-utils/methods';
 		computed: {},
 		watch: {},
 		created() {
-			// console.log('321ceasasisahdqwnwqui1223');
 			//
 			//开泰银行获取支付信息
 			this.getInfoFromKasikornbank()
@@ -410,7 +409,7 @@ import { arrayEach } from 'xe-utils/methods';
 								this.$elementMessage(r.Message, "error");
 							}
 						})
-				}else if(this.KTType == 'credit card'){
+				}else if(this.KTType == 'credit&debit card'){
 						this.KasikornbankPay('','card', 13)
 				}else{
 						this.KasikornbankPay('','debit', 15)

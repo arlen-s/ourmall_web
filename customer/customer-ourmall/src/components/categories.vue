@@ -34,6 +34,7 @@
         <span>{{showMore ? 'Collapse':'More'}}</span>
       </a>
     </div>
+
   </div>
 </template>
 
@@ -81,13 +82,19 @@ a{
 a:hover{
     color: #5a6cc4;
 }
+  div::-webkit-scrollbar {
+    width: 4px;
+  }
 .categories-nav{
-  box-shadow: 0px 2px 9px 0px rgba(180, 180, 180 ,0.2);
+  // box-shadow: 0px 2px 9px 0px rgba(180, 180, 180 ,0.2);
   position: relative;
   background-color: #fff;
   width: 234px;
-  max-height: 434px;
+  // max-height: 434px;
+  height: 300px;
   min-width: 234px;
+  overflow-y: scroll;
+  
   h2{
     margin: 0;
     padding: 0 20px;
@@ -186,8 +193,19 @@ a:hover{
     color: #5a6cc4;
   }
 }
+  .categories-nav::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    opacity: 0.2;
+    background: fade(#7d88d0, 60%);
+  }
+  .categories-nav::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: fade(#7d88d0, 30%);
+  }
 .categories-nav.more{
-  max-height: 9999px;
+  // max-height: 9999px;
   box-shadow: 0 0 6px 1px #ccc;
 }
 </style>

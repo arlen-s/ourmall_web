@@ -544,10 +544,10 @@ export default {
       defVat: 0,
       firstBox: true,
 			credits: 0,
-      KTType: 'credit card',
+      KTType: 'credit&debit card',
       KTpayList: [
         {
-          name: 'credit card',
+          name: 'credit&debit card',
           id: 13,
 
         },
@@ -555,10 +555,10 @@ export default {
           name: 'qr payment',
           id: 14
         },
-        {
-          name: 'debit card',
-          id: 15
-        }
+        // {
+        //   name: 'debit card',
+        //   id: 15
+        // }
       ],
       setting: null,
       logLoading: false,
@@ -869,7 +869,7 @@ export default {
 				if (this.KTType == 'qr payment') {
             this.platformType = 14 
              this.orderPay()
-				}else if(this.KTType == 'credit card'){
+				}else if(this.KTType == 'credit&debit card'){
 						this.platformType = 13
             this.orderPay()
 				}else{

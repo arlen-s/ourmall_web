@@ -1212,7 +1212,7 @@ export default {
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
-	background-color: #aaa;
+	background-color: #e7e7e7;
 	font-size: 12px;
 }
 .tms{

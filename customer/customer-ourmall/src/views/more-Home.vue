@@ -21,7 +21,7 @@
               SEARCH
             </div>
           </div>
-        </div> -->
+        </div>-->
         <!-- 面包屑 -->
         <div class="pagetitle">
           <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -30,15 +30,11 @@
               Products Market
             </el-breadcrumb-item>
             <el-breadcrumb-item v-if="activeCategory.l1">
-              <a v-if="activeCategory.L > 1" @click="gotoCategory(1)">
-                {{ activeCategory.l1.name }}
-              </a>
+              <a v-if="activeCategory.L > 1" @click="gotoCategory(1)">{{ activeCategory.l1.name }}</a>
               <a v-else href="javascript:;">{{ activeCategory.l1.name }}</a>
             </el-breadcrumb-item>
             <el-breadcrumb-item v-if="activeCategory.l2">
-              <a v-if="activeCategory.L > 2" @click="gotoCategory(2)">
-                {{ activeCategory.l2.name }}
-              </a>
+              <a v-if="activeCategory.L > 2" @click="gotoCategory(2)">{{ activeCategory.l2.name }}</a>
               <a v-else href="javascript:;">{{ activeCategory.l2.name }}</a>
             </el-breadcrumb-item>
             <el-breadcrumb-item v-if="activeCategory.l3">
@@ -47,46 +43,120 @@
           </el-breadcrumb>
         </div>
         <!-- 列表 -->
-        
-      <div style="display:flex;width:100%">
-        <Categories :categories="commodityTypeMoreList" />
-        <div v-if="items && items.length == 0" style="flex:1">
-          <el-card class="mg-l-20" style="width:auto">
-            <div class="noProduct">
-              <img src="../../public/images/productShop/none.png">
-              <b class="mg-t-10">There are no products in this category</b>
+
+        <div style="display:flex;width:100%">
+          <div>
+            <Categories :categories="commodityTypeMoreList" />
+            <div class="filter-box">
+              <div class="box-card">
+                <p class="price">Unit Price</p>
+                <div>
+                  <el-input placeholder="Min" style="width:60px" v-model="min">
+                    <span slot="prefix">$</span>
+                  </el-input>
+                  <span> — </span>
+                  <el-input placeholder="Max" style="width:60px" v-model="max">
+                    <span slot="prefix">$</span>
+                  </el-input>
+                  <el-button type="primary" @click="searchPrice">GO</el-button>
+                </div>
+                 <el-divider></el-divider>
+                <p class="price">Qty Available</p>
+                <div>
+                  <el-input placeholder="Min" style="width:60px" v-model="minQty">
+                  </el-input>
+                  <span> — </span>
+                  <el-input placeholder="Max" style="width:60px" v-model="maxQty">
+                  </el-input>
+                  <el-button type="primary"  @click="searchPrice">GO</el-button>
+                </div>   
+                 <el-divider></el-divider>
+                 <div class="top-title">
+                    <p class="price">First Available</p>
+                    <span @click="restDay">Clear</span>
+                 </div>
+                
+                <div>
+                <el-radio-group v-model="radioDay" @change="searchPrice">
+                  <div>
+                      <el-radio :label="7">Last 7 days</el-radio>
+                  </div>
+                  <div>
+                      <el-radio :label="14">Last 14 days</el-radio>
+                  </div>
+                  <div>
+                      <el-radio :label="30">Last 30 days</el-radio>
+                  </div>
+                  
+                </el-radio-group>
+                </div>                               
+              </div>
             </div>
-          </el-card>
+          </div>
+
+          <div v-if="items && items.length == 0" style="flex:1">
+                        <div class="top-filter-box">
+              <span> Sort by</span>
+        <div class="right"
+          @click="change(item,index)"
+          v-for="(item, index) in btnList"
+          :key="index">{{item.label}}
+          <div class="box-icon-top">
+            <div class="up"
+              :class="item.status === 1 ? 'opacity-5' : ''"></div>
+            <div class="down"
+              :class="item.status === 1 ? 'opacity-1' : ''"></div>
+          </div>
         </div>
-        <div v-loading="loading"  style="flex:1" v-else>
-          <div class="list">
-            
-               <div class="pro_box" v-for="item in items"
-              :key="item.id"
-              style="margin-bottom: 20px">
-                      <div class="pro_img" style="height:194px">
-                    <el-image
-                      
-                      style="position: absolute; width: 100%;cursor: pointer;
+            </div>
+            <el-card class="mg-l-20" style="width:auto">
+              <div class="noProduct">
+                <img src="../../public/images/productShop/none.png" />
+                <b class="mg-t-10">There are no products in this category</b>
+              </div>
+            </el-card>
+          </div>
+          <div v-loading="loading" style="flex:1" v-else>
+            <div class="top-filter-box">
+              <span> Sort by</span>
+        <div class="right"
+          @click="change(item,index)"
+          v-for="(item, index) in btnList"
+          :key="index">{{item.label}}
+          <div class="box-icon-top">
+            <div class="up"
+              :class="item.status === 1 ? 'opacity-5' : ''"></div>
+            <div class="down"
+              :class="item.status === 1 ? 'opacity-1' : ''"></div>
+          </div>
+        </div>
+            </div>
+            <div class="list">
+              <div class="pro_box" v-for="item in items" :key="item.id" style="margin-bottom: 10px">
+                <div class="pro_img" style="height:194px">
+                  <el-image
+                    style=" width: 100%;cursor: pointer;
                       height: 100%;"
-                      :fit="'contain'"
-                      :src="item.imgUrl"
-                      @click="goToDetail(item)"
-                    >
-                    </el-image>
-                      
-                    </div>
-                    <div style="padding:16px 10px">
-                      <div class="pro_name" @click="goToDetail(item)">
-                        <a href="javascript:;">{{ item.name }}</a>
-                      </div>
-                  <b class="pro_cost">{{$store.state.country.symbol}} {{item.minPrice == item.maxPrice ? $exchangeRate(item.minPrice) : `${$exchangeRate(item.minPrice)}~${$exchangeRate(item.maxPrice)} `}}</b>                  
-                  <p v-if="item.estimatedLeadTimeType">about: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{item.estimatedLeadTimeType}}</p>
+                    :fit="'contain'"
+                    :src="item.imgUrl"
+                    @click="goToDetail(item)"
+                  ></el-image>
+                </div>
+                <div style="padding:16px 10px">
+                  <div class="pro_name" @click="goToDetail(item)">
+                    <a href="javascript:;">{{ item.name }}</a>
+                  </div>
+                  <b
+                    class="pro_cost"
+                  >{{$store.state.country.symbol}} {{item.minPrice === item.maxPrice ? item.minPrice : `${item.minPrice}~${item.maxPrice} `}}</b>
+                  <p
+                    v-if="item.estimatedLeadTimeType"
+                  >about: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{item.estimatedLeadTimeType}}</p>
                   <!-- <div class="imports">
                         <span>Imports:
                            <span style="color:#525FB0">{{ item.imports }}</span>
                         </span>
-                      </div> -->
+                  </div>-->
                   <!-- <div style="
                           display: flex;
                           width: 100%;
@@ -102,7 +172,7 @@
                         <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
-                  </div> -->
+                  </div>-->
                 </div>
               </div>
             </div>
@@ -112,19 +182,28 @@
       <el-row v-if="items.length" :gutter="20" style="margin: 20px 0">
         <el-col :span="24" class="d-flex justify-content-center">
           <div>
-            <el-pagination :current-page="Number(page)" :background="true" layout="sizes, total, prev, pager, next, jumper" :page-sizes="pageSizes" :page-size="rowsPerPage" :total="Number(total)" @current-change="toPage"
-              @size-change="changePageSize">
-            </el-pagination>
+            <el-pagination
+              :current-page="Number(page)"
+              :background="true"
+              layout="sizes, total, prev, pager, next, jumper"
+              :page-sizes="pageSizes"
+              :page-size="rowsPerPage"
+              :total="Number(total)"
+              @current-change="toPage"
+              @size-change="changePageSize"
+            ></el-pagination>
           </div>
         </el-col>
       </el-row>
-      <div class="ball" :style="{
+      <div
+        class="ball"
+        :style="{
           top: `${ball.y}px`,
           left: `${ball.x}px`,
           opacity: ball.opacity,
-        }"></div>
-      <el-backtop class="goto-top" :right="32" :bottom="120">
-      </el-backtop>
+        }"
+      ></div>
+      <el-backtop class="goto-top" :right="32" :bottom="120"></el-backtop>
     </div>
     <!-- <Footer /> -->
     <DFooter :setting="$store.state.configJson && $store.state.configJson.footer || ''" />
@@ -136,12 +215,22 @@
         <div class="login-box">
           <div class="box mg-b-5">
             <p>Please enter your shopify store name to connect the dashboard page:</p>
-            <div class=" mg-b-30">
-              <input type="text" placeholder="Shopify store name" @input="storeInput($event.target.value)" v-model="shopUrl" @keyup.enter="goLogin">
+            <div class="mg-b-30">
+              <input
+                type="text"
+                placeholder="Shopify store name"
+                @input="storeInput($event.target.value)"
+                v-model="shopUrl"
+                @keyup.enter="goLogin"
+              />
               <span>.myshopify.com</span>
             </div>
             <div>
-              <el-button class="login-btn" :loading="loginLoading" @click="goLogin">{{loginLoading ? 'Please Wait' : 'LOGIN'}}</el-button>
+              <el-button
+                class="login-btn"
+                :loading="loginLoading"
+                @click="goLogin"
+              >{{loginLoading ? 'Please Wait' : 'LOGIN'}}</el-button>
             </div>
           </div>
         </div>
@@ -161,12 +250,25 @@ export default {
   data () {
     return {
       setting: null,
+      min:'',
+      max: '',
+      minQty:'',
+      maxQty: '',
+      radioDay: '',
+      filterUItem: {},
       headerMenu: [],
       code: {
         header: [],
         footer: []
       },
+       btnList: [
+        { label: "Price", status: 0 },
+        { label: "Stock Qty", status: 0 }
+      ],
+
       nameS: '',
+      checkQty:'asc',
+      checkSort: '',
       header2Visible: false,
       time: 0,
       loginLoading: false,
@@ -193,21 +295,21 @@ export default {
         opacity: 0,
       },
       c_apiShopId: JSON.parse(localStorage.getItem('c_apiShopId'))
-    };
+    }
   },
   computed: {
     product () {
-      let text = "";
+      let text = ""
       this.commodityTypeMoreList.forEach((item) => {
         if (item.id == this.categoryId) {
-          text = item.name;
+          text = item.name
         }
-      });
-      return text;
+      })
+      return text
     },
     activeCategory () {
       if (!this.commodityTypeMoreList) {
-        return false;
+        return false
       }
       if (this.$route.params.id == "0") {
         return {
@@ -218,53 +320,53 @@ export default {
           },
           l2: undefined,
           l3: undefined,
-        };
+        }
       }
-      let L, l1, l2, l3;
+      let L, l1, l2, l3
       if (this.commodityTypeMoreList && this.commodityTypeMoreList.length) {
         this.commodityTypeMoreList.some((e) => {
           if (e.id == this.$route.params.id) {
-            L = 1;
-            l1 = e;
-            return true;
+            L = 1
+            l1 = e
+            return true
           }
           if (e.list) {
             e.list.some((s) => {
               if (s.id == this.$route.params.id) {
-                L = 2;
-                l1 = e;
-                l2 = s;
-                return true;
+                L = 2
+                l1 = e
+                l2 = s
+                return true
               }
               if (s.list) {
                 s.list.some((ss) => {
                   if (ss.id == this.$route.params.id) {
-                    L = 3;
-                    l1 = e;
-                    l2 = s;
-                    l3 = ss;
-                    return true;
+                    L = 3
+                    l1 = e
+                    l2 = s
+                    l3 = ss
+                    return true
                   }
-                });
+                })
               }
-            });
+            })
           }
-        });
+        })
       }
       return {
         L,
         l1,
         l2,
         l3,
-      };
+      }
     },
   },
   beforeDestroy () {
-    clearInterval(this.time);
+    clearInterval(this.time)
   },
   created () {
-    this.setting = localStorage.getItem("c_shopConfigJson") ? JSON.parse(localStorage.getItem("c_shopConfigJson")) : null;
-    if (!this.setting || !this.setting.customCode || !this.setting.customCode.length) return;
+    this.setting = localStorage.getItem("c_shopConfigJson") ? JSON.parse(localStorage.getItem("c_shopConfigJson")) : null
+    if (!this.setting || !this.setting.customCode || !this.setting.customCode.length) return
     this.setting.customCode.forEach((item) => {
       if (item.pages.includes('搜索结果页')) {
         if (item.position == '底部') {
@@ -279,19 +381,19 @@ export default {
   mounted () {
     if (this.$root.$children[0].getParentUrl() && this.$root.$children[0].getParentUrl().indexOf("vendor") >= 0) {
     } else {
-      this.$root.$children[0].checkLogin();
+      this.$root.$children[0].checkLogin()
     }
-    this.header2Visible = $(window).scrollTop() > 70;
+    this.header2Visible = $(window).scrollTop() > 70
     $(window).scroll(() => {
-      this.header2Visible = $(window).scrollTop() > 70;
-    });
+      this.header2Visible = $(window).scrollTop() > 70
+    })
     if (this.$route.query.search) {
-      this.categoryId = this.$route.params.id;
+      this.categoryId = this.$route.params.id
     }
-    this.input = this.$route.query.input;
-    this.content = this.input;
-    this.getCategory();
-    document.title = `${this.$route.params.name.replace('.html', '')} How to find :: ${this.$root.$children[0].pName.b} - Easy Dropshipping`;
+    this.input = this.$route.query.input
+    this.content = this.input
+    this.getCategory()
+    document.title = `${this.$route.params.name.replace('.html', '')} How to find :: ${this.$root.$children[0].pName.b} - Easy Dropshipping`
   },
   components: {
     homeHeader,
@@ -312,7 +414,7 @@ export default {
   },
 
   methods: {
-
+    
     getMenu () {
       if (this.setting.header.activeMenu) { //有启用头部菜单
         this.setting.menu.forEach((item) => {
@@ -322,30 +424,43 @@ export default {
         })
       }
     },
+    searchPrice(){
+        this.getItems ()
+    },
+    // searchAva(){},
+
+    //获取筛选表头状态
+     change(item, index) {
+      this.btnList[index].status === 0
+        ? (this.btnList[index].status = 1)
+        : (this.btnList[index].status = 0);
+        this.filterUItem = item
+         this.getItems ()
+    },
     gotoCategory (i) {
       if (i == 1) {
         this.$router.push(
           `/category/${this.activeCategory.l1.id
           }/${this.activeCategory.l1.name.replace(/\s+/g, "-")}.html`
-        );
+        )
       } else {
         this.$router.push(
           `/category/${this.activeCategory.l2.id
           }/${this.activeCategory.l2.name.replace(/\s+/g, "-")}.html`
-        );
+        )
       }
     },
     // 登录
     storeInput (val) {
       let codeReg = new RegExp("[A-Za-z0-9-_]+"), //正则 英文+数字；
         len = val.length,
-        str = "";
+        str = ""
       for (var i = 0; i < len; i++) {
         if (codeReg.test(val[i])) {
-          str += val[i];
+          str += val[i]
         }
       }
-      this.shopUrl = str;
+      this.shopUrl = str
     },
     getLoginStatus () {
       this.$apiCall(
@@ -356,47 +471,47 @@ export default {
         r => {
           if (r.ErrorCode == "9999") {
             if (r.Data.Results.status) {
-              clearInterval(this.time);
+              clearInterval(this.time)
               if (r.Data.Results.status == 1) {
                 if (!localStorage.getItem("c_ourMallFirstLogin")) {
-                  localStorage.setItem("c_ourMallFirstLogin", 1);
+                  localStorage.setItem("c_ourMallFirstLogin", 1)
                 } else {
-                  localStorage.setItem("c_ourMallFirstLogin", 2);
+                  localStorage.setItem("c_ourMallFirstLogin", 2)
                 }
-                localStorage.setItem("c_apiUserId", r.Data.Results.userInfo.id);
+                localStorage.setItem("c_apiUserId", r.Data.Results.userInfo.id)
                 localStorage.setItem("c_apiUserToken",
                   r.Data.Results.userInfo.apiUserToken
-                );
+                )
                 localStorage.setItem("c_ourMallUserInfo",
                   JSON.stringify(r.Data.Results.userInfo)
-                );
-                this.$store.commit("setUserInfo", r.Data.Results.userInfo);
+                )
+                this.$store.commit("setUserInfo", r.Data.Results.userInfo)
                 this.$router.push({ name: 'more', query: this.$route.query })
 
-                this.win.close();
+                this.win.close()
               } else {
-                this.loginLoading = false;
-                this.$elementMessage(r.Data.Results.errorMessage, "error");
+                this.loginLoading = false
+                this.$elementMessage(r.Data.Results.errorMessage, "error")
                 setTimeout(() => {
-                  window.location.reload();
+                  window.location.reload()
                 }, 1000)
-                this.win.close();
+                this.win.close()
               }
             }
           } else {
-            clearInterval(this.time);
-            this.$elementMessage(r.Message, "error");
+            clearInterval(this.time)
+            this.$elementMessage(r.Message, "error")
           }
         }
-      );
+      )
     },
     goLogin () {
       if (!this.shopUrl) {
-        this.$elementMessage("Please enter Shopify store name", "error");
-        return false;
+        this.$elementMessage("Please enter Shopify store name", "error")
+        return false
       }
-      this.win = window.open("/blank.html", "Shopify");
-      this.loginLoading = true;
+      this.win = window.open("/blank.html", "Shopify")
+      this.loginLoading = true
       this.$apiCall(
         "api.ShopifyAccount.addShopifyAccount",
         {
@@ -407,28 +522,28 @@ export default {
         },
         r => {
           if (r.ErrorCode == "9999") {
-            this.win.location = r.Data.Results;
+            this.win.location = r.Data.Results
             this.time = setInterval(() => {
-              this.getLoginStatus();
-            }, 2000);
+              this.getLoginStatus()
+            }, 2000)
           } else {
-            this.$elementMessage(r.Message, "error");
+            this.$elementMessage(r.Message, "error")
           }
         }
-      );
+      )
     },
     closeLogin () {
-      this.shopUrl = '';
-      this.loginLoading = false;
+      this.shopUrl = ''
+      this.loginLoading = false
     },
     handleCommand (command) {
       switch (command) {
         case "exit":
-          this.$Logout("/");
-          break;
+          this.$Logout("/")
+          break
         case "profile":
-          this.$router.push({ name: "profile" });
-          break;
+          this.$router.push({ name: "profile" })
+          break
         case "dashboard":
           // this.$router.push({ name: "dashboard" });
           if (this.c_apiShopId == 121173) {
@@ -441,90 +556,125 @@ export default {
           }
           this.$router.push({
             name: "dashboard",
-          });
-          break;
+          })
+          break
       }
     },
     login () {
       if (localStorage.getItem("c_ourMallUserInfo")) {
-        this.$router.push({ name: "dashboard" });
+        this.$router.push({ name: "dashboard" })
       } else {
-        this.$router.push({ name: "login" });
+        this.$router.push({ name: "login" })
       }
     },
     gotoLogin () {
       if (!this.shopUrl) {
-        this.$elementMessage("Please enter Shopify store name", "error");
-        return false;
+        this.$elementMessage("Please enter Shopify store name", "error")
+        return false
       }
       if (localStorage.getItem("c_ourMallUserInfo")) {
         this.$router.push({
           name: "stores",
           params: { add: true, val: this.shopUrl },
-        });
+        })
       } else {
-        this.$router.push({ name: "login", params: { shopUrl: this.shopUrl } });
+        this.$router.push({ name: "login", params: { shopUrl: this.shopUrl } })
       }
     },
     getCategory () {
       this.$apiCall("api.ProductCategory.findByVendorRelateCategory", {}, (r) => {
         if (r.ErrorCode == 9999) {
-          this.commodityTypeMoreList = r.Data.Results;
-          this.getItems();
+          this.commodityTypeMoreList = r.Data.Results
+          this.getItems()
         }
-      });
+      })
     },
     getItems () {
-      this.loading = true;
-      this.allLoading = true;
+      this.loading = true
+      this.allLoading = true
       if (this.categoryId == "ALL-CATEGORIES") {
         this.categoryId = ''
       }
       this.commodityTypeMoreList.forEach((item) => {
         if (item.name == this.categoryId) {
-          this.categoryId = item.id;
+          this.categoryId = item.id
         }
-      });
-      this.$apiCall(
-        "api.VendorShop.vendorFindProducts",
-        {
+      })
+      if (this.filterUItem) {
+        if (this.filterUItem.label == 'Price') {
+         this.checkSort =   this.filterUItem.status == 0 ? 'asc' : 'desc'
+    
+
+      }else{
+        this.checkQty =   this.filterUItem.status == 0 ? 'asc' : 'desc'
+      }
+      }
+      let params = {}
+      if (this.checkQty == 'asc') {
+        params = {
           name: this.input,
           categoryId: this.$route.params.id,
           page: this.page,
           rowsPerPage: this.rowsPerPage,
-          status: 1
-        },
+          status: 1,
+          costFrom: this.min ,
+          costTo: this.max ,
+          timePublishedTo: this.radioDay,
+          sortCost: this.checkSort || 'asc',
+          maxInventory: this.maxQty ,
+          minInventory: this.minQty ,
+          sortMinInventory: 'asc',
+        }
+      }else{
+        params = {
+                    name: this.input,
+          categoryId: this.$route.params.id,
+          page: this.page,
+          rowsPerPage: this.rowsPerPage,
+          status: 1,
+          costFrom: this.min ,
+          costTo: this.max ,
+          timePublishedTo: this.radioDay,
+          sortCost: this.checkSort || 'asc',
+          maxInventory: this.maxQty ,
+          minInventory: this.minQty ,
+          sortMaxInventory: 'desc',
+        }
+      }
+      this.$apiCall(
+        "api.VendorShop.vendorFindProducts",
+        params,
         (r) => {
           if (r.ErrorCode == 9999) {
             this.commodityTypeMoreList.forEach((item) => {
               if (item.id == this.categoryId) {
-                this.name = item.name;
-                this.categoryId = item.name;
+                this.name = item.name
+                this.categoryId = item.name
               }
-            });
-            this.items = r.Data.Results.products;
-            this.total = r.Data.Pagination.totalCount;
-            this.totalPage = r.Data.Pagination.totalPage;
-            this.allLoading = false;
-            this.loading = false;
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
+            })
+            this.items = r.Data.Results.products
+            this.total = r.Data.Pagination.totalCount
+            this.totalPage = r.Data.Pagination.totalPage
+            this.allLoading = false
+            this.loading = false
+            document.body.scrollTop = document.documentElement.scrollTop = 0
           } else {
-            this.allLoading = false;
+            this.allLoading = false
             this.$elementMessage(r.Message, 'error')
           }
         }
-      );
+      )
     },
     search () {
-      this.content = this.input;
+      this.content = this.input
       // if(this.categoryId)
       this.commodityTypeMoreList.forEach((item) => {
         if (item.name == this.categoryId) {
-          this.nameS = item.id;
+          this.nameS = item.id
         }
-      });
+      })
       if (!this.nameS) {
-        this.nameS = this.categoryId;
+        this.nameS = this.categoryId
       }
       if (this.categoryId == '') {
         this.$router.push({
@@ -533,41 +683,41 @@ export default {
             input: this.content,
             search: true
           }
-        });
+        })
       } else {
         this.$router.push({
           path: `/category/${this.nameS}/${this.content}.html`,
           query: {
             input: this.content
           }
-        });
+        })
       }
-      this.page = 1;
+      this.page = 1
       // this.categoryId = this.nameS;
-      this.nameS = '';
+      this.nameS = ''
     },
     changePageSize (val) {
-      this.rowsPerPage = val;
-      localStorage.setItem("c_importPerPage", val);
-      this.getItems();
+      this.rowsPerPage = val
+      localStorage.setItem("c_importPerPage", val)
+      this.getItems()
     },
     gotoPage () {
-      this.page = this.$route.query.page ? this.$route.query.page : 1;
+      this.page = this.$route.query.page ? this.$route.query.page : 1
       // this.categoryId = this.$route.params.id;
-      this.input = this.$route.query.input;
-      this.getItems();
+      this.input = this.$route.query.input
+      this.getItems()
     },
     toPage (val) {
       if (val != this.$route.query.page) {
-        let query = {};
-        let id = '';
+        let query = {}
+        let id = ''
         //    this.commodityTypeMoreList.forEach((item) => {
         //   if (item.name == this.categoryId) {
         //     id = item.id;
         //   }
         // });
         id = this.$route.params.id
-        query.page = val;
+        query.page = val
         query.input = this.content
         if (this.categoryId == '') {
           this.$router.push({
@@ -579,9 +729,13 @@ export default {
           this.$router.push({
             path: `/category/${id}/${this.$route.params.name}`,
             query,
-          });
+          })
         }
       }
+    },
+    restDay(){
+this.radioDay = ''
+this.getItems()
     },
     goToDetail (item) {
       let id = localStorage.getItem('vendorId')
@@ -595,8 +749,8 @@ export default {
     },
     import_pro (item, e) {
       if (!this.$store.state.userInfo) {
-        this.$root.$children[0].openDialogLogin();
-        return;
+        this.$root.$children[0].openDialogLogin()
+        return
       }
       this.$apiCall(
         "api.Product.addFromVendorShopProduct",
@@ -605,15 +759,15 @@ export default {
         },
         (r) => {
           if (r.ErrorCode == 9999) {
-            item.hasImport = 1;
-            item.imports++;
-            this.$root.$children[0].importNum++;
-            this.$message.success("Import Success !");
+            item.hasImport = 1
+            item.imports++
+            this.$root.$children[0].importNum++
+            this.$message.success("Import Success !")
           } else {
-            this.$message.error(r.Message);
+            this.$message.error(r.Message)
           }
         }
-      );
+      )
     },
   },
 
@@ -624,8 +778,100 @@ export default {
 .home-page {
   max-width: 1920px;
   width: 100%;
-  background-color: #fff;
+  background-color: #f2f2f2 !important;
 }
+.filter-box{
+  margin-top: 10px;
+  .box-card{
+  padding: 20px;
+  background-color: #fff;
+  }
+
+  .price{
+    padding-bottom: 15px;
+  }
+  ::v-deep.el-input__inner{
+    padding-left: 15px;
+  }
+  ::v-deep.el-button{
+    padding: 10px;
+    margin-left: 10px;
+  }
+  ::v-deep.el-input__prefix{
+    line-height: 40px;
+  }
+  .top-title{
+    display: flex;
+    justify-content: space-between;
+    span{
+      cursor: pointer;
+    }
+  }
+}
+.top-filter-box{
+  width: 95%;
+  background-color: #fff;
+  display: flex;
+  border: 1px solid rgb(233, 231, 231);
+  margin-left: 1%;
+  margin-bottom: 10px;
+  line-height: 34px;
+  padding-left: 10px;
+}
+    .right {
+      width: 140px;
+      padding: 0 20px;
+      height: 32px;
+      color: #505363;
+      font-weight: 400;
+      font-size: 14px;
+      margin-left: 10px;
+      
+      display: flex;
+      justify-content: center;
+      line-height: 32px;
+      cursor: pointer;
+    }
+    .right:hover {
+      color: #217aff;
+      border: 1px solid #217aff;
+      .up {
+        border-bottom: 6px solid #217aff;
+      }
+      .down {
+        border-top: 6px solid #217aff;
+      }
+    }
+    .opacity-5 {
+      opacity: 0.5;
+    }
+    .opacity-1 {
+      opacity: 1 !important;
+    }
+    .box-icon-top {
+      height: 30px;
+      margin-top: 7px;
+      .up {
+        width: 0px; /*设置宽高为0，所以div的内容为空，从才能形成三角形尖角*/
+        height: 0px;
+        border-bottom: 6px solid #a3a5b3;
+        border-left: 4px solid transparent; /*transparent 表示透明*/
+        border-right: 4px solid transparent;
+        margin-bottom: 4px;
+      }
+      .down {
+        width: 0px;
+        height: 0px;
+        opacity: 0.5;
+        border-top: 6px solid #a3a5b3;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+      }
+    }
+    .box-icon-top div {
+      height: 10px;
+      margin-left: 4px;
+    }
 </style>
 
 <style scoped lang="scss">
@@ -648,10 +894,12 @@ export default {
   transition: ease-in-out 0.5s;
 }
 .list {
-  width: 100%;
+  width: 99%;
   display: flex;
   flex-wrap: wrap;
+  margin-left: 1%;
 }
+
 .box {
   display: flex;
   justify-content: space-evenly;
@@ -677,7 +925,6 @@ export default {
 .pro_box {
   width: 24%;
   font-weight: 500;
-  margin-left: 1%;
   position: relative;
   background: #ffffff;
   // box-shadow: 0px 2px 9px 0px rgba(180, 180, 180, 0.5);

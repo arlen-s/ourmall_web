@@ -19,7 +19,7 @@
         )
         }else{
           document.writeln(
-          `<form data-v-7e7ca540="" method="POST" id="formPay" action="${html.action_url}" style=""><script type="text/javascript" src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js" data-apikey="${html.dataApikey}" data-amount="${html.dataAmount}" data-currency="THB" data-payment-methods="card"  data-smartpay-id="${html.dataSmartpayId}" data-mid="${html.merchantId_Installment}"><\/script></form>`
+          `<form data-v-7e7ca540="" method="POST" id="formPay" action="${html.action_url}" style=""><script type="text/javascript" src="https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js" data-apikey="${html.dataApikey}" data-amount="${html.dataAmount}" data-currency="THB" data-payment-methods="card" data-mid="${html.merchantId_Installment}" data-tid="${html.terminalId_Installment}"><\/script></form>`
         )
         }
 
