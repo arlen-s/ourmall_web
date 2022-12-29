@@ -94,6 +94,7 @@ a:hover{
   height: 355px;
   min-width: 234px;
   overflow-y: scroll;
+  overflow-x: hidden;
   
   h2{
     margin: 0;
