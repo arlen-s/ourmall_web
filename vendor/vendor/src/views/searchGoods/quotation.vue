@@ -86,12 +86,12 @@
                 </el-form-item>
                 <el-form-item :label="$t('quotation.回复价格')" label-width="150px" required>
                   <el-input-number
-                    disabled
+                    
                     :min="0"
                     :controls="false"
                     :precision="2"
                     style="width: 120px"
-                    v-model="form.cost"
+                    v-model="form.price"
                   ></el-input-number>
                 </el-form-item>
                 <el-form-item :label="$t('quotation.备注')" label-width="150px">
@@ -169,7 +169,7 @@ export default {
         id:'',
         radio: "1",
         imgUrl: "",
-        cost: undefined,
+        price: "",
         remark: "",
       },
     };
@@ -285,7 +285,8 @@ export default {
            id:this.$route.query.id,
            status:this.form.radio == '3'? '9':'2',
            productId:this.form.id,
-           remark:this.form.remark
+           remark:this.form.remark,
+           price: this.form.price
         },r=>{
             this.loading = false;
             if(r.ErrorCode == 9999){

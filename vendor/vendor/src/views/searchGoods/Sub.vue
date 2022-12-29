@@ -168,11 +168,8 @@
         <!-- 回复价格 -->
         <el-table-column :label="$t('quotation.回复价格')"   v-if="$route.name == 'SGFinish'||$route.name == 'SGSearch'">
           <template slot-scope="scope">
-            <div v-if="scope.row.vendorProduct">
-              <b v-if="scope.row.vendorProduct.cost">${{scope.row.vendorProduct.cost}}</b>
+              <b v-if="scope.row.price">${{scope.row.price}}</b>
             <span v-else>---</span>
-            </div>
-            <div v-else>{{$t('quotation.暂无数据展示')}}</div>
           </template>  
         </el-table-column>
         <!-- 回复价格 -->

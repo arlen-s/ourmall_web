@@ -47,8 +47,8 @@
             <template v-if="$route.name == 'SGFinish'">
             <el-form :label-position="'left'" ref="productForm" v-if="data.data.vendorProduct">
                 <el-form-item  label-width="150px" :label="$t('quotation.回复价格')+':'">
-                  <span v-if="data.data.vendorProduct.cost">${{ data.data.vendorProduct.cost }}</span>
-                  <span v-else>---</span>
+                   <span v-if="data.data.price">${{data.data.price }}</span>
+                   <span v-else>--</span>
                 </el-form-item>
                 <!-- <el-form-item  label-width="150px" label="商品链接:"></el-form-item> -->
                 <el-form-item  label-width="150px" :label="$t('quotation.回复时间')+':'">

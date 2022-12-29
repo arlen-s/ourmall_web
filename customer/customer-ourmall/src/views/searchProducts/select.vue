@@ -59,8 +59,8 @@
 						</template></el-table-column>
 					<el-table-column label="Reply price">
 						<template slot-scope="scope">
-							<span v-if="scope.row.vendorProduct">
-								{{$store.state.country.symbol}} {{ $exchangeRate(scope.row.vendorProduct.cost)}}
+							<span v-if="scope.row.price">
+								{{$store.state.country.symbol}} {{ $exchangeRate(scope.row.price)}}
 							</span>
 							<span v-else>--</span>
 						</template></el-table-column>

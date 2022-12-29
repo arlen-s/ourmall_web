@@ -51,7 +51,7 @@
 							$ {{ publishDetail.remark }}
 						</el-form-item>
 						<el-form-item label="Price:">
-							$ {{ publishDetail.vendorProduct.cost }}
+							$ {{ publishDetail.price }}
 						</el-form-item>
 						<el-form-item label="Product Link:" prop="title">
 							<a target="_blank"  v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74" :href="`${host}/item/${publishDetail.vendorProduct.id}/${publishDetail.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`">{{`${host}/item/${publishDetail.vendorProduct.id}/${publishDetail.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`}}</a>
