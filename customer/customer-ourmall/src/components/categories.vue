@@ -91,7 +91,7 @@ a:hover{
   background-color: #fff;
   width: 234px;
   // max-height: 434px;
-  height: 300px;
+  height: 355px;
   min-width: 234px;
   overflow-y: scroll;
   

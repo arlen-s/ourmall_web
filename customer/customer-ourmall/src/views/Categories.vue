@@ -43,20 +43,19 @@
                                       <el-carousel-item class="el-car-item" v-for="(list, index) in item.list" :key="index">
                                         <div v-for="(imgList,index1) in list" :key="index1" class="divSrc">
                                           <!-- <img class="img" :src="imgList.themeUrl" /> -->
-                                          <div @click="handleDeal(imgList)" v-if="imgList.themeUrl">
+                                         
+                                          <div @click="handleDeal(imgList)">
                                               <el-image
                                             style="width: 200px; height: 100px;margin-top:40px"
-                                            :src="imgList.themeUrl"
-                                            fit="contain"></el-image>
-                                          <div class="title">{{imgList.name}}</div>
-                                          </div>
-                                          <div v-else>
-                                                <el-image>
-                                                  <div slot="error" class="image-slot">
+                                            :src="imgList.themeUrl || ''"
+                                            fit="contain">
+                                            <div slot="error" class="image-slot">
                                                     <i class="el-icon-picture-outline"></i>
                                                   </div>
-                                                </el-image>
+                                            </el-image>
+                                          <div class="title">{{imgList.name}} {{imgList.themeUrl.length}}</div>
                                           </div>
+   
                                         </div>
                                       </el-carousel-item>
                                       
@@ -159,6 +158,7 @@ methods: {
             {},
             (r) => {
               if (r.ErrorCode == 9999) {
+                console.log(2022-11)
                 // this.$store.commit("setCategroy", r.Data.Results);
                 let list =  r.Data.Results
             for (let i = 0; i < list.length; i++) {
