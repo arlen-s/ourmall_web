@@ -25,6 +25,7 @@ export const lang = {
   '库存扣减方式':'Inventory deduction method',
   '仓库必须填写': 'warehouse must be filled',
   '是否为组合':'Is combination',
+  '商品是否免邮': 'Is the product free shipping',
   '不扣减': 'No deduction',
   '出库之后': 'After leaving the warehouse',
   '商品名必须填写': 'Product name must be filled',
