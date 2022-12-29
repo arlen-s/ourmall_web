@@ -47,13 +47,13 @@
                                           <div @click="handleDeal(imgList)">
                                               <el-image
                                             style="width: 200px; height: 100px;margin-top:40px"
-                                            :src="imgList.themeUrl || ''"
+                                            :src="imgList? imgList.themeUrl : ''"
                                             fit="contain">
                                             <div slot="error" class="image-slot">
                                                     <i class="el-icon-picture-outline"></i>
                                                   </div>
                                             </el-image>
-                                          <div class="title">{{imgList.name}} {{imgList.themeUrl.length}}</div>
+                                          <div class="title">{{imgList ? imgList.name  : ''}}</div>
                                           </div>
    
                                         </div>
