@@ -578,10 +578,17 @@ export default {
     min-width: 100px;
     padding: 0;
     border-radius: 3px;
+    background: #fff;
+    z-index: 10;
     a {
       text-decoration: none;
       color: rgb(96, 98, 102);
-    }
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+}      
+    
     li.sec-item {
       padding: 5px 10px;
       position: relative;
@@ -602,6 +609,7 @@ export default {
         border-radius: 3px;
         top: 30px;
         left: 0;
+        background: #fff;
         li {
           padding: 5px 10px;
           overflow: hidden;
