@@ -106,16 +106,16 @@
                 </router-link>
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="12">
               <el-form-item :label="$t('goodsEdit.是否上架')" style="width: 100%;">
                 <el-switch v-model="form.status"></el-switch>
               </el-form-item>
             
             </el-col>
-            <el-col :span="18">
-              <el-form-item :label="$t('goodsEdit.商品是否免邮')" style="width: 100%;">
+            <el-col :span="12">
+              <!-- <el-form-item :label="$t('goodsEdit.商品是否免邮')" style="width: 100%;">
                 <el-switch v-model="form.shipping"></el-switch>
-              </el-form-item>
+              </el-form-item> -->
             
             </el-col>            
             <el-col :span="24">

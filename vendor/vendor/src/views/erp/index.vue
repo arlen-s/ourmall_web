@@ -4,26 +4,30 @@
 			<div class="left">
 				<div class="title">
 					<i class="el-icon-s-management"></i>
-					<h2>{{ $t('app.应用') }}</h2>
+					<h2>{{ $t('app.我的服务') }}(1)</h2>
 				</div>
 			</div>
 			<div class="right"></div>
 		</div>
-		<el-card>
+		<el-card class="box-card">
 			<div class="erp-manage">
-				<h4>ERP</h4>
-				<div class="d-flex erp-mabang">
-					<img src="../../../public/images/erp/mabang.png" width="150">
-					<div class="">
-						<p>{{ $t('app.马帮ERP') }}</p>
-						<el-link type="primary" @click="openAuth">{{ $t('app.去授权') }}</el-link>
+				<!-- <h4>ERP</h4> -->
+				<div class="box-flex erp-mabang">
+					<div class="log-box">
+							<img src="../../../public/images/erp/mabang.png">
+							<p class="erp-text">{{ $t('app.马帮erp') }}</p>
+					</div>
+					
+					<div class="right-box">
+						<p>{{ $t('app.maBangLogo文案') }}</p>
+						<el-link type="primary" @click="openAuth">{{ $t('app.获取授权码') }}</el-link>
 					</div>
 				</div>
-				<div class="d-flex erp-text">
+				<!-- <div class="d-flex erp-text">
 					<img src="../../../public/images/erp/icon.png" width="25">
 					<p>{{ $t('app.您若使用其他ERP') }}</p>
 				</div>
-				<img src="../../../public/images/erp/qrcode.png" width="300">
+				<img src="../../../public/images/erp/qrcode.png" width="300"> -->
 			</div>
 		</el-card>
 		<dialoAuth :authData="dialoAuthInfo" @openSecretKey="openSecretKey"></dialoAuth>
@@ -97,7 +101,10 @@
 
 <style lang="scss" scoped>
 	.erp-manage{
-		padding: 50px 150px;
+		// padding: 50px 150px;
+		.box-flex{
+			display: flex;
+		}
 		h4{
 			font-size: 26px;
 			font-weight: 600;
@@ -106,25 +113,33 @@
 			margin-bottom: 10px;
 		}
 		.erp-mabang{
-			padding: 26px 46px;
+			// padding: 26px 46px;
 			border-radius: 4px;
-			border: 1px solid #CACACA;
-			margin-bottom: 80px;
-			width: 500px;
-			img{
-				margin-right: 37px;
+			// border: 1px solid #CACACA;
+			// margin-bottom: 80px;
+
+			.log-box{
+				margin-right: 10px
+				p{
+					text-align: center;
+				}
 			}
-			p{
-				font-size: 24px;
+			img{
+				width: 120px;
+				height: 120px;
+			}
+			.erp-text{
+				text-align: center;
+				font-size: 14px;
 				font-weight: 500;
-				color: #0F0252;
-				line-height: 33px;
-				margin-bottom: 20px;
+				color: #000;
+				line-height: 20px;
 			}
 		}
-		.erp-text{
-			margin-bottom: 30px;
+		.right-box{
+				padding-left: 10px;
 			p{
+				padding-top: 10px;
 				font-size: 14px;
 				font-weight: 400;
 				color: #666666;
@@ -132,5 +147,18 @@
 				margin-left: 22px;
 			}
 		}
+		// .erp-text{
+		// 	p{
+		// 		font-size: 14px;
+		// 		padding-left: 10px;
+		// 		font-weight: 400;
+		// 		color: #666666;
+		// 		line-height: 20px;
+		// 		margin-left: 22px;
+		// 	}
+		// }
+	}
+	.box-card{
+		width: 400px;
 	}
 </style>

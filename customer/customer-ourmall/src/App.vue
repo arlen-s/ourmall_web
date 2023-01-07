@@ -529,6 +529,7 @@ export default {
       shopName: "",
       importNum: 0,
       cartNum: 0,
+      faviconLogo: '',
       authCode: "",
       headerMenu: [],
       changeEmailStatus: false,
@@ -973,6 +974,9 @@ export default {
       },
       deep: true,
     },
+    faviconLogo(){
+      this.changeFavicon ()
+    },
     $route: {
       handler: function () {
         // 页面停留时间统计——正常路由跳转
@@ -1092,6 +1096,18 @@ export default {
     },
   },
   methods: {
+			changeFavicon () {
+      let favicon = document.querySelector('link[rel="icon"]')
+      console.log('app', favicon)
+      if (favicon !== null) {
+        favicon.href = this.faviconLogo
+      } else {
+        favicon = document.createElement('link')
+        favicon.rel = 'icon'
+        favicon.href = this.faviconLogo
+        document.head.appendChild(favicon)
+      }
+    },    
     getVendorCurrency() {
       this.$apiCall("api.User.getVendorCurrency", {}, (r) => {
         if (r.ErrorCode == 9999) {
@@ -1103,7 +1119,6 @@ export default {
       });
     },
     getShopConfig() {
-      console.log(111)
       this.$apiCall("api.VendorShop.getShopConfig", {}, (r) => {
         if (r.ErrorCode == 9999) {
           if (r.Data.Results.length !== 0) {
@@ -1117,6 +1132,7 @@ export default {
             }
             this.$store.commit("getStoreComponent", r.Data.Results);
             this.setting = r.Data.Results;
+            this.faviconLogo = r.Data.Results.header.logo
             localStorage.setItem(
               "c_shopConfigJson",
               JSON.stringify(r.Data.Results)
