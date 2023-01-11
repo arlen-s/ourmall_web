@@ -635,14 +635,14 @@ export default {
   padding: 5px 10px 0 0;
   text-align: left;
   &:hover .drop-sec {
-    display: flex;
+    // display: flex;
   }
   .drop-sec {
     display: none;
     position: absolute;
-    bottom: 0;
+    bottom: -10px;
     transform: translateY(100%);
-    left: -10px;
+    left: 0px;
     list-style: none;
     box-sizing: border-box;
     max-width: 150px;
@@ -671,8 +671,8 @@ export default {
         max-width: 200px;
         min-width: 100px;
         border-radius: 3px;
-        top: 30px;
-        left: 0;
+        top: 0px;
+        left: 105px;
         li {
           padding: 5px 10px;
           overflow: hidden;
