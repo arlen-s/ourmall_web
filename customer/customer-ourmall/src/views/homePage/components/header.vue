@@ -564,7 +564,7 @@ export default {
   padding: 5px 10px 0;
   text-align: left;
   &:hover .drop-sec {
-    // display: flex;
+    display: block;
   }
   .drop-sec {
     display: none;
@@ -635,7 +635,7 @@ export default {
   padding: 5px 10px 0 0;
   text-align: left;
   &:hover .drop-sec {
-    // display: flex;
+    display: block;
   }
   .drop-sec {
     display: none;
