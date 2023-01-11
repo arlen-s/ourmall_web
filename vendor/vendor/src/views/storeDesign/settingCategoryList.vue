@@ -42,7 +42,7 @@
 						</el-form-item>
 						<el-form-item :label="$t('storeSetting.每排展示个数(每排最多可展示4排)')">
 							<el-input-number @change="perChange" v-model="setting.cntPerRows" style="width: 210px"
-								controls-position="right" :min="1" :max="4"></el-input-number>
+								controls-position="right" :min="1" :max="6"></el-input-number>
 						</el-form-item>
 						<el-form-item :label="$t('storeSetting.更多按钮文案')">
 							<el-input v-model="setting.moreText" style="width: 210px"></el-input>

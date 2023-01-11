@@ -100,11 +100,12 @@ export default {
 		margin-top: 12px;
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-between;
+		justify-content: flex-start;
 		align-items: center;
 		.items {
 			margin-top: 43px;
 			width: 30%;
+			padding: 0 10px;
 			.item-inner {
 				border-radius: 5px;
 				height: 0;

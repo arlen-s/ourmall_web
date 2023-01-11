@@ -87,7 +87,7 @@
               >
                 <el-option label="Plus" value="1"></el-option>
                 <el-option label="Multiply" value="2"></el-option>
-                <el-option label="固定价格" value="3"></el-option>
+                <el-option label="Fixed Price" value="3"></el-option>
               </el-select>
             </template>
           </el-table-column>

@@ -42,7 +42,7 @@
           </div>
           <div>
               <div class="title">{{$t('storeSetting.每排展示个数')}}</div>
-              <el-slider :min="Number(1)" :max="Number(4)" v-model="setting.colNum"></el-slider>
+              <el-slider :min="Number(1)" :max="Number(6)" v-model="setting.colNum"></el-slider>
           </div>
           <!-- 对齐方式 -->
           <div>
@@ -178,7 +178,6 @@ export default {
     }
   },
   created(){
-    console.log(222222);
     this.$apiCall("api.VendorShop.getShopConfig", {}, r => {
       if (r.ErrorCode == 9999) {
         if(r.Data.Results.length !== 0){

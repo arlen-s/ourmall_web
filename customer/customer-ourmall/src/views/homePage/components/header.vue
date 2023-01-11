@@ -561,7 +561,7 @@ export default {
 }
 .dropmenu {
   position: relative;
-  padding: 5px 10px 0 0;
+  padding: 5px 10px 0;
   text-align: left;
   &:hover .drop-sec {
     display: flex;
