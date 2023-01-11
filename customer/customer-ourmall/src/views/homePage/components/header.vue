@@ -574,11 +574,10 @@ export default {
     left: -10px;
     list-style: none;
     box-sizing: border-box;
-    max-width: 150px;
-    min-width: 100px;
+    width: 150px;
     padding: 0;
     border-radius: 3px;
-    background: #fff;
+    background: #d1d2dc;
     z-index: 10;
     a {
       text-decoration: none;
@@ -604,12 +603,11 @@ export default {
         display: none;
         padding: 0;
         position: absolute;
-        max-width: 200px;
-        min-width: 100px;
+        width: 150px;
         border-radius: 3px;
         top: 30px;
         left: 0;
-        background: #fff;
+        background: #d1d2dc;
         li {
           padding: 5px 10px;
           overflow: hidden;
@@ -645,10 +643,10 @@ export default {
     left: 0px;
     list-style: none;
     box-sizing: border-box;
-    max-width: 150px;
-    min-width: 100px;
+    width: 150px;
     padding: 0;
     border-radius: 3px;
+    background: #d1d2dc;
     a {
       text-decoration: none;
       color: rgb(96, 98, 102);
@@ -668,11 +666,11 @@ export default {
         display: none;
         padding: 0;
         position: absolute;
-        max-width: 200px;
-        min-width: 100px;
+        width: 150px;
         border-radius: 3px;
         top: 0px;
         left: 105px;
+        background: #d1d2dc;
         li {
           padding: 5px 10px;
           overflow: hidden;
