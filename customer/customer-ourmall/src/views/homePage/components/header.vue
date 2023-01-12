@@ -605,8 +605,8 @@ export default {
         position: absolute;
         width: 150px;
         border-radius: 3px;
-        top: 30px;
-        left: 0;
+        top: 0px;
+        left: 150px;
         background: #d1d2dc;
         li {
           padding: 5px 10px;
@@ -669,7 +669,7 @@ export default {
         width: 150px;
         border-radius: 3px;
         top: 0px;
-        left: 105px;
+        left: 150px;
         background: #d1d2dc;
         li {
           padding: 5px 10px;

@@ -1176,20 +1176,22 @@ export default {
             this.$Burying({
               object: "1005",
             }); 
+            if ( r.Data.Results.isSubUser&& r.Data.Results.isSubUser == true ) {
+console.log(r.Data.Results.isSubUser, 'r.Data.Results.isSubUser');
+              // this.selectChildShopList = r.Data.Results.shops
+              this.selectShopToken = r.Data.Results.apiUserToken
+              this.needChildSelectShop =false
+               this.needSelectShop = false;  
+                this.handleLogin(r.Data.Results);
+            
+            } else {
 
-            if (!r.Data.Results.isSubUser ) {
               this.needSelectShop = true;
               this.needChildSelectShop =false
               this.needMasterSelectShop = false;
               this.handleLogin(r.Data.Results, 1);
               this.getShopList();
               this.getCountry();
-            } else {
-              this.selectChildShopList = r.Data.Results.shops
-              this.selectShopToken = r.Data.Results.token
-              this.needChildSelectShop =true
-               this.needSelectShop = false;
-                // this.handleLogin(r.Data.Results);
             }
 
           } else {
