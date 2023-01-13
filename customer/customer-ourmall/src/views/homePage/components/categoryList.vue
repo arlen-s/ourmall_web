@@ -49,7 +49,7 @@
 		},
 		computed: {
 			itemWidth() {
-				return 90 / this.setting.cntPerRows
+				return 100 / this.setting.cntPerRows
 			},
 			sumCnt() {
 				return this.setting.cntPerRows * this.setting.rows
@@ -142,7 +142,7 @@
 				margin-top: 43px;
 				width: 30%;
 				cursor: pointer;
-				pad: 0 10px;
+				padding: 0 20px;
 				.item-inner {
 					border-radius: 5px;
 					height: 0;

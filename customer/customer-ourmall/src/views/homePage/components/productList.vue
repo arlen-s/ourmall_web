@@ -17,7 +17,9 @@
             <div class="inner" v-if="index<(data.rowNum*data.colNum)">
                 <div class="innerBox" :class="{
                   'col-num1':data.colNum == 1,'col-num2':data.colNum == 2,
-                  'col-num3':data.colNum == 3,'col-num4':data.colNum == 4}" 
+                  'col-num3':data.colNum == 3,'col-num4':data.colNum == 4,
+                  'col-num5':data.colNum == 4,'col-num6':data.colNum == 4                 
+                  }" 
                 >
                 <div class="product-img">
                     <img :src="item.imgUrl">
