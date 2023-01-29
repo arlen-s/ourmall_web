@@ -10,7 +10,7 @@ let ApiCall = (api, params, callBack) => {
 	params.apiUserId = localStorage.getItem("apiUserId")?localStorage.getItem("apiUserId"):"";
 	params.apiUserToken = localStorage.getItem("apiUserToken")?localStorage.getItem("apiUserToken"):"";
 	params.apiSubUserId = localStorage.getItem('apiSubUserId') ? localStorage.getItem("apiSubUserId") : userInfo.subUserId;
-	params.apiShopId = localStorage.getItem('apiShopId') || '';
+	params.apiShopId = api != 'api.CompanyUser.login'? localStorage.getItem('apiShopId') : '';
 	//有权限限制
 	if(userInfo && userInfo.subUserNoRightsApi && userInfo.subUserNoRightsApi.length){
 		if(userInfo.subUserNoRightsApi.indexOf(api) > -1){
