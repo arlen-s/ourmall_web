@@ -1183,7 +1183,7 @@ export default {
                   this.needSelectShop = false;  
                   this.handleLogin(r.Data.Results);
               }else{
-                  this.needSelectShop = true;
+                  this.needChildSelectShop = true;
                   this.selectShopList = r.Data.Results.shops || [];
                   this.selectShopToken = r.Data.Results.token;
               }
