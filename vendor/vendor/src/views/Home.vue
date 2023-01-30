@@ -1184,7 +1184,7 @@ export default {
                   this.handleLogin(r.Data.Results);
               }else{
                   this.needChildSelectShop = true;
-                  this.selectShopList = r.Data.Results.shops || [];
+                  this.selectChildShopList = r.Data.Results.shops || [];
                   this.selectShopToken = r.Data.Results.token;
               }
               // this.selectChildShopList = r.Data.Results.shops        
