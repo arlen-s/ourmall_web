@@ -1177,13 +1177,17 @@ export default {
               object: "1005",
             }); 
             if ( r.Data.Results.isSubUser&& r.Data.Results.isSubUser == true ) {
-console.log(r.Data.Results.isSubUser, 'r.Data.Results.isSubUser');
-              // this.selectChildShopList = r.Data.Results.shops
-              this.selectShopToken = r.Data.Results.apiUserToken
-              this.needChildSelectShop =false
-               this.needSelectShop = false;  
-                this.handleLogin(r.Data.Results);
-            
+              if(!r.Data.Results.chooseStore){
+                  this.selectShopToken = r.Data.Results.apiUserToken
+                  this.needChildSelectShop =false
+                  this.needSelectShop = false;  
+                  this.handleLogin(r.Data.Results);
+              }else{
+                  this.needSelectShop = true;
+                  this.selectShopList = r.Data.Results.shops || [];
+                  this.selectShopToken = r.Data.Results.token;
+              }
+              // this.selectChildShopList = r.Data.Results.shops        
             } else {
 
               this.needSelectShop = true;
