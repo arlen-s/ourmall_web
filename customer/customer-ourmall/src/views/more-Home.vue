@@ -95,19 +95,28 @@
           </div>
 
           <div v-if="items && items.length == 0" style="flex:1">
-                        <div class="top-filter-box">
-              <span> Sort by</span>
+        <div class="top-filter-box">
+        <span> Sort by</span>
         <div class="right"
-          @click="change(item,index)"
-          v-for="(item, index) in btnList"
-          :key="index">{{item.label}}
+          @click="changePrice()"
+         >{{priceObj.label}}
           <div class="box-icon-top">
             <div class="up"
-              :class="item.status === 1 ? 'opacity-5' : ''"></div>
+              :class="priceObj.status === 1 ? 'opacity-5' : ''"></div>
             <div class="down"
-              :class="item.status === 1 ? 'opacity-1' : ''"></div>
+              :class="priceObj.status === 1 ? 'opacity-1' : ''"></div>
           </div>
         </div>
+        <div class="right"
+          @click="changeStock()"
+         >{{filterStock.label}}
+          <div class="box-icon-top">
+            <div class="up"
+              :class="filterStock.status === 1 ? 'opacity-5' : ''"></div>
+            <div class="down"
+              :class="filterStock.status === 1 ? 'opacity-1' : ''"></div>
+          </div>
+        </div>        
             </div>
             <el-card class="mg-l-20" style="width:auto">
               <div class="noProduct">
@@ -120,16 +129,25 @@
             <div class="top-filter-box">
               <span> Sort by</span>
         <div class="right"
-          @click="change(item,index)"
-          v-for="(item, index) in btnList"
-          :key="index">{{item.label}}
+          @click="changePrice()"
+         >{{priceObj.label}}
           <div class="box-icon-top">
             <div class="up"
-              :class="item.status === 1 ? 'opacity-5' : ''"></div>
+              :class="priceObj.status === 1 ? 'opacity-5' : ''"></div>
             <div class="down"
-              :class="item.status === 1 ? 'opacity-1' : ''"></div>
+              :class="priceObj.status === 1 ? 'opacity-1' : ''"></div>
           </div>
         </div>
+        <div class="right"
+          @click="changeStock()"
+         >{{filterStock.label}}
+          <div class="box-icon-top">
+            <div class="up"
+              :class="filterStock.status === 1 ? 'opacity-5' : ''"></div>
+            <div class="down"
+              :class="filterStock.status === 1 ? 'opacity-1' : ''"></div>
+          </div>
+        </div> 
             </div>
             <div class="list">
               <div class="pro_box" v-for="item in items" :key="item.id" style="margin-bottom: 10px">
@@ -265,7 +283,12 @@ export default {
         { label: "Price", status: 0 },
         { label: "Stock Qty", status: 0 }
       ],
-
+      priceObj: {
+        label: "Price", status: 0
+      },
+      filterStock: {
+          label: "Stock Qty", status: 0
+      },
       nameS: '',
       checkQty:'asc',
       checkSort: '',
@@ -437,6 +460,20 @@ export default {
         this.filterUItem = item
          this.getItems ()
     },
+    changePrice(){
+      this.priceObj.status === 0
+        ? (this.priceObj.status = 1)
+        : (this.priceObj.status = 0);
+        this.filterUItem =  this.priceObj
+         this.getItems ()
+    },
+    changeStock(){
+      this.filterStock.status === 0
+        ? (this.filterStock.status = 1)
+        : (this.filterStock.status = 0);
+        this.filterUItem =  this.filterStock
+         this.getItems ()
+    },
     gotoCategory (i) {
       if (i == 1) {
         this.$router.push(
@@ -595,6 +632,7 @@ export default {
       if (this.categoryId == "ALL-CATEGORIES") {
         this.categoryId = ''
       }
+      let params = {}
       this.commodityTypeMoreList.forEach((item) => {
         if (item.name == this.categoryId) {
           this.categoryId = item.id
@@ -603,14 +641,6 @@ export default {
       if (this.filterUItem) {
         if (this.filterUItem.label == 'Price') {
          this.checkSort =   this.filterUItem.status == 0 ? 'asc' : 'desc'
-    
-
-      }else{
-        this.checkQty =   this.filterUItem.status == 0 ? 'asc' : 'desc'
-      }
-      }
-      let params = {}
-      if (this.checkQty == 'asc') {
         params = {
           name: this.input,
           categoryId: this.$route.params.id,
@@ -623,11 +653,14 @@ export default {
           sortCost: this.checkSort || 'asc',
           maxInventory: this.maxQty ,
           minInventory: this.minQty ,
-          sortMinInventory: 'asc',
+          sortMinInventory: '',
         }
+
       }else{
-        params = {
-                    name: this.input,
+          this.checkSort =   this.filterUItem.status == 0 ? 'asc' : 'desc'
+          if ( this.checkSort == 'asc') {
+          params = {
+          name: this.input,
           categoryId: this.$route.params.id,
           page: this.page,
           rowsPerPage: this.rowsPerPage,
@@ -635,12 +668,62 @@ export default {
           costFrom: this.min ,
           costTo: this.max ,
           timePublishedTo: this.radioDay,
-          sortCost: this.checkSort || 'asc',
+          sortCost: '',
           maxInventory: this.maxQty ,
           minInventory: this.minQty ,
-          sortMaxInventory: 'desc',
+          sortMinInventory: this.checkSort,
         }
+          }else{
+          params = {
+          name: this.input,
+          categoryId: this.$route.params.id,
+          page: this.page,
+          rowsPerPage: this.rowsPerPage,
+          status: 1,
+          costFrom: this.min ,
+          costTo: this.max ,
+          timePublishedTo: this.radioDay,
+          sortCost: '',
+          maxInventory: this.maxQty ,
+          minInventory: this.minQty ,
+          sortMaxInventory: this.checkSort,            
+          }
+          }
+        this.checkQty =   this.filterUItem.status == 0 ? 'asc' : 'desc'
       }
+      }
+      // let params = {}
+      // if (this.checkQty == 'asc') {
+      //   params = {
+      //     name: this.input,
+      //     categoryId: this.$route.params.id,
+      //     page: this.page,
+      //     rowsPerPage: this.rowsPerPage,
+      //     status: 1,
+      //     costFrom: this.min ,
+      //     costTo: this.max ,
+      //     timePublishedTo: this.radioDay,
+      //     sortCost: this.checkSort || 'asc',
+      //     maxInventory: this.maxQty ,
+      //     minInventory: this.minQty ,
+      //     sortMinInventory: 'asc',
+      //   }
+      // }else{
+      //   params = {
+      //     name: this.input,
+      //     categoryId: this.$route.params.id,
+      //     page: this.page,
+      //     rowsPerPage: this.rowsPerPage,
+      //     status: 1,
+      //     costFrom: this.min ,
+      //     costTo: this.max ,
+      //     timePublishedTo: this.radioDay,
+      //     sortCost: this.checkSort || 'asc',
+      //     maxInventory: this.maxQty ,
+      //     minInventory: this.minQty ,
+      //     sortMaxInventory: 'desc',
+      //   }
+      // }
       this.$apiCall(
         "api.VendorShop.vendorFindProducts",
         params,
