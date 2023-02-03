@@ -224,11 +224,11 @@
                     <div class="title">{{$t('storeSetting.添加内容')}}</div>
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="scribe" :disabled="setting.contentConfig.scribeUsed">{{$t('storeSetting.订阅')}}</el-dropdown-item>
-                    <el-dropdown-item command="company" :disabled="setting.contentConfig.companyUsed">{{$t('storeSetting.公司信息')}}</el-dropdown-item>
-                    <el-dropdown-item command="socal" :disabled="setting.contentConfig.socalUsed">{{$t('storeSetting.社交账号信息')}}</el-dropdown-item>
-                    <el-dropdown-item command="about" :disabled="setting.contentConfig.aboutUsed">{{$t('storeSetting.关于我们')}}</el-dropdown-item>
-                    <el-dropdown-item command="navigate" :disabled="setting.contentConfig.navigateUsed">{{$t('storeSetting.菜单导航')}}</el-dropdown-item>
+                    <el-dropdown-item command="scribe" >{{$t('storeSetting.订阅')}}</el-dropdown-item>
+                    <el-dropdown-item command="company" >{{$t('storeSetting.公司信息')}}</el-dropdown-item>
+                    <el-dropdown-item command="socal" >{{$t('storeSetting.社交账号信息')}}</el-dropdown-item>
+                    <el-dropdown-item command="about" >{{$t('storeSetting.关于我们')}}</el-dropdown-item>
+                    <el-dropdown-item command="navigate" >{{$t('storeSetting.菜单导航')}}</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
