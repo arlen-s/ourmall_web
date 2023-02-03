@@ -210,11 +210,7 @@
               </div>
             </draggable>
               <div class="add-box"
-                v-if="!setting.contentConfig.scribeUsed
-                || !setting.contentConfig.companyUsed
-                || !setting.contentConfig.socalUsed
-                || !setting.contentConfig.aboutUsed
-                || !setting.contentConfig.navigateUsed"
+
                 @click="addModal">
                 <el-dropdown
                 @command="addCommand"
@@ -232,9 +228,9 @@
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
-              <div v-else class="add-box">
+              <!-- <div v-else class="add-box">
                 5 contents have been added. Please delete them before adding
-              </div>
+              </div> -->
           </div>
         </div>
         <div class="one-box">
