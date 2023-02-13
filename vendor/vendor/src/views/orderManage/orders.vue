@@ -1645,15 +1645,15 @@ export default {
     downloadFileBuild(){
       console.log(3333);
 				let url = "/newFile/UnbundTemp.xlsx";
-				if ($("#downloadFileCreateA").length == 0) {
-					$("body").append(
-						'<iframe id="downloadFileCreateA" style="display:none"></iframe>'
-					);
-				}
-				let openDownload = (url) => {
-					document.getElementById("downloadFileCreateA").src = url;
-				};
-				openDownload(url);
+      if($("#downloadFile").length == 0) {
+        $("body").append(
+          '<iframe id="downloadFile" style="display:none"></iframe>'
+        );
+      }
+      let openDownload = url => {
+        document.getElementById("downloadFile").src = url;
+      };
+      openDownload(url);
   //       let a = document.createElement('a') // 创建a标签
 	// a.href = url // 文件路径
 	// a.download = '解绑模板.xlsx' // 文件名称
