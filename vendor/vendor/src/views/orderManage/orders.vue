@@ -8,6 +8,10 @@
         </div>
       </div>
       <div class="right">
+          <el-button
+            type="primary"
+            @click="batchUnbundling()"          
+          >批量解绑商品</el-button>        
         <template v-if="status == 2 && (activeName == 3)">
           <el-button
             type="primary"
@@ -1288,6 +1292,46 @@
     <el-button type="primary" @click="buildOrder">{{$t('orders.提交')}}</el-button>
   </span>
 </el-dialog>
+<el-dialog
+  title="批量解绑商品"
+  :visible.sync="bathBundDialog"
+  width="30%"
+  :before-close="handleCloseBund">
+  <div class="sina-box">
+     <el-link type="danger" :underline="false">注意：你现在操作解绑国内，有可能会影响已付款的订单，请确认操作</el-link>
+    <p> </p>
+    <div>
+  <el-form :model="formInline" class="demo-form-inline">
+      <el-form-item label="下载解绑模板：">
+      <!-- <el-link type="primary"  href="./file/UnbundTemp.xlsx" target="_blank">解绑模板</el-link> -->
+      <el-button type="text" @click="downloadFileBuild">解绑模板</el-button>
+      </el-form-item>
+      <el-form-item label="导入解绑文档">
+          <el-input
+            v-model="formInline.templateFile"
+            type="text"
+            style="width:65%"
+            auto-complete="off"
+            :placeholder="$t('请上传模板文件')"
+            readonly="readonly">
+            <el-button slot="append" type="success" @click="uploadFileClick"
+              ><i class="el-icon-upload"></i> {{ $t('选择本地Excel文件') }}</el-button
+            >
+          </el-input>
+      </el-form-item>
+          <input
+            id="uploadFile"
+            style="display: none"
+            type="file"
+            accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            @change="uploadExcel($event)" />
+  </el-form>
+    </div>
+  </div>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="setDialog()">确 定</el-button>
+  </span>
+</el-dialog>
     <dialogQuote :quoteData="dialogQuoteInfo" @openRelate="openRelate"></dialogQuote>
     <dialogRelate :relateData="dialogRelateInfo" @relateFn="relateFn"></dialogRelate>
     <dialogImport :importData="dialoImportInfo" @submitUpload="submitUpload"></dialogImport>
@@ -1329,6 +1373,10 @@ export default {
           type: ''
       
       },
+      formInline: {
+        templateFile: '',
+      },
+      bathBundDialog: false,
       batchNum: 0,
       offlineNum: 0,
       vipOrderReserveDay: this.$root.$children[0].vipNowData.orderReserveDay,
@@ -1587,6 +1635,74 @@ export default {
       })
       this.dialogSplitInfo.items = this.checkItems
     },
+    batchUnbundling(){
+        this.bathBundDialog = true
+    },
+    handleCloseBund(){
+      this.bathBundDialog = false
+       this.formInline.templateFile = ''
+    },
+    downloadFileBuild(){
+      console.log(3333);
+				let url = "/newFile/UnbundTemp.xlsx";
+				// if ($("#downloadFileCreateA").length == 0) {
+				// 	$("body").append(
+				// 		'<iframe id="downloadFileCreateA" style="display:none"></iframe>'
+				// 	);
+				// }
+				// let openDownload = (url) => {
+				// 	document.getElementById("downloadFileCreateA").src = url;
+				// };
+				// openDownload(url);
+        let a = document.createElement('a') // 创建a标签
+	a.href = url // 文件路径
+	a.download = '解绑模板.xlsx' // 文件名称
+	a.style.display = 'none' // 隐藏a标签
+	document.body.appendChild(a)
+    // 定时器(可选)
+	setTimeout(() => {
+	a.click() // 模拟点击(要加)
+	document.removeChild(a) //删除元素(要加)
+	setTimeout(() => {
+		self.URL.revokeObjectURL(a.href) // 用来释放文件路径(可选)
+	}, 200)
+	    }, 66)
+
+    },
+    uploadFileClick(){
+      document.getElementById('uploadFile').click()
+    },
+    setDialog(){
+      if (this.formInline.templateFile.length == 0) {
+        this.$message.error('请上传文件')
+        return false
+      }    
+      let fileData  = document.getElementById('uploadFile').files[0]
+      console.log(fileData, 'this.formInline.templateFile.');  
+      // let form = new FormData()
+      // form.append('file', fileData)
+            let param = {
+        "@file": fileData,
+      }
+      this.$apiCall("api.ShopifyOrder.cancelRelationships", param, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.$message.success('Binding succeeded!');
+          this.bathBundDialog = false
+          this.formInline.templateFile = ''
+          this.getItem()
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })      
+    },
+    uploadExcel(event) {
+      let _this = this
+      let file = event.currentTarget.files[0]
+      _this.formInline.templateFile = file.name
+    },    
     batchWareHouse(){        
         if (this.checkIds.length == 0) {
           this.$message.error('Please select an order')
