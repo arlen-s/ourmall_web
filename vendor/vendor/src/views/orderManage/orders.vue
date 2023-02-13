@@ -2772,6 +2772,9 @@ export default {
   font-size: 18px;
   color: #606266;
 }
+.sina-box{
+  padding-left: 20px;
+}
 </style>
 <style>
 .el-popover .items {
