@@ -1644,7 +1644,7 @@ export default {
     },
     downloadFileBuild(){
       console.log(3333);
-				let url = "/newFile/UnbundTemp.xlsx";
+				let url = "/newFile/orders_creat.xlsx";
       if($("#downloadFile").length == 0) {
         $("body").append(
           '<iframe id="downloadFile" style="display:none"></iframe>'
@@ -1654,19 +1654,19 @@ export default {
         document.getElementById("downloadFile").src = url;
       };
       openDownload(url);
-  //       let a = document.createElement('a') // 创建a标签
-	// a.href = url // 文件路径
-	// a.download = '解绑模板.xlsx' // 文件名称
-	// a.style.display = 'none' // 隐藏a标签
-	// document.body.appendChild(a)
-  //   // 定时器(可选)
-	// setTimeout(() => {
-	// a.click() // 模拟点击(要加)
-	// document.removeChild(a) //删除元素(要加)
-	// setTimeout(() => {
-	// 	self.URL.revokeObjectURL(a.href) // 用来释放文件路径(可选)
-	// }, 200)
-	//     }, 66)
+        let a = document.createElement('a') // 创建a标签
+	a.href = url // 文件路径
+	a.download = '解绑模板.xlsx' // 文件名称
+	a.style.display = 'none' // 隐藏a标签
+	document.body.appendChild(a)
+    // 定时器(可选)
+	setTimeout(() => {
+	a.click() // 模拟点击(要加)
+	document.removeChild(a) //删除元素(要加)
+	setTimeout(() => {
+		self.URL.revokeObjectURL(a.href) // 用来释放文件路径(可选)
+	}, 200)
+	    }, 66)
 
     },
     uploadFileClick(){
