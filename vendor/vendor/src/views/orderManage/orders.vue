@@ -1644,7 +1644,7 @@ export default {
     },
     downloadFileBuild(){
       console.log(3333);
-				let url = "/newFile/orders_creat.xlsx";
+				let url = "/newFile/ordeExecl.xlsx";
       if($("#downloadFile").length == 0) {
         $("body").append(
           '<iframe id="downloadFile" style="display:none"></iframe>'
