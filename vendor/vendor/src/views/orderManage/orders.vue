@@ -1653,7 +1653,7 @@ export default {
       // let openDownload = url => {
       //   document.getElementById("downloadFile").src = url;
       // };
-      openDownload(url);
+      // openDownload(url);
         let a = document.createElement('a') // 创建a标签
 	a.href = url // 文件路径
 	a.download = '解绑模板.xlsx' // 文件名称
