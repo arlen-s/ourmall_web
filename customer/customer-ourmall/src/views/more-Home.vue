@@ -52,11 +52,11 @@
                 <p class="price">Unit Price</p>
                 <div>
                   <el-input placeholder="Min" style="width:60px" v-model="min">
-                    <span slot="prefix">$</span>
+                    <span slot="prefix">{{$store.state.country.symbol}}</span>
                   </el-input>
                   <span> — </span>
                   <el-input placeholder="Max" style="width:60px" v-model="max">
-                    <span slot="prefix">$</span>
+                    <span slot="prefix">{{$store.state.country.symbol}}</span>
                   </el-input>
                   <el-button type="primary" @click="searchPrice">GO</el-button>
                 </div>
