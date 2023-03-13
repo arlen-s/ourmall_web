@@ -183,7 +183,7 @@
 								</el-image>
 							</div>
 						</div>
-						<p style="color: #909399;">{{$t('goodsEdit.建议上传图片 800*800像素，大小为2MB以内。 最多添加9张图片')}}</p>
+						<p style="color: #909399;">{{$t('goodsEdit.建议上传图片 800*800像素，大小为2MB以内。 最多添加20张图片')}}</p>
 					</div>
 
 					<el-divider></el-divider>
@@ -1380,7 +1380,7 @@
 			fileList(el) {
 				//处理图片数据
 				let files = el.files;
-				if (files.length + this.form.imgUrlsList.length > 9) {
+				if (files.length + this.form.imgUrlsList.length > 20) {
 					//最多9张
 					this.$message({
 						message: this.$t('goodsEdit.最多上传9张图片,还能添加{num}张图片。', {
