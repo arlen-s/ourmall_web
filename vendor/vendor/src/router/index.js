@@ -944,6 +944,18 @@ const routes = [
     ]  
   },
   {
+    path: '/TicketSetting',
+    name: "TicketSetting",
+    meta: {
+      title: 'TicketSetting',
+      urlActive: '/TicketSetting',
+      checkLogin: true,
+      role: "onlineShopTicketSettingView",
+      roleWrite: "onlineShopTicketSettingEdit",
+    },
+    component: () => import(/* webpackChunkName: 'Shop' */ '../views/ShopSet/ticket-settings.vue')
+  },
+  {
     path: '/store-code',
     name: 'storeCode',
     meta: {

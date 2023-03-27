@@ -9,7 +9,7 @@ export default new Vuex.Store({
     country:{
       symbol: '$',
       name:'',
-      shopCurrency: '',
+      shopCurrency: 'USD',
     },
     cnt: {
       customerCnt: 0,

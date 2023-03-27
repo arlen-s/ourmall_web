@@ -268,13 +268,13 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
     background-color: #fff;
     transition: background-color .15s ease-in-out;
     height: 254px;
-    padding-left: 90px;
+    padding-left: 10px;
 }
 .gill,.CategoryCarousel{
   height: 100%;
 }
 .CategoryCarousel-title{
-  width: 210px;
+  width: 250px;
   word-wrap: break-word;
   padding-right: 32px;
   position: relative;
@@ -370,7 +370,7 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   align-items: center;
 }
 .CategoryCarousel-carousel{
-  width: calc(100% - 210px);
+  width: calc(100% - 250px);
 }
 /* .swiper_btn{
    width: 20px;

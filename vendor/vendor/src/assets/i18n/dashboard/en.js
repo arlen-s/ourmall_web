@@ -33,7 +33,7 @@ export const lang = {
   '日期': 'Date',
   '下单客户量': 'Customer Qty',
   '订单数':'Order Qty',
-  '销售额US$': 'Sale Amount US$',
+  '销售额': 'Sale Amount ',
   '显示更多': 'Show more',
   '信息汇总': 'Summary',
   '客户': 'Customer',

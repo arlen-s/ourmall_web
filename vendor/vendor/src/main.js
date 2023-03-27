@@ -246,6 +246,7 @@ router.beforeEach((to, from, next) => {
       next();
     }
   }
+  
 })
 const messages = {
   zh: require('./assets/i18n/lang-zh').lang,

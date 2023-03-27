@@ -74,7 +74,6 @@ export const lang = {
   '库存': 'Inventory',
   '请添加你的商品规格': 'Please add your product specifications',
   '操作': 'Operation',
-  '成本价($)': 'Cost price($)',
   '编辑商品描述': 'Edit product descriptions',
   '当前页面还未保存，确定要离开吗?': 'The current page has not been saved yet, are you sure you want to leave',
   '商品名称必须填写': 'Product name must be filled in.',

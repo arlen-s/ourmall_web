@@ -43,12 +43,12 @@
               <!-- <span style="display:block">Register/login</span> -->
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item v-if="$store.state.userInfo" class="align-items-endd-flex" style="width: 160px" command="dashboard">
-                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> My
-                  Profile
+                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i>
+                  {{$t('My Profile')}}
                 </el-dropdown-item>
                 <el-dropdown-item v-else class="d-flex" style="width: 160px" command="login">
-                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> Login/
-                  Register
+                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i>
+                  {{$t('Login/Register')}}
                 </el-dropdown-item>
                 <el-dropdown-item class="lan-menu align-items-endd-flex" style="width: 160px">
                   <div class="lan-box">
@@ -108,8 +108,8 @@
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item v-if="$store.state.userInfo" class="d-flex" style="width: 160px" command="exit">
-                  <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i>
-                  Logout
+                  <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i>                  
+                  {{$t('Logout')}}
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -243,9 +243,9 @@
     </div>
     <el-dialog class="isValidationCW-dialog" append-to-body title="" :visible.sync="isValidationCWDialog" width="50%">
       <div>
-        <el-result icon="warning" title="警告提示" subTitle="请联系供应商，完善站长外部编号">
+        <el-result icon="warning" :title="$t('警告提示')" :subTitle="$t('请联系供应商，完善站长外部编号')">
           <template slot="extra">
-            <el-button type="primary" size="medium" @click="isValidationCWDialog = false">返回</el-button>
+            <el-button type="primary" size="medium" @click="isValidationCWDialog = false">{{$t('返回')}}</el-button>
           </template>
         </el-result>
       </div>
@@ -564,7 +564,7 @@ export default {
   padding: 5px 10px 0;
   text-align: left;
   &:hover .drop-sec {
-    display: block;
+    display: flex;
   }
   .drop-sec {
     display: none;
@@ -633,7 +633,7 @@ export default {
   padding: 5px 10px 0 0;
   text-align: left;
   &:hover .drop-sec {
-    display: block;
+    // display: flex;
   }
   .drop-sec {
     display: none;
@@ -663,6 +663,7 @@ export default {
         }
       }
       .drop-third {
+        background: #d1d2dc;
         display: none;
         padding: 0;
         position: absolute;
@@ -670,7 +671,6 @@ export default {
         border-radius: 3px;
         top: 0px;
         left: 150px;
-        background: #d1d2dc;
         li {
           padding: 5px 10px;
           overflow: hidden;
@@ -913,12 +913,12 @@ export default {
 .banner-box {
   padding: 0;
   flex-wrap: wrap;
-  width: 945px;
+  max-width: 1440px;
   margin: 0 auto;
   // padding-left: calc(234px + 1%);
 }
 .banner-box a {
-  font-size: 16px;
+  font-size: 18px;
   text-decoration: none;
 }
 .search-but {

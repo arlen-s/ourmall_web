@@ -92,6 +92,7 @@ export const lang = {
 	'待我确认收款':'Waiting for my confirmation of payment',
 	'待我报价': 'Waiting for offer',
 	'待客户付款': 'Waiting for payment',
+	'待分配仓库': 'warehouse to be allocated',
 	'已付款待发货': 'Waiting for fulfill',
 	'全部发货': 'All fulfilled',
 	'有异常': 'Abnormal',

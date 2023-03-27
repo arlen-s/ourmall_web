@@ -144,7 +144,6 @@
 				font-weight: 400;
 				color: #666666;
 				line-height: 20px;
-				margin-left: 22px;
 			}
 		}
 		// .erp-text{

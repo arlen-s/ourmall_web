@@ -46,7 +46,6 @@ export const lang = {
     '票类设置':'Ticket settings',
     '自定义代码':'Custom code',
     '自定义页面': 'Custom page',
-    '待分配仓库':'warehouse to be allocated',
     '折扣管理':'Discount',
     '财务管理':'Finance',
 		'收款方式':'Payment',
