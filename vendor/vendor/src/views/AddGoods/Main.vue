@@ -2141,8 +2141,8 @@ export default {
       if (files.length + this.form.imgUrlsList.length > 20) {
         //最多9张
         this.$message({
-          message: this.$t('goodsEdit.最多上传9张图片,还能添加{num}张图片。', {
-            num: 9 - this.form.imgUrlsList.length
+          message: this.$t('goodsEdit.最多上传20张图片,还能添加{num}张图片。', {
+            num: 20 - this.form.imgUrlsList.length
           }),
           type: "error"
         })
