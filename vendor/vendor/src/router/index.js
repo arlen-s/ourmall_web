@@ -118,6 +118,15 @@ const routes = [
     component: () => import(/* webpackChunkName: 'Dropshipping' */ '../views/Dropshipping/Dropshipping.vue')
   },
   {
+    path: '/DownPdf',
+    name: "DownPdf",
+    meta: {
+      title: 'DownPdf',
+      checkLogin: false,
+    },
+    component: () => import(/* webpackChunkName: 'Dropshipping' */ '../views/downInvoices.vue')
+  },
+  {
     path: '/DropD',
     name: "DropD",
     meta: {
