@@ -46,6 +46,7 @@ export const lang = {
   authorize: '马帮ERP授权',
   Made:'发起报价',
   Giveup:'放弃报价',
+  '下载发票': '下载发票',
   receipt:'确认收款',
   notreceived:'未收到付款',
   synchronized:'已手动同步',

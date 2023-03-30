@@ -299,6 +299,7 @@
                   ref="gridTable"
                   :data="items"
                   tooltip-effect="dark"
+                  height="500"
                   @selection-change="handleSelectionChange"
                   :row-key="(row) => row.id"
                 >
@@ -738,6 +739,7 @@
                   ref="gridTable"
                   :data="items"
                   tooltip-effect="dark"
+                  height="500"
                   @selection-change="handleSelectionChange"
                   :row-key="(row) => row.id"
                 >
@@ -826,6 +828,7 @@
                   style="width: 100%"
                   ref="gridTable"
                   :data="items"
+                  height="500"
                   @selection-change="handleSelectionChange"
                   tooltip-effect="dark"
                   :row-key="(row) => row.id"
@@ -1575,7 +1578,6 @@ export default {
     },
     $route (to, from) {
       // 对路由变化作出响应...
-
       this.activeName = this.$route.params.active
       this.status = this.$route.params.status ? Number(this.$route.params.status) : 1
       if (to.params.status !== from.params.status) {//切换左边菜单清空搜索条件

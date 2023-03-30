@@ -1023,12 +1023,12 @@
 								role: 'privilegeView',
 								enabled: true,
 							},
-							{
-								name: "shop.交易币种",
-								path: "/Currency",
-								// role: 'privilegeView',
-								enabled: true,
-							},
+							// {
+							// 	name: "shop.交易币种",
+							// 	path: "/Currency",
+							// 	// role: 'privilegeView',
+							// 	enabled: true,
+							// },
 						],
 					},
 					{
