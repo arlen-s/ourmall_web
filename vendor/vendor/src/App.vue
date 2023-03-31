@@ -1044,12 +1044,12 @@
 								role:"onlineShopDecoView",
 								enabled: true,
 							},
-							// {
-							// 	name: "app.票类设置",
-							// 	path: "/TicketSetting",
-							// 	role: 'onlineShopTicketSettingView',
-							// 	enabled: true,
-							// },							
+							{
+								name: "app.票类设置",
+								path: "/TicketSetting",
+								role: 'onlineShopTicketSettingView',
+								enabled: true,
+							},							
 							{
 								name: 'storeSetting.菜单导航',
 								path: "/menu-setting",
