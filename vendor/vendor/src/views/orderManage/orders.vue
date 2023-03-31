@@ -24,6 +24,12 @@
             :disabled="!$isRole('invoiceWaitDeliverEdit')"
           >{{$t('orders.authorize')}}</el-button>
         </template>
+                <template v-if="(status == 2 && activeName == 3) || (status == 3 && activeName == 1)">
+          <el-button
+            type="primary"
+            @click="downPdf"
+          >批量下载发票</el-button>
+        </template>
         <template v-if="status == 2 && (activeName == 1)">
           <el-button
             type="primary"
@@ -704,6 +710,7 @@
                           @click="quoteFn('row',scope.row)"
                           :disabled="!$isRole('invoiceWaitOfferEdit')"
                         >{{$t('orders.Made')}}</el-link>
+                    
                         <el-link
                           v-if="status == 2 && activeName == 3"
                           class="mg-r-20"
@@ -711,6 +718,12 @@
                           @click="markShippedOpen(scope.row)"
                           :disabled="!$isRole('invoiceWaitDeliverEdit')"
                         >{{$t('orders.mark')}}</el-link>
+                                                <el-link
+                          v-if="(status == 2 && activeName == 3) || (status == 3 && activeName == 1)"
+                          class="mg-r-20"
+                          type="primary"
+                          @click="downPdf(scope.row, '1')"
+                        >{{$t('orders.下载发票')}}</el-link>    
                         <el-link
                           v-if="status == 4"
                           class="mg-r-20"
@@ -1981,6 +1994,33 @@ export default {
             reject(id)
           }
         })
+      })
+    },
+    downPdf(row, type){
+      
+      let params = []
+      if (type) {
+      params = [{accountId:row.shopifyAccountId,orderId:row.orderId}]
+      }else{
+      if (!this.checkIds.length) this.$elementMessage("Please select an order first", "error")
+      this.$showLoading()
+      console.log(this.checkItems, '111');
+      params = this.checkItems.map(item=>{
+          let itemT = {
+              accountId:item.shopifyAccountId,orderId:item.orderId
+          }
+          return itemT
+      })
+      }
+     this.$apiCall("api.BillSet.exportBill",{orderInfo:params} , (r) => {
+        if (r.ErrorCode == "9999") {
+    let a = document.createElement('a')
+    a.href = r.Data.Results.url;
+    a.click();
+        } else {
+          this.$elementMessage(r.Message, "error")
+        }
+         this.$hideLoading()
       })
     },
     markShippedOpen (item) {
