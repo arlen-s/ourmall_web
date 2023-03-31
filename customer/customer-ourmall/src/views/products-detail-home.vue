@@ -76,11 +76,11 @@
               <!-- <div class="proCost">{{$showSybmol()}} {{ Number(price)!='0.00' ? $exchangeRate(Number(price).toFixed(2)) : (minPrice||maxPrice) ? `${$exchangeRate(minPrice)} - ${$exchangeRate(maxPrice)}` : $exchangeRate(price)}}</div> -->
               <!-- 选属性 -->
               <div class="other-info" id="special-info" v-if="vatDom">
-                <div class="title">   VAT information :</div>
+                <div class="title">   Mehrwertsteuer-Informationen :</div>
                 <div class="right-fit">
-                    <span class="tx-bold">you can click </span>
-                      <el-link type="primary" @click="showVatDom"> here </el-link>
-                      <span>for VAT information</span>
+                    <span class="tx-bold">können Sie klicken </span>
+                      <el-link type="primary" @click="showVatDom"> hier </el-link>
+                      <span>für Informationen zur Mehrwertsteuer</span>
                 </div>  
               </div>
               <div class="other-info">
@@ -105,10 +105,10 @@
                 </div>
               </div>
               <div class="d-flex warehouse-sty" style="align-items: baseline;">
-                <div class="title">Shipping :</div>
+                <div class="title">Versand :</div>
                 <div class>
                   <div class="d-flex text mg-b-15">
-                    <div class="mg-l-10 " style="width: 100px;">Shipping to</div>
+                    <div class="mg-l-10 " style="width: 100px;">Versand nach</div>
                     <el-select
                       size="small"
                       v-model="shippingContry"
@@ -128,7 +128,7 @@
                     </el-select>
                   </div>
                   <div class="d-flex text">
-                    <div class="mg-l-10" style="width: 100px;">Shipping fee</div>
+                    <div class="mg-l-10" style="width: 100px;">Versandgebühr</div>
                     <el-select
                       size="small"
                       v-model="shippingFee"
@@ -164,7 +164,7 @@
               </ul>
               <!-- 这里 -->
               <div class="d-flex  warehouse-sty" style="align-items: baseline; margin:20px 0 10px 0;">
-                <div class="title">Quality :</div>
+                <div class="title">Qualität :</div>
                 <div class="mg-l-20 d-flex">
                   <el-input-number
                     size="small"
@@ -175,7 +175,7 @@
                     label="description text"
                   ></el-input-number>
                   <div class="mg-l-20 d-flex">
-                    <div>inventory :</div>
+                    <div>Inventar :</div>
                     <div class="tx-bold mg-l-10">{{qualityNum}}</div>
                   </div>
                 </div>
@@ -185,13 +185,13 @@
                 type="primary"
                 @click="import_pro($event)"
                 :disabled="isAdd == 1"
-              >Add to List</el-button>
+              >Zur Liste hinzufügent</el-button>
               <el-button
                 class="addCart"
                 type="primary"
                 @click="addToCart($event)"
                 :disabled="qualityNum == 0 ? true : false"
-              >Add to Cart</el-button> 
+              >Zum Warenkorb hinzufügen</el-button> 
               <!-- 1.9 平铺     -->
               <!-- <div v-if="$store.state.configJson.detailPage.imgSize == 'Tile'" class="inner-description" v-html="web"> -->
 
@@ -214,40 +214,40 @@
           <el-tabs v-model="activeTabsBom" @tab-click="handleClick">
             <el-tab-pane label="Specifications" name="first">
               <div v-if="showSpace &&  checkData.attachment.length> 0">
-               <h3>Download the attachment</h3>
+               <h3>Download der Anlage</h3>
               <div class="product-information2">
                 <span class="fly-box"  v-for="(item, c) in checkData.attachment" :key="c" @click="downFile(item.url,item.name)"><i class="el-icon-document"></i>{{item.name}}</span>
               </div>   
               </div>
               <div style="margin-top:30px"  v-if="showSpace">
-              <h3 >product information</h3>
+              <h3 >Produktinformation</h3>
               <div class="product-information">
                 <div>
                   <span>sku</span>
                   <span>{{checkData.sku || ''}}</span>
                 </div>
                 <div>
-                  <span>Product category</span>
+                  <span>Produktkategorie</span>
                   <span>{{checkData.productCategory}}</span>
                 </div>
                 <div>
-                  <span>product name</span>
+                  <span>Produktname</span>
                   <span>{{checkData.productName || ''}}</span>
                 </div>
                 <div>
-                  <span>Specification</span>
+                  <span>Spezifikation</span>
                   <span>{{checkData.propertyValue || '/'}}</span>
                 </div>
                 <div>
-                  <span>material</span>
+                  <span>Material</span>
                   <span>{{checkData.material || ''}}</span>
                 </div>
                 <div>
-                  <span>size</span>
+                  <span>Größe</span>
                   <span>{{checkData.productLength}}*{{checkData.productWidth}}*{{checkData.productHeight}} （V{{ Number(checkData.productLength)* Number(checkData.productWidth)*Number(checkData.productHeight)}} cm³）</span>
                 </div>
                 <div>
-                  <span>weight</span>
+                  <span>Gewicht</span>
                   <span>{{checkData.weight}}</span>
                 </div>
               </div>
@@ -286,7 +286,7 @@
                 :src="returnImg"
                 fit="contain"></el-image>
                 <strong class="sp" v-if="!salesGuaranteeTimeValue"></strong>
-                <strong class="sp" v-else>Returnable within{{salesGuaranteeTimeValue}}{{timeType}}</strong>
+                <strong class="sp" v-else>Rückgabe innerhalb von{{salesGuaranteeTimeValue}}{{timeType}}</strong>
                   
               </div>
             </el-tab-pane>
@@ -313,7 +313,7 @@
         <el-table-column property="name" label="Carrier"></el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="shoppingDialog = false">Close</el-button>
+        <el-button @click="shoppingDialog = false">Schließen Sie</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -322,9 +322,9 @@
   width="40%">
   <el-row>
     <el-col>
-        <span class="pad-20">The tax-inclusive price of an item is calculated based on the item price set by the seller and the applicable tax rate. You can contact the seller for more details.</span>
+        <span class="pad-20">Der Preis eines Artikels ohne Steuern wird auf der Grundlage des vom Verkäufer festgelegten Artikelpreises und des geltenden Steuersatzes berechnet. Für weitere Einzelheiten können Sie sich an den Verkäufer wenden.</span>
         <span class="pad-10">
-          VAT rate(Destination only in Germany): {{vatValue}} %
+           Mehrwertsteuersatz (Bestimmung nur in Deutschland): {{vatValue}} %
         </span>
         <div style="padding:20px">
             <el-table
@@ -356,7 +356,7 @@
  
 
   <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogVisibleHide = false">enter</el-button>
+    <el-button type="primary" @click="dialogVisibleHide = false">eingeben.</el-button>
   </span>
 </el-dialog>
   </div>
