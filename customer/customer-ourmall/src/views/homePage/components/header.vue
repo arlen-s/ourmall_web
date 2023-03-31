@@ -44,11 +44,11 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item v-if="$store.state.userInfo" class="align-items-endd-flex" style="width: 160px" command="dashboard">
                   <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i>
-                  {{$t('My Profile')}}
+                  My Profile
                 </el-dropdown-item>
                 <el-dropdown-item v-else class="d-flex" style="width: 160px" command="login">
                   <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i>
-                  <!-- {{$t('Login/Register')}} -->
+                  Login/Register
                 </el-dropdown-item>
                 <el-dropdown-item class="lan-menu align-items-endd-flex" style="width: 160px">
                   <div class="lan-box">
@@ -109,7 +109,7 @@
                 </el-dropdown-item>
                 <el-dropdown-item v-if="$store.state.userInfo" class="d-flex" style="width: 160px" command="exit">
                   <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i>                  
-                  {{$t('Logout')}}
+                  Logout
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
