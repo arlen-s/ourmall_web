@@ -160,74 +160,62 @@
       <el-col v-for="m in headerMenu.menu" class="dropmenu" :key="m.id" :span="2"> -->
         <!-- <template v-for="m in menu"> -->
         <!-- <div class="dropmenu" :key="m.timestamp"> -->
-        <a v-if="m.value == '9999'" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+        <a v-if="m.value == '9999'" href="javascript:;" class="cot">
           {{ m.label }}
         </a>
-        <a v-else-if="m.value == '9998'" @click="gotoUrl(m.url)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+        <a v-else-if="m.value == '9998'" @click="gotoUrl(m.url)" href="javascript:;"  class="cot">
           {{ m.label }}
         </a>
-        <a v-else-if="m.value == 'productDetails'" @click="goToDetail(m.urlData)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+        <a v-else-if="m.value == 'productDetails'" @click="goToDetail(m.urlData)" href="javascript:;" class="cot">
           {{ m.label }}
         </a>
-        <a v-else-if="m.value == 'category'" @click="goToCategory(m.urlData)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+        <a v-else-if="m.value == 'category'" @click="goToCategory(m.urlData)" href="javascript:;" class="cot">
           {{ m.label }}
         </a>
-        <a v-else-if="m.value == 'customPage'" @click="goToCustom(m.urlData.id)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+        <a v-else-if="m.value == 'customPage'" @click="goToCustom(m.urlData.id)" href="javascript:;" class="cot">
           {{ m.label }}
         </a>
-        <a v-else @click="goto(m.url)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+        <a v-else @click="goto(m.url)" href="javascript:;"  class="cot">
           {{ m.label }}
         </a>
         <ul class="drop-sec" v-if="m.children && m.children.length > 0">
           <li class="sec-item" v-for="sec in m.children" :key="sec.id">
-            <a v-if="sec.value == '9999'" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+            <a v-if="sec.value == '9999'" href="javascript:;" >
               {{ sec.label }}
             </a>
-            <a v-else-if="sec.value == '9998'" @click="gotoUrl(sec.url)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+            <a v-else-if="sec.value == '9998'" @click="gotoUrl(sec.url)" href="javascript:;" >
               {{ sec.label }}
             </a>
-            <a v-else-if="sec.value == 'productDetails'" @click="goToDetail(sec.urlData)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+            <a v-else-if="sec.value == 'productDetails'" @click="goToDetail(sec.urlData)" href="javascript:;" >
               {{ sec.label }}
             </a>
-            <a v-else-if="sec.value == 'category'" @click="goToCategory(sec.urlData)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+            <a v-else-if="sec.value == 'category'" @click="goToCategory(sec.urlData)" href="javascript:;">
               {{ sec.label }}
             </a>
-            <a v-else-if="sec.value == 'customPage'" @click="goToCustom(sec.urlData.id)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+            <a v-else-if="sec.value == 'customPage'" @click="goToCustom(sec.urlData.id)" href="javascript:;" >
               {{ sec.label }}
             </a>
-            <a v-else @click="goto(sec.url)" href="javascript:;" :style="{ color: data.isTransparent ? color : data.color }">
+            <a v-else @click="goto(sec.url)" href="javascript:;" >
               {{ sec.label }}
             </a>
             <ul class="drop-third">
               <li v-for="thi in sec.children" :key="thi.id">
-                <a v-if="thi.value == '9999'" href="javascript:;" :style="{
-                          color: data.isTransparent ? color : data.color,
-                        }">
+                <a v-if="thi.value == '9999'" href="javascript:;" >
                   {{ thi.label }}
                 </a>
-                <a v-else-if="thi.value == '9998'" @click="gotoUrl(thi.url)" href="javascript:;" :style="{
-                          color: data.isTransparent ? color : data.color,
-                        }">
+                <a v-else-if="thi.value == '9998'" @click="gotoUrl(thi.url)" href="javascript:;" >
                   {{ thi.label }}
                 </a>
-                <a v-else-if="thi.value == 'productDetails'" @click="goToDetail(thi.urlData)" href="javascript:;" :style="{
-                          color: data.isTransparent ? color : data.color,
-                        }">
+                <a v-else-if="thi.value == 'productDetails'" @click="goToDetail(thi.urlData)" href="javascript:;" >
                   {{ thi.label }}
                 </a>
-                <a v-else-if="thi.value == 'category'" @click="goToCategory(thi.urlData)" href="javascript:;" :style="{
-                          color: data.isTransparent ? color : data.color,
-                        }">
+                <a v-else-if="thi.value == 'category'" @click="goToCategory(thi.urlData)" href="javascript:;" >
                   {{ thi.label }}
                 </a>
-                <a v-else-if="thi.value == 'customPage'" @click="goToCustom(thi.urlData.id)" href="javascript:;" :style="{
-                          color: data.isTransparent ? color : data.color,
-                        }">
+                <a v-else-if="thi.value == 'customPage'" @click="goToCustom(thi.urlData.id)" href="javascript:;" >
                   {{ thi.label }}
                 </a>
-                <a v-else @click="goto(thi.url)" href="javascript:;" :style="{
-                          color: data.isTransparent ? color : data.color,
-                        }">
+                <a v-else @click="goto(thi.url)" href="javascript:;" >
                   {{ thi.label }}
                 </a>
               </li>
@@ -566,6 +554,9 @@ export default {
   &:hover .drop-sec {
     display: flex;
   }
+  .cot{
+    color: rgb(96, 98, 102);
+  }
   .drop-sec {
     display: none;
     position: absolute;
@@ -577,7 +568,8 @@ export default {
     width: 150px;
     padding: 0;
     border-radius: 3px;
-    background: #d1d2dc;
+    background: #fff;
+box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
     z-index: 10;
     a {
       text-decoration: none;
@@ -607,7 +599,8 @@ export default {
         border-radius: 3px;
         top: 0px;
         left: 150px;
-        background: #d1d2dc;
+        background: #fff;
+        box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
         li {
           padding: 5px 10px;
           overflow: hidden;
@@ -633,7 +626,8 @@ export default {
   padding: 5px 10px 0 0;
   text-align: left;
   &:hover .drop-sec {
-    // display: flex;
+    display: flex;
+    flex-wrap: wrap;
   }
   .drop-sec {
     display: none;
@@ -646,24 +640,30 @@ export default {
     width: 150px;
     padding: 0;
     border-radius: 3px;
-    background: #d1d2dc;
+    background: #fff;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
     a {
       text-decoration: none;
       color: rgb(96, 98, 102);
     }
+    a:hover{
+      color: #6995f1;
+    }
     li.sec-item {
-      padding: 5px 10px;
+      padding: 2px 10px;
       position: relative;
       text-overflow: ellipsis;
       white-space: nowrap;
       line-height: 2;
+      width: 150px;
       &:hover {
         .drop-third {
           display: block;
         }
       }
       .drop-third {
-        background: #d1d2dc;
+        background: #fff;
+        box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
         display: none;
         padding: 0;
         position: absolute;
