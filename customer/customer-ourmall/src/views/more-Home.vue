@@ -169,7 +169,8 @@
                   >{{$store.state.country.symbol}} {{item.minPrice === item.maxPrice ? item.minPrice : `${item.minPrice}~${item.maxPrice} `}}</b>
                   <p
                     v-show="item.estimatedLeadTimeType"
-                  >about: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{item.estimatedLeadTimeType}}</p>
+                  >über: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{item.estimatedLeadTimeType}}</p>
+                  <p>Kostenloser Versand</p>
                   <!-- <div class="imports">
                         <span>Imports:
                            <span style="color:#525FB0">{{ item.imports }}</span>
