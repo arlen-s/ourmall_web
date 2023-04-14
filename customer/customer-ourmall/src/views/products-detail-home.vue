@@ -39,7 +39,8 @@
               <div class="show_img">
                 <!-- 放大镜 -->
                 <div class="magnifier" @click="clickImg(activeImg)">
-                  <vue-photo-zoom-pro :url="activeImg" :scale="3" :width="200" :mask="false"></vue-photo-zoom-pro>
+                  <vue-photo-zoom-pro v-if="activeImg.type=='img'" :url="activeImg.url" :scale="3" :width="200" :mask="false"></vue-photo-zoom-pro>
+                  <video v-else :src="activeImg.url" controls="controls"  width="450px" height="450px"/>
                 </div>
               </div>
               <div class="list_wrap">
@@ -50,13 +51,14 @@
                     :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}"
                   >
                     <li
-                      v-for="(item, index) in imgList"
+                      v-for="(item, index) in concatList"
                       :key="index"
                       @mouseover="change(index)"
                       :class="{ active: isActive == index }"
                     >
                       <div class="images-view-item">
-                        <img :src="item" alt />
+                        <img :src="item.url" v-if="item.type == 'img'" alt />
+                        <video v-else :src="item.url" controls="controls"  width="45px" height="45px"/>
                       </div>
                     </li>
                   </ul>
@@ -290,6 +292,35 @@
                   
               </div>
             </el-tab-pane>
+            <!-- <el-tab-pane label="Versuchsweise Berechnung der Versandkosten" name="fourth">
+                    <el-table
+                     :header-cell-style="{background:'#ccc',color:'#000000 !important'}"
+                      :data="tableDataCost"
+                      style="width: 100%">
+                      <el-table-column
+                        prop="country"
+                        label="Land"
+                        width="180">
+                      </el-table-column>
+                      <el-table-column
+                        prop="Shipping"
+                        label="Shipping options"
+                        width="180">
+                      </el-table-column>
+                      <el-table-column
+                        prop="Erfüllungsaufwand"
+                        label="Fulfillment Costs">
+                        <template  slot="header">
+                          <span>{{$t('Fulfillment Costs')}}</span> 
+                          <i class="el-icon-question"></i>
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                        prop="发货时效"
+                        label="Versandzeit">
+                      </el-table-column>
+                    </el-table>  
+            </el-tab-pane> -->
           </el-tabs>
         </el-col>
       </el-row>
@@ -381,6 +412,7 @@ export default {
       returnImg: require('../assets/images/store-design/back.png'),
       showTest: true,
       vatValue: '0',
+      tableDataCost: [],
       suitRuleInfoClone: {},
       qualityNum: 0,
       checkData: {},
@@ -474,6 +506,7 @@ export default {
       moreName: '',
       imgUrl: "",
       imgList: [],
+      videoList: [],
       type1: [],
       type2: [],
       typeImg: [],
@@ -513,6 +546,7 @@ export default {
       maxPrice: '',
       saleCost: '0.00',
       vatDom: true,
+      concatList: []
     }
   },
   watch: {
@@ -525,6 +559,7 @@ export default {
       deep: true
     },
     checkData(val){
+      console.log(val.attachment, 'val');
           if (val) {
               this.showSpace = val.specificationSwitch == '1' ? true : false
               // if (!this.showSpace) {
@@ -572,7 +607,7 @@ export default {
   },
   computed: {
     atEndOfList () {
-      return this.currentOffset <= (this.paginationFactor * -1) * (this.imgList.length - this.windowSize)
+      return this.currentOffset <= (this.paginationFactor * -1) * (this.concatList.length - this.windowSize)
     },
     atHeadOfList () {
       return this.currentOffset === 0
@@ -594,7 +629,7 @@ export default {
       })
       if (r.img) {
         // this.activeImg = r.img;
-        this.activeImg = this.stocks.find((item) => item.id == this.keyValue).propertyImage
+        this.activeImg ={url: this.stocks.find((item) => item.id == this.keyValue).propertyImage, type:'img'} 
       }
       return r
     },
@@ -863,6 +898,9 @@ export default {
         }
       })
     },
+    clickImg(u){
+
+    },
     getVendorShippingCountry () {
       this.$apiCall("api.VendorShop.getVendorShippingCountry", {
         id: this.proId
@@ -902,7 +940,11 @@ export default {
           if (r.ErrorCode == 9999) {
             let data = r.Data.Results
             this.getVendorShippingCountry()
+            for (let i = 0; i < data.property.length; i++) {
+             this.subIndex.push(0)              
+            }
             this.defaultPropertyArr = data.property
+            console.log( this.defaultPropertyArr, ' this.defaultPropertyArr');
             this.defaultStocks = data.stocks
             this.name = data.name
             for (var i in data.stocks) {
@@ -914,12 +956,30 @@ export default {
             let priceArr = []
             let weightArr = []
             //old
-            this.activeImg = r.Data.Results.imgUrl
+            this.activeImg = {url:r.Data.Results.imgUrl, type: 'img'}
             this.saleCost = r.Data.Results.saleCost
             this.price = this.saleCost
             this.sku = r.Data.Results.sku
             this.weight = 0
+
             this.imgList = eval(r.Data.Results.imgUrlJson)
+            this.videoList = eval(r.Data.Results.videoUrlJson)
+            let newListImg = this.imgList.map(item=>{
+              let img = {
+                type: 'img',
+                url: item
+              }
+              return img
+            })
+            let newListVideo = this.videoList.map(item=>{
+              let video = {
+                type: 'video',
+                url: item
+              }
+              return video
+            })
+            this. concatList = [...newListImg, ...newListVideo]
+            // console.log(concatList, 'this.imgList');
             if (r.Data.Results.videoUrl) {
               this.isImage = false
             }
@@ -1032,7 +1092,7 @@ export default {
       if (self.shopItemInfo[result.join("||")]) {
         self.qualityNum = self.shopItemInfo[result.join("||")].inventory
         self.price = self.shopItemInfo[result.join("||")].price
-        self.activeImg = self.shopItemInfo[result.join("||")].propertyImageOriginal
+        self.activeImg = {url: self.shopItemInfo[result.join("||")].propertyImageOriginal, type:"img"}
         this.checkData = self.shopItemInfo[result.join("||")]
         if (Number(self.qualityNum) >= 0) {
           this.qualityNum = Number(self.qualityNum)
@@ -1049,7 +1109,7 @@ export default {
       } else {
         self.qualityNum = 0
         self.price = this.saleCost
-        self.activeImg = self.defaultImg
+        self.activeImg = {url:self.defaultImg, type: 'img'}
         this.checkData = {}
         this.VatTableData[0] = {
           price : this.saleCost,
@@ -1082,7 +1142,7 @@ export default {
     },
     change (i) {
       this.isActive = i
-      this.activeImg = this.imgList[i]
+      this.activeImg = this.concatList[i]
     },
     changeCate (i) {
       this.isActiveCate = i
@@ -1181,6 +1241,9 @@ export default {
   width: 240px;
   height: 54px;
   font-size: 20px;
+}
+.el-table__header thead > tr > th ::v-deep div{
+  color: #000 !important;
 }
 .product-information {
   border: 1px solid #c0bfbf;

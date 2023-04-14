@@ -189,6 +189,42 @@
               </div>
               <p style="color: #909399;">{{$t('goodsEdit.建议上传图片 800*800像素，大小为2MB以内。 最多添加20张图片')}}</p>
             </div>
+          </el-form-item>          
+          <el-form-item :label="$t('goodsEdit.视频')" required>
+            <div class="img-upload">
+              <div class="img-list">
+                <div class="el-upload el-upload--picture-card" >
+
+                <el-upload
+                  action="#"
+                  :auto-upload="false"
+                  :on-change="videoHandleChange"
+                  :before-upload="beforeUploadVideo"
+                >
+                <i class="el-icon-plus"></i>
+                  <!-- <el-button class="video_btn iconfont icontianjia3">上传视频</el-button> -->
+                </el-upload>
+
+             </div>
+                <div
+                  v-for="(item, index) in form.videoUrls"
+                  :key="index"
+                  class="img-wrap"
+                >
+                <a href="javascript:;" @click="delVideo(index)">
+                    <i class="el-icon-delete"></i>
+                  </a>
+                  <video
+                    @click="Visiblemovie(item)"
+                    style="width: 100px; height: 100px;"
+                    controls="controls"
+                  >
+                    <source :src="item" type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+                   <div class="el-upload__tip">只能上传video/mp4文件，且不超过20mb</div>
+            </div>
           </el-form-item>
           <el-form-item :label="$t('goodsEdit.售后质保时间')" style="width: 400px;margin-top:50px;">
             <div style="display:flex">
@@ -784,6 +820,12 @@
         <el-button type="primary" @click="handleHouseList">{{$t('goodsEdit.确定')}}</el-button>
       </span>
     </el-dialog>
+
+<el-dialog :visible.sync="dialogVisiblevideo">
+  <video controls="controls" style="width: 100%;">
+     <source :src="movie" type="video/mp4" />
+  </video>
+</el-dialog>
   </div>
 </template>
 
@@ -816,6 +858,8 @@ export default {
         show: false,
 
       },
+      dialogVisiblevideo: false,
+      movie: '',
       num: 0,
       SkuId: '',
       houseNum: 0,
@@ -880,6 +924,7 @@ export default {
         customCode: "", //海关编号
         imgUrlsList: [],
         propertyNames: [],
+        videoUrls:[],
         stockSingle: [{ //单属性表格初始
           stockId: '',
           price: undefined,
@@ -1000,6 +1045,7 @@ export default {
         }
       },
       stocksLoading: false,
+      videoUrls: [],
     }
   },
   components: {
@@ -1188,6 +1234,41 @@ export default {
         }
       })
     },
+beforeUploadVideo(file){
+      var fileSize = file.size / 1024 / 1024 < 20;
+        if (['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb', 'video/mov'].indexOf(file.type) == -1) {
+            this.$message.error("请上传正确的视频格式");
+            return false;
+        }
+        if (!fileSize) {
+               this.$message.error("视频大小不能超过20MB");
+              return false;
+                      }                
+},
+videoHandleChange(file, fileList) {
+  //限制条件可以通过file判断，比如视频格式
+  console.log(file, "file");
+  console.log(fileList, "fileList");
+  this.$apiCall("api.Comment.uploadAttach", {
+						"@file": file.raw,
+					}, res => {
+     //拿到返回的路径
+     console.log(11111, res);
+    this.$message.success("上传成功");
+    //回显接口
+    // getEventpath(path).then(res => {
+    // //拿到视频路径回显
+    let url = res.Data.Results.url;
+    this.form.videoUrls.push(url);
+    // });
+  });
+
+},
+
+Visiblemovie(val) {
+   this.movie = val;
+   this.dialogVisiblevideo = !this.dialogVisiblevideo;
+},
     handleHouseList () { //仓库选择
       this.dialogStorehouse.show = false
       let lists = []
@@ -1491,6 +1572,7 @@ export default {
               url: e,
             }
           })
+          this.form.videoUrls = JSON.parse(data.videoUrlJson)         
           //规格
           this.propType = data.stocks.length > 1 ? 2 : 1
           this.specifications = data.specifications
@@ -1797,6 +1879,7 @@ export default {
         description: this.form.description,
         customCode: this.form.customCode,
         imgUrls: this.imgUrls,
+        videoUrls: this.form.videoUrls,
         propertyNames: this.propType == 1 ? 'default' : this.propertyNames.join('||'),
         stocks: this.propType == 1 ? JSON.parse(JSON.stringify(this.form.stockSingle)) : JSON.parse(JSON
           .stringify(stocks)),
@@ -2115,7 +2198,12 @@ export default {
       //删除待提交的图片
       this.form.imgUrlsList.splice(i, 1)
     },
+    delVideo (i) {
+      //删除待提交的图片
+      this.form.videoUrls.splice(i, 1)
+    },    
     getUploadImgUrl (obj) {
+      console.log(obj,'dasdasd');
       //图片上传接口
       let imgUrlBase64 = obj.base64.split("base64,").pop()
       let ext = obj.base64.match(/data:image\/(.*);base64,.*/)[1]
@@ -2589,6 +2677,9 @@ export default {
       }
     }
   }
+}
+::v-deep .el-upload-list{
+display: none;
 }
 ::v-deep.img-wrap a {
   line-height: 22px !important;
