@@ -13,7 +13,7 @@ if (window.location.host.match(/\./ig)) pointCnt = window.location.host.match(/\
 //  host = (window.location.host.toLowerCase().indexOf('sandbox') >= 0 ? 'sandboxapi.' : 'api.') + 'ourmall.com';
 //  break;
 //}
-let protocol = 'https:' == document.location.protocol ? 'https' : 'http';
+let protocol = 'https:' == document.location.protocol ? 'https' : 'https';
 
 let axiosWrap = axios.create({
   method: 'post',

@@ -200,6 +200,8 @@
                   :auto-upload="false"
                   :on-change="videoHandleChange"
                   :before-upload="beforeUploadVideo"
+                  style="width:100%;height:100px"
+                  class="video-up-box"
                 >
                 <i class="el-icon-plus"></i>
                   <!-- <el-button class="video_btn iconfont icontianjia3">上传视频</el-button> -->
@@ -1252,7 +1254,7 @@ videoHandleChange(file, fileList) {
 						"@file": file.raw,
 					}, res => {
      //拿到返回的路径
-     console.log(11111, res);
+     console.log(11111, res.Data.Results.url);
     this.$message.success("上传成功");
     //回显接口
     // getEventpath(path).then(res => {
@@ -1571,7 +1573,7 @@ Visiblemovie(val) {
               url: e,
             }
           })
-          this.form.videoUrls = JSON.parse(data.videoUrlJson)         
+          this.form.videoUrls = data.videoUrlJson ==null ? [] : JSON.parse(data.videoUrlJson)        
           //规格
           this.propType = data.stocks.length > 1 ? 2 : 1
           this.specifications = data.specifications
@@ -2682,5 +2684,9 @@ display: none;
 }
 ::v-deep.img-wrap a {
   line-height: 22px !important;
+}
+.video-up-box ::v-deep.el-upload{
+  width: 100%;
+  height: 100%;
 }
 </style>
