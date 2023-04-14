@@ -1045,7 +1045,6 @@ export default {
         }
       },
       stocksLoading: false,
-      videoUrls: [],
     }
   },
   components: {
