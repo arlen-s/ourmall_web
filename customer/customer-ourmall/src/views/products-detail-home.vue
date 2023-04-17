@@ -963,7 +963,7 @@ export default {
             this.weight = 0
 
             this.imgList = eval(r.Data.Results.imgUrlJson)
-            this.videoList =r.Data.Results.videoUrlJson ==null ? [] : JSON.parse(r.Data.Results.videoUrlJson)
+            this.videoList =r.Data.Results.videoUrlJson ==null || r.Data.Results.videoUrlJson =='null' ? [] : JSON.parse(r.Data.Results.videoUrlJson)
             let newListImg = this.imgList.map(item=>{
               let img = {
                 type: 'img',
