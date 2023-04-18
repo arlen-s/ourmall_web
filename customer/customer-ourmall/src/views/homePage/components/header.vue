@@ -10,7 +10,7 @@
           backgroundImage: `url(${data.logo})`,
           width: data.logoWidth ? `${data.logoWidth}px` : `60px`,
           height: data.logoWidth ? `${data.logoWidth}px` : `60px`,
-          maxWidth: '80px',
+          maxWidth: '300px',
           maxHeight: '80px'
         }" style="cursor: pointer" @click="goto('home')"></h1>
         <h1 v-else-if="this.$store.state.shopInfo.shopName" class="logo-name tx-ellipsis1" style="cursor: pointer" @click="goto('home')">
