@@ -653,7 +653,7 @@ export default {
                       return item
                     }
                   })
-              return lang.length>0? lang[0].En : ''
+              return lang.length>0? lang[0].Ge : ''
           }else{
           let lang=  this.languageList.filter(item=>{
                 if (item.En == type) {
