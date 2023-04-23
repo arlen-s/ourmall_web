@@ -169,7 +169,7 @@
                   >{{$store.state.country.symbol}} {{item.minPrice === item.maxPrice ? item.minPrice : `${item.minPrice}~${item.maxPrice} `}}</b>
                   <p
                     v-show="item.estimatedLeadTimeType"
-                  >über: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{item.estimatedLeadTimeType}}</p>
+                  >über: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{getType(item.estimatedLeadTimeType)}}</p>
                   <p>Kostenloser Versand</p>
                   <!-- <div class="imports">
                         <span>Imports:
@@ -276,6 +276,24 @@ export default {
       radioDay: '',
       filterUItem: {},
       headerMenu: [],
+      languageList: [
+        {
+          Ge: 'Tag',
+          En: 'day',
+
+        },
+        {
+          Ge: 'Woche',
+          En: 'week',
+          
+        },
+        {
+          Ge: 'Monat',
+          En: 'month',
+          
+        }
+        
+      ],
       code: {
         header: [],
         footer: []
@@ -627,6 +645,28 @@ export default {
         }
       })
     },
+    getType(type){
+      if (localStorage.getItem("c_ourMallUserInfo")) {
+          if (JSON.parse(localStorage.getItem("c_ourMallUserInfo")).shopCountry == 'DE') {
+                let lang=  this.languageList.filter(item=>{
+                    if (item.En == type) {
+                      return item
+                    }
+                  })
+              return lang.length>0? lang[0].En : ''
+          }else{
+          let lang=  this.languageList.filter(item=>{
+                if (item.En == type) {
+                  return item
+                }
+              })
+              return lang.length>0? lang[0].En : ''
+          }
+      }else{
+        return type
+      }
+
+  },
     getItems () {
       this.loading = true
       this.allLoading = true
