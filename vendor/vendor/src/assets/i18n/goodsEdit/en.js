@@ -56,6 +56,8 @@ export const lang = {
   '商品属性': 'Product property',
   '商品描述': 'Product description',
   '海关编号': 'Customs number',
+  '包装后体积重': 'Volume weight after packing',
+  '包装后侧面积': 'Side area after packing',
   '图片': 'Picture',
   '视频': 'video',
   '上传中': 'Uploading',

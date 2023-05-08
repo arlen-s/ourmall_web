@@ -1047,6 +1047,7 @@ export default {
         }
       },
       stocksLoading: false,
+      videoUrls: [],
     }
   },
   components: {
@@ -1573,7 +1574,8 @@ Visiblemovie(val) {
               url: e,
             }
           })
-          this.form.videoUrls = data.videoUrlJson ==null ? [] : JSON.parse(data.videoUrlJson)        
+          this.form.videoUrls = data.videoUrlJson == '' || data.videoUrlJson == null ? [] : JSON.parse(data.videoUrlJson)      
+          console.log(this.form.videoUrls, 'this.form.videoUrls')   
           //规格
           this.propType = data.stocks.length > 1 ? 2 : 1
           this.specifications = data.specifications
