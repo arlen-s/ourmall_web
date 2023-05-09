@@ -8,6 +8,7 @@
         </div>
       </div>
       <div class="right">
+        <el-button  type="primary" size="small" @click="setPostageAmount()">{{$t('logistics.免邮规则设置')}}</el-button>
         <el-button :disabled="!$isRole($route.meta.roleWrite)" type="primary" size="small" @click="goto('settingsLogistics')">{{$t('logistics.添加区域方案')}}</el-button>
       </div>  
     </div>
@@ -81,6 +82,19 @@
         </div>
       </el-card>
     </div>
+    <el-dialog
+  title="免邮规则"
+  :visible.sync="dialogVisibleAmount"
+  width="30%"
+  :before-close="handleClose">
+  <div>
+    <p>当订单商品总价大于等于（包含）<el-input v-model="amounts" placeholder="请输入内容"></el-input>时免邮</p>
+  </div>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisibleAmount = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisibleAmount = false">确 定</el-button>
+  </span>
+</el-dialog>
   </div>  
 </template>
 
@@ -92,6 +106,8 @@ export default {
   data(){
     return {
       loading: false,
+      amounts: '',
+      dialogVisibleAmount: false,
       items: [],
     }
   },
@@ -116,6 +132,9 @@ export default {
     },
     editAreaShipping(item){
       this.$router.push({name: 'settingsLogistics', query: {id: item.id}})
+    },
+    setPostageAmount(){
+      this.dialogVisibleAmount = true
     },
     delAreaShipping(item, i){
       this.$confirm(this.$t('logistics.是否确定删除该区域方案？'), {

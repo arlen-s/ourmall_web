@@ -3,6 +3,7 @@ export const lang = {
   '添加一组运费设置':'Add a freight settings',
   '其他运费设置': 'Other Freight settings',
   '添加区域方案': 'Add a regional plan',
+  '免邮规则设置': 'Free shipping rule setting',
   '导入运费方案': 'Import regional plan',
   '方案名称': 'Plan name',
   '运费': 'Freight',
