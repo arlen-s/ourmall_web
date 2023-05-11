@@ -1893,7 +1893,8 @@
           <div class="el-upload__tip" slot="tip">
             <div>
               click to download
-              <a class="template" @click="downloadFile">Order Import Template</a>
+              <!-- <a class="template" @click="downloadFile">Order Import Template</a> -->
+              <el-button size="mini" type="primary" @click="downloadFile">Order Import Template</el-button>
             </div>
             Please fill in the form according to the specification, only support xlsx format file<br />
             The uploaded file cannot exceed 2M, and only the first 99 pieces of data are processed
