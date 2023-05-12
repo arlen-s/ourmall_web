@@ -274,6 +274,9 @@
 						firstWeight:"",
 						firstPrice:"",
 						nextWeight:"",
+						width:'',
+						height: '',
+						length: '',
 						lateralAreaBegin: '',
 						lateralAreaEnd: '',						
 						nextPrice:"",
@@ -296,6 +299,11 @@
 					firstWeight:"",
 					firstPrice:"",
 					nextWeight:"",
+					width:'',
+					height: '',
+					length: '',
+					lateralAreaBegin: '',
+					lateralAreaEnd: '',							
 					nextPrice:"",
 					noHeavy:[]
 				})
