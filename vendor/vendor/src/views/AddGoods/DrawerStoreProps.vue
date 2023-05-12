@@ -130,6 +130,35 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <!-- <el-row>
+            <el-col>
+                <el-form-item :label="$t('goodsEdit.包装后体积重')">
+                  <div class="volume-box">
+                      <div>
+                        1000 <b style="padding:0 5px;">/</b>
+                      </div>
+                      <div class="cim2">
+                        <el-radio-group v-model="radioVolume" style="display: flex;align-items: center;">
+                          <el-radio :label="1">5000KG</el-radio>
+                          <el-radio :label="2">6000KG</el-radio>
+                          <el-radio :label="3" style="line-height:40px;">
+                            <el-input v-model="customVolume" placeholder="0.00" style="width:140px">
+                              <template slot="append">kg</template>
+                            </el-input>
+                          </el-radio>
+                        </el-radio-group>
+                      </div>
+                      <div>
+                      <b  style="padding:0 5px;"> = </b>
+                       <el-input v-model="amiVolume" placeholder="0.00"  style="width:140px">
+                      <template slot="append">kg</template>
+                    </el-input>
+                      </div>
+                  </div>
+                    
+                </el-form-item>                
+            </el-col>
+        </el-row> -->
         <el-form-item :label="$t('goodsEdit.商品属性')">
           <el-checkbox-group v-model="dataMAG.form.productType">
             <el-checkbox
@@ -268,6 +297,9 @@ export default {
         imgUrl: '',
         productType: [],
       },
+      radioVolume: '',
+      customVolume: '',
+      amiVolume: '',
       texFlag: true,
       titleName: '',
       DialogEditComment:{
@@ -623,6 +655,14 @@ export default {
 // }
 .flex-r{
   display: flex;
+}
+.volume-box{
+  display: flex;
+  align-items: center;
+  .cim2{
+    display: flex;
+    align-items: center;
+  }
 }
 </style>
 

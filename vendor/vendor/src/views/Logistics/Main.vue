@@ -85,14 +85,18 @@
     <el-dialog
   title="免邮规则"
   :visible.sync="dialogVisibleAmount"
+  @open="openAut"
   width="30%"
-  :before-close="handleClose">
-  <div>
-    <p>当订单商品总价大于等于（包含）<el-input v-model="amounts" placeholder="请输入内容"></el-input>时免邮</p>
-  </div>
+  :before-close="closeDialogA">
+  <el-row>
+    <el-col style="padding:0 20px;">
+    <p>当订单商品总价大于等于（包含）<el-input style="width:70px" @input="limitInput($event)" v-model="amounts" placeholder="0.00" ></el-input>时免邮</p>
+    <p class="tips-trip">温馨提示：订单总金额计算仅为购物车商品总售价</p>
+    </el-col>
+  </el-row>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisibleAmount = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisibleAmount = false">确 定</el-button>
+    <el-button @click="closeDialogA">取 消</el-button>
+    <el-button type="primary" @click="saveAmount">确 定</el-button>
   </span>
 </el-dialog>
   </div>  
@@ -130,8 +134,43 @@ export default {
       })
       return name;
     },
+    openAut(){
+    this.getFee()
+
+    },
+     limitInput(value) {
+      this.amounts =
+        ("" + value) // 第一步：转成字符串
+          .replace(/[^\d^\.]+/g, "") // 第二步：把不是数字，不是小数点的过滤掉
+          .replace(/^0+(\d)/, "$1") // 第三步：第一位0开头，0后面为数字，则过滤掉，取后面的数字
+          .replace(/^\./, "0.") // 第四步：如果输入的第一位为小数点，则替换成 0. 实现自动补全
+          .match(/^\d*(\.?\d{0,2})/g)[0] || ""; // 第五步：最终匹配得到结果 以数字开头，只有一个小数点，而且小数点后面只能有0到2位小数
+    },
     editAreaShipping(item){
       this.$router.push({name: 'settingsLogistics', query: {id: item.id}})
+    },
+    closeDialogA(){
+      this.dialogVisibleAmount = false;
+      this.amounts = ''
+    },
+    getFee(){
+            this.$apiCall("api.AreaShipping.getShippingConfig", {},r=>{
+        if (r.ErrorCode == '9999') {
+            this.amounts = r.Data.Results.orderPriceFreeShipping == null? 0 : r.Data.Results.orderPriceFreeShipping
+        }
+      })
+    },
+    saveAmount(){
+      this.$apiCall("api.AreaShipping.changeShippingConfig", {orderPriceFreeShipping: this.amounts},r=>{
+        if (r.ErrorCode == '9999') {
+            this.$message.success("success")
+                  this.dialogVisibleAmount = false;
+                  this.amounts = ''
+        }else{
+          this.$message.success(r.msg)
+        }
+      })
+
     },
     setPostageAmount(){
       this.dialogVisibleAmount = true
@@ -182,5 +221,9 @@ export default {
   align-items: center;
   width: 100%;
   padding: 15px;
+}
+.tips-trip{
+  padding: 10px 0;
+  color: #eb8f06;
 }
 </style>

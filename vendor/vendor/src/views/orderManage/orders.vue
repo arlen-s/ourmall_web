@@ -28,7 +28,16 @@
           <el-button
             type="primary"
             @click="downPdf"
-          >批量下载发票</el-button>
+          >发票</el-button> -->
+          <el-dropdown style="margin:0 10px">
+          <el-button type="primary">
+            发票<i class="el-icon-arrow-down el-icon--right"></i>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item > <span @click="downPdf()">下载</span> </el-dropdown-item>
+            <el-dropdown-item > <span @click="sendEmail()">发送邮箱</span></el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         </template>
         <template v-if="status == 2 && (activeName == 1)">
           <el-button
@@ -724,6 +733,12 @@
                           type="primary"
                           @click="downPdf(scope.row, '1')"
                         >{{$t('orders.下载发票')}}</el-link>    
+                        <el-link
+                          v-if="(status == 2 && activeName == 3) || (status == 3 && activeName == 1)"
+                          class="mg-r-20"
+                          type="primary"
+                          @click="sendEmail(scope.row, '1')"
+                        >发送发票到邮箱</el-link>   
                         <el-link
                           v-if="status == 4"
                           class="mg-r-20"
@@ -1997,14 +2012,12 @@ export default {
       })
     },
     downPdf(row, type){
-      
       let params = []
       if (type) {
       params = [{accountId:row.shopifyAccountId,orderId:row.orderId}]
       }else{
       if (!this.checkIds.length) this.$elementMessage("Please select an order first", "error")
       this.$showLoading()
-      console.log(this.checkItems, '111');
       params = this.checkItems.map(item=>{
           let itemT = {
               accountId:item.shopifyAccountId,orderId:item.orderId
@@ -2017,6 +2030,33 @@ export default {
     let a = document.createElement('a')
     a.href = r.Data.Results.url;
     a.click();
+        } else {
+          this.$elementMessage(r.Message, "error")
+        }
+         this.$hideLoading()
+      })
+    },
+    sendEmail(row, type) {
+      let params = []
+      if (type) {
+      params = [{accountId:row.shopifyAccountId,orderId:row.orderId}]
+      }else{
+      if (!this.checkIds.length){
+        this.$elementMessage("Please select an order first", "error")
+        return
+      } 
+      this.$showLoading()
+      console.log(this.checkItems, '111');
+      params = this.checkItems.map(item=>{
+          let itemT = {
+              accountId:item.shopifyAccountId,orderId:item.orderId,
+          }
+          return itemT
+      })
+      }
+     this.$apiCall("api.BillSet.exportBill",{orderInfo:params,isSend: 1} , (r) => {
+        if (r.ErrorCode == "9999") {
+          this.$elementMessage('send success', "success")  
         } else {
           this.$elementMessage(r.Message, "error")
         }

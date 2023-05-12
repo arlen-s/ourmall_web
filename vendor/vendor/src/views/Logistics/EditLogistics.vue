@@ -251,6 +251,7 @@ export default {
               perPrice: undefined,
               registrationFee: undefined,
               surcharge: undefined,
+
             },
           ],
         },

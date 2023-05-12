@@ -63,7 +63,7 @@
 									<!-- <el-checkbox v-model="setting.noHeavy">{{$t('logistics.不限重')}}</el-checkbox> -->
 								</el-col>
 							</template>
-						</el-row>
+						</el-row>					
 						<el-row class="mg-t-15">
 							<el-col :span="2">
 							  {{$t('logistics.首重设置：')}}
@@ -108,6 +108,77 @@
 							    </el-input>
 							</el-col>
 						</el-row>
+						<el-row class="mg-t-15">
+							<el-col :span="2">
+							  包裹侧面积范围：
+							</el-col>
+							<el-col :span="8">
+							  <el-input v-model="setting.lateralAreaBegin" @change="numberChangeT('lateralAreaBegin',index,setting.lateralAreaBegin)">
+							      <template slot="prepend">{{$t('logistics.起始')}}</template>
+								  <template slot="append">m²</template>
+							    </el-input>
+							</el-col>
+							<el-col :span="8" :offset="1">
+							  <el-input v-model="setting.lateralAreaEnd" @change="numberChangeT('lateralAreaEnd',index,setting.lateralAreaEnd)" >
+							      <template slot="prepend">{{$t('logistics.截止')}}</template>
+							  	  <template slot="append">m²</template>
+							    </el-input>
+							</el-col>
+							<template v-if="settingArr.length > 1">
+								<el-col :span="2" :offset="1">
+									<el-link type="primary" :underline="false" @click="deleteSetting(index)">{{$t('logistics.删除')}}</el-link>
+								</el-col>
+							</template>
+						</el-row>	
+						<el-row class="mg-t-15">
+							<el-col :span="2">
+							  包裹尺寸范围：
+							</el-col>
+							<el-col :span="6">
+							  <el-input v-model="setting.length" >
+							      <template slot="prepend">长</template>
+								  <template slot="append">cm</template>
+							    </el-input>
+							</el-col>
+							<el-col :span="6" :offset="1">
+							  <el-input v-model="setting.width" >
+							      <template slot="prepend">宽</template>
+							  	  <template slot="append">cm</template>
+							    </el-input>
+							</el-col>
+							<el-col :span="6" :offset="1">
+							  <el-input v-model="setting.height"  >
+							      <template slot="prepend">高</template>
+							  	  <template slot="append">cm</template>
+							    </el-input>
+							</el-col>
+						</el-row>	
+						<!-- <el-row class="mg-t-15 mg-b-15">
+							<el-col :span="2">
+							  利润：
+							</el-col>
+							<el-col :span="8">
+							  <el-input placeholder="0.00" v-model="setting.registrationFee">
+								  <template slot="append">{{$store.state.country.symbol}}</template>
+							    </el-input>
+							</el-col>
+						</el-row>
+						<el-row class="mg-t-15 mg-b-15">
+							<el-col :span="2">
+							  汇率：
+							</el-col>
+							<el-col :span="4">
+							  <el-input placeholder="0.00" v-model="setting.registrationFee">
+							    </el-input>
+							</el-col>
+							<el-col :span="2" :offset="1">
+							  固定运费：
+							</el-col>
+							<el-col :span="4">
+							  <el-input placeholder="0.00" v-model="setting.registrationFee">
+							    </el-input>
+							</el-col>							
+						</el-row>																								 -->
 						<el-divider></el-divider>
 					</div>
 					</template>
@@ -166,6 +237,11 @@
 				settingArr:[{
 					rangeBegin:"",
 					rangeEnd:"",
+					lateralAreaBegin: '',
+					lateralAreaEnd: '',
+					width:'',
+					height: '',
+					length: '',
 					firstWeight:"",
 					firstPrice:"",
 					nextWeight:"",
@@ -178,6 +254,7 @@
 		methods: {
 			open(){
 				if(this.data.isEdit){//编辑
+				console.log( this.data.form.priceArr, ' this.data.form.priceArr');
 					this.settingArr = this.data.form.priceArr;
 					// this.freightObj.registrationFee = this.data.form.item.registrationFee;
 					this.freightObj.operatingFee = this.data.form.item.operatingFee;
@@ -197,6 +274,8 @@
 						firstWeight:"",
 						firstPrice:"",
 						nextWeight:"",
+						lateralAreaBegin: '',
+						lateralAreaEnd: '',						
 						nextPrice:"",
 						registrationFee:"",
 						noHeavy:[]
@@ -247,6 +326,28 @@
 					})
 				}
 				
+			},
+			numberChangeT(type,index,val){
+				let item = this.settingArr[index];
+				if(type == 'lateralAreaBegin'){
+					if(this.settingArr.length > 1 && index > 0){
+						let item2 = this.settingArr[index-1]
+						if(item2 && item2.lateralAreaEnd && (item.lateralAreaBegin != item2.lateralAreaEnd)){
+							this.$elementMessage(this.$t("logistics.相邻的阶梯重量，当前组的起始重量必须等于前一组的截止重量"),"error");
+							this.$set(item,"lateralAreaBegin",item2.lateralAreaEnd);
+						}
+					}
+				}else{
+					item.lateralAreaEnd = Number(val)
+					this.$nextTick(()=>{
+					   if(item.lateralAreaBegin > 0) {
+					       if(item.lateralAreaEnd < item.lateralAreaBegin){
+							   this.$elementMessage(this.$t("logistics.截止重量需要大于等于起始重量"),"error");
+							   this.$set(item,"lateralAreaEnd",item.lateralAreaBegin);
+						   }
+					   }
+					})
+				}
 			},
 			oninput(num) {
 			  var str = num
