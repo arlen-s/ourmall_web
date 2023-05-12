@@ -1316,7 +1316,9 @@ export default {
           this.dialogUnderline.params = item.params
             ? JSON.parse(item.params)
             : "";
-          this.dialogUnderline.payAmount = 0;
+          // this.dialogUnderline.payAmount = 0;
+          this.dialogUnderline.payAmount = this.sum;
+
           break;
         default:
           //bonus
