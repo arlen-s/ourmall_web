@@ -365,6 +365,7 @@
                 style="margin-left: 20px"
                 v-model="logistic"
                 placeholder="Please choose"
+                :disabled="isMailFree == 1"
               >
                 <el-option
                   v-for="item in logisticArr"
@@ -540,6 +541,7 @@ export default {
       orderType: '1',
       newWin: null,
       paystatus: 0,
+      isMailFree: 2,
       pickAddress: '',
       defVat: 0,
       firstBox: true,
@@ -983,7 +985,7 @@ export default {
             stockInfo[item.stockInfo.id] = item.stockInfo.chooseInventory;
           });
           if (Object.keys(stockInfo).length != 0) {
-            this.getLogisticArr(stockInfo);
+            this.getLogisticArr(stockInfo, this.multipleSelection);
           }
           this.$message.success(r.Message);
         } else {
@@ -1117,7 +1119,7 @@ export default {
           stockInfo[item.stockInfo.id] = item.stockInfo.chooseInventory;
           //   运费逻辑
         });
-        this.getLogisticArr(stockInfo);
+        this.getLogisticArr(stockInfo, val);
         this.subtotal = Number(this.subtotal).toFixed(2);
         if (this.orderType == 2) {
           this.sum = Number(this.subtotal);          
@@ -1150,21 +1152,28 @@ export default {
         }      
       this.sum = Number(this.sum).toFixed(2);
     },
-    getLogisticArr(stockInfo) {
+    getLogisticArr(stockInfo, val) {
+      console.log(val, 'stockInfo');
       let params = {
         country: this.country,
         stockList: stockInfo,
+        warehouseId: val[0].warehouseInfo.id
       };
       this.logLoading = true;
       this.$apiCall("api.AreaShipping.getShippingByStockList", params, (r) => {
         if (r.ErrorCode == "9999") {
           this.logLoading = false;
+
           if (r.Data.Results.length) {
             this.logisticArr = r.Data.Results;
             this.logError = "";
+            this.isMailFree = 2
           } else {
             this.logError = r.Data.Results.msg;
+            this.isMailFree = 1
           }
+          
+
         } else {
           this.$message.error(r.Message);
         }
@@ -1185,7 +1194,7 @@ export default {
           stockInfo[item.stockInfo.id] = item.stockInfo.chooseInventory;
           //   运费逻辑
         });
-        this.getLogisticArr(stockInfo);
+        this.getLogisticArr(stockInfo, this.multipleSelection);
         this.subtotal = Number(this.subtotal).toFixed(2);
         if (this.orderType == 2) {
           this.sum = Number(this.subtotal);          
@@ -1236,7 +1245,8 @@ export default {
         this.$message.error("Please select the goods first!");
         return;
       }
-      if (this.orderType == 1) {
+      if (this.orderType == 1 && this.isMailFree == 2) {
+        console.log(this.isMailFree, '352352352');
               if (this.logistic == "") {
         this.$message.error("Please choose the logistics channel");
         return;

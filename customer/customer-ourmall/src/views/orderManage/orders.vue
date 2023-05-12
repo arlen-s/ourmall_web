@@ -726,6 +726,10 @@
                 <template v-if="status == 2 || status == 4">
                   <el-table-column label="Shipping Method" width="150">
                     <template slot-scope="scope">
+                      <div v-if="scope.row.isMailFree">
+                          Kostenloser Versand
+                      </div>
+                      <div v-else>
                       <template
                         v-if="
                           scope.row.shippingMethodArr &&
@@ -761,13 +765,18 @@
                         </el-select>
                       </template>
                       <div class="tx-middle" v-else>
-                        ---
+                        <div>
+                             ---
                         <i
                           @click="shippedFn(scope.row)"
                           class="el-icon-warning"
                           style="font-size: 20px;cursor:pointer;"
                         ></i>
+                        </div>
+                       
                       </div>
+                      </div>
+
                     </template>
                   </el-table-column>
                   <el-table-column
@@ -850,9 +859,10 @@
                       </el-link>
                       <el-link
                         v-if="
-                          status == 2 &&
-                            scope.row.shippingMethodArr &&
-                            scope.row.shippingMethodArr.length
+                          (status == 2 &&
+                          scope.row.shippingMethodArr &&
+                            scope.row.shippingMethodArr.length) ||  (status == 2&&scope.row.isMailFree == 1)
+                            
                         "
                         class="mg-r-20"
                         type="primary"
@@ -1689,7 +1699,7 @@
           </div>
           <div class="platform-select">
             <div
-              v-for="(type, index) in dialogPay.payTypes"
+              v-for="type in dialogPay.payTypes"
               :key="type.accountType"
             >
               <a
@@ -3144,9 +3154,14 @@ export default {
       let flag = 0;
       let obj = {};
       if (item) {
+        if (item.isMailFree) {
+           obj[item.id] = 0
+        }else{
         obj[item.id] = item.shippingMethodItem
           ? item.shippingMethodItem.id
           : "";
+        }
+
       } else {
         this.checkItems.forEach((item) => {
           if (item.shippingMethodArr && item.shippingMethodArr.length) {

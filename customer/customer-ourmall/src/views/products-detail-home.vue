@@ -944,6 +944,16 @@ export default {
              this.subIndex.push(0)              
             }
             this.defaultPropertyArr = data.property
+            let ports = data.property || []
+            for (let o = 0; o < ports.length; o++) {
+              for (let y = 0; y < ports[o].items.length; y++) {
+                if (y == 0) {
+                    this.selectArr.push(ports[o].items[y].name)
+                }
+                
+              }  
+              
+            }
             console.log( this.defaultPropertyArr, ' this.defaultPropertyArr');
             this.defaultStocks = data.stocks
             this.name = data.name

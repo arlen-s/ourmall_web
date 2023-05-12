@@ -113,9 +113,9 @@
             
             </el-col>
             <el-col :span="12">
-              <!-- <el-form-item :label="$t('goodsEdit.商品是否免邮')" style="width: 100%;">
-                <el-switch v-model="form.shipping"></el-switch>
-              </el-form-item> -->
+              <el-form-item :label="$t('goodsEdit.商品是否免邮')" style="width: 100%;">
+                <el-switch v-model="form.isMailFree"></el-switch>
+              </el-form-item>
             
             </el-col>            
             <el-col :span="24">
@@ -920,6 +920,7 @@ export default {
         max: '',
         name: '',
         status: true,
+        isMailFree: true,
         spu: '',
         productType: [], //商品属性多选
         description: "",
@@ -1527,6 +1528,7 @@ Visiblemovie(val) {
           this.form.days = data.day || ''
           this.form.InventoryDedType = data.inventoryDeduction
           this.form.status = data.status == '1' //是否上架
+          this.form.isMailFree = data.isMailFree == '1' ? true : false //是否免邮
           this.form.selectTime = data.salesGuaranteeTimeType
           this.form.days = data.salesGuaranteeTimeValue
           this.form.deliveryTime = data.estimatedLeadTimeType
@@ -1876,6 +1878,7 @@ Visiblemovie(val) {
         estimatedLeadTimeMinValue: this.form.min,
         estimatedLeadTimeMaxValue: this.form.max,
         status: this.form.status ? '1' : '2',
+        isMailFree: this.form.isMailFree ? '1' : '2',
         categoryId: this.categoryId,
         spu: this.form.spu,
         productType: this.form.stockSingle[0].productType,
