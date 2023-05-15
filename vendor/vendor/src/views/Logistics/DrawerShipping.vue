@@ -26,6 +26,23 @@
 							:value="type.val">{{ $t(type.text) }}</el-checkbox>
 					</el-checkbox-group>
 				</el-form-item>
+				<el-form-item label="运费方案" required>
+					<div>
+						  <el-select v-model="data.form.calType" placeholder="请选择">
+							<el-option
+								v-for="item in logicList"
+								:key="item.value"
+								:label="item.label"
+								:value="item.value">
+							</el-option>
+						</el-select>
+					</div>
+					<div class="t-box-int">
+						<span class="text">添加运费方案:</span>
+						<span class="textM" v-if="data.form.calType== '1'">ourmall计算逻辑：首重价格+（重量=首重）/续重*续重费用+挂号费+附加费</span>
+						<span class="textM" v-else>云途运费计算逻辑：商品重量*运费++（多出来的重量*续重费用）+利润+挂号费+附加费</span>
+					</div>	
+				</el-form-item>				
 				<el-form-item :label="$t('logistics.运费设置')">
 					
 					<div class="" style="position: absolute;top: -40px;left: 80px;">
@@ -153,19 +170,19 @@
 							    </el-input>
 							</el-col>
 						</el-row>	
-						<!-- <el-row class="mg-t-15 mg-b-15">
+						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType== '2'">
 							<el-col :span="2">
 							  利润：
 							</el-col>
 							<el-col :span="8">
-							  <el-input placeholder="0.00" v-model="setting.registrationFee">
+							  <el-input placeholder="0.00" v-model="setting.profit">
 								  <template slot="append">{{$store.state.country.symbol}}</template>
 							    </el-input>
 							</el-col>
 						</el-row>
-						<el-row class="mg-t-15 mg-b-15">
+						<!-- <el-row class="mg-t-15 mg-b-15">
 							<el-col :span="2">
-							  汇率：
+							 利润：
 							</el-col>
 							<el-col :span="4">
 							  <el-input placeholder="0.00" v-model="setting.registrationFee">
@@ -234,6 +251,16 @@
 					agingDaysBegin:"",
 					agingDaysEnd:""
 				},
+				logicType: '1',
+				logicList: [{
+          value: '1',
+          label: 'ourmall计算模板'
+        }, {
+          value: '2',
+          label: '云途计算模板'
+        }
+
+				],
 				settingArr:[{
 					rangeBegin:"",
 					rangeEnd:"",
@@ -247,6 +274,7 @@
 					nextWeight:"",
 					nextPrice:"",
 					registrationFee:"",
+					profit: "",
 					noHeavy:[]
 				}]
 			};
@@ -281,6 +309,7 @@
 						lateralAreaEnd: '',						
 						nextPrice:"",
 						registrationFee:"",
+						profit: "",
 						noHeavy:[]
 					}];
 					// this.freightObj.registrationFee = "";
@@ -412,6 +441,7 @@
 					remark: this.data.form.remark,
 					productType: this.data.form.productType,
 					type: this.data.form.type,
+					calType: this.data.form.calType,
 					tId: this.data.form.tId,
 					min: 0,
 					max: 0,
@@ -486,6 +516,17 @@
 			bottom: -20px;
 			max-width: 100px;
 			line-height: 22px;
+		}
+	}
+	.t-box-int{
+		display: flex;
+		height: 36px;
+		line-height: 36px;
+		.text{
+			padding-right: 10px;
+		}
+		.textM{
+			color: #eb9c0d;
 		}
 	}
 </style>

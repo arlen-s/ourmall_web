@@ -243,6 +243,7 @@ export default {
           radio: undefined,
           priceType: "1", //2 type ==1, 1 type == 2
           tId: "",
+          calType: "1",
           minWeight: undefined,
           priceArr: [
             {
@@ -526,7 +527,8 @@ export default {
       this.DrawerShippingsData = JSON.parse(this.defaultDrawerShippingData);
       this.DrawerShippingsData.form.id = item.id;
       this.DrawerShippingsData.form.name = item.name;
-	  this.DrawerShippingsData.form.nameDisplay = item.nameDisplay;
+      this.DrawerShippingsData.form.calType = item.calType? item.calType : '1';
+	    this.DrawerShippingsData.form.nameDisplay = item.nameDisplay;
       this.DrawerShippingsData.form.remark = item.remark;
       this.DrawerShippingsData.form.productType = [...item.productType];
       this.DrawerShippingsData.form.tId = item.tId;
