@@ -39,8 +39,8 @@
 					</div>
 					<div class="t-box-int">
 						<span class="text">添加运费方案:</span>
-						<span class="textM" v-if="data.form.calType== '1'">ourmall计算逻辑：首重价格+（重量=首重）/续重*续重费用+挂号费+附加费</span>
-						<span class="textM" v-else>云途运费计算逻辑：商品重量*运费++（多出来的重量*续重费用）+利润+挂号费+附加费</span>
+						<span class="textM" v-if="data.form.calType== '1'">ourmall运费计算逻辑：首重价格+（重量-首重）/续重*续重费用+挂号费+附加费</span>
+						<span class="textM" v-else>云途运费计算逻辑：商品重量不超过首重的部分*首重价格/1000+商品重量超过首重的部分*续重价格/1000+挂号费+附加费+利润</span>
 					</div>	
 				</el-form-item>				
 				<el-form-item :label="$t('logistics.运费设置')">
