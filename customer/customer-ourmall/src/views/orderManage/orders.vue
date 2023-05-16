@@ -2052,11 +2052,11 @@ export default {
       },
       statusArr: {
         //状态
-        1: {
-          text: "Quotation to be submitted",
-          type: "danger",
-          val: 1,
-        },
+        // 1: {
+        //   text: "Quotation to be submitted",
+        //   type: "danger",
+        //   val: 1,
+        // },
         2: {
           text: "Vendor quoted order",
           type: "warning",
@@ -2172,7 +2172,7 @@ export default {
       // 对路由变化作出响应...
       this.status = this.$route.params.status
         ? Number(this.$route.params.status)
-        : 1;
+        : 2;
       this.activeName = this.activeName ? this.activeName : "1";
       if (to.params.status !== from.params.status) {
         //切换左边菜单清空搜索条件
@@ -3462,14 +3462,14 @@ export default {
       switch (this.status) {
         case 1:
           this.tabList = [
-            {
-              id: 1,
-              name: 1,
-              title: "Quotation to be submitted",
-            },
+            // {
+            //   id: 1,
+            //   name: 1,
+            //   title: "Quotation to be submitted",
+            // },
             {
               id: 2,
-              name: 2,
+              name: 1,
               title: "Vendor quoted order",
             },
           ];
