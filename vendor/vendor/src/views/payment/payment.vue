@@ -226,17 +226,19 @@
 	export default {
 		data() {
 			return {
-				paymentMethods:[{
-					accountType:"3",
-					icon: require('@/assets/pay/3.png'),
-					name:"paypal",
-					status:"2"
-				},{
-					accountType:"4",
-					icon:require('@/assets/pay/4.png'),
-					name:"checkout",
-					status:"2"
-				},{
+				paymentMethods:[
+				// 	{
+				// 	accountType:"3",
+				// 	icon: require('@/assets/pay/3.png'),
+				// 	name:"paypal",
+				// 	status:"2"
+				// },{
+				// 	accountType:"4",
+				// 	icon:require('@/assets/pay/4.png'),
+				// 	name:"checkout",
+				// 	status:"2"
+				// },
+				{
 					accountType:"12",
 					icon:require('@/assets/pay/12.png'),
 					name:"underline",
@@ -247,27 +249,28 @@
 				// 	icon:require('@/assets/pay/6.png'),
 				// 	name:"bonus",
 				// },
-				{
-					accountType:"1",
-					icon:require('@/assets/pay/1.png'),
-					name:"stripe",
-					status:"2"
-				},{
-					accountType:"2",
-					icon:require('@/assets/pay/2.png'),
-					name:"ebanx",
-					status:"2"
-				},{
-					accountType:"10",
-					icon:require('@/assets/pay/10.png'),
-					name:"dlocal",
-					status:"2"
-				},{
-					accountType:"13",
-					icon:require('@/assets/pay/13.png'),
-					name:"Kasikornbank",
-					status:"2"
-				}],
+				// {
+				// 	accountType:"1",
+				// 	icon:require('@/assets/pay/1.png'),
+				// 	name:"stripe",
+				// 	status:"2"
+				// },{
+				// 	accountType:"2",
+				// 	icon:require('@/assets/pay/2.png'),
+				// 	name:"ebanx",
+				// 	status:"2"
+				// },{
+				// 	accountType:"10",
+				// 	icon:require('@/assets/pay/10.png'),
+				// 	name:"dlocal",
+				// 	status:"2"
+				// },{
+				// 	accountType:"13",
+				// 	icon:require('@/assets/pay/13.png'),
+				// 	name:"Kasikornbank",
+				// 	status:"2"
+				// }
+				],
 				underlineItems:[],
 				dialogData: {
 					isShow: false,
