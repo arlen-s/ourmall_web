@@ -193,6 +193,7 @@
                 type="primary"
                 @click="addToCart($event)"
                 :disabled="qualityNum == 0 ? true : false"
+                style="width:auto;"
               >Zum Warenkorb hinzufügen</el-button> 
               <!-- 1.9 平铺     -->
               <!-- <div v-if="$store.state.configJson.detailPage.imgSize == 'Tile'" class="inner-description" v-html="web"> -->

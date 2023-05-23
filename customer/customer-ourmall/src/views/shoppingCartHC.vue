@@ -5,31 +5,31 @@
         <div class="d-flex">
           <img src="@/assets/pay/payStatus1.png" height="30" />
           <span class="tx-bold"
-            >Waiting for the payment result to be returned.</span
+            >Warten auf die Rücksendung des Zahlungsergebnisses.</span
           >
         </div>
-        <p>You may need to wait a little while</p>
-        <el-button type="primary" plain @click="goBack">View order</el-button>
+        <p>Sie müssen möglicherweise eine Weile warten</p>
+        <el-button type="primary" plain @click="goBack">Bestellung ansehen</el-button>
       </div>
       <div v-if="paystatus == 2">
         <div class="d-flex">
           <img src="@/assets/pay/payStatus2.png" height="30" />
-          <span class="tx-bold">Payment successful</span>
+          <span class="tx-bold">Zahlung erfolgreich</span>
         </div>
-        <p>You have successfully completed your order.</p>
-        <el-button type="primary" plain @click="goBack">View order</el-button>
+        <p>Sie haben Ihre Bestellung erfolgreich abgeschlossen.</p>
+        <el-button type="primary" plain @click="goBack">Bestellung ansehen</el-button>
       </div>
       <div v-if="paystatus == 3">
         <div class="d-flex">
           <img src="@/assets/pay/payStatus3.png" height="30" />
-          <span class="tx-bold">Payment failed</span>
+          <span class="tx-bold">Zahlung fehlgeschlagen</span>
         </div>
-        <p>Sorry, we can't complete the payment.</p>
+        <p>Wir können die Zahlung leider nicht abschließen.</p>
         <div class="d-flex">
           <!-- <el-button type="primary" @click="orderPay('repay')"
             >Pay again</el-button
           > -->
-          <el-button type="primary" plain @click="goBack">View order</el-button>
+          <el-button type="primary" plain @click="goBack">Bestellung ansehen</el-button>
         </div>
       </div>
     </div>
@@ -136,11 +136,11 @@
       </div> -->
       <div class="main" style="margin-top:40px">
         <div style="height:40px">
-          <el-radio v-model="orderType" label="1">Wholesale order</el-radio>
-          <el-radio v-model="orderType" label="2">offline order</el-radio>
+          <el-radio v-model="orderType" label="1">Großhandel</el-radio>
+          <el-radio v-model="orderType" label="2">Offline oder</el-radio>
         </div>
         <div class="address_box" v-if="orderType==1">
-          <div class="title mr-l-30">Shipping Address</div>
+          <div class="title mr-l-30">Lieferadresse</div>
           <div class="swiperBox">
             <div class="swiper-button-next">
               <el-button icon="el-icon-arrow-right" circle></el-button>
@@ -166,13 +166,13 @@
                     </div>
                     <div class="footer_card">
                       <el-button type="text" @click.native="editAddress(item)"
-                        >Edit</el-button
+                        >Änderungen</el-button
                       >
                       <el-button
                         type="text"
                         class="text-danger"
                         @click.native="deleteAddress(item, index)"
-                        >Delete</el-button
+                        >Löschen</el-button
                       >
                     </div>
                     <span v-if="item.isDefault == '1'" class="default"
@@ -187,7 +187,7 @@
                       type="text"
                       class="text-white"
                       @click.native="editAddress()"
-                      >Add New Address</el-button
+                      >Neue Adresse eingeben</el-button
                     >
                   </el-card>
                 </swiper-slide>
@@ -203,9 +203,9 @@
         <el-card shadow="never">
           <div>
             <div class="title">
-              Product Details
+              Produkt-Details
               <span class="title_tips m-l-20"
-                >(Please check the purchase products)</span
+                >(Bitte überprüfen Sie die Produkte)</span
               >
             </div>
             <div>
@@ -220,7 +220,7 @@
                   width="55"
                 >
                 </el-table-column>
-                <el-table-column prop="date" label="Check All" align="center">
+                <el-table-column prop="date" label="Check alle" align="center">
                   <template slot-scope="scope">
                     <el-image
                       style="width: 70px; height: 70px"
@@ -236,7 +236,7 @@
                     </el-image>
                   </template>
                 </el-table-column>
-                <el-table-column prop="name" label="Product">
+                <el-table-column prop="name" label="Produkt">
                   <template slot-scope="scope">
                     <div>
                       <div
@@ -259,12 +259,12 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="address" label="Price" align="center">
+                <el-table-column prop="address" label="Preis" align="center">
                   <template slot-scope="scope">
                     <div class="title">{{$store.state.country.symbol}}{{ scope.row.stockInfo.price }}</div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Quantity" align="center">
+                <el-table-column label="Menge" align="center">
                   <template slot-scope="scope">
                     <el-input-number
                       :disabled="scope.row.stockInfo.inventory <= 0"
@@ -292,21 +292,21 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Weight" align="center">
+                <el-table-column label="Gewicht" align="center">
                   <template slot-scope="scope">
                     <div class="title">
                       {{ scope.row.stockInfo.weight || 0 }}g
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="warehouse" align="center">
+                <el-table-column label="Lager" align="center">
                   <template slot-scope="scope">
                     <div class="title">
                       {{ scope.row.warehouseInfo? scope.row.warehouseInfo.name : '--' }}
                     </div>
                   </template>
                 </el-table-column>                
-                <el-table-column label="Subtotal(vat)" align="center">
+                <el-table-column label="Zwischensumme(vat)" align="center">
                   <template slot-scope="scope">
                     <div class="title" v-if="orderType == 1">
                       {{$store.state.country.symbol}}{{
@@ -334,14 +334,14 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Operate" align="center">
+                <el-table-column label="verwalten" align="center">
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
                       type="danger"
                       icon="el-icon-delete"
                       @click="deleteFromCart(scope.row)"
-                      >Delete</el-button
+                      >Löschen</el-button
                     >
                   </template>
                 </el-table-column>
@@ -359,12 +359,12 @@
             </div>
           <div class="d-flex-between">
             <div v-if="orderType == 1">
-              <span>Shipping Method :</span>
+              <span>Versandart:</span>
               <el-select
                 @change="logisticChange"
                 style="margin-left: 20px"
                 v-model="logistic"
-                placeholder="Please choose"
+                placeholder="Bitte wählen Sie"
                 :disabled="isMailFree == 1"
               >
                 <el-option
@@ -385,11 +385,11 @@
             <div v-else></div>
             <div>
               <span
-                >Subtotal（{{$store.state.country.symbol}}）:
+                >Zwischensumme（{{$store.state.country.symbol}}）:
                 <span class="font_bold">{{ subtotal }}</span></span
               >
               <span style="margin-left: 20px"
-                >Freight（{{$store.state.country.symbol}}）:
+                >Versandkosten（{{$store.state.country.symbol}}）:
                 <span class="font_bold">{{ freight }}</span></span
               >
             </div>
@@ -418,7 +418,7 @@
     				</el-tooltip>
 								
 						<span style="margin-right: 30px;">
-									Credits:
+									Kredit:
 							<span class="tx-bold"> ({{$store.state.country.symbol}} {{credits}})</span>
 						</span>
             <el-switch
@@ -430,7 +430,7 @@
             </el-switch>
           </div>
           <div class="pay_method">
-            <p>Payment method:</p>
+            <p>Zahlungsmethode:</p>
             <div class="imgRow" v-if="payTypes.length">
               <div
                 class="img"
@@ -457,11 +457,11 @@
         </el-card>
         <div class="pay-submit">
           <span class="left">
-            Amount due (including freight)（{{$store.state.country.symbol}}）:
+           Fälliger Betrag (einschließlich Versandkosten)（{{$store.state.country.symbol}}）:
             <span class="font_bold"> {{ sum }} </span>
           </span>
           <el-button type="primary" :disabled="platformType == '13'" @click="orderPay()"
-            >Submit orders</el-button
+            >Bestellungen aufgeben</el-button
           >
         </div>
 
