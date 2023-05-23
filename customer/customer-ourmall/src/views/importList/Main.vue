@@ -54,7 +54,8 @@
         </el-row>
        </el-card> 
 		<div style="margin: 0 0 30px;" v-else>
-			<subPage ref="main" :key="pageKey"
+      <span v-if="this.vendorId != 148982 && this.vendorId != 146428 && this.vendorId != 144875 && this.vendorId != 144843 && this.vendorId != 143779 && this.vendorId != 143654 && this.vendorId != 74">
+        			<subPage ref="main" :key="pageKey"
 			  :tab="tab" 
 			  :loadingImport="loadingImport"
 			  :pushLoading="pushLoading"
@@ -82,6 +83,38 @@
 			  @delItem2="delItem2"
 			  @gotoImportList="gotoImportList"
 			/>
+      </span>
+      <span v-else>
+			<subPageHC ref="main" :key="pageKey"
+			  :tab="tab" 
+			  :loadingImport="loadingImport"
+			  :pushLoading="pushLoading"
+			  :exportLoading="exportLoading"
+			  :delLoading="delLoading"
+			  :AllChecked="AllChecked"
+			  :items="items"
+			  :tags="tags"
+			  :allCnt="allCnt"
+			  :doneCnt="doneCnt"
+			  :filtersParams="filtersParams"
+			  :shopOptArr="shopOptArr"
+			  :filterAccountProps="filterAccountProps"
+			  @changeAllItems="changeAllItems"
+			  @batItems="batItems"
+			  @openTagMgt="openTagMgt"
+			  @removeCheckedTags="removeCheckedTags"
+			  @singPush="singPush"
+			  @editProduct="editProduct"
+			  @delItem="delItem"
+			  @importPorduct="importPorduct"
+			  @openPushSetting="openPushSetting"
+			  @setFilter="setFilter"
+			  @clearFilter="clearFilter"
+			  @delItem2="delItem2"
+			  @gotoImportList="gotoImportList"
+			/>
+      </span>
+
 		</div>
        <el-row v-if="items.length" :gutter="20">
         <el-col :span="24" class="d-flex justify-content-center">
@@ -122,6 +155,7 @@ import DialogEditProduct from '@/views/importList/DialogEditProduct'
 import DialogSelectImg from "@/views/importList/DialogSelectImg"
 import DialogPushSetting from "@/views/importList/DialogPushSetting"
 import subPage from '@/views/importList/Sub'
+import subPageHC from '@/views/importList/SubHC'
 export default {
 	props: ['fromPage'],
   data(){
@@ -297,7 +331,8 @@ export default {
     DialogEditProduct,
     DialogSelectImg,
     DialogPushSetting,
-	subPage,
+	  subPage,
+    subPageHC,
   },
   watch:{
     $route: "gotoPage",

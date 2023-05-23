@@ -517,9 +517,9 @@
 <script>
 import DHeader from "@/views/homePage/components/header";
 // import DFooter from "@/views/homePage/components/footer";
-import DialogAddress from "@/views/homePage/components/DialogAddress";
+import DialogAddress from "@/views/homePage/components/DialogAddressHC";
 import countryArr from "@/components/country.json";
-import Underline from "@/components/checkout/underline";
+import Underline from "@/components/checkout/underlineHC";
 import Dlocal from "@/components/checkout/dlocal";
 import Checkout from "@/components/checkout/checkout";
 // import STable from '@/components/table'
@@ -1072,7 +1072,7 @@ export default {
       if (val.length> 0) {
           for (let b = 0; b < val.length; b++) {
               if (val[b].warehouseInfo.id != val[0].warehouseInfo.id) {
-                this.$message.error('Please tick the products from the same warehouse')
+                this.$message.error('Bitte kreuzen Sie die Produkte aus demselben Lager an')
                 //  this.$refs.multipleTable.clearSelection();
                  this.$refs.multipleTable.toggleRowSelection(val[b]);
                     return  false
@@ -1084,13 +1084,13 @@ export default {
                   if (this.multipleSelection[i]?.warehouseInfo && val[j]?.warehouseInfo) {
                   if(this.multipleSelection[i].warehouseInfo.id != val[j].warehouseInfo.id){
                    this.$refs.multipleTable.toggleRowSelection(val[j]);
-                    this.$message.error('Please tick the products from the same warehouse')
+                    this.$message.error('Bitte kreuzen Sie die Produkte aus demselben Lager an')
                     return  false
                        }
                   }else{
                     if(this.multipleSelection[i].stockWarehouseId != val[j].stockWarehouseId){
                       this.$refs.multipleTable.toggleRowSelection(val[j]);
-                        this.$message.error('Please tick the products from the same warehouse')
+                        this.$message.error('Bitte kreuzen Sie die Produkte aus demselben Lager an')
                         return  false
                     }
                   }
