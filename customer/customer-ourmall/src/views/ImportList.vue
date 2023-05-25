@@ -252,7 +252,7 @@
                   {{$t('Cost price')}}:
                   <span
                     ><span style="font-size: 13px">{{
-                      item.stocks[0].currency ? item.stocks[0].currency : "USD"
+                      item.stocks[0].currency ? item.stocks[0].currency : $store.state.country.symbol
                     }}</span>
                     {{ showPrice(item) }}</span
                   >
@@ -1692,7 +1692,7 @@ export default {
         if (r.ErrorCode == 9999) {
           this.currency = r.Data.Results[0].currency
             ? r.Data.Results[0].currency
-            : "USD";
+            : this.$store.state.country.symbol;
           this.stores = [];
           r.Data.Results.forEach((store) => {
             store.fChecked = false;

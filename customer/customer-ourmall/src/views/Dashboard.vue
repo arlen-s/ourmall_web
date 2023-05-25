@@ -207,7 +207,7 @@
                     <el-table :data="tableData" stripe style="width: 100%">
                       <el-table-column prop="date" label="Date" width="180">
                       </el-table-column>
-                      <el-table-column prop="orderCnt" label="Total Orders">
+                      <el-table-column prop="orderCnt" :label="$t('Total Orders')">
                       </el-table-column>
                       <el-table-column
                         :label="`Revenue (${$store.state.country.symbol})`"
@@ -850,7 +850,7 @@
           </el-table-column>
           <el-table-column
             prop="revenue"
-            :label="`Revenue (${$store.state.country.symbol})`"
+            :label="`${$t('Revenue')} (${$store.state.country.symbol})`"
             width="180"
           >
             <template slot-scope="scope">
@@ -859,7 +859,7 @@
           </el-table-column>
           <el-table-column
             prop="cost"
-            :label="`Cost (${$store.state.country.symbol})`"
+            :label="`${$t('Cost')} (${$store.state.country.symbol})`"
             width="180"
           >
             <template slot-scope="scope">
@@ -1574,7 +1574,7 @@ export default {
                 trigger: "axis",
               },
               legend: {
-                data: [`Total Revenue ${this.$store.state.country.symbol}`, "Total Cost"],
+                data: [`${this.$t('Total Revenue')} ${this.$store.state.country.symbol}`, this.$t("Total Cost")],
               },
               grid: {
                 left: "3%",
@@ -1597,16 +1597,16 @@ export default {
               },
               series: [
                 {
-                  name: `Total Revenue ${this.$store.state.country.symbol}`,
+                  name: `${this.$t('Total Revenue')} ${this.$store.state.country.symbol}`,
                   type: "line",
-                  stack: "Total Revenue",
+                  stack: this.$t('Total Revenue'),
                   data: arr.map((item) => this.$exchangeRate(item.revenue)),
                   smooth: true,
                 },
                 {
-                  name: "Total Cost",
+                  name: this.$t("Total Cost"),
                   type: "line",
-                  stack: "Total Cost",
+                  stack: this.$t("Total Cost"),
                   data: arr.map((item) => this.$exchangeRate(item.cost)),
                   smooth: true,
                 },

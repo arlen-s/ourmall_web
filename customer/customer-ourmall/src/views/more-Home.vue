@@ -169,7 +169,8 @@
                   >{{$store.state.country.symbol}} {{item.minPrice === item.maxPrice ? item.minPrice : `${item.minPrice}~${item.maxPrice} `}}</b>
                   <p
                     v-show="item.estimatedLeadTimeType"
-                  >about: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{item.estimatedLeadTimeType}}</p>
+                  >{{$t('about')}}: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{getType(item.estimatedLeadTimeType)}}</p>
+                  <p>Kostenloser Versand</p>
                   <!-- <div class="imports">
                         <span>Imports:
                            <span style="color:#525FB0">{{ item.imports }}</span>
@@ -277,7 +278,7 @@ export default {
       headerMenu: [],
       languageList: [
         {
-          Ge: 'Tag',
+          Ge: 'Werktage',
           En: 'day',
 
         },
@@ -298,11 +299,11 @@ export default {
         footer: []
       },
        btnList: [
-        { label: "Price", status: 0 },
+        { label: this.$t("Price"), status: 0 },
         { label: this.$t("Stock Qty"), status: 0 }
       ],
       priceObj: {
-        label: "Price", status: 0
+        label: this.$t("Price"), status: 0
       },
       filterStock: {
           label: this.$t("Stock Qty"), status: 0

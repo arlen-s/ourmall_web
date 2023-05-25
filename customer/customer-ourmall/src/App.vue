@@ -571,12 +571,12 @@ export default {
           enabled: true,
           subItem: [
             {
-              name: "Import List",
+              name: this.$t("Import List"),
               path: "/import-list",
               enabled: true,
             },
             {
-              name: "My Products",
+              name: this.$t("My Products"),
               path: "/products",
               enabled: true,
             },
@@ -750,17 +750,17 @@ export default {
           id: 6,
           icon: "el-icon-shopping-bag-1",
           image: "/images/sidebar/products.png",
-          text: "Products",
+          text: this.$t("Products"),
           path: "/products",
           enabled: true,
           subItem: [
             {
-              name: "Import List",
+              name: this.$t("Import List"),
               path: "/import-list",
               enabled: true,
             },
             {
-              name: "My Products",
+              name: this.$t("My Products"),
               path: "/products",
               enabled: true,
             },
@@ -790,7 +790,7 @@ export default {
         {
           id: 10,
           icon: "el-icon-receiving",
-          text: "Purchase List",
+          text: this.$t("Purchase List"),
           path: "/purchase-list",
           enabled: true,
           subItem: [
@@ -800,7 +800,7 @@ export default {
               enabled: true,
             },
             {
-              name: "Purchase List",
+              name: this.$t("Purchase List"),
               path: "/purchase-list",
               enabled: true,
             },
@@ -821,17 +821,17 @@ export default {
           id: 14,
           icon: "el-icon-s-order",
           image: "/images/sidebar/order.png",
-          text: "Order",
+          text: this.$t("Order"),
           path: "/ordersManage/1",
           enabled: true,
           subItem: [
             {
-              name: "Quotation",
+              name: this.$t("Quotation"),
               path: "/ordersManage/1",
               enabled: true,
             },
             {
-              name: "Payment",
+              name: this.$t("Payment"),
               path: "/ordersManage/2",
               enabled: true,
             },
@@ -841,17 +841,17 @@ export default {
               enabled: true,
             },
             {
-              name: "Abnormal",
+              name: this.$t("Abnormal"),
               path: "/ordersManage/4",
               enabled: true,
             },
             {
-              name: "Completed",
+              name: this.$t("Completed"),
               path: "/ordersManage/5",
               enabled: true,
             },
             {
-              name: "All orders",
+              name: this.$t("All orders"),
               path: "/ordersManage/6",
               enabled: true,
             },
@@ -861,7 +861,7 @@ export default {
           id: 21,
           icon: "el-icon-s-order",
           image: "/images/sidebar/search-pro.png",
-          text: "Inquiry",
+          text: this.$t("Inquiry"),
           enabled: true,
           subItem: [
             {
@@ -870,12 +870,12 @@ export default {
               enabled: true,
             },
             {
-              name: "Completed",
+              name: this.$t("Completed"),
               path: "/search-complete",
               enabled: true,
             },
             {
-              name: "All",
+              name: this.$t("All"),
               path: "/search-select",
               enabled: true,
             },
@@ -885,7 +885,7 @@ export default {
           id: 5,
           icon: "el-icon-s-shop",
           image: "/images/sidebar/store.png",
-          text: "Stores",
+          text: this.$t("Stores"),
           path: "/stores",
           enabled: true,
         },
@@ -898,7 +898,7 @@ export default {
         // },
         {
           id: 13,
-          text: "Billing",
+          text: this.$t("Billing"),
           icon: "el-icon-s-finance",
           image: "/images/sidebar/billing.png",
           path: "/transaction",
