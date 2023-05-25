@@ -18,7 +18,7 @@ export const lang = {
   '选择上级目录': 'select upper category',
   '类目描述': 'category description',
   '类目封面': 'category cover',
-  '推荐尺寸：600px * 600px, 最大1MB。': 'recommended size: 600px * 600px, up to 1Mb.',
+  '推荐尺寸：600px * 600px, 最大1MB。': 'recommended size: 800px * 800px, up to 1Mb.',
   '类目名称必须填写': 'category name must be entered',
   '1级类目必须设置封面图片': 'level 1 category must set cover image',
   '保存': 'save',

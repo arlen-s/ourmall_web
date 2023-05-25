@@ -654,7 +654,7 @@
                     <span>{{ scope.row.store || "---" }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column ：label="$t('Created Time)" width="200">
+                <el-table-column :label="$t('Created Time')" width="200">
                   <template slot-scope="scope">
                     <span>{{
                       moment(scope.row.timeCreated).format(

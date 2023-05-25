@@ -4,7 +4,7 @@
 			{{ setting.title || $t('Product category name') }}
 			<div class="more">
 				<router-link to="/products-market">
-					<span style="color: #3C3C3C;">{{ setting.moreText || 'More' }}</span>
+					<span style="color: #3C3C3C;">{{ setting.moreText || $t('MORE') }}</span>
 					<i style="color: #3C3C3C;" class="el-icon-arrow-right"></i>
 				</router-link>
 			</div>
