@@ -739,6 +739,7 @@ export default {
   "MORE": "MORE",
   "Categories": "Categories",
   "size":"size",
+  "Stock Qty": 'Stock Qty',
   "weight":"weight",
   "GO": "GO",
   "Tag": "Tag",

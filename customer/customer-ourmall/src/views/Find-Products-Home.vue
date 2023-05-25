@@ -474,7 +474,7 @@ export default {
       );
     });
     document.title = 
-    `${this.$t('How to find products? Find products in')} ${this.$root.$children[0].pName.a}${$t('Products Market! Dropshipping from Worldwide to Worldwide!')} :: ${this.$root.$children[0].baseUrl == '/my' ? 'GoDropShipping':'OurMall DropShipping'} App`;
+    `${this.$t('How to find products? Find products in')} ${this.$root.$children[0].pName.a}${this.$t('Products Market! Dropshipping from Worldwide to Worldwide!')} :: ${this.$root.$children[0].baseUrl == '/my' ? 'GoDropShipping':'OurMall DropShipping'} App`;
   },
   methods: {
     getMenu(){

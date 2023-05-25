@@ -1,6 +1,6 @@
 import axios from 'axios'
 let arr = window.location.hostname.split('.')
-let host = `${window.location.host.toLowerCase().indexOf('sandbox') >= 0 ? 'sandboxapi.' : 'api.'}${/^(\w+\.)+[a-zA-Z]+$/.test(window.location.hostname) ? arr[arr.length - 2] : 'ourmall'}.com`,
+let host = `${window.location.host.toLowerCase().indexOf('sandbox') >= 0 ? 'sandboxapi.' : 'sandboxapi.'}${/^(\w+\.)+[a-zA-Z]+$/.test(window.location.hostname) ? arr[arr.length - 2] : 'ourmall'}.com`,
   pointCnt = 0;
 if (window.location.host.match(/\./ig)) pointCnt = window.location.host.match(/\./ig).length;
 //switch (pointCnt) {

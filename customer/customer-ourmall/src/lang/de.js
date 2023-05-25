@@ -609,6 +609,7 @@ export default {
   "My Profile": "Mein Profil",
   "Logout": "Ausloggen",
   "LOGIN": "ANMELDUNG",
+  "Stock Qty": 'Warenbestand',
   "Sign up here": "Hier anmelden",
   "Attach image file": "Bilddatei anhängen",
   "Browse": "Durchsuche",

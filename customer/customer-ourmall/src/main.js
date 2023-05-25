@@ -89,7 +89,7 @@ Vue.use(VueAxios, axiosWrap)
 Vue.prototype.$apiCall = ApiCall;
 VueClipboard.config.autoSetContainer = true
 Vue.use(VueClipboard)
-i18n.locale=  localStorage.getItem('countryType') == 'DE'? 'de' : 'de'
+i18n.locale=  localStorage.getItem('countryType') == 'DE'? 'de' : 'en'
 Vue.prototype.$Burying = function (params) {
   if (!window.location.href.includes('godropshipping.com')) {
     return ;

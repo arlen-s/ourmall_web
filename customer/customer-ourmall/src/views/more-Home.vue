@@ -58,7 +58,7 @@
                   <el-input placeholder="Max" style="width:60px" v-model="max">
                     <span slot="prefix">$</span>
                   </el-input>
-                  <el-button type="primary" @click="searchPrice">{{$('GO')}}</el-button>
+                  <el-button type="primary" @click="searchPrice">{{$t('GO')}}</el-button>
                 </div>
                  <el-divider></el-divider>
                 <p class="price">{{$t('Qty Available')}}</p>
@@ -68,7 +68,7 @@
                   <span> — </span>
                   <el-input placeholder="Max" style="width:60px" v-model="maxQty">
                   </el-input>
-                  <el-button type="primary"  @click="searchPrice">{{$('GO')}}</el-button>
+                  <el-button type="primary"  @click="searchPrice">{{$t('GO')}}</el-button>
                 </div>   
                  <el-divider></el-divider>
                  <div class="top-title">
@@ -299,13 +299,13 @@ export default {
       },
        btnList: [
         { label: "Price", status: 0 },
-        { label: "Stock Qty", status: 0 }
+        { label: this.$t("Stock Qty"), status: 0 }
       ],
       priceObj: {
         label: "Price", status: 0
       },
       filterStock: {
-          label: "Stock Qty", status: 0
+          label: this.$t("Stock Qty"), status: 0
       },
       nameS: '',
       checkQty:'asc',
