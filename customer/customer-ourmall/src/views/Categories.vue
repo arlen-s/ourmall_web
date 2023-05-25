@@ -274,7 +274,7 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
   height: 100%;
 }
 .CategoryCarousel-title{
-  width: 250px;
+  width: 255px;
   word-wrap: break-word;
   padding-right: 32px;
   position: relative;

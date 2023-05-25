@@ -226,7 +226,7 @@
               <h3 >{{$t('product information')}}</h3>
               <div class="product-information">
                 <div>
-                  <span>sku</span>
+                  <span>Sku</span>
                   <span>{{checkData.sku || ''}}</span>
                 </div>
                 <div>
