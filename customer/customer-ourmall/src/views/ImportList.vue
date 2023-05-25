@@ -5,7 +5,7 @@
         <div class="left">
           <div class="title">
             <i class="el-icon-upload2"></i>
-            <h2>Import List</h2>
+            <h2>{{$t('Import List')}}</h2>
           </div>
         </div>
         <div class="right">
@@ -13,23 +13,20 @@
             size="small"
             icon="el-icon-setting"
             @click="openPushSetting"
-            >Push Setting</el-button
+            >{{$t('Push Setting')}}</el-button
           >
         </div>
       </div>
       <div class="r2">
         <el-alert type="warning">
           <div slot="title">
-            You can import and manage your AliExpress / Amazon products here
-            before publishing them to your Shopify store. You can publish a
-            product to different stores and add multiple tags to each products.
-            Click
+            {{$t('You can import and manage your AliExpress / Amazon products here before publishing them to your Shopify store. You can publish a product to different stores and add multiple tags to each products.')}}{{$t('Click')}}
             <router-link
               :to="{ name: 'article', query: { id: 12 } }"
               target="_blank"
-              >here</router-link
+              >{{$t('here')}}</router-link
             >
-            to leam more
+           {{$t('to leam more')}} 
           </div>
         </el-alert>
       </div>
@@ -43,12 +40,12 @@
           type="primary"
           :loading="loadingImport"
           @click="importPorduct"
-          >Import Product</el-button
+          >{{$t('Import Product')}}</el-button
         >
       </div>
       <div class="r4"> 
         <div v-if="taskList.length!= 0">
-          <span>Current Import Task: {{taskList.length}}</span>
+          <span>{{$t('Current Import Task')}}: {{taskList.length}}</span>
           <el-popover
             placement="bottom"
             trigger="manual"
@@ -57,20 +54,20 @@
             <div style="width:100%;height:100%" >
               <div class="d-flex" v-for="(info,index) in taskList" :key="info.id" style="margin-bottom:10px">
               <router-link :to="{path:'/task-list',query:{id:info.id}}"
-               class="mg-r-10" style="width:100px">Import Task{{index+1}}</router-link>
+               class="mg-r-10" style="width:100px">{{$t('Import Task')}}{{index+1}}</router-link>
               <el-progress :percentage="parseInt((info.doneCnt/info.allCnt)*100)" 
               v-if="(info.doneCnt/info.allCnt)*100>=0&&(info.doneCnt/info.allCnt)*100<=100" style="width:70%"></el-progress>
               <el-progress :percentage="0"  style="width:70%" v-else></el-progress>
               <i class="el-icon-error" @click="delitem(info)" style="cursor: pointer;"></i>
             </div>
             </div>
-            <el-link v-if="!taskListShow" slot="reference" type="primary" class="mg-l-10" style="margin-bottom:4px" @click="taskListShow = !taskListShow">Details</el-link>
-            <el-link v-else slot="reference" type="primary" class="mg-l-10" style="margin-bottom:4px" @click="taskListShow = !taskListShow">Close</el-link>
+            <el-link v-if="!taskListShow" slot="reference" type="primary" class="mg-l-10" style="margin-bottom:4px" @click="taskListShow = !taskListShow">{{$t('Details')}}</el-link>
+            <el-link v-else slot="reference" type="primary" class="mg-l-10" style="margin-bottom:4px" @click="taskListShow = !taskListShow">{{$t('Close')}}</el-link>
           </el-popover>
         </div>
         <div v-else></div>
         <el-button type="primary">
-          <router-link to="/list-history" tag="span">View History</router-link>
+          <router-link to="/list-history" tag="span">{{$t('View History')}}</router-link>
         </el-button>
       </div>
     </div>
@@ -84,7 +81,7 @@
                 :value="AllChecked"
                 @change="changeAllItems($event)"
                 style="margin-right: 15px"
-                >All</el-checkbox
+                >{{$t('All')}}</el-checkbox
               >
               <el-button
                 type="primary"
@@ -100,7 +97,7 @@
                 size="mini"
                 :loading="exportLoading"
                 @click="batItems('export')"
-                >Export</el-button
+                >{{$t('Export')}}</el-button
               >
               <el-button
                 type="danger"
@@ -108,17 +105,17 @@
                 style="margin-right: 10px"
                 :loading="delLoading"
                 @click="batItems('del')"
-                >Delete</el-button
+                >{{$t('Delete')}}</el-button
               >
               <el-dropdown trigger="click" ref="tagMgt">
                 <el-button size="mini">
-                  Add Tags <i class="el-icon-arrow-down el-icon--right"></i>
+                 {{$t('Add Tags')}}  <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
                   <div class="add-tags-wrap">
                     <div class="header">
                       <el-button type="primary" size="mini" @click="openTagMgt"
-                        >+ Tag management</el-button
+                        >+ {{$t('Tag management')}}</el-button
                       >
                     </div>
                     <div class="check-wrap">
@@ -134,13 +131,13 @@
                         size="mini"
                         type="danger"
                         @click="removeCheckedTags()"
-                        >Clear</el-button
+                        >{{$t('Clear')}}</el-button
                       >
                       <el-button
                         size="mini"
                         type="primary"
                         @click="batItems('addTags')"
-                        >Confirm</el-button
+                        >{{$t('Confirm')}}</el-button
                       >
                     </div>
                   </div>
@@ -154,7 +151,7 @@
                 class="filter-dropdown"
               >
                 <el-button size="mini">
-                  Filter
+                 {{$t('Filter')}} 
                   <span v-if="filterNum" class="filter-num">{{
                     filterNum
                   }}</span>
@@ -163,7 +160,7 @@
                 <el-dropdown-menu slot="dropdown" style="max-width: 300px">
                   <div class="filter-wrap">
                     <div class="filter-stores-wrap">
-                      <h3>Filter by stores</h3>
+                      <h3>{{$t('Filter by stores')}}</h3>
                       <ul>
                         <li v-for="store in stores" :key="store.id">
                           <el-checkbox v-model="store.fChecked">{{
@@ -173,7 +170,7 @@
                       </ul>
                     </div>
                     <div class="filter-tags-wrap">
-                      <h3>Filter by tags</h3>
+                      <h3>{{$t('Filter by tags')}}</h3>
                       <el-checkbox
                         v-for="tag in tags"
                         :key="tag.id"
@@ -187,13 +184,13 @@
                         size="mini"
                         type="danger"
                         @click="clearFilter()"
-                        >Clear</el-button
+                        >{{$t('Clear')}}</el-button
                       >
                       <el-button
                         size="mini"
                         type="primary"
                         @click="filterGetItem"
-                        >Confirm</el-button
+                        >{{$t('Confirm')}}</el-button
                       >
                     </div>
                   </div>
@@ -212,7 +209,7 @@
                 text-align: center;
               "
             >
-              no product
+              {{$t('no product')}}
             </p>
           </el-col>
           <el-col
@@ -225,7 +222,7 @@
             style="position: relative; margin-bottom: 20px"
           >
             <div v-if="item.status != '1'" class="disabled-mask">
-              <span>Sold Out</span>
+              <span>{{$t('Sold Out')}}</span>
             </div>
             <div class="product-box">
               <el-checkbox
@@ -252,7 +249,7 @@
                   }}</a>
                 </p>
                 <div class="price tx-ellipsis1" v-if="item.stocks.length">
-                  Cost price:
+                  {{$t('Cost price')}}:
                   <span
                     ><span style="font-size: 13px">{{
                       item.stocks[0].currency ? item.stocks[0].currency : "USD"
@@ -316,7 +313,7 @@
               <div class="push-warp">
                 <el-button type="primary" size="mini" @click="singPush(item)" class="import-list-push-to-store"
                 >
-                  <span class="import-list-push-to-store">Push To Store</span>
+                  <span class="import-list-push-to-store">{{$t('Push To Store')}}</span>
                 </el-button>
               </div>
             </div>
@@ -369,7 +366,7 @@
                 </div>
                 <div class="tx-center">
                   <a href="javascript:;" @click="openDialogSelectImg()"
-                    >Change image</a
+                    >{{$t('Change image')}}</a
                   >
                 </div>
               </div>
@@ -433,7 +430,7 @@
                   </el-form-item>
                   <!-- shopifyTag -->
                   <div class="edit-tags">
-                    <div class="label-title">Shopify tags</div>
+                    <div class="label-title">{{$t('Shopify tags')}}</div>
                     <div class="tag-wrap">
                       <el-tag
                         v-for="tag in dialogEditProduct.shopifyTag"
@@ -459,7 +456,7 @@
                         size="small"
                         @click="showInput('tag')"
                       >
-                        + New Tag
+                        + {{$t('New Tag')}}
                       </el-button>
                     </div>
                   </div>
@@ -491,7 +488,7 @@
                         size="small"
                         @click="showInput('type')"
                       >
-                        + New Type
+                        + {{$t('New Type')}}
                       </el-button>
                     </div>
                   </div>
@@ -533,7 +530,7 @@
               >
                 <el-table-column fixed type="selection" width="55">
                 </el-table-column>
-                <el-table-column fixed label="Product" width="120">
+                <el-table-column fixed :label="$t('products')" width="120">
                   <template slot-scope="scope">
                     <div class="table-img-wrap">
                       <el-image
@@ -564,10 +561,10 @@
                     ></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column label="price" width="190">
-                  <template slot="header" slot-scope="scope">
+                <el-table-column :label="$t('price')" width="190">
+                  <template slot="header">
                     <div>
-                      <span>Price ({{ currency }})</span>
+                      <span> {{$t('Price')}} ({{ currency }})</span>
                       <br />
                       <el-select
                         v-show="!dialogEditProduct.AllActionPriceType"
@@ -657,10 +654,10 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column label="Compare Price" width="190">
-                  <template slot="header" slot-scope="scope">
+                <el-table-column :label="$t('Compare Price')" width="190">
+                  <template slot="header">
                     <div>
-                      <span>Compare Price ({{ currency }})</span>
+                      <span>{{$t('Compare Price')}} ({{ currency }})</span>
                       <br />
                       <el-select
                         v-show="!dialogEditProduct.AllActionCPriceType"
@@ -670,13 +667,13 @@
                         style="width: 130px"
                         @change="changeAllPriceType('Cprice')"
                       >
-                        <el-option label="Action" :value="''"></el-option>
-                        <el-option label="Change All" :value="1"></el-option>
+                        <el-option :label="$t('Action')" :value="''"></el-option>
+                        <el-option :label="$t('Change All')" :value="1"></el-option>
                         <el-option
-                          label="Multiply Price"
+                          :label="$t('Multiply Price')"
                           :value="2"
                         ></el-option>
-                        <el-option label="Add Price" :value="3"></el-option>
+                        <el-option :label="$t('Add Price')" :value="3"></el-option>
                       </el-select>
                       <div v-show="dialogEditProduct.AllActionCPriceType">
                         <div class="d-flex">
@@ -833,7 +830,7 @@
                   </template>
                 </el-table-column> -->
                 <el-table-column
-                  label="Cost Price"
+                  :label="$t('Cost Price')"
                   prop="costPrice"
                   width="150"
                 >
@@ -841,7 +838,7 @@
                     {{ scope.row.costPrice }} ({{ scope.row.currency }})
                   </template>
                 </el-table-column>
-                <el-table-column label="Action" width="100" align="center">
+                <el-table-column :label="$t('Action')" width="100" align="center">
                   <template
                     v-if="dialogEditProduct.stocks.length > 1"
                     slot-scope="scope"
@@ -888,13 +885,13 @@
         </el-tabs>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogEditProduct.isShow = false">Cancel</el-button>
+        <el-button @click="dialogEditProduct.isShow = false">{{$t('Cancel')}}</el-button>
         <el-button
           type="primary"
           :loading="dialogEditProduct.loading"
           @click="saveEditProduct"
         >
-          Save
+          {{$t('Save')}}
         </el-button>
       </div>
     </el-dialog>
@@ -921,8 +918,8 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogSelectImg.isShow = false">Cancel</el-button>
-        <el-button type="primary" @click="confirmSelectImg">OK</el-button>
+        <el-button @click="dialogSelectImg.isShow = false">{{$t('Cancel')}}</el-button>
+        <el-button type="primary" @click="confirmSelectImg">{{$t('OK')}}</el-button>
       </span>
     </el-dialog>
     <el-dialog
@@ -935,7 +932,7 @@
       <div class="setting-range">
         <div class="setting-opt">
           <el-button size="mini" @click="addRangeItem"
-            >+ Add Cost Range</el-button
+            >+ {{$t('Add Cost Range')}}</el-button
           >
         </div>
         <el-form
@@ -950,10 +947,10 @@
             style="width: 100%"
             height="300"
           >
-            <el-table-column label="Product Cost" width="250" fixed>
+            <el-table-column :label="$t('Product Cost')" width="250" fixed>
               <template slot-scope="scope">
                 <el-tag v-if="scope.row.default" type="info"
-                  >Rest of the price ranges</el-tag
+                  >{{$t('Rest of the price ranges')}}</el-tag
                 >
                 <template v-else>
                   <el-input-number
@@ -979,7 +976,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column label="Shipping Cost" width="150">
+            <el-table-column :label="$t('Shipping Cost')" width="150">
               <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.shippingCost"
@@ -992,7 +989,7 @@
                 </el-input-number>
               </template>
             </el-table-column>
-            <el-table-column label="Price" width="250">
+            <el-table-column :label="$t('Price')" width="250">
               <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.price"
@@ -1013,9 +1010,9 @@
               </template>
             </el-table-column>
             <el-table-column label="Compare Price" width="250">
-              <template slot="header" slot-scope="scope">
+              <template slot="header" >
                 <el-checkbox v-model="dialogPushSetting.isComparePrice">
-                  Compare Price
+                  {{$t('Compare Price')}}
                 </el-checkbox>
               </template>
               <template
@@ -1055,8 +1052,8 @@
         </el-form>
         <div>
           <div style="margin-bottom: 5px; padding-left: 15px">
-            You can set a specific cent value for your price or comparison
-            price.
+           {{$t('You can set a specific cent value for your price or comparison')}}{{$t('price.')}}
+            
           </div>
           <div class="d-flex" style="margin-bottom: 5px; padding: 0 15px">
             <div style="margin-right: 30px">
@@ -1065,7 +1062,7 @@
                 v-model="dialogPushSetting.isPriceCent"
                 size="mini"
               >
-                Assign Cent
+               {{$t('Assign Cent')}} 
               </el-checkbox>
               <el-input-number
                 v-model="dialogPushSetting.priceCent"
@@ -1080,7 +1077,7 @@
                 style="margin-right: 10px"
                 v-model="dialogPushSetting.isComparePriceCent"
               >
-                Assign compare at Cent
+                {{$t('Assign compare at Cent')}}
               </el-checkbox>
               <el-input-number
                 v-model="dialogPushSetting.comparePriceCent"
@@ -1101,7 +1098,7 @@
               </el-switch>
               <!-- Auto convert currency to
               <el-tag type="info" size="mini">{{ currency }}</el-tag> -->
-              According to store currency
+             {{$t('According to store currency')}} 
             </div>
           </div>
         </div>
@@ -1113,15 +1110,15 @@
           type="primary"
           style="margin-right: 10px"
           @click="applyPriceSetting"
-          >Apply for products in Import List</el-link
+          >{{$t('Apply for products in Import List')}}</el-link
         >
-        <el-button @click="dialogPushSetting.isShow = false">Cancel</el-button>
+        <el-button @click="dialogPushSetting.isShow = false">{{$t('Cancel')}}</el-button>
         <el-button
           type="primary"
           :loading="dialogPushSetting.loading"
           @click="savePushSetting()"
         >
-          Save
+          {{$t('Save')}}
         </el-button>
       </div>
     </el-dialog>
@@ -1173,7 +1170,7 @@
         </div>
         <div v-else style="padding-left: 30px">
           <el-button size="mini" type="primary" @click="changeEntTag(true)"
-            >+Add New Tags</el-button
+            >+{{$t('Add New Tags')}}</el-button
           >
         </div>
       </div>
@@ -1185,7 +1182,7 @@
           height="300"
           ref="tagListTable"
         >
-          <el-table-column prop="name" label="Tag name">
+          <el-table-column prop="name" :label="$t('Tag name')">
             <template slot-scope="scope">
               <div v-if="scope.row.edit" class="d-flex">
                 <el-input
@@ -1215,7 +1212,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Action" width="150">
+          <el-table-column :label="$t('Action')" width="150">
             <template slot-scope="scope">
               <el-button
                 v-if="!scope.row.edit"
@@ -1236,7 +1233,7 @@
         </el-table>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogTagManagement.isShow = false">Close</el-button>
+        <el-button @click="dialogTagManagement.isShow = false">{{$t('Close')}}</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -1250,7 +1247,7 @@
       <div class="dialog-push-body">
         <el-row :gutter="30">
           <el-col :span="14">
-            <h3>Selected products ({{ dialogPush.items.length }})</h3>
+            <h3>{{$t('Selected products')}} ({{ dialogPush.items.length }})</h3>
             <el-table :data="dialogPush.items" height="400" style="width: 100%">
               <el-table-column prop="mainImg" width="110">
                 <template slot-scope="scope">
@@ -1304,9 +1301,9 @@
           <el-col :span="10">
             <h3 style="margin-bottom: 15px">
               <template v-if="SelectedPushStoresNum">
-                Selected stores ({{ SelectedPushStoresNum }})
+                {{$t('Selected stores')}} ({{ SelectedPushStoresNum }})
               </template>
-              <template v-else> Please select the Shopify stores </template>
+              <template v-else> {{$t('Please select the Shopify stores')}} </template>
             </h3>
             <ul class="push-select-stores" v-for="shops in dialogPush.shopList" :key="shops.platform">
               <div class="block" v-if="shops.platform == 1"><shopCate  :items="shops" />Shopify</div>
@@ -1351,7 +1348,7 @@
           active-text="Also publish to Online Store"
         >
         </el-switch>
-        <el-button @click="dialogPush.isShow = false">Close</el-button>
+        <el-button @click="dialogPush.isShow = false">{{$t('Close')}}</el-button>
         <el-button
           type="primary"
           v-if="dialogPush.isAction"
@@ -1359,7 +1356,7 @@
           @click="pushToShopify"
           :disabled="!dialogPush.items.length"
         >
-          Push to Store
+          {{$t('Push to Store')}}
         </el-button>
       </div>
     </el-dialog>
@@ -1371,7 +1368,7 @@
       width="30%">
       <div class="LoadingModal">
           <el-progress  type="circle"  :percentage="loadingNum" :color="colors"></el-progress>
-          <div class="text">Loading time to long, check detailed progress</div>
+          <div class="text">{{$t('Loading time to long, check detailed progress')}}</div>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="goTask">Go</el-button>
@@ -1600,7 +1597,7 @@ export default {
        this.$router.push({path:'/task-list',query:{id:this.nowTaskId}})
     },
     delitem(i){
-       this.$confirm("Do you want to delete this task?", "Tips", {
+       this.$confirm(this.$t("Do you want to delete this task?"), "Tips", {
         confirmButtonText: "Confirm",
         cancelButtonText: "Cancel",
         type: "warning",
@@ -1611,7 +1608,7 @@ export default {
             (r) => {
               if (r.ErrorCode == 9999) {
                 this.getImportTask();
-                this.$elementMessage("Delete Completed", "success");
+                this.$elementMessage(this.$t("Delete Completed"), "success");
               } else {
                 this.$elementMessage(r.Message, "error");
               }
@@ -1651,7 +1648,7 @@ export default {
     },
     delEditStock(i) {
       //编辑弹层删除 stock
-      this.$confirm("Are you sure to delete it?？")
+      this.$confirm(`${this.$t("Are you sure to delete it")}?？`)
         .then(() => {
           this.$apiCall(
             "api.Product.deleteImportStock",
@@ -1710,7 +1707,7 @@ export default {
         if (tag.checked) tagIds.push(tag.id);
       });
       if (!tagIds.length) {
-        this.$elementMessage("Please select the tags", "error");
+        this.$elementMessage(this.$t("Please select the tags"), "error");
         return;
       }
       this.loading = true;
@@ -1723,7 +1720,7 @@ export default {
         (r) => {
           if (r.ErrorCode == 9999) {
             this.removeCheckedTags();
-            this.$elementMessage("Tags added successfully", "success");
+            this.$elementMessage(this.$t("Tags added successfully"), "success");
             this.$refs.tagMgt.hide();
             this.getItem();
           } else {
@@ -1788,7 +1785,7 @@ export default {
     },
     pushToShopify() {
       if (!this.SelectedPushStoresNum) {
-        this.$elementMessage("Please select the stores", "error");
+        this.$elementMessage(this.$t("Please select the stores"), "error");
         return;
       }
       this.LoadingVisible = true;
@@ -1908,7 +1905,7 @@ export default {
           }
         );
       } else {
-        this.$elementMessage("Please enter the tag", "error");
+        this.$elementMessage(this.$t("Please enter the tag"), "error");
       }
     },
     editTag(tag) {
@@ -1919,7 +1916,7 @@ export default {
       });
     },
     delTag(tag) {
-      this.$confirm("Are you sure to delete it?？")
+      this.$confirm(this.$t("Are you sure to delete it"))
         .then(() => {
           this.dialogTagManagement.loading = true;
           this.$apiCall("api.Product.deleteTag", { id: tag.id }, (r) => {
@@ -1953,7 +1950,7 @@ export default {
           }
         );
       } else {
-        this.$elementMessage("Please enter the New tag", "error");
+        this.$elementMessage(this.$t("Please enter the New tag"), "error");
       }
     },
     changeEntTag(type) {
@@ -2022,7 +2019,7 @@ export default {
         if (r.ErrorCode == 9999) {
           if (s) {
             this.$elementMessage(
-              "The update  has started, it will take a while to finish.",
+              this.$t("The update  has started, it will take a while to finish."),
               "success"
             );
             this.$apiCall("api.Product.applyPriceSetting", {}, (r) => {
@@ -2871,7 +2868,7 @@ export default {
         color: #909399;
         margin-top: 10px;
         span {
-          color:#5c6ac4;
+          color: #5c6ac4;
           font-weight: bold;
         }
       }

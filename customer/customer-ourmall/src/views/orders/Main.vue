@@ -15,19 +15,19 @@
          <!-- 前三个菜单显示 导出和更新 -->
          <template v-if="/AllOrders|WaitingForAllocated|WaitingForSourcing/.test($route.name)">
            <el-button v-if="$route.name != 'WaitingForSourcing'" type="primary" size="medium" icon="fa fa-download" @click="openExportDialog">
-             Export
+            {{$t('Export')}} 
            </el-button>
            <template v-if="!!(updateTime && (updateTime > now))">
              <el-tooltip class="item" effect="dark" content="The update process has started, it will take a while to finish." placement="bottom">
                <el-button type="primary" size="medium" icon="el-icon-refresh" style="color: #FFFFFF;background-color: #aeb5e2;border-color: #aeb5e2;">
-                 Update Order
+                {{$t('Update Order')}} 
                </el-button>
              </el-tooltip>
            </template>
            <template v-else>
              <el-tooltip class="item" effect="dark" content="Use this button to update your Order List if missing orders.The process may take a while to finish." placement="bottom">
                <el-button icon="el-icon-refresh" :disabled="!!(updateTime && (updateTime > now))" type="primary" size="medium" :loading="updateOrderLoading" @click="updateOrder">
-                 Update Order
+                {{$t('Update Order')}}
                </el-button>
              </el-tooltip>
            </template>
@@ -44,7 +44,7 @@
         :closable="false"
       >
         <template>
-          <p>You have <a @click="handlePendingPay" class="mian-alert-a"> {{pendingPay}} purchase orders </a> NEED to finish payment</p>
+          <p>{{$t('You have')}} <a @click="handlePendingPay" class="mian-alert-a"> {{pendingPay}} {{$t('purchase orders')}} </a> {{$t('NEED to finish payment')}}</p>
         </template>
       </el-alert>
 
@@ -61,15 +61,15 @@
               @tab-click="handleClick"
             >
               <el-tab-pane
-                label="All orders"
+                :label="$t('All orders')"
                 name="AllOrders"
               ></el-tab-pane>
               <el-tab-pane
-                label="Waiting for allocated"
+                :label="$t('Waiting for allocated')"
                 name="WaitingForAllocated"
               >
                 <span slot="label">
-                  Waiting for allocated <span
+                 {{$t('Waiting for allocated')}}  <span
                     v-if="allocateCnt"
                     class=" tx-warning"
                   >({{allocateCnt}})</span>
@@ -80,7 +80,7 @@
                 name="WaitingForSourcing"
               >
                 <span slot="label">
-                  Waiting for sourcing <span
+                {{$t('Waiting for sourcing')}}   <span
                     v-if="sourcingCnt"
                     class=" tx-warning"
                   >({{sourcingCnt}})</span>
@@ -91,7 +91,7 @@
                 name="OrderProcessing"
               >
                 <span slot="label">
-                  Orders processing <span
+                 {{$t('Orders processing')}} <span
                     v-if="processingCnt"
                     class=" tx-success"
                   >({{processingCnt}})</span>
@@ -106,7 +106,7 @@
                 name="AbnormalOrder"
               >
                 <span slot="label">
-                  Abnormal order <span
+                 {{$t('Abnormal order')}}  <span
                     v-if="abnormalCnt"
                     class=" tx-danger"
                   >({{abnormalCnt}})</span>
@@ -122,15 +122,15 @@
             <el-tooltip class="item" effect="dark" content="Please select at least one order and quote for your order" placement="top">
               <i class="el-icon-info"></i>
             </el-tooltip>
-                Quote for Orders
+               {{$t('Quote for Orders')}} 
             </el-button>
             <!-- 商品报价 -->
             <el-button type="primary quoteProduct" @click="quotation()" size="small">
-                Quote for Product
+              {{$t('Quote for Product')}}  
             </el-button>
             <!-- 报价单入口 -->
             <el-button type="primary recent" size="small"  @click="openRecent">
-              Recent Quotations
+             {{$t('Recent Quotations')}} 
             </el-button>
           </div> 
           <div class="btn-hide-dropdown recent">
@@ -138,16 +138,16 @@
               <el-tooltip class="item" effect="dark" content="Please select at least one order and quote for your order" placement="top">
                 <i class="el-icon-info"></i>
               </el-tooltip>
-              Quote for Orders
+             {{$t('Quote for Orders')}} 
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="quoteForProduct">Quote for Product</el-dropdown-item>
-                <el-dropdown-item  command="recentQuotations">Recent Quotations</el-dropdown-item>
+                <el-dropdown-item command="quoteForProduct">{{$t('Quote for Product')}}</el-dropdown-item>
+                <el-dropdown-item  command="recentQuotations">{{$t('Recent Quotations')}}</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
             <el-dropdown v-else  split-button type="primary" size="medium" @click="quotation()" @command="handleCommand">
-              Quote for Product
+              {{$t('Quote for Product')}}
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="recentQuotations">Recent Quotations</el-dropdown-item>
+                <el-dropdown-item command="recentQuotations">{{$t('Recent Quotations')}}</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>  
@@ -167,18 +167,18 @@
     <el-dialog title="Export orders" :visible.sync="exportDialog.isShow" :width="'620px'" :close-on-click-modal="false">
       <el-divider></el-divider>
       <div style="padding: 20px;">
-        <p class="mg-b-10">Export to   {{$store.state.userInfo.email}}</p>
+        <p class="mg-b-10">{{$t('Export to')}} {{$store.state.userInfo.email}}</p>
         <el-radio-group v-model="exportDialog.status"
         style="display: flex; flex-direction: column; padding-left: 15px;">
-          <el-radio label="1">All orders</el-radio>
+          <el-radio label="1">{{$t('All orders')}}</el-radio>
           <!-- <el-radio label="2" :disabled="!exportDialog.selectData.length">Selected: {{exportDialog.selectData.length}} orders</el-radio> -->
-          <el-radio label="3" :disabled="!Number(exportDialog.totalCount)">{{exportDialog.totalCount}} orders matching your search</el-radio>
+          <el-radio label="3" :disabled="!Number(exportDialog.totalCount)">{{exportDialog.totalCount}} {{$t('orders matching your search')}}</el-radio>
         </el-radio-group>
       </div>
       <el-divider></el-divider>
       <div slot="footer" class="dialog-footer">
-				<el-button size="small" @click="exportDialog.isShow = false;">Cancel</el-button>
-				<el-button size="small" type="primary" @click="exportOrders" :disabled="!exportDialog.status" :loading="exportDialog.loading">Export orders</el-button>
+				<el-button size="small" @click="exportDialog.isShow = false;">{{$t('Cancel')}}</el-button>
+				<el-button size="small" type="primary" @click="exportOrders" :disabled="!exportDialog.status" :loading="exportDialog.loading">{{$t('Export orders')}}</el-button>
 			</div>
     </el-dialog>
     <el-dialog 
@@ -242,8 +242,8 @@
                 {{form.email}}
                 <el-link type="primary" class="mg-l-10" style="margin-bottom:3px"
                   @click="changeOpen" :disabled="!canChange">
-                  <span v-if="form.email">Change</span>
-                  <span v-else>Add</span>
+                  <span v-if="form.email">{{$t('Change')}}</span>
+                  <span v-else>{{$t('Add')}}</span>
                 </el-link>
               </span>
               <el-input
@@ -262,15 +262,15 @@
            <li style="display:flex">
              <el-input placeholder="Captcha" v-model="authcode"
              style="flex:1;width:250px"></el-input>
-              <el-link class="mg-l-10" :underline="false" v-if="!sendMsgDisabled" type="primary" :disabled="!canSendAuthCode" @click="sendAuthCode">Get captcha</el-link>
+              <el-link class="mg-l-10" :underline="false" v-if="!sendMsgDisabled" type="primary" :disabled="!canSendAuthCode" @click="sendAuthCode">{{$t('Get captcha')}}</el-link>
     		     <el-link class="mg-l-10" :underline="false" v-if="sendMsgDisabled" type="primary" :disabled="!canSendAuthCode" @click="sendAuthCode">
-              try again in {{time}} seconds
+              {{$t('try again in')}} {{time}} {{$t('seconds')}}
               </el-link>
            </li>
          </ul>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="saveEmail" type="primary">Confirm</el-button>
-          <el-button @click="verifyEmail=false">Discard</el-button>
+          <el-button @click="saveEmail" type="primary">{{$t('Confirm')}}</el-button>
+          <el-button @click="verifyEmail=false">{{$t('Discard')}}</el-button>
         </span>
     </el-dialog>
     <Quotation :visible.sync="visible"></Quotation>
@@ -438,7 +438,7 @@ export default {
           this.$refs.verify.reset()
           this.canSendAuthCode = false;
           this.econfirmSuccess = false;
-          this.failTx = "Please fill in the correct Email address"
+          this.failTx = this.$t("Please fill in the correct Email address")
       } 
     },
     // 发送验证码
@@ -456,7 +456,7 @@ export default {
 	        if (r.ErrorCode == '9999') {
             this.$message({
               type: 'success',
-              message: 'The captcha was sent successfully',
+              message: this.$t('The captcha was sent successfully'),
             });
 	        	vm.time = 60;
 	          	let interval = window.setInterval(function() {
@@ -541,7 +541,7 @@ export default {
             duration:0,
             dangerouslyUseHTMLString: true,
             showClose: true,
-            message: `<strong>Your Orders are exporting</strong><br/>Your export will be delivered by email to: ${this.$store.state.userInfo.email}. <br/>Depending on how many Orders you’re exporting, this could take some time.`,
+            message: `<strong>${$t('Your Orders are exporting</strong><br/>Your export will be delivered by email to')}: ${this.$store.state.userInfo.email}. ${$t("<br/>Depending on how many Orders you’re exporting, this could take some time")}.`,
             type: 'success'
           });
         }else{

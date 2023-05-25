@@ -1,6 +1,6 @@
 <template>
   <div class="categories-nav" :class="{more: showMore}">
-    <h2 title="ALL CATEGORIES">Categories</h2>
+    <h2 title="ALL CATEGORIES">{{$t('Categories')}}</h2>
     <ul class="c-nav">
       <template v-for="(c, ci) in categories">
         <li v-if="ci < 10 || showMore"  :key="c.id">

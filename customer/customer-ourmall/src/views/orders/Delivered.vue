@@ -14,9 +14,9 @@
           <div slot="title">
             <p class="c-title" style="color: #e6a23c">
               <i class="el-icon-warning"></i>
-              <b>Notice: </b>
-              You have {{waitConfirmCnt}} purchase order(s) need your reconfirm,
-              <a href="javascript:;"  @click="filterWaitConfirm">click here</a> to view details.
+              <b>{{$t('Notice')}}: </b>
+             {{$t('You have')}} {{waitConfirmCnt}}{{$t('purchase order(s) need your reconfirm,')}} 
+              <a href="javascript:;"  @click="filterWaitConfirm">{{$t('click here')}}</a>{{$t('to view details.')}} 
             </p>
           </div>
         </el-alert>
@@ -185,8 +185,8 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item>
-                    <el-button type="primary" @click="filterGetItem">Filter</el-button>
-                    <el-button type="danger" @click="clearFilter">Clear</el-button>
+                    <el-button type="primary" @click="filterGetItem">{{$t('Filter')}}</el-button>
+                    <el-button type="danger" @click="clearFilter">{{$t('Clear')}}</el-button>
                   </el-form-item>
                 </el-form>
               </div>
@@ -201,7 +201,7 @@
             ref="gridTable"
             :row-class-name="tableRowClassName"
           >
-            <el-table-column label="Purchase Order" width="250">
+            <el-table-column :label="$t('Purchase Order')" width="250">
               <template v-slot="{ row }">
                 <span>#{{row.code}}</span>
                 <el-popover
@@ -209,33 +209,33 @@
                   trigger="hover"
                 >
                   <div class="order-time-tips">
-                    <p v-if="row.timeCreated"><span>Create:</span> {{moment.unix(row.timeCreated).format("ll [at] LTS")}} </p>
-                    <p v-if="row.timeRead"><span>Paid:</span> {{moment.unix(row.timeRead).format("ll [at] LTS")}} </p>
-                    <p v-if="row.timePaid"><span>Confrmed:</span> {{moment.unix(row.timePaid).format("ll [at] LTS")}} </p>
+                    <p v-if="row.timeCreated"><span>{{$t('Create')}}:</span> {{moment.unix(row.timeCreated).format("ll [at] LTS")}} </p>
+                    <p v-if="row.timeRead"><span>{{$t('Paid')}}:</span> {{moment.unix(row.timeRead).format("ll [at] LTS")}} </p>
+                    <p v-if="row.timePaid"><span>{{$t('Confirmed')}}:</span> {{moment.unix(row.timePaid).format("ll [at] LTS")}} </p>
                   </div>
                   <i slot="reference" class="el-icon-date mg-l-5"></i>
                 </el-popover>
               </template>
             </el-table-column>
-            <el-table-column label="Vendor" prop="vendorName" width="180">
+            <el-table-column :label="$t('Vendor')" prop="vendorName" width="180">
               <template v-slot="{ row }">
                 <span v-if="row.vendorId" style="color:#303133"> {{ row.vendorName }}</span>
                 <span v-else style="color:#303133"> --- <span style='color: #909399'>(NOT Joined)</span></span>
                 <div v-if="row.vendorId == 0"><span style='color: #909399'>(NOT Joined)</span></div>
               </template>
             </el-table-column>
-            <el-table-column label="Order Includes" width="200">
+            <el-table-column label="$t('Order Includes)" width="200">
               <template v-slot="{ row }">
                 <div style="white-space: nowrap;">
-                  <span class="tx-gray-600">Orders: </span>
+                  <span class="tx-gray-600">{{$t('Orders')}}: </span>
                   <span style="color: #303133;">{{ row.orderStatusCnt ? row.orderStatusCnt.orderCnt : 0 }}</span>
                 </div>
                 <div style="white-space: nowrap;">
-                  <span class="tx-gray-600">Products: </span>
+                  <span class="tx-gray-600">{{$t('Products')}}: </span>
                   <span style="color: #303133;">{{ row.totalCnt || '0'  }}</span>
                 </div>
                 <div style="white-space: nowrap;">
-                  <span class="tx-gray-600">My stores: </span>
+                  <span class="tx-gray-600">{{$t('My stores')}}: </span>
                   <span style="color: #303133;">{{ row.shops.length || '0'  }}</span>
                 </div>
               </template>
@@ -254,10 +254,10 @@
               width="120"
             >
             </el-table-column>-->
-            <el-table-column label="Amount" prop="realAmount" width="235">
+            <el-table-column :label="$t('Amount')" prop="realAmount" width="235">
               <template slot-scope="{ row }">
                 <div style="white-space: nowrap;">
-                  <span class="tx-gray-600">Income: </span>
+                  <span class="tx-gray-600">{{$t('Income')}}: </span>
                   <span style="color: #303133;">
                     {{row.orderStatusCnt ?
                     row.orderStatusCnt.income.income ? `${ce[row.orderStatusCnt.income.currency] ?
@@ -266,13 +266,13 @@
                   </span>
                 </div>
                 <div style="white-space: nowrap;">
-                  <span class="tx-gray-600">Cost: </span>
-                  <span v-if="" class="tx-danger">
-                    {{row.totalAmount ? `US$ ${row.totalAmount}` : 'Not set up'}}
+                  <span class="tx-gray-600">{{$t('Cost')}}: </span>
+                  <span  class="tx-danger">
+                    {{row.totalAmount ? `US$ ${row.totalAmount}` : this.$t('Not set up')}}
                   </span>
                 </div>
                 <div style="white-space: nowrap;">
-                  <span class="tx-gray-600">Profit: </span>
+                  <span class="tx-gray-600">{{$t('Profit')}}: </span>
                   <span
                     :style="`color: ${isProfit(row) ? '#303133;' : '#67C23A;'}`"
                   >
@@ -287,12 +287,12 @@
             <el-table-column label="Statistics" width="220">
               <template slot-scope="scope">
                 <div style="white-space: nowrap;">
-                  <span class="tx-gray-600">Vendor shipped: </span>
+                  <span class="tx-gray-600">{{$t('Vendor shipped')}}: </span>
                   <span style="color: #303133;">{{scope.row.itemShippedCnt}}</span> 
                   <span v-if="scope.row.itemCnt" style="color: #909399"> of {{scope.row.itemCnt}}</span>
                 </div>
                 <div style="white-space: nowrap;">
-                  <span class="tx-gray-600">Fulflled: </span>
+                  <span class="tx-gray-600">{{$t('Fulfilled')}}: </span>
                   <span style="color: #303133;">
                     {{scope.row.itemSyncCnt}}
                     <span v-if="scope.row.itemSyncFailCnt !== '0'">
@@ -305,7 +305,7 @@
                            trigger="hover"
                          >
                           <div class="mg-t-15 mg-b-15" style="white-space: nowrap;">
-                            <span class=" tx-gray-600">Vendor shipped: </span>
+                            <span class=" tx-gray-600">{{$t('Vendor shipped')}}: </span>
                             <a href="javascript:void(0)">
                               {{scope.row.orderStatusCnt ? scope.row.orderStatusCnt.deliveredOrderCnt : '---'}}
                             </a>
@@ -318,17 +318,17 @@
                               </a> unfulfilled / partially fulfilled)
                             </span>
                           </div>
-                          <el-alert class="icon-color" :closable="false" title="You may download these tracking information and fulfilled these orders in your Shopify store manualy." type="info" show-icon>
+                          <el-alert class="icon-color" :closable="false" :title="$t('You may download these tracking information and fulfilled these orders in your Shopify store manualy.')" type="info" show-icon>
                           </el-alert>
                           <div class="mg-t-15 d-flex justify-content-center">
-                            <el-button type="primary" size="small" @click="exportDeliver(scope.row.id,1)">Download ALL tracking information</el-button>
+                            <el-button type="primary" size="small" @click="exportDeliver(scope.row.id,1)">{{$t('Download ALL tracking information')}}</el-button>
                             <el-button v-if="scope.row.orderStatusCnt && Number(scope.row.orderStatusCnt.deliveredOrderCnt)- Number(scope.row.orderStatusCnt.syncOrderCnt) > 0" type="primary" size="small" @click="exportDeliver(scope.row.id,2)">Download NOT FULFILLED tracking information</el-button>
                           </div>
                           <a slot="reference" href="javascript:void(0)">
                             {{scope.row.itemSyncFailCnt}}
                           </a>
                         </el-popover>
-                      sync failed
+                     {{$t('sync failed')}} 
                       </span>)
                     </span>
                   </span>
@@ -356,22 +356,22 @@
                   </el-popconfirm>
                 </div> -->
                 <div v-if="scope.row.status == 7">
-                  <el-link type="primary" @click="openReconfirm(scope.row)">Reconfirm</el-link>
+                  <el-link type="primary" @click="openReconfirm(scope.row)">{{$t('Reconfirm')}}</el-link>
                 </div>
                 <div v-else>
-                  <el-link type="primary" @click="gotoInvoice(scope.row)">View Details</el-link>
+                  <el-link type="primary" @click="gotoInvoice(scope.row)">{{$t('View Details')}}</el-link>
                 </div>
                 <div v-if="scope.row.status == 1 || scope.row.status == 2">
-                  <el-link type="primary" @click="openCAVDialog(scope.row)">Change another vendor</el-link>
+                  <el-link type="primary" @click="openCAVDialog(scope.row)">{{$t('Change another vendor')}}</el-link>
                 </div>
                 <div v-if="scope.row.status != 7">
-                  <el-link type="primary" @click="exportOrder(scope.row)">Export</el-link>
+                  <el-link type="primary" @click="exportOrder(scope.row)">{{$t('Export')}}</el-link>
                 </div>
                 <!--&& scope.row.payStatus != 1 -->
                 <!-- paymentType=4 的 payStatus=1的 不能取消订单 -->
                 <template v-if="!((scope.row.paymentType == 4 && scope.row.payStatus == 1) || scope.row.paymentType == 6)">
                   <div v-if="(scope.row.status == 1 || scope.row.status == 2 || scope.row.status == 7) && scope.row.createUserType == 1">
-                    <el-link type="danger" @click="cancelInvoice(scope.row)">Cancel this order </el-link>
+                    <el-link type="danger" @click="cancelInvoice(scope.row)">{{$t('Cancel this order')}} </el-link>
                   </div>
                 </template>
               </template>
@@ -399,7 +399,7 @@
     <el-dialog :visible.sync="selectedSaveDialog.isShow" :width="'620px'" :close-on-click-modal="false" class="selected-save-dialog">
       <div style="padding: 0 20px 20px;text-align: center;">
         <i style="color: #67C23A;font-size: 50px;" class="el-message__icon el-icon-success"></i>
-        <p style="color: #67C23A;font-weight: bold;font-size: 18px;margin: 10px 0px 20px;">Selected saved! Now you can Check the purchase orders</p>
+        <p style="color: #67C23A;font-weight: bold;font-size: 18px;margin: 10px 0px 20px;">{{$t('Selected saved! Now you can Check the purchase orders')}}</p>
         <el-table :data="selectedSaveDialog.info" border style="width: 100%">
           <el-table-column label="#Invoice Number" prop="code">
             <template slot-scope="scope">
@@ -407,24 +407,24 @@
             </template>
           </el-table-column>
           <el-table-column label="Vendor" prop="vendorName">
-            <template slot-scope="scope">
+            <template >
               <span v-if="row.vendorName" style="color:#303133"> {{ row.vendorName }}</span>
-              <span v-else style="color:#303133"> --- <span style='color: #909399'>(NOT Joined)</span></span>
+              <span v-else style="color:#303133"> --- <span style='color: #909399'>({{$t('NOT Joined')}})</span></span>
             </template>
           </el-table-column>
           <el-table-column label="Amount Due" prop="realAmount">
             <template slot-scope="scope">
               <span v-if="scope.row.realAmount>0" class=" tx-danger">US$ <span>{{scope.row.realAmount}}</span></span>
-              <span class=" tx-danger" v-else>Not set up</span>
+              <span class=" tx-danger" v-else>{{$t('Not set up')}}</span>
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="Action" width="150">
             <template slot-scope="scope">
               <div>
-                <el-link style="font-size: 12px;font-weight: normal;" type="primary" @click="gotoInvoice(scope.row)">View Details</el-link>
+                <el-link style="font-size: 12px;font-weight: normal;" type="primary" @click="gotoInvoice(scope.row)">{{$t('View Details')}}</el-link>
               </div>
               <div>
-                <el-link style="font-size: 12px;font-weight: normal;" type="primary" @click="sendtoVendor(scope.row)">Send to vendor</el-link>
+                <el-link style="font-size: 12px;font-weight: normal;" type="primary" @click="sendtoVendor(scope.row)">{{$t('Send to vendor')}}</el-link>
               </div>
             </template>
           </el-table-column>
@@ -438,9 +438,9 @@
 
         <el-tabs v-model="activeShareName" type="card" style="margin-left: 20px;margin-top: 10px;">
           <el-tab-pane name="shareLink">
-            <span slot="label"><i class="iconfont icon-link"></i> Share by link</span>
+            <span slot="label"><i class="iconfont icon-link"></i> {{$t('Share by link')}}</span>
             <div class="d-flex mg-y-20">
-              <div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Share link:</div>
+              <div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Share link')}}:</div>
               <div>
                 <!--<el-link :underline="false" :href="invoiceInfo.url" target="_blank">{{invoiceInfo.url}}</el-link>-->
                 <span>{{invoiceInfo.url}}</span>
@@ -450,7 +450,7 @@
               <div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;"></div>
               <div>
                 <div>
-                  <el-button size="mini" type="success" v-clipboard:copy="invoiceInfo.url" v-clipboard:success="onCopy" v-clipboard:error="onError">Copy Link</el-button>
+                  <el-button size="mini" type="success" v-clipboard:copy="invoiceInfo.url" v-clipboard:success="onCopy" v-clipboard:error="onError">{{$t('Copy Link')}}</el-button>
                 </div>
               </div>
             </div>
@@ -459,13 +459,13 @@
             <span slot="label"><i class="iconfont icon-shejiao"></i> Share by APP</span>
             <div>
               <div class="d-flex mg-y-20">
-                <div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Title:</div>
+                <div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Title')}}:</div>
                 <div style="width: 70%;">
                   <el-input @change="saveRemark('2')" type="text" size="small" v-model="shareTitle"></el-input>
                 </div>
               </div>
               <div class="d-flex mg-y-20 align-items-center">
-                <div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Desc:</div>
+                <div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Desc')}}:</div>
                 <div style="width: 70%;">
                   <el-input @change="saveRemark('2')" type="textarea" resize="none" :autosize="{ minRows: 3, maxRows: 6}" size="small" v-model="shareDesc"></el-input>
                   <!--<div class="mg-t-20 tx-right">
@@ -475,18 +475,18 @@
                 </div>
               </div>
               <div class="d-flex mg-y-20">
-                <div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Share:</div>
+                <div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Share')}}:</div>
                 <div style="width: 70%;" class="d-flex">
                   <div class="skype-share" style="margin-right: 30px;" :data-href="shareTitle + shareDesc" data-lang="en-US" :data-text="invoiceInfo.url" data-style="large"></div>
                   <div>
                     <el-tooltip placement="bottom">
                       <div slot="content">
-                        <p class="tx-center mg-b-10">Scan share to WeChat</p>
+                        <p class="tx-center mg-b-10">{{$t('Scan share to WeChat')}}</p>
                         <img :src="invoiceInfo.qrcode" width="130" />
                         <img src="images/weixin.png" width="30px" style="position: absolute;left: 50%;top: 50%;margin-left: -15px;margin-top: -4px;" />
                       </div>
                       <a class="share-weixin" href="javascript:;">
-                        <i class="fa fa-weixin"></i> Share
+                        <i class="fa fa-weixin"></i> {{$t('Share')}}
                       </a>
                     </el-tooltip>
                   </div>
@@ -499,10 +499,10 @@
       <el-divider></el-divider>
       <div slot="footer" class="dialog-footer d-flex justify-content-between">
         <div>
-          <el-button v-show="activeShareName == 'shareWeixin'" size="small" type="primary" plain @click="saveRemark('1')">Clear</el-button>
+          <el-button v-show="activeShareName == 'shareWeixin'" size="small" type="primary" plain @click="saveRemark('1')">{{$t('Clear')}}</el-button>
         </div>
         <div>
-          <el-button size="small" @click="sendInvoiceOpen = false">Close</el-button>
+          <el-button size="small" @click="sendInvoiceOpen = false">{{$t('Close')}}</el-button>
         </div>
       </div>
     </el-dialog>
@@ -513,17 +513,17 @@
     >
       <template v-if="DialogReconfirm.item">
         <div style="padding: 0 20px">
-          <div style="margin-bottom: 10px;">Vendor name: <b style="color: #909399;">{{DialogReconfirm.item.vendorName}}</b></div>
+          <div style="margin-bottom: 10px;">{{$t('Vendor name')}}: <b style="color: #909399;">{{DialogReconfirm.item.vendorName}}</b></div>
           <div>
-            Includes: <b style="color: #5c6ac4;">{{DialogReconfirm.item.orderCnt ? DialogReconfirm.item.orderCnt : 0}}</b> Shopify orders /
-            <b style="color: #5c6ac4;">{{DialogReconfirm.item.totalCnt ? DialogReconfirm.item.totalCnt : 0}}</b> products
+           {{$t('Includes')}} : <b style="color: #5c6ac4;">{{DialogReconfirm.item.orderCnt ? DialogReconfirm.item.orderCnt : 0}}</b>Shopify orders /
+            <b style="color: #5c6ac4;">{{DialogReconfirm.item.totalCnt ? DialogReconfirm.item.totalCnt : 0}}</b>{{$t('products')}} 
           </div>
         </div>
         <div slot="footer" class="dialog-footer d-flex">
           <el-button v-if="DialogReconfirm.item.status == 7"  size="small" type="primary"  @click="runReconfirm(1)">
-            Allow vendor to process these orders
+           {{$t('Allow vendor to process these orders')}} 
           </el-button>
-          <el-button size="small" @click="runReconfirm(2)">View details</el-button>
+          <el-button size="small" @click="runReconfirm(2)">{{$t('View details')}}</el-button>
         </div>
       </template>
     </el-dialog>
@@ -534,13 +534,13 @@
       :before-close="cancelOrderDialogClose"
     >
       <div style="margin: 20px;">
-        <p class="mg-b-10">Do you want to cancel this order?</p>
-        <p>Don't worry, after cancelling this purchase order, you can still find your
-          Shopify orders in the "Waiting for sourcing" menu and re-place the purchase order.</p>
+        <p class="mg-b-10">{{$t('Do you want to cancel this order?')}}</p>
+        <p>{{$t("Don't worry, after cancelling this purchase order, you can still find your")}}{{$t('Shopify orders in the "Waiting for sourcing" menu and re-place the purchase order')}}.
+          </p>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button :loading="cancelOrderDialog.loading" type="primary" @click="postCanceOrder">Confirm</el-button>
-        <el-button @click="cancelOrderDialogClose">Discard</el-button>
+        <el-button @click="cancelOrderDialogClose">{{$t('Discard')}}</el-button>
       </span>
     </el-dialog>
 
@@ -572,12 +572,12 @@
           </el-form-item>
         </el-form>
         <div style="margin: 0 20px;">
-          <el-checkbox v-model="changeAnotherVendorDialog.changeDispatch">Also allocate the products in this purchase order to the new supplier</el-checkbox>
+          <el-checkbox v-model="changeAnotherVendorDialog.changeDispatch">{{$t('Also allocate the products in this purchase order to the new supplier')}}</el-checkbox>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button :loading="changeAnotherVendorDialog.loading" type="primary" @click="postCAVDialog">Confirm</el-button>
-        <el-button @click="closeCAVDialog">Discard</el-button>
+        <el-button :loading="changeAnotherVendorDialog.loading" type="primary" @click="postCAVDialog">{{$t('Confirm')}}</el-button>
+        <el-button @click="closeCAVDialog">{{$t('Discard')}}</el-button>
       </span>
     </el-dialog>
     <el-backtop class="goto-top" target=".main-scroll  .el-scrollbar__wrap" :right="20" :bottom="120">
@@ -944,7 +944,7 @@ export default {
           this.$apiCall("api.Invoice.exportDeliver", param, r => {
             this.$hideLoading();
             if(r.ErrorCode == "9999") {
-              this.$elementMessage("Your request is been submitted, please wait one moment.", 'success');
+              this.$elementMessage( this.$t("Your request is been submitted, please wait one moment."), 'success');
               openDownload(r.Data.Results.file);
             } else {
               this.$elementMessage(r.Message, 'error');
@@ -1079,10 +1079,10 @@ export default {
       });
     },
     onCopy(e) {
-      this.$elementMessage("Has been copied to the clipboard", "success");
+      this.$elementMessage(this.$t("Has been copied to the clipboard"), "success");
     },
     onError(e) {
-      this.$elementMessage("Copy to clipboard failed, please copy manually", "error");
+      this.$elementMessage(this.$t("Copy to clipboard failed, please copy manually"), "error");
     },
     openSend() {
       let num = 0;

@@ -27,7 +27,7 @@
               </div>
               <div class="tx-center">
                 <a href="javascript:;" @click="openDialogSelectImg()"
-                  >Change image</a
+                  >{{$t('Change image')}}</a
                 >
               </div>
             </div>
@@ -54,7 +54,7 @@
                 </el-form-item>
                 <!-- shopifyTag -->
                 <div class="edit-tags">
-                  <div class="label-title">Shopify tags</div>
+                  <div class="label-title">{{$t('Shopify tags')}}</div>
                   <div class="tag-wrap">
                     <el-tag
                       v-for="tag in dialogEditProduct.shopifyTag"
@@ -80,13 +80,13 @@
                       size="small"
                       @click="showInput('tag')"
                     >
-                      + New Tag
+                      + {{$t('New Tag')}}
                     </el-button>
                   </div>
                 </div>
                 <!-- shopifyType -->
                 <div class="edit-tags">
-                  <div class="label-title">Shopify type</div>
+                  <div class="label-title">{{$t('Shopify type')}}</div>
                   <div class="tag-wrap">
                     <el-tag
                       v-for="type in dialogEditProduct.shopifyType"
@@ -112,7 +112,7 @@
                       size="small"
                       @click="showInput('type')"
                     >
-                      + New Type
+                      + {{$t('New Type')}}
                     </el-button>
                   </div>
                 </div>
@@ -130,7 +130,7 @@
         </el-tab-pane>
         <el-tab-pane>
           <span slot="label"
-            >Variants({{ dialogEditProduct.stocks2.length }})</span
+            >{{$t('Variants')}}({{ dialogEditProduct.stocks2.length }})</span
           >
           <div
             v-if="!dialogEditProduct.stocks.length"
@@ -185,10 +185,10 @@
                   ></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="price" width="190">
-                <template slot="header" slot-scope="scope">
+              <el-table-column :label="$t('Price')" width="190">
+                <template slot="header">
                   <div>
-                    <span>Price ({{ currency }})</span>
+                    <span>{{$t('Price')}} ({{ currency }})</span>
                     <br />
                     <el-select
                       v-show="!dialogEditProduct.AllActionPriceType"
@@ -275,10 +275,10 @@
                 </template>
               </el-table-column>
 
-              <el-table-column label="Compare Price" width="190">
-                <template slot="header" slot-scope="scope">
+              <el-table-column :label="$t('Compare Price')" width="190">
+                <template slot="header">
                   <div>
-                    <span>Compare Price ({{ currency }})</span>
+                    <span>{{$t('Compare Price')}} ({{ currency }})</span>
                     <br />
                     <el-select
                       v-show="!dialogEditProduct.AllActionCPriceType"
@@ -288,10 +288,10 @@
                       style="width: 130px"
                       @change="changeAllPriceType('Cprice')"
                     >
-                      <el-option label="Action" :value="''"></el-option>
-                      <el-option label="Change All" :value="1"></el-option>
-                      <el-option label="Multiply Price" :value="2"></el-option>
-                      <el-option label="Add Price" :value="3"></el-option>
+                      <el-option :label="$t('Action')" :value="''"></el-option>
+                      <el-option :label="$t('Change All')" :value="1"></el-option>
+                      <el-option :label="$t('Multiply Price')" :value="2"></el-option>
+                      <el-option :label="$t('Add Price')" :value="3"></el-option>
                     </el-select>
                     <div v-show="dialogEditProduct.AllActionCPriceType">
                       <div class="d-flex">

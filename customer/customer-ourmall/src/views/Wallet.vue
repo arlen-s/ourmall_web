@@ -3,9 +3,9 @@
     <div class="pagetitle">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/dashboard' }"
-          >Dashboard</el-breadcrumb-item
+          >{{$t('Dashboard')}}</el-breadcrumb-item
         >
-        <el-breadcrumb-item>My Wallet</el-breadcrumb-item>
+        <el-breadcrumb-item>{{$t('My Wallet')}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div v-loading="loading" class="pagebody">
@@ -19,7 +19,7 @@
                   <i class="iconfont icon-qian"></i>
                 </div>
                 <div class="body">
-                  <div class="title">My Balance</div>
+                  <div class="title">{{$t('My Balance')}}</div>
                   <div class="num">${{ wallet.balance || 0 }}</div>
                 </div>
               </div>
@@ -28,9 +28,9 @@
                   <i class="iconfont icon-liwu"></i>
                 </div>
                 <div class="body">
-                  <div class="title">Your Total Rewards</div>
+                  <div class="title">{{$t('Your Total Rewards')}}</div>
                   <div class="num">
-                    {{ wallet.orderRewards || 0 }} orders QTY
+                    {{ wallet.orderRewards || 0 }} {{$t('orders QTY')}}
                   </div>
                 </div>
               </div>
@@ -39,9 +39,9 @@
                   <img src="./../assets/wallet/icon-QTY.png" />
                 </div>
                 <div class="body">
-                  <div class="title">Rewards QTY left</div>
+                  <div class="title">{{$t('Rewards QTY left')}}</div>
                   <div class="num">
-                    {{ wallet.withdrawalAmount || 0 }} orders QTY
+                    {{ wallet.withdrawalAmount || 0 }} {{$t('orders QTY')}}
                   </div>
                 </div>
               </div>
@@ -49,7 +49,7 @@
             <el-row :gutter="20" class="main">
               <!-- 充值选择支付类型 -->
               <el-row :gutter="20" class="mode">
-                <div class="mg-b-15 label-title">Charging Method:</div>
+                <div class="mg-b-15 label-title">{{$t('Charging Method')}}:</div>
                 <div class="body">
                   <div class="card" @click="walletParams.paymentType = 1">
                     <div class="name">PayPal</div>
@@ -60,7 +60,7 @@
                   </div>
                   <div style="width: 60px"></div>
                   <div class="card" @click="walletParams.paymentType = 2">
-                    <div class="name">Pay with Credit Card</div>
+                    <div class="name">{{$t('Pay with Credit Card')}}</div>
                     <div
                       class="active"
                       v-if="walletParams.paymentType == 2"
@@ -71,7 +71,7 @@
               <!-- 充值表单 -->
               <el-row :gutter="20">
                 <el-col :span="12" class="amount">
-                  <div class="label-title">Paypal Payment Amount:</div>
+                  <div class="label-title">{{$t('Paypal Payment Amount')}}:</div>
                   <div class="field">
                     <span>{{$store.state.country.symbol}}</span>
                     <el-input
@@ -81,11 +81,10 @@
                   </div>
                 </el-col>
                 <el-col :span="24" class="tips"
-                  >The amount of each recharge must be more than 100
-                  dollars.</el-col
+                  >{{$t('The amount of each recharge must be more than 100 dollars.')}}</el-col
                 >
                 <el-col :span="24" class="wallet-btn">
-                  <el-button type="primary" @click="showPay">Confim</el-button>
+                  <el-button type="primary" @click="showPay">{{$t('Confirm')}}</el-button>
                 </el-col>
               </el-row>
               <el-row :gutter="20">
@@ -113,12 +112,12 @@
                   :disabled="$store.state.userInfo.verifyEmail == 1"
                 >
                   <div slot="content">
-                    <span>Please verify your email address here, </span>
+                    <span>{{$t('Please verify your email address here,')}} </span>
                     <a
                       href="javascript:;"
                       style="text-decoration: none"
                       @click="$emit('openVerify')"
-                      >Verify Email</a
+                      >{{$t('Verify Email')}}</a
                     >
                   </div>
                   <div class="withdraw">
@@ -128,7 +127,7 @@
                       :disabled="$store.state.userInfo.verifyEmail != 1"
                       @click="showWithdraw"
                     >
-                      Withdraw Cash
+                     {{$t('Withdraw Cash')}} 
                     </el-button>
                   </div>
                 </el-tooltip>
@@ -150,7 +149,7 @@
                               type="primary"
                               class="search_btn"
                               @click.stop="search"
-                              >Search</el-button
+                              >{{$t('Search')}}</el-button
                             >
                           </el-form-item>
                           <el-form-item label="Date：">
@@ -222,7 +221,7 @@
                       label="Type"
                       v-if="activeName == 'RechargeRecords'"
                     >
-                      wallet recharge
+                      {{$t('wallet recharge')}}
                     </el-table-column>
 
                     <el-table-column
@@ -343,8 +342,8 @@
         >
           ${{ walletParams.amount }}
         </div>
-        <div class="mg-b-25 label-title" style="font-weight: 500">
-          The minimum payment is $100.
+        <div class="mg-b-25 label-title" style="font-weight: 500">          
+          {{$t("The minimum payment is $100.")}}
         </div>
         <div class="action">
           <el-button
@@ -366,7 +365,7 @@
           class="mg-t-10 label-title"
           style="font-weight: 500; display: flex; justify-content: center"
         >
-          <div>Powered by</div>
+          <div>{{$t('Powered by')}}</div>
           <svg
             class="icon"
             aria-hidden="true"
@@ -395,7 +394,7 @@
           ${{ walletParams.amount }}
         </div>
         <div class="mg-b-25 label-title" style="font-weight: 500">
-          The minimum payment is $100.
+          {{$t('The minimum payment is $100.')}}
         </div>
         <div class="mg-t-10" style="display: flex; justify-content: center">
           <svg
@@ -421,10 +420,10 @@
           <div class="one-liner">
             <div class="card-label">
               <div>
-                <div>Card Number <span>*</span></div>
+                <div>{{$t('Card Number')}} <span>*</span></div>
               </div>
               <div class="right">
-                <div class="mg-r-5">Expiration<span>*</span></div>
+                <div class="mg-r-5">{{$t('Expiration')}}<span>*</span></div>
                 <div>CVV<span>*</span></div>
               </div>
             </div>
@@ -442,7 +441,7 @@
         <div class="mg-t-15" style="font-size: 16px">
           <i class="iconfont icon-verification-code"></i>
           <span style="padding-left: 10px"
-            >All transactions are secure and encrypted.</span
+            >{{$t('All transactions are secure and encrypted.')}}</span
           >
         </div>
       </div>
@@ -484,7 +483,7 @@
           ></el-input>
         </el-form-item>
         <div class="mg-b-20" style="padding-left: 180px">
-          We will charge you 5% fee when withdrawing.
+         {{$t('We will charge you 5% fee when withdrawing.')}} 
         </div>
         <el-form-item label="Your PayPal Name：" prop="name">
           <el-input
@@ -506,14 +505,14 @@
               @click="getCode"
             >
               <template v-if="withdrawParams.time == 0"
-                >Send Verification Code</template
+                >{{$t('Send Verification Code')}}</template
               >
               <template v-else>{{ withdrawParams.time }}s</template>
             </el-button>
           </div>
         </el-form-item>
         <div style="margin-bottom: 60px; padding-left: 180px">
-          The verification code will be sent to your email：{{
+          {{$t('The verification code will be sent to your email：')}}{{
             $store.state.userInfo.email || ""
           }}
         </div>
@@ -521,13 +520,13 @@
           <el-button
             style="margin-right: 30px"
             @click="withdrawParams.isShow = false"
-            >Cancel</el-button
+            >{{$t('Cancel')}}</el-button
           >
           <el-button
             type="primary"
             :loading="withdrawParams.loading"
             @click="submitForm('ruleForm')"
-            >Confirm</el-button
+            >{{$t('Confirm')}}</el-button
           >
         </el-form-item>
       </el-form>
@@ -837,14 +836,14 @@ export default {
     showPay() {
       if (!this.walletParams.amount) {
         this.$message({
-          message: "Please enter the recharge amount",
+          message: this.$t("Please enter the recharge amount"),
           type: "error",
         });
         return;
       } else {
         if (this.walletParams.amount < 100) {
           this.$message({
-            message: "The minimum payment is $100",
+            message: this.$t("The minimum payment is $100"),
             type: "error",
           });
           return;

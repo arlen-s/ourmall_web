@@ -30,23 +30,23 @@
 		<div class="mask" :class="guideStep == 5 || guideStep == 6 ? 'mask-white' : ''">
 			<div class="guide guide1" v-if="guideStep == 1">
 				<div class="left-menu">
-					<i class="iconfont icon-shopify"></i><span>Orders</span>
+					<i class="iconfont icon-shopify"></i><span>{{$t('orders')}}</span>
 				</div>
 				<div class="content-over">
 					<div class="content-wrap">
 						<div class="guide-step guide-step1"></div>
 						<div class="content-title">
-							Choose the products from your Shopify orders to allocated to your vendor
+							{{$t('Choose the products from your Shopify orders to allocated to your vendor')}}
 						</div>
 						<div style="margin-bottom: 10px; color: font-size: 14px;">
-							Click the <b>Allocate to vendor</b> button on the bottom of the page.
+							{{$t('Click the')}}<b>{{$t('Allocate to vendor')}}</b> {{$t('button on the bottom of the page.')}}
 						</div>
 						<img src="./../../public/images/guide2/guide1-1.png" width="100%" style="border: 1px solid #ddd;"/>
 					</div>
 					<div class="content-wrap">
 						<div class="guide-step guide-step2"></div>
 						<div class="content-title">
-							Tips: You can filter your orders here.
+							{{$t('Tips: You can filter your orders here.')}}
 						</div>
 						<img src="./../../public/images/guide2/guide1-3.png" width="100%" style="border: 1px solid #ddd;"/>
 					</div>
@@ -55,7 +55,7 @@
 			<!-- step02 -->
 			<div class="guide guide2" v-if="guideStep == 2">
 				<div class="left-menu">
-					<i class="iconfont icon-shopify"></i><span>Orders</span>
+					<i class="iconfont icon-shopify"></i><span>{{$t('orders')}}</span>
 				</div>
 				<!-- <div class="bottom-menu">
 					<div class="guide-step guide-step3"></div>
@@ -65,10 +65,10 @@
 				<div class="content-wrap" style="top: 15px; left:40%;">
 					<div class="guide-step guide-step1"></div>
 					<div class="content-title">
-						Choose or create a new vendor.
+						{{$t('Choose or create a new vendor.')}}
 					</div>
 					<div class="content-sub-title" style=" margin-bottom: 15px">
-						You can create a new vendor or select an exist one.
+						{{$t('You can create a new vendor or select an exist one.')}}
 					</div>
 					<div class="tx-center">
 						<img src="./../../public/images/guide2/guide2-1.png" width="100%" style="border: 1px solid #ddd;"/>
@@ -77,7 +77,7 @@
 				<div class="content-wrap" style="top: 5px; left: 40%;">
 					<div class="guide-step guide-step2" style=" top: 225px;"></div>
 					<div class="content-title">
-						Click the <b>Allocate</b> button of the page,you can also allocate items from the same SPU to the same vendor
+						{{$t('Click the')}} <b>{{$t('Allocate')}}</b> {{$t('button of the page,you can also allocate items from the same SPU to the same vendor')}}
 					</div>
 					<img src="./../../public/images/guide2/guide2-2.png" width="100%"/>
 				</div>
@@ -86,7 +86,7 @@
 			<!-- step3 -->
 			<div class="guide guide3" v-if="guideStep == 3">
 				<div class="left-menu">
-					<i class="iconfont icon-shopify"></i><span>Orders</span>
+					<i class="iconfont icon-shopify"></i><span>{{$t('Orders')}}</span>
 				</div>
 				<div class="bottom-menu" style="right: 120px; bottom: 50px;">
 					<div class="guide-step guide-step3"></div>
@@ -94,12 +94,12 @@
 				<div class="guide-2-bottom">
 					<div class="content">
 						<div>
-							<el-button size="small" type="danger">Un-allocate selected products</el-button>
+							<el-button size="small" type="danger">{{$t('Un-allocate selected products')}}</el-button>
 						</div>
 						<div class="right">
-							<div>Total vendors: <span> 1</span></div>
-							<div>Total orders: <span> 104</span></div>
-							<el-button size="small" type="primary">Place 1 purchase orders</el-button>
+							<div>{{$t('Total vendors')}}: <span> 1</span></div>
+							<div>{{$t('Total orders')}}: <span> 104</span></div>
+							<el-button size="small" type="primary">{{$t('Place 1 purchase orders')}}</el-button>
 						</div>
 					</div>
 				</div>
@@ -107,10 +107,10 @@
 					<div class="content-wrap">
 						<div class="guide-step guide-step1"></div>
 						<div class="content-title">
-							Create a purchase orders to your vendor.
+							{{$t('Create a purchase orders to your vendor.')}}
 						</div>
 						<div class="content-sub-title">
-							Choose the Shopify orders you want to sourcing,and click the <b>Make a purchase order</b> button of the page.
+							{{$t('Choose the Shopify orders you want to sourcing,and click the Make a purchase order button of the page.')}}
 						</div>
 						<div class="tx-center">
 							<img src="./../../public/images/guide2/guide3-1.png"  style="border: 1px solid #ddd;"/>
@@ -119,7 +119,7 @@
 					<div class="content-wrap">
 						<div class="guide-step guide-step2"></div>
 						<div class="content-title">
-							After confirming the operation,The purchase orders will be created successfully.
+							{{$t('After confirming the operation,The purchase orders will be created successfully.')}}
 						</div>
 						<img src="./../../public/images/guide2/guide3-2.png" width="100%" style="border: 1px solid #ddd;"/>
 					</div>
@@ -128,16 +128,16 @@
 			<!-- step4 -->
 			<div class="guide guide4" v-if="guideStep == 4">
 				<div class="left-menu" style=" top: 185px;">
-					<i class="iconfont icon-shopify"></i><span>Orders</span>
+					<i class="iconfont icon-shopify"></i><span>{{$t('orders')}}</span>
 				</div>
 				<div class="content-over">
 				<div class="content-wrap" style=" top: 50px;">
 					<div class="guide-step guide-step1"></div>
 					<div class="content-title">
-						Share purchase orders URL to your vendor and wait your vendor finish the invoice for you.
+						{{$t('Share purchase orders URL to your vendor and wait your vendor finish the invoice for you.')}}
 					</div>
 					<div class="content-sub-title">
-						Click the <b>Invite vendor to process</b> button on the bottom of the page.
+						{{$t('Click the')}} <b>{{$t('Invite vendor to process')}}</b> {{$t('button on the bottom of the page.')}}
 					</div>
 					<div class="tx-center">
 						<img src="./../../public/images/guide2/guide4-1.png" width="100%"/>
@@ -146,7 +146,7 @@
 				<div class="content-wrap" style=" top: 50px;">
 					<div class="guide-step guide-step2"></div>
 					<div class="content-title" style="margin-top: 20px;">
-						You can send the purchase orders by Skype, WeChat or share by URL link.
+						{{$t('You can send the purchase orders by Skype, WeChat or share by URL link.')}}
 					</div>
 					<img src="./../../public/images/guide/guide2-2.png" width="100%" style="margin-bottom: 5px; border: 1px solid #ddd;"/>
 					<img src="./../../public/images/guide/guide2-3.png" width="100%" style="border: 1px solid #ddd;"/>
@@ -157,7 +157,7 @@
 				<div class="menu-wrap5">
 					<div class="bottom-menu" style="right: 211px;">
 						<div class="guide-step guide-step3"></div>
-						<el-button style="margin-right: 15px;" type="primary" size="medium">I have finished the payment</el-button>
+						<el-button style="margin-right: 15px;" type="primary" size="medium">{{$t('I have finished the payment')}}</el-button>
 					</div>
 				</div>
 				<div class="mask-step5">
@@ -167,31 +167,31 @@
 							<el-col :span="24">
 								<div class="grid-content invoice-bottom">
 									<div class="d-flex justify-content-end mg-b-10">
-										<div class="">Items total (US$)  :</div>
+										<div class="">{{$t('Items total')}} (US$)  :</div>
 										<div class="mg-l-5 pd-r-15">560.00</div>
 									</div>
 									<div class="d-flex justify-content-end">
-										<div class="">Shipping costs (US$) :</div>
+										<div class="">{{$t('Shipping costs')}} (US$) :</div>
 										<div class="mg-l-5 pd-r-15">
 											0.00
 										</div>
 									</div>
 									<el-divider></el-divider>
 									<div class="d-flex justify-content-end mg-t-10 bold-input">
-										<div class="tx-bold">Amount Due (US$) :</div>
+										<div class="tx-bold">{{$t('Amount Due')}} (US$) :</div>
 										<div class="mg-l-5 pd-r-15" style="font-size: 16px;font-weight: bold;">
 											0.00
 										</div>
 									</div>
 									<div class="d-flex justify-content-end mg-t-10" style="align-items: flex-start;">
-										<div class="">Payment method :</div>
+										<div class="">{{$t('Payment method')}} :</div>
 										<div class="mg-l-5 pd-r-15">
-											Through AliExpress proxy payment link
+											{{$t('Through AliExpress proxy payment link')}}
 										</div>
 									</div>
 									<div class="mg-t-10 normal-input pd-r-15" style="text-align: right;">
-										<el-button size="medium" type="primary">I have finished the payment</el-button>
-										<el-button size="medium" type="success">Invite vendor to proess purchase order</el-button>
+										<el-button size="medium" type="primary">{{$t('I have finished the payment')}}</el-button>
+										<el-button size="medium" type="success">{{$t('Invite vendor to proess purchase order')}}</el-button>
 									</div>
 								</div>
 							</el-col>
@@ -202,10 +202,10 @@
 				<div class="content-wrap">
 					<div class="guide-step guide-step1"></div>
 					<div class="content-title">
-						After you receive the vendor's invoice and finished the payment.
+						{{$t("After you receive the vendor's invoice and finished the payment.")}}
 					</div>
 					<div class="content-sub-title">
-						Click the button <b>I have finished the payment</b> on the PO page when you finished your payment.
+						{{$t('Click the button')}} <b>{{$t('I have finished the payment')}}</b> {{$t('on the PO page when you finished your payment.')}}
 					</div>
 					<div class="tx-center">
 						<img src="./../../public/images/guide2/guide5-1.png" width="100%" style="border: 1px solid #ddd;"/>
@@ -221,18 +221,18 @@
 				<div class="content-wrap">
 					<div class="guide-step guide-step1"></div>
 					<div class="content-title">
-						After vendor shipped, Shopify order will be fulfilled automatically.
+						{{$t('After vendor shipped, Shopify order will be fulfilled automatically.')}}
 					</div>
 					<div class="content-sub-title">
-						After your vendor shipped your order, the shipping information will be sync to your Shopify store automatically.
+						{{$t('After your vendor shipped your order, the shipping information will be sync to your Shopify store automatically.')}}
 					</div>
 					<img src="./../../public/images/guide2/guide6-1.png" width="100%" style="border: 1px solid #ddd;"/>
 				</div>
 				</div>
 			</div>
 			<div class="btn-wrap">
-				<el-button v-if="guideStep>1" size="samll" type="primary" @click="guideChangeStep(1)">Previous</el-button>
-				<el-button :loading="loading" size="samll" type="primary" @click="guideChangeStep(2)">Next</el-button>
+				<el-button v-if="guideStep>1" size="samll" type="primary" @click="guideChangeStep(1)">{{$t('Previous')}}</el-button>
+				<el-button :loading="loading" size="samll" type="primary" @click="guideChangeStep(2)">{{$t('Next')}}</el-button>
 			</div>
 		</div>
 	</div>

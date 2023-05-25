@@ -59,10 +59,10 @@
       <el-divider></el-divider>
       <div slot="footer">
         <div class="footer-wrap" v-loading="data.loading">
-          <el-checkbox v-model="data.isDefault">Set as default shipping address</el-checkbox>
+          <el-checkbox v-model="data.isDefault">{{$t('Set as default shipping address')}}</el-checkbox>
           <div class="footer-action">
-            <el-button size="small" @click="closeDialog">Cancel</el-button>
-            <el-button type="primary" size="small" @click="setAddress">Confirm</el-button>
+            <el-button size="small" @click="closeDialog">{{$t('Cancel')}}</el-button>
+            <el-button type="primary" size="small" @click="setAddress">{{$t('Confirm')}}</el-button>
           </div>
         </div>
       </div>

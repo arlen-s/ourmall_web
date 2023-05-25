@@ -17,15 +17,15 @@
         </el-form-item>
       </el-form>  
       <div style=" padding: 0 20px">
-        <el-link type="primary" @click="switchTo('forgotPSD')">Forgot your password?</el-link>
+        <el-link type="primary" @click="switchTo('forgotPSD')">{{$t('Forgot your password?')}}</el-link>
       </div>
     </div>
     <div slot="footer" class="dialog-footer">
       <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-        <el-button type="primary" @click="login" :loading="data.loading" style="padding: 12px 40px;">LOGIN</el-button>
+        <el-button type="primary" @click="login" :loading="data.loading" style="padding: 12px 40px;">{{$t('LOGIN')}}</el-button>
       </div>
       <div style=" display: flex; justify-content: flex-end; align-items: center; color: #909399;">
-        <span style=" margin-right: 15px;">No Account?</span>  <el-link type="primary" @click="switchTo('register')">Sign up here</el-link>
+        <span style=" margin-right: 15px;">No Account?</span>  <el-link type="primary" @click="switchTo('register')">{{$t('Sign up here')}}</el-link>
       </div>
     </div>
   </el-dialog>
@@ -39,10 +39,10 @@ export default {
       readonly: true,
       rules: {
         email: [
-          {required: true, message: 'Email must be filled in', trigger: 'blur'},
+          {required: true, message: this.$t('Email must be filled in'), trigger: 'blur'},
         ],
         password: [
-          {required: true, message: 'Password must be filled in', trigger: 'blur'},
+          {required: true, message: this.$t('Password must be filled in'), trigger: 'blur'},
         ],
       }
     }

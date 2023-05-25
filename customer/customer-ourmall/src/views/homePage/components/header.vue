@@ -44,11 +44,11 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item v-if="$store.state.userInfo" class="align-items-endd-flex" style="width: 160px" command="dashboard">
                   <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i>
-                  My Profile
+                  {{$t('My Profile')}}
                 </el-dropdown-item>
                 <el-dropdown-item v-else class="d-flex" style="width: 160px" command="login">
                   <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i>
-                  Login/Register
+                  {{$t('Login/Register')}}
                 </el-dropdown-item>
                 <el-dropdown-item class="lan-menu align-items-endd-flex" style="width: 160px">
                   <div class="lan-box">
@@ -109,7 +109,7 @@
                 </el-dropdown-item>
                 <el-dropdown-item v-if="$store.state.userInfo" class="d-flex" style="width: 160px" command="exit">
                   <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i>                  
-                  Logout
+                  {{$t('Logout')}}
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -231,9 +231,9 @@
     </div>
     <el-dialog class="isValidationCW-dialog" append-to-body title="" :visible.sync="isValidationCWDialog" width="50%">
       <div>
-        <el-result icon="warning" title="error" subTitle="请联系供应商，完善站长外部编号">
+        <el-result icon="warning" :title="$t('警告提示')" :subTitle="$t('请联系供应商，完善站长外部编号')">
           <template slot="extra">
-            <el-button type="primary" size="medium" @click="isValidationCWDialog = false">black</el-button>
+            <el-button type="primary" size="medium" @click="isValidationCWDialog = false">{{$t('返回')}}</el-button>
           </template>
         </el-result>
       </div>

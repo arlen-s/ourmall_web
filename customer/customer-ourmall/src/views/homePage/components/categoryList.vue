@@ -1,7 +1,7 @@
 <template>
 	<div class="content">
 		<div class="title">
-			{{ setting.title || 'Product category name' }}
+			{{ setting.title || $t('Product category name') }}
 			<div class="more">
 				<router-link to="/products-market">
 					<span style="color: #3C3C3C;">{{ setting.moreText || 'More' }}</span>
@@ -31,7 +31,7 @@
 						<img v-if="!item.themeUrl" :style="{ 'object-fit': setting.fillWay }" :src="imgList[index]"
 							alt="">
 					</div>
-					<div class="title">Category Name</div>
+					<div class="title">{{$t('Category Name')}}</div>
 				</div>
 			</template>
 		</div>

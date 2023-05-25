@@ -8,7 +8,7 @@
               <el-col :span="24">
                 <div class="d-flex justify-content-between headView">
                   <div class="d-flex" v-if="task && task.doneCnt != task.allCnt">
-                    <span class="mg-r-10">Upload Progress:</span>
+                    <span class="mg-r-10">{{$t('Upload Progress')}}:</span>
                     <el-progress v-if="(task.doneCnt/task.allCnt)*100>=0&&(task.doneCnt/task.allCnt)*100<=100"
                       style="width: 500px"
                       :stroke-width="18"
@@ -23,10 +23,10 @@
                   <div v-else></div>
                   <div class="d-flex">
                     <el-checkbox :value="AllChecked" @change="allSelect($event)"
-                      >All</el-checkbox
+                      >{{$t('All')}}</el-checkbox
                     >
                     <el-button class="del" type="primary" @click="delItems()"
-                      >Delete</el-button
+                      >{{$t('Delete')}}</el-button
                     >
                   </div>
                 </div>
@@ -41,7 +41,7 @@
                         text-align: center;
                       "
                     >
-                      no product
+                      {{$t('no product')}}
                     </p>
                   </el-col>
                   <el-col
@@ -77,7 +77,7 @@
                           >
                         </p>
                         <div class="price tx-ellipsis1">
-                          Cost price:
+                          {{$t('Cost price')}}:
                           <span
                             ><span style="font-size: 13px">{{
                               item.stocks[0].currency
@@ -92,7 +92,7 @@
                             type="primary"
                             size="mini"
                             @click="delItems(item)"
-                            >Delete Task</el-button
+                            >{{$t('Delete Task')}}</el-button
                           >
                         </div>
                       </div>

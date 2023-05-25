@@ -4,16 +4,16 @@
       <h1></h1>
       <ul class="home-nav">
         <li>
-          <router-link :to="{ path: '/home' }">Home</router-link>
+          <router-link :to="{ path: '/home' }">{{$t('Home')}}</router-link>
         </li>
         <li>
           <router-link :to="{ path: '/products-market' }"
-            >Products Market</router-link
+            >{{$t('Products Market')}}</router-link
           >
         </li>
         <li>
           <router-link :to="{ path: '/Waiting-for-allocated' }"
-            >Request for Quote</router-link
+            >{{$t('Request for Quote')}}</router-link
           >
         </li>
         <li>
@@ -23,7 +23,7 @@
                 <i v-if="$store.state.userInfo" class="badge" >{{this.$root.$children[0].importNum > 99 ? '99+' : this.$root.$children[0].importNum}}</i>
               </div>
               <div class="btn-text" rel="nofollow">
-                Wait for import
+                {{$t('Wait for import')}}
               </div>
             </a>
           </li>
@@ -39,15 +39,15 @@
                 style="width: 150px"
                 command="dashboard"
               >
-                <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
+                <i class="fa fa-tachometer" aria-hidden="true"></i> {{$t('Dashboard')}}
               </el-dropdown-item>
               <el-dropdown-item
                 class="align-items-endd-flex"
                 style="width: 150px"
                 command="profile"
               >
-                <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> My
-                Profile
+                <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i>
+                {{$t('My Profile')}}
               </el-dropdown-item>
               <template v-if="$root.$children[0].baseUrl == '/my'">
                 <!-- 钱包导航 -->
@@ -61,7 +61,7 @@
                     style="font-size: 14px"
                     aria-hidden="true"
                   ></i>
-                  My Wallet
+                  {{$t('My Wallet')}}
                 </el-dropdown-item>
               </template>
               <el-dropdown-item
@@ -69,14 +69,14 @@
                 style="width: 150px"
                 command="exit"
               >
-                <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i> Logout
+                <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i> {{$t('Logout')}}
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </li>
         <li v-else>
           <!--<router-link to="/login">LOGIN</router-link>-->
-          <a href="javascript:;" @click="login">LOGIN</a>
+          <a href="javascript:;" @click="login">{{$t('LOGIN')}}</a>
         </li>
       </ul>
     </div>
@@ -85,16 +85,16 @@
         <h1></h1>
         <ul class="home-nav">
           <li>
-            <router-link :to="{ path: '/home' }">Home</router-link>
+            <router-link :to="{ path: '/home' }">{{$t('Home')}}</router-link>
           </li>
           <li>
             <router-link :to="{ path: '/products-market' }"
-              >Products Market</router-link
+              >{{$t('Products Market')}}</router-link
             >
           </li>
           <li>
             <router-link :to="{ path: '/Waiting-for-allocated' }"
-              >Request for Quote</router-link
+              >{{$t('Request for Quote')}}</router-link
             >
           </li>
           <li>
@@ -104,7 +104,7 @@
                 <i v-if="$store.state.userInfo" class="badge" >{{this.$root.$children[0].importNum > 99 ? '99+' : this.$root.$children[0].importNum}}</i>
               </div>
               <div class="btn-text" rel="nofollow">
-                Wait for import
+                {{$t('Wait for import')}}
               </div>
             </a>
           </li>
@@ -120,15 +120,14 @@
                   style="width: 150px"
                   command="dashboard"
                 >
-                  <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
+                  <i class="fa fa-tachometer" aria-hidden="true"></i> {{$t('Dashboard')}}
                 </el-dropdown-item>
                 <el-dropdown-item
                   class="align-items-endd-flex"
                   style="width: 150px"
                   command="profile"
                 >
-                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> My
-                  Profile
+                  <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> {{$t('My Profile')}}
                 </el-dropdown-item>
                 <template v-if="$root.$children[0].baseUrl == '/my'">
                   <!-- 钱包导航 -->
@@ -142,7 +141,7 @@
                       style="font-size: 14px"
                       aria-hidden="true"
                     ></i>
-                    My Wallet
+                    {{$t('My Wallet')}}
                   </el-dropdown-item>
                 </template>
                 <el-dropdown-item
@@ -151,14 +150,14 @@
                   command="exit"
                 >
                   <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i>
-                  Logout
+                  {{$t('Logout')}}
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </li>
           <li v-else>
             <!--<router-link to="/login">LOGIN</router-link>-->
-            <a href="javascript:;" @click="login">LOGIN</a>
+            <a href="javascript:;" @click="login">{{$t('LOGIN')}}</a>
           </li>
         </ul>
       </div>
@@ -168,13 +167,11 @@
         <div class="content">
           <div class="left">
             <p class="row1">
-              Allocate Orders for vendors<br />
-              and Automate <br />your entire dropshipping process
+              {{$t('Allocate Orders for vendors')}}<br />
+              {{$t('and Automate')}} <br />{{$t('your entire dropshipping process')}}
             </p>
             <p class="row2">
-              With just one click, you can easily allocate your stores orders to
-              your vendors and the entire shipping process will be automatically
-              completed.
+              {{$t('With just one click, you can easily allocate your stores orders to your vendors and the entire shipping process will be automatically completed.')}}            
             </p>
             <LoginDropdown
               :loading="loading"
@@ -194,24 +191,24 @@
       </div>
       <div class="card2">
         <div class="content">
-          <div class="title">How does it work?</div>
+          <div class="title">{{$t('How does it work?')}}</div>
           <ul class="step-li">
             <li>
               <div class="img"></div>
-              <div class="text">1. Connect to your store</div>
+              <div class="text">1. {{$t('Connect to your store')}}</div>
             </li>
             <li>
               <div class="img"></div>
-              <div class="text">2. Allocate orders to your vendors</div>
+              <div class="text">2. {{$t('Allocate orders to your vendors')}}</div>
             </li>
             <li>
               <div class="img"></div>
-              <div class="text">3. The vendor arranges the delivery</div>
+              <div class="text">3. {{$t('The vendor arranges the delivery')}}</div>
             </li>
             <li>
               <div class="img"></div>
               <div class="text">
-                4. Automatic fulfillment of your orders by
+                4. {{$t('Automatic fulfillment of your orders by')}}
                 {{ $root.$children[0].pName.a }}
               </div>
             </li>
@@ -222,11 +219,11 @@
         <div class="content">
           <div class="text">
             <div class="r1">
-              See what our <br />
-              customers talk about us.
+              {{$t('See what our')}} <br />
+              {{$t('customers talk about us.')}}
             </div>
             <div class="r2">
-              More than 10,000+ customers around the world rely on us!
+              {{$t('More than 10,000+ customers around the world rely on us!')}}
             </div>
           </div>
           <div class="img"></div>
@@ -387,23 +384,23 @@ export default {
     saveNewPSD() {
       //保存新密码
       if (!this.dialogForgotPsd.email) {
-        this.$message({ message: "Email must be filled in", type: "error" });
+        this.$message({ message: this.$t("Email must be filled in"), type: "error" });
         return;
       }
       if (!this.dialogForgotPsd.captcha) {
-        this.$message({ message: "CAPTCHA must be filled in", type: "error" });
+        this.$message({ message: this.$t("CAPTCHA must be filled in"), type: "error" });
         return;
       }
       if (!this.dialogForgotPsd.password) {
         this.$message({
-          message: "New password must be filled in",
+          message: this.$t("New password must be filled in"),
           type: "error",
         });
         return;
       }
       if (this.dialogForgotPsd.password != this.dialogForgotPsd.rePassword) {
         this.$message({
-          message: "The new password and confirm password must be the same",
+          message: this.$t("The new password and confirm password must be the same"),
           type: "error",
         });
         return;
@@ -412,7 +409,7 @@ export default {
       if (!pwdRegex.test(this.dialogForgotPsd.password)) {
         this.$message({
           message:
-            "The password must contain letters, and numbers, Minimum 8 characters",
+            this.$("The password must contain letters, and numbers, Minimum 8 characters"),
           type: "error",
         });
         return;
@@ -430,7 +427,7 @@ export default {
           this.dialogForgotPsd.loading = false;
           if (r.ErrorCode == 9999) {
             this.$message({
-              message: "Password reset successful",
+              message: this.$t("Password reset successful"),
               type: "success",
             });
             this.openSingIn(
@@ -452,11 +449,11 @@ export default {
     signIn() {
       //登录
       if (!this.dialogSignin.email) {
-        this.$message({ message: "Email must be filled in", type: "error" });
+        this.$message({ message: this.$t("Email must be filled in"), type: "error" });
         return;
       }
       if (!this.dialogSignin.password) {
-        this.$message({ message: "Password must be filled in", type: "error" });
+        this.$message({ message: this.$t("Password must be filled in"), type: "error" });
         return;
       }
       this.$Burying({
@@ -508,7 +505,7 @@ export default {
     register() {
       //注册
       if (!this.dialogSignup.email) {
-        this.$message({ message: "Email must be filled in", type: "error" });
+        this.$message({ message: this.$t("Email must be filled in"), type: "error" });
         return;
       }
       // if (!this.dialogSignup.captcha) {
@@ -516,12 +513,12 @@ export default {
       //   return;
       // }
       if (!this.dialogSignup.password) {
-        this.$message({ message: "Password must be filled in", type: "error" });
+        this.$message({ message: this.$t("Password must be filled in"), type: "error" });
         return;
       }
       if (this.dialogSignup.password != this.dialogSignup.rePassword) {
         this.$message({
-          message: "The password and confirm password must be the same",
+          message: this.$t("The password and confirm password must be the same"),
           type: "error",
         });
         return;
@@ -530,7 +527,7 @@ export default {
       if (!pwdRegex.test(this.dialogSignup.password)) {
         this.$message({
           message:
-            "The password must contain letters, and numbers, Minimum 8 characters",
+            this.$t("The password must contain letters, and numbers, Minimum 8 characters"),
           type: "error",
         });
         return;
@@ -702,7 +699,7 @@ export default {
     loginPlatform(activePlatform, shopUrl) {
       if (activePlatform == "shopify") {
         if (!shopUrl) {
-          this.$elementMessage("Please enter Shopify store name", "error");
+          this.$elementMessage(this.$t("Please enter Shopify store name"), "error");
           return false;
         }
         this.win = window.open("/blank.html", "Shopify");

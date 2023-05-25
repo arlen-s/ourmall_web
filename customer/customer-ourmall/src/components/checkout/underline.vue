@@ -8,7 +8,7 @@
 	  <div class="pd-x-20 mg-y-30 underline-payment">
 		  <el-row :gutter="20" class=" mg-y-20">
 		    <el-col :span="7" style="text-align: right;">
-		  	  Payment amount ({{$store.state.country.symbol}})：
+		  	  {{$t('Payment amount')}} ({{$store.state.country.symbol}})：
 		    </el-col>
 		    <el-col :span="16">
 		  	  {{data.payAmount}}
@@ -16,7 +16,7 @@
 		  </el-row>
 		  <el-row :gutter="20" class=" mg-y-20">
 		    <el-col :span="7" style="text-align: right;">
-		  	  Payment instructions：
+		  	  {{$t('Payment instructions：')}}
 		    </el-col>
 		    <el-col :span="16">
 		  	  <div class="ql-container ql-snow">
@@ -27,7 +27,7 @@
 		  </el-row>
 		  <el-row :gutter="20" class=" mg-y-20">
 		    <el-col :span="7" style="text-align: right;">
-		  	  Other details：
+		  	  {{$t('Other details')}}：
 		    </el-col>
 		    <el-col :span="16">
 				<div class="ql-container ql-snow">
@@ -38,7 +38,7 @@
 		  </el-row>
 	  	<el-row :gutter="20" class=" mg-y-20">
 	  	  <el-col :span="7" style="text-align: right;">
-			  Payment account：
+			  {{$t('Payment account')}}：
 		  </el-col>
 	  	  <el-col :span="16">
 			  <el-input v-model="account" placeholder="payment account"></el-input>
@@ -46,7 +46,7 @@
 	  	</el-row>
 		<el-row :gutter="20" class=" mg-y-20">
 		  <el-col :span="7" style="text-align: right;">
-			  Payment voucher：
+			  {{$t('Payment voucher')}}：
 		  </el-col>
 		  <el-col :span="16">
 			  <el-upload

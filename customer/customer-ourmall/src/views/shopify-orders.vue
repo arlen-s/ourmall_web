@@ -12,25 +12,25 @@
 			</div>
 			<div class="right">
 				<el-button type="primary" size="medium" @click="exportDialogOpen">
-					<i class="fa fa-download"></i>Export
+					<i class="fa fa-download"></i>{{$t('Export')}}
 				</el-button>
 				<template v-if="!!(updateTime && (updateTime > now))">
 					<el-tooltip class="item" effect="dark" content="The update process has started, it will take a while to finish." placement="bottom">
 				      <el-button type="primary" size="medium" style="color: #FFFFFF;background-color: #aeb5e2;border-color: #aeb5e2;">
-							<i class="el-icon-refresh"></i>Update Order
+							<i class="el-icon-refresh"></i>{{$t('Update Order')}}
 						</el-button>
 				    </el-tooltip>
 				</template>
 				<template v-else>
 					<el-tooltip class="item" effect="dark" content="Use this button to update your Order List if missing orders.The process may take a while to finish." placement="bottom">
 				     <el-button :disabled="!!(updateTime && (updateTime > now))" type="primary" size="medium" :loading="updateOrderLoading" @click="updateOrder">
-						<i class="el-icon-refresh"></i>Update Order
+						<i class="el-icon-refresh"></i>{{$t('Update Order')}}
 					</el-button>
 				    </el-tooltip>
 				</template>
 				<el-button type="success" @click="openAutomaticSetting">
 					<i class="el-icon-setting el-icon--right"></i>
-					Automatic dispatch orders setting <span v-if="ruleCnt">({{ruleCnt}})</span>
+					{{$t('Automatic dispatch orders setting')}} <span v-if="ruleCnt">({{ruleCnt}})</span>
 				</el-button>
 			</div>
 		</div>
@@ -48,23 +48,23 @@
 								<el-radio v-for="(dispatch,k) in dispatchArr" :key="k" :label="k">{{dispatch}}</el-radio>
 							</el-radio-group>
 							<div v-if="dispatchStatus == 3 && supplierList.length">
-								<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">All vendors</el-checkbox>
-								<div style="margin: -8px 0 0;padding-left: 22px;">(You could select multiple vendors)</div>
+								<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">{{$t('All vendors')}}</el-checkbox>
+								<div style="margin: -8px 0 0;padding-left: 22px;">({{$t('You could select multiple vendors')}})</div>
 								<el-checkbox-group v-model="checkedSupplier" @change="handleCheckedCitiesChange">
 								    <el-checkbox v-for="tag in supplierList" v-if="tag.id != '999e'" :label="tag.id" :key="tag.id">{{tag.vendorName}}</el-checkbox>
 								</el-checkbox-group>
 							</div>
 							<div>
-								<el-button type="text" :disabled="!dispatchStatus" @click="clearFilterItems('dispatch')">Clear</el-button>
+								<el-button type="text" :disabled="!dispatchStatus" @click="clearFilterItems('dispatch')">{{$t('Clear')}}</el-button>
 							</div>
-						    <el-button size="small" slot="reference">Dispatch Status<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+						    <el-button size="small" slot="reference">{{$t('Dispatch Status')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
 						</el-popover>
 					  	<el-popover placement="bottom" title="" trigger="click" popper-class="d-block">
 					  		<el-checkbox-group v-model="shopifyStore" @change="filterItems('store')">
 							    <el-checkbox v-for="tag in storeList" :label="tag.shopifyAccountId" :key="tag.shopifyAccountId">{{tag.store}}</el-checkbox>
 							</el-checkbox-group>
 							<div>
-								<el-button type="text" :disabled="!shopifyStore.length" @click="clearFilterItems('store')">Clear</el-button>
+								<el-button type="text" :disabled="!shopifyStore.length" @click="clearFilterItems('store')">{{$t('Clear')}}</el-button>
 							</div>
 						    <el-button size="small" slot="reference">Shopify Stores<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
 						</el-popover>
@@ -88,33 +88,33 @@
 			                    </el-date-picker>
 							</div>
 							<div>
-								<el-button type="text" :disabled="!timeFilter" @click="clearFilterItems('date')">Clear</el-button>
+								<el-button type="text" :disabled="!timeFilter" @click="clearFilterItems('date')">{{$t('Clear')}}</el-button>
 							</div>
-						    <el-button size="small" slot="reference">Date Ranges<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+						    <el-button size="small" slot="reference">{{$t('Date Ranges')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
 						</el-popover>
 						<el-popover placement="bottom" title="" trigger="click" popper-class="d-block">
 							<el-checkbox-group v-model="fulfillStatus" @change="filterItems('fulfill')">
-							    <el-checkbox label="1">Unfulfilled</el-checkbox>
-							    <el-checkbox label="2">Partially fulfilled</el-checkbox>
+							    <el-checkbox label="1">{{$t('Unfulfilled')}}</el-checkbox>
+							    <el-checkbox label="2">{{$t('Partially fulfilled')}}</el-checkbox>
 							</el-checkbox-group>
 							<div>
-								<el-button type="text" :disabled="!fulfillStatus.length" @click="clearFilterItems('fulfill')">Clear</el-button>
+								<el-button type="text" :disabled="!fulfillStatus.length" @click="clearFilterItems('fulfill')">{{$t('Clear')}}</el-button>
 							</div>
-						    <el-button size="small" slot="reference">Fulfillment Status<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+						    <el-button size="small" slot="reference">{{$t('Fulfillment Status')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
 						</el-popover>
 						<el-popover placement="bottom" title="" trigger="click" popper-class="d-block">
 							<el-radio-group v-model="sortBy" @change="filterItems('sort')">
 								<el-radio v-for="(sort,k) in sortArr" :key="k" :label="k">{{sort}}</el-radio>
 							</el-radio-group>
 							<div>
-								<el-button type="text" :disabled="!sortBy" @click="clearFilterItems('sort')">Clear</el-button>
+								<el-button type="text" :disabled="!sortBy" @click="clearFilterItems('sort')">{{$t('Clear')}}</el-button>
 							</div>
-						    <el-button size="small" slot="reference">SortBy<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+						    <el-button size="small" slot="reference">{{$t('SortBy')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
 						</el-popover>
 					</el-button-group>
 					<div style="margin-left: auto;margin-right: 15px;">
-						<el-link v-if="isManage == 1" type="primary" @click="filterItems2(2)">Show hidden orders</el-link>
-						<el-link v-if="isManage == 2" type="primary" @click="filterItems2(1)">Show all valid orders</el-link>
+						<el-link v-if="isManage == 1" type="primary" @click="filterItems2(2)">{{$t('Show hidden orders')}}</el-link>
+						<el-link v-if="isManage == 2" type="primary" @click="filterItems2(1)">{{$t('Show all valid orders')}}</el-link>
 					</div>
 					<!--<el-button-group>
 					  <el-button>Shopify Stores<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
@@ -159,7 +159,7 @@
 							<li class="invoice-item">Shopify store</li>
 							<li class="invoice-item">Date</li>
 							<li class="invoice-item">Customer</li>
-							<li class="invoice-item tx-right pd-r-15">Shopify order total</li>
+							<li class="invoice-item tx-right pd-r-15">{{$t('Shopify order total')}}</li>
 							<li class="invoice-item">Fulfillment</li>
 							<li class="invoice-item">Items</li>
 						</ul>
@@ -204,13 +204,13 @@
 												<div class="mg-y-15 mg-t-20">
 													<div class="d-flex mg-b-10">
 														<div class="d-flex" style="width: 90%;">
-															<div style="width: 100px;text-align: right;color: #999;" class="">Order Date :</div>
+															<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Order Date')}} :</div>
 															<div class="mg-l-5 pd-r-15">{{data.timeCreated?data.timeCreated:'---'}}</div>
 														</div>
 													</div>
 													<div class="d-flex mg-b-10">
 														<div class="d-flex" style="width: 90%;">
-															<div style="width: 100px;text-align: right;color: #999;" class="">Customer :</div>
+															<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Customer')}} :</div>
 															<div class="mg-l-5 pd-r-15">
 																{{data.shippingJson && data.shippingJson.name ? data.shippingJson.name : '---'}}
 															</div>
@@ -226,7 +226,7 @@
 													</div>
 													<div class="d-flex mg-b-10">
 														<div class="d-flex" style="width: 90%;">
-															<div style="width: 100px;text-align: right;color: #999;" class="">Address:</div>
+															<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Address')}}:</div>
 															<div class="mg-l-5 pd-r-15">
 																{{data.shippingJson && data.shippingJson.address1 ? data.shippingJson.address1 : ''}} {{data.shippingJson && data.shippingJson.city ? data.shippingJson.city : ''}} {{data.shippingJson && data.shippingJson.province ? data.shippingJson.province : ''}}
 																<br />
@@ -244,7 +244,7 @@
 										<div class="table_info_item">
 											<el-tag v-if="!data.fulfillmentStatus" size="small" type="warning">
 												<span class="-EFlq"></span>
-												Unfulfilled
+												{{$t('Unfulfilled')}}
 											</el-tag>
 											<el-tag v-else-if="data.fulfillmentStatus == 'partial'" size="small" :type="data.fulfillmentStatus == 'partial' ? 'danger' : ''">
 												<span class="-EFlq"></span>
@@ -282,18 +282,18 @@
 												<span>
 													x {{ data.unfulfillQuantity }}
 												</span>
-												<span style="color: #c05717;margin-left: 20px;">({{data.fulfillQuantity}} of {{ data.quantity }} purchased items are delivered)</span>
+												<span style="color: #c05717;margin-left: 20px;">({{data.fulfillQuantity}} of {{ data.quantity }} {{$t('purchased items are delivered')}})</span>
 											</p>
 											<p v-if="data.unfulfillQuantity == 0">
-												<span>({{data.fulfillQuantity}} of {{ data.quantity }} fulfilled)</span>
+												<span>({{data.fulfillQuantity}} of {{ data.quantity }} {{$t('fulfilled')}})</span>
 											</p>
 										</div>
 										<div class="table_info_item">
 											<p>
-												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">Vendor: </span> {{ data.vendorName?data.vendorName:'---' }}
+												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">{{$t('Vendor')}}: </span> {{ data.vendorName?data.vendorName:'---' }}
 											</p>
 											<p>
-												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">Cost per unit: </span> {{ data.costPrice? 'US$ '+data.costPrice:'---' }}
+												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">{{$t('Cost per unit')}}: </span> {{ data.costPrice? 'US$ '+data.costPrice:'---' }}
 											</p>
 										</div>
 										<div class="table_info_item" v-if="data.invoiceItems">
@@ -304,7 +304,7 @@
 														<div class="d-flex mg-b-15">
 															<span class="mg-r-10"># {{item.code}}</span>
 															<span class="mg-r-10">{{item.vendorName}}</span>
-															<el-link type="primary" @click="gotoInvoice(item)">View the details</el-link>
+															<el-link type="primary" @click="gotoInvoice(item)">{{$t('View the details')}}</el-link>
 														</div>
 													</div>
 												</el-popover>
@@ -321,9 +321,9 @@
 		</div>
 		<div ref="ordersFooter" class="alert-wrap d-flex justify-content-between">
 			<div>
-				<div v-show="isManage == 1" class="is-bold">{{selectData.length}} shopify orders have been selected and can now be dispatched to your vendors.</div>
+				<div v-show="isManage == 1" class="is-bold">{{selectData.length}} {{$t('shopify orders have been selected and can now be dispatched to your vendors')}}</div>
 				<div v-show="isManage == 1" class="d-flex">
-					<span style="margin-right: 10px;">Dispatch to the vendor:</span>
+					<span style="margin-right: 10px;">{{$t('Dispatch to the vendor')}}:</span>
 					<div class="d-flex align-items-center">
 						<el-tag v-if="dynamicTags.length>0" :key="tag.id" size="medium" v-for="(tag,i) in dynamicTags" closable :disable-transitions="false" @close="handleClose(i)">
 							{{tag.vendorName}}
@@ -345,19 +345,19 @@
 													</div>-->
 												</div>
 												<!--<el-button size="mini" type="primary" plain>Select</el-button>-->
-												<el-link type="primary" :underline="false" style="font-weight: normal;">Select</el-link>
+												<el-link type="primary" :underline="false" style="font-weight: normal;">{{$t('Select')}}</el-link>
 											</div>
 										</div>
-										<div v-else class="tx-center">No data</div>
+										<div v-else class="tx-center">{{$t('No data')}}</div>
 									</div>
 									<el-divider></el-divider>
 									<template v-if="vendorName == '' || vendorData.length > 0">
-										<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>Add a new vendor</el-button>
+										<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>{{$t('Add a new vendor')}}</el-button>
 									</template>
 									<template v-if="vendorName && vendorData.length == 0">
 										<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>Add "{{vendorName}}"</el-button>
 									</template>
-									<el-button @click="hidepopoverCustomer">Close</el-button>
+									<el-button @click="hidepopoverCustomer">{{$t('Close')}}</el-button>
 								</div>
 							</el-popover>
 						</div>
@@ -369,11 +369,11 @@
 				</div>
 			</div>
 			<div>
-				<el-button class="button-new-tag" type="primary" size="small" @click="setOrderHideChecked">{{isManage == 1 ? 'Hide' : 'Show'}} selected orders</el-button>
-				<el-button v-show="isManage == 1" class="button-new-tag mg-l-10" type="success" size="small" @click="getInvocie">Make a purchase order</el-button>
+				<el-button class="button-new-tag" type="primary" size="small" @click="setOrderHideChecked">{{isManage == 1 ? 'Hide' : 'Show'}} {{$t('selected orders')}}</el-button>
+				<el-button v-show="isManage == 1" class="button-new-tag mg-l-10" type="success" size="small" @click="getInvocie">{{$t('Make a purchase order')}}</el-button>
 			</div>
 		</div>
-		<el-dialog title="Add a new vendor" :visible.sync="addVendorDialog.isShow" :width="'620px'" :close-on-click-modal="false" class="add-vendor-dialog">
+		<el-dialog :title="$t('Add a new vendor')" :visible.sync="addVendorDialog.isShow" :width="'620px'" :close-on-click-modal="false" class="add-vendor-dialog">
 			<el-divider></el-divider>
 			<el-row>
 				<el-col :span="24">
@@ -392,25 +392,25 @@
 			</el-row>
 			<el-divider></el-divider>
 			<div slot="footer" class="dialog-footer">
-				<el-button size="small" @click="addVendorDialog.isShow = false;">Close</el-button>
-				<el-button size="small" type="primary" @click="saveVendor(2)" :loading="addVendorDialog.loading">Save</el-button>
+				<el-button size="small" @click="addVendorDialog.isShow = false;">{{$t('Close')}}</el-button>
+				<el-button size="small" type="primary" @click="saveVendor(2)" :loading="addVendorDialog.loading">{{$t('Save')}}</el-button>
 <!--				<el-button size="small" type="primary" @click="saveVendor(2)" :loading="addVendorDialog.loading">Save and change the vendor</el-button>-->
 			</div>
 		</el-dialog>
 		<el-dialog title="Export orders" :visible.sync="exportDialog" :width="'620px'" :close-on-click-modal="false" class="d-block">
 			<el-divider></el-divider>
 			<div style="padding: 20px;">
-				<p class="mg-b-10">Export to   {{$store.state.userInfo.email}}</p>
+				<p class="mg-b-10">{{$t('Export to')}}   {{$store.state.userInfo.email}}</p>
 				<el-radio-group v-model="exportStatus">
-					<el-radio label="1">All orders</el-radio>
-					<el-radio label="2" :disabled="!selectData.length">Selected: {{selectData.length}} orders</el-radio>
-					<el-radio label="3">{{totalCount}} orders matching your search</el-radio>
+					<el-radio label="1">{{$t('All orders')}}</el-radio>
+					<el-radio label="2" :disabled="!selectData.length">{{$t('Selected')}}: {{selectData.length}} orders</el-radio>
+					<el-radio label="3">{{totalCount}} {{$t('orders matching your search')}}</el-radio>
 				</el-radio-group>
 			</div>
 			<el-divider></el-divider>
 			<div slot="footer" class="dialog-footer">
-				<el-button size="small" @click="exportDialog = false;">Cancel</el-button>
-				<el-button size="small" type="primary" @click="exportOrders" :disabled="!exportStatus" :loading="exportLoading">Export orders</el-button>
+				<el-button size="small" @click="exportDialog = false;">{{$t('Cancel')}}</el-button>
+				<el-button size="small" type="primary" @click="exportOrders" :disabled="!exportStatus" :loading="exportLoading">{{$t('Export orders')}}</el-button>
 			</div>
 		</el-dialog>
 		<el-dialog
@@ -428,7 +428,7 @@
 					</el-alert>
 				</div>
 				<div v-if="!automaticSettingDialog.openRulestatus" style="margin-bottom: 10px;">
-					<el-button type="primary" size="mini" @click="changeOpenAddRule(true)">+ Add a dispatch rule</el-button>
+					<el-button type="primary" size="mini" @click="changeOpenAddRule(true)">+ {{$t('Add a dispatch rule')}}</el-button>
 				</div>
 				<!-- 添加新条目 -->
 				<template v-else>
@@ -468,7 +468,7 @@
 								</el-option>
 							</el-select>
 							<el-checkbox style=" margin-right: 25px; margin-bottom: 0;" v-model="automaticSettingDialog.allProducts">
-								Choose my all Shopify products
+								{{$t('Choose my all Shopify products')}}
 							</el-checkbox>
 							<el-select
 								filterable
@@ -526,10 +526,10 @@
 							</el-select>
 							<el-button :disabled="automaticSettingDialog.saveRuleLoading" :loading="automaticSettingDialog.saveRuleLoading" type="primary" size="mini"
 								@click="saveRule()"
-							>Save Rule</el-button>
+							>{{$t('Save Rule')}}</el-button>
 							<el-button :disabled="automaticSettingDialog.saveRuleLoading" size="mini"
 								@click="changeOpenAddRule(false)"
-							>Cancel</el-button>
+							>{{$t('Cancel')}}</el-button>
 						</div>
 					</div>
 				</template>
@@ -617,7 +617,7 @@
 											</span>
 										</template>
 									</template>
-									<template v-else>My all Shopify products</template>
+									<template v-else>{{$t('My all Shopify products')}}</template>
 								</div>
 							</template>
 						</el-table-column>
@@ -721,11 +721,11 @@
 						>
 							<template slot-scope="scope">
 								<template v-if="scope.row.editMode">
-									<el-button :loading="scope.row.loading" :disabled="scope.row.loading"  size="mini" type="primary" @click="saveEditRule(scope.row)">Save Rule</el-button>
-									<el-button :disabled="scope.row.loading" size="mini" @click="cancelEditRule(scope.row)">Cancel</el-button>
+									<el-button :loading="scope.row.loading" :disabled="scope.row.loading"  size="mini" type="primary" @click="saveEditRule(scope.row)">{{$t('Save Rule')}}</el-button>
+									<el-button :disabled="scope.row.loading" size="mini" @click="cancelEditRule(scope.row)">{{$t('Cancel')}}</el-button>
 								</template>
 								<template v-else>
-									<el-link type="primary" style="margin-right: 10px" @click="editRule(scope.row)">Edit</el-link>
+									<el-link type="primary" style="margin-right: 10px" @click="editRule(scope.row)">{{$t('Edit')}}</el-link>
 									<el-link
 										:disabled="scope.row.statusLoading"
 										:type="scope.row.status == 1 ? 'danger' : 'success'"
@@ -740,7 +740,7 @@
   									cancelButtonText='Cancel'
 										@onConfirm="delRuleStatus(scope.row, scope.$index)"
 									>
-										<el-link :disabled="scope.row.delLoading"  type="danger" slot="reference">Delete</el-link>
+										<el-link :disabled="scope.row.delLoading"  type="danger" slot="reference">{{$t('Delete')}}</el-link>
 									</el-popconfirm>
 								</template>
 							</template>
@@ -750,7 +750,7 @@
 			</div>
 			<div slot="footer"  class="dialog-footer" style="display: flex; justify-content: space-between;">
 				<div>
-					Only matching last
+					{{$t('Only matching last')}}
 					<el-select v-model="automaticSettingDialog.day" style="width:100px;"
 						size="mini"
 						@change="changeDay"
@@ -762,15 +762,15 @@
 							:value="day"
 						></el-option>
 					</el-select>
-					days unfulfilled orders
+					{{$t('days unfulfilled orders')}}
 				</div>
 				<div>
-					<el-button :disabled="automaticSettingDialog.loading" @click="automaticSettingDialog.isShow = false">Close</el-button>
+					<el-button :disabled="automaticSettingDialog.loading" @click="automaticSettingDialog.isShow = false">	{{$t('Close')}}</el-button>
 					<el-button type="primary"
 						:loading="automaticSettingDialog.loading"
 						@click="dispatchRuleTest"
 					>
-						Dispatch rule TEST
+						{{$t('Dispatch rule TEST')}}
 					</el-button>
 				</div>
 			</div>
@@ -781,20 +781,20 @@
 				append-to-body>
 				<div style=" padding: 20px;">
 					<p style=" margin-bottom: 10px;">
-						According to your settings, we found some data for you:
+						{{$t('According to your settings, we found some data for you')}}:
 					</p>
 					<p>
-						Shopify order: <b style="margin-right: 15px; color: #5c6ac4;">{{automaticSettingDialog.orderCnt}}</b>
+						{{$t('Shopify order')}}: <b style="margin-right: 15px; color: #5c6ac4;">{{automaticSettingDialog.orderCnt}}</b>
 						(Dispatch to <b  style="color: #5c6ac4;">{{automaticSettingDialog.vendorCnt}}</b> vendor(s))
 					</p>
 				</div>
 				<div slot="footer" class="dialog-footer">
 					<el-button :disabled="automaticSettingDialog.runLoading"  @click="automaticSettingDialog.previewShow = false">
-						Dispatch in the Next Cycle
+						{{$t('Dispatch in the Next Cycle')}}
 					</el-button>
 					<el-button :loading="automaticSettingDialog.runLoading"
 						:disabled="automaticSettingDialog.runLoading"
-						type="primary" @click="runDispatchRule">Dispatch Immediately</el-button>
+						type="primary" @click="runDispatchRule">{{$t('Dispatch Immediately')}}</el-button>
 				</div>
 			</el-dialog>
 			<el-dialog
@@ -819,7 +819,7 @@
 					</div>
 				</div>
 				<div slot="footer" class="dialog-footer">
-					<el-button  @click="automaticSettingDialog.isShowProducts = false">Close</el-button>
+					<el-button  @click="automaticSettingDialog.isShowProducts = false">{{$t('Close')}}</el-button>
 				</div>
 			</el-dialog>
 		</el-dialog>
@@ -1242,19 +1242,19 @@ import Sortable from 'sortablejs'
 			},
 			saveEditRule(item){
 				if(!item.editMode.allProducts && !item.editMode.productIds.length){
-					this.$elementMessage('Please select the products', 'error');
+					this.$elementMessage(this.$t('Please select the products'), 'error');
 					return;
 				}
 				if(!item.editMode.relationshipId){
-					this.$elementMessage('Please select the vendor', 'error');
+					this.$elementMessage(this.$t('Please select the vendor'), 'error');
 					return;
 				}
 				if(!item.editMode.period){
-					this.$elementMessage('Please select the circle period', 'error');
+					this.$elementMessage(this.$t('Please select the circle period'), 'error');
 					return;
 				}
 				if(!item.editMode.visibilityType){
-					this.$elementMessage('Please select the vendow visibility', 'error');
+					this.$elementMessage(this.$t('Please select the vendow visibility'), 'error');
 					return;
 				}
 				item.loading = true;
@@ -1281,19 +1281,19 @@ import Sortable from 'sortablejs'
 			},
 			saveRule(){
 				if(!this.automaticSettingDialog.allProducts && !this.automaticSettingDialog.productIds.length){
-					this.$elementMessage('Please select the products', 'error');
+					this.$elementMessage(this.$t('Please select the products'), 'error');
 					return;
 				}
 				if(!this.automaticSettingDialog.vendorId){
-					this.$elementMessage('Please select the vendor', 'error');
+					this.$elementMessage(this.$t('Please select the vendor'), 'error');
 					return;
 				}
 				if(!this.automaticSettingDialog.period){
-					this.$elementMessage('Please select the Period', 'error');
+					this.$elementMessage(this.$t('Please select the Period'), 'error');
 					return;
 				}
 				if(!this.automaticSettingDialog.visibilityType){
-					this.$elementMessage('Please select the vendow visibility', 'error');
+					this.$elementMessage(this.$t('Please select the vendor visibility'), 'error');
 					return;
 				}
 				this.automaticSettingDialog.saveRuleLoading = true;
@@ -1517,7 +1517,7 @@ import Sortable from 'sortablejs'
 			},
 			saveVendor(type) {
 				if(!this.addVendorDialog.name) {
-					this.$elementMessage('Customer name required', 'error');
+					this.$elementMessage(this.$t('Customer name required'), 'error');
 					return;
 				}
 				this.addVendorDialog.loading = true;
@@ -1532,7 +1532,7 @@ import Sortable from 'sortablejs'
 					if(r.ErrorCode == 9999) {
 						this.vendorName = "";
 						this.addVendorDialog.isShow = false;
-						this.$elementMessage("Customers successfully added", 'success');
+						this.$elementMessage(this.$t("Customers successfully added"), 'success');
 						if(type == 2) {
 							this.dynamicTags.push({
 								id:r.Data.Results,
@@ -1559,11 +1559,11 @@ import Sortable from 'sortablejs'
 					tagData = [];
 
 				if(!this.dynamicTags.length){
-					this.$elementMessage('Please choose an vendor', 'error');
+					this.$elementMessage(this.$t('Please choose an vendor'), 'error');
 					return;
 				}
 				if(!arr.length){
-					this.$elementMessage('Please choose an item', 'error');
+					this.$elementMessage(this.$t('Please choose an item'), 'error');
 					return;
 				}
 				arr.forEach((e)=>{
@@ -1581,7 +1581,7 @@ import Sortable from 'sortablejs'
 				}, r => {
 					this.$hideLoading();
 					if(r.ErrorCode == "9999") {
-						this.$elementMessage('A new order successfully created', 'success');
+						this.$elementMessage(this.$t('A new order successfully created'), 'success');
 						sessionStorage.setItem("c_selectedSaveInfo",JSON.stringify( r.Data.Results));
 						setTimeout(()=>{
 							this.$router.push({

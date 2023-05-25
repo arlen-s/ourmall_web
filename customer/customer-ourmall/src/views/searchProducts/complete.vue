@@ -3,7 +3,7 @@
 		<div class="pagetitle">
 			<div class="left">
 				<div class="title title-color">
-					<h2>Search Products</h2>
+					<h2>{{$t('Search Product')}}s</h2>
 				</div>
 			</div>
 			<div class="right">
@@ -34,8 +34,8 @@
 						</el-date-picker>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" @click="getItems">Query</el-button>
-						<el-button type="warning" @click="ResetClick">Reset</el-button>
+						<el-button type="primary" @click="getItems">{{$t('Query')}}</el-button>
+						<el-button type="warning" @click="ResetClick">{{$t('Reset')}}</el-button>
 					</el-form-item>
 				</el-form>
 			</el-row>
@@ -44,20 +44,20 @@
 				<el-table
 					:data="items"
 					v-loading="tableLoading">
-					<el-table-column label="Product title" prop="name"></el-table-column>
-					<el-table-column label="Picture">
+					<el-table-column :label="$t('Product title')" prop="name"></el-table-column>
+					<el-table-column :label="$t('Picture')">
 						<template slot-scope="scope">
 							<el-image class="image-size" 
 								:src="scope.row.imgUrlJson[0]" fit="contain"
 								:preview-src-list="[scope.row.imgUrlJson[0]]"></el-image>
 						</template>
 					</el-table-column>
-					<el-table-column label="Expected price">
+					<el-table-column :label="$t('Expected price')">
 						<template slot-scope="scope">
 							{{$store.state.country.symbol}} {{ $exchangeRate(scope.row.minPrice) }} - {{ $exchangeRate(scope.row.maxPrice) }}
 						</template>
 					</el-table-column>
-					<el-table-column label="Reply price" v-if="activeName == '2'">
+					<el-table-column :label="$t('Reply price')" v-if="activeName == '2'">
 						<template slot-scope="scope">
 							<span v-if="scope.row.price">
 								{{$store.state.country.symbol}} {{$exchangeRate(scope.row.price)}}
@@ -67,20 +67,20 @@
 							</span>
 						</template>
 					</el-table-column>
-					<el-table-column label="Reply link" v-if="activeName == '2'">
+					<el-table-column :label="$t('Reply link')" v-if="activeName == '2'">
 						<template slot-scope="scope">
-							<a target="_blank" v-if="scope.row.vendorProduct" :href="(vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74) ? `${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` : `${host}/itemOld/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`">
-								{{ (vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&&  vendorId != 74) ?  `${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` :  `${host}/itemOld/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` || '--'}}
+							<a target="_blank" v-if="scope.row.vendorProduct" :href="`${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`">
+								{{`${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html` || '--'}}
 							</a>
 							<span v-else> --</span>
 						</template>
 					</el-table-column>
-					<el-table-column label="Failure reason" v-if="activeName == '9'">
+					<el-table-column :label="$t('Failure reason')" v-if="activeName == '9'">
 						<template slot-scope="scope">
 							{{ scope.row.remark }}
 						</template>
 					</el-table-column>
-					<el-table-column label="Creation date">
+					<el-table-column :label="$t('Creation date')">
 						<template slot-scope="scope">
 						{{moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}
 						</template>
@@ -88,10 +88,10 @@
 					<el-table-column label="Operation" width="200px">
 						<template slot-scope="scope">
 							<div>
-								<el-link type="primary"  v-if="activeName == '2' && scope.row.hasImportProduct != 1" @click="publishAndImport(scope.row)">Add To import List</el-link>
+								<el-link type="primary"  v-if="activeName == '2' && scope.row.hasImportProduct != 1" @click="publishAndImport(scope.row)">{{$t('Add To import List')}}</el-link>
 							</div>
 							<div>
-								<el-link type="primary" @click="detailClick(scope.row)">Details </el-link>
+								<el-link type="primary" @click="detailClick(scope.row)">{{$t('Details')}} </el-link>
 							</div>
 						</template>
 					</el-table-column>
@@ -117,7 +117,7 @@ export default {
 	data() {
 		let validatePrice = (rule, value, callback) => {
 			if (!value) {
-				return callback(new Error('Please enter price'))
+				return callback(new Error(this.$t('Please enter price')))
 			} else {
 				callback()
 			}

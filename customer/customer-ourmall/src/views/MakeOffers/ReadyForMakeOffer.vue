@@ -14,7 +14,7 @@
               @change="changeAllChecked"
             >
               <span style="margin-right: 15px; font-size: 12px"
-                >All ({{ CAllChecked.num }} / {{ tableData.length }})</span
+                >{{$t('All')}} ({{ CAllChecked.num }} / {{ tableData.length }})</span
               >
             </el-checkbox>
             <div class="mg-r-10">
@@ -32,7 +32,7 @@
             <el-cascader
               size="mini"
               v-model="filterParams.shopifyStore"
-              placeholder="All my stores"
+              :placeholder="$t('All my stores')"
               :key="cascaderKey"
               :options="options"
               :props="{ expandTrigger: 'hover' }"
@@ -143,20 +143,20 @@
                     type="danger"
                     :disabled="!filterParams.sortBy"
                     @click="clearFilter('sort')"
-                    >Clear</el-link
+                    >{{$t('Clear')}}</el-link
                   >
                 </div>
                 <el-button size="mini" slot="reference"
-                  >SortBy<i class="el-icon-caret-bottom el-icon--right"></i
+                  >{{$t('SortBy')}}<i class="el-icon-caret-bottom el-icon--right"></i
                 ></el-button>
               </el-popover>
             </el-button-group>
             <div style="min-width: 130px">
               <el-button type="primary" size="mini" @click="filterItems()"
-                >Filter
+                >{{$t('Filter')}}
               </el-button>
               <el-button type="danger" size="mini" @click="clearFilter()"
-                >Clear</el-button
+                >{{$t('Clear')}}</el-button
               >
             </div>
 
@@ -174,16 +174,16 @@
                   type="warning"
                   v-if="CAllChecked.num == tableData.length"
                   @click="changeAllChecked(false)"
-                  >{{ CAllChecked.num }} orders selected, uncheck</el-link
+                  >{{ CAllChecked.num }} {{$t('orders selected, uncheck')}}</el-link
                 >
                 <el-link
                   type="primary"
                   v-if="CAllChecked.num && CAllChecked.num < tableData.length"
                   @click="changeAllChecked(true)"
                 >
-                  {{ CAllChecked.num }} orders selected, select all ({{
+                  {{ CAllChecked.num }} {{$t('orders selected, select all')}} ({{
                     tableData.length
-                  }}) orders
+                  }}) {{$t('orders')}}
                 </el-link>
               </div>
             </el-alert>
@@ -198,7 +198,7 @@
               "
             >
               <el-button type="primary" @click="quotation()" size="small">
-                <i class="el-icon-plus"></i> Request Quotation
+                <i class="el-icon-plus"></i> {{$t('Request Quotation')}}
               </el-button>
               <el-button
                 type="primary"
@@ -206,7 +206,7 @@
                 :disabled="!CAllChecked.num"
                 @click="makeAnOffer"
               >
-                Create quotation request
+               {{$t('Create quotation request')}} 
               </el-button>
             </div>
           </div>
@@ -289,23 +289,23 @@
                 <span
                   style="margin-right: 5px"
                   class="el-tag el-tag--info el-tag--small el-tag--light"
-                  ><span class="-EFlq bg3"></span> Paid
+                  ><span class="-EFlq bg3"></span>{{$t('Paid')}} 
                 </span>
 
                 <span style="margin-right: 5px"
                   ><span
                     class="el-tag el-tag--warning el-tag--small el-tag--light"
-                    ><span class="-EFlq bg1"></span> Unfulfilled
+                    ><span class="-EFlq bg1"></span> {{$t('Unfulfilled')}}
                   </span></span
                 >
 
                 <span style="margin-right: 5px"
                   ><span
                     class="shopfiy-status el-tag el-tag--danger el-tag--small el-tag--light"
-                    ><span class="-EFlq bg2"></span> Partially Fulfilled
+                    ><span class="-EFlq bg2"></span>{{$t('Partially Fulfilled')}} 
                   </span></span
                 >
-                can <b style="color: #606266">[Create quotation request]</b>
+                can <b style="color: #606266">[{{$t('Create quotation request')}}]</b>
               </div>
             </el-alert>
           </div>
@@ -321,7 +321,7 @@
       </div>
       <div class="table-wrap">
         <el-table :data="tableData" stripe ref="gridTable">
-          <el-table-column label="Order" prop="codeName" width="80" fixed>
+          <el-table-column :label="$t('Order')" prop="codeName" width="80" fixed>
             <template slot-scope="scope">
               <el-checkbox
                 style="margin-right: 5px"
@@ -330,7 +330,7 @@
               <span>{{ scope.row.codeName }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="My Store" prop="codeName" width="170">
+          <el-table-column :label="$t('My Store')" prop="codeName" width="170">
             <template slot-scope="scope">
               <div
                 class="tx-ellipsis1"
@@ -340,12 +340,12 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Date" width="180">
+          <el-table-column :label="$t('Date')" width="180">
             <template slot-scope="scope">
               {{ moment(scope.row.timeCreated).format("ll [at] LTS") }}
             </template>
           </el-table-column>
-          <el-table-column label="Customer" width="140">
+          <el-table-column :label="$t('Customer')" width="140">
             <template slot-scope="scope">
               <popShippingJson
                 :item="scope.row"
@@ -354,7 +354,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="Total" align="center">
+          <el-table-column :label="$t('Total')" align="center">
             <template slot-scope="scope">
               <span>{{
                 ce[scope.row.currency]
@@ -364,7 +364,7 @@
               {{ scope.row.totalPrice }}
             </template>
           </el-table-column>
-          <el-table-column label="Payment" width="150">
+          <el-table-column :label="$t('Payment')" width="150">
             <template slot-scope="scope">
               <el-tag
                 v-if="
@@ -382,14 +382,14 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="Fulfillment" width="150">
+          <el-table-column :label="$t('Fulfillment')" width="150">
             <template slot-scope="scope">
               <fulfillMentStatusTag
                 :fulfillmentStatus="scope.row.fulfillmentStatus"
               />
             </template>
           </el-table-column>
-          <el-table-column label="Items">
+          <el-table-column :label="$t('Items')">
             <template slot-scope="scope">
               <popItems
                 v-if="scope.row.items"
@@ -528,7 +528,7 @@ export default {
     },
     makeAnOffer() {
       //生成 make an offer
-      this.$confirm("Create quotation request?", "", {
+      this.$confirm(this.$t("Create quotation request?"), "", {
         confirmButtonText: "OK",
         cancelButtonText: "Discard",
         type: "info",
@@ -687,11 +687,11 @@ export default {
       this.getItems();
     },
     onCopy(e) {
-      this.$elementMessage("Has been copied to the clipboard", "success");
+      this.$elementMessage(this.$t("Has been copied to the clipboard"), "success");
     },
     onError(e) {
       this.$elementMessage(
-        "Copy to clipboard failed, please copy manually",
+        this.$t("Copy to clipboard failed, please copy manually"),
         "error"
       );
     },

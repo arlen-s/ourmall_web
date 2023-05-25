@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-s-finance"></i>
-          <h2>Billing History</h2>
+          <h2>{{$t('Billing History')}}</h2>
         </div>
       </div>
     </div>

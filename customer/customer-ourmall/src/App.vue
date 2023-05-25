@@ -375,13 +375,11 @@
             </div>
             <div class="right">
               <h3>Dear {{ $store.state.userInfo.name }}</h3>
-              <p>
-                Our app is now updating the page you are visiting, we will auto
-                refresh this page in 10 seconds.
+              <p>{{$t('Our app is now updating the page you are visiting, we will auto refresh this page in 10 seconds.')}}
               </p>
               <div>
                 <el-button type="primary" size="small" @click="resetPage()"
-                  >I got it, please refresh it now</el-button
+                  >{{$t("I got it, please refresh it now")}}</el-button
                 >
               </div>
             </div>
@@ -419,10 +417,10 @@
           </el-alert>
         </div>
         <div class="countDown">
-          Estimated start time: <b v-html="countDown"></b>
+          {{$t('Estimated start time:')}} <b v-html="countDown"></b>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="annDialogVisible = false">I see</el-button>
+          <el-button @click="annDialogVisible = false">{{$t('I see')}}</el-button>
         </span>
       </el-dialog>
       <el-dialog
@@ -433,20 +431,19 @@
         <div class="verifyWrap">
           <img src="./assets/security.png" alt="" />
           <div class="right">
-            <h3 class="title">Security Verification</h3>
+            <h3 class="title">{{$t('Security Verification')}}</h3>
             <div class="ctx">
-              We noticed you haven't verified your email address. Go to verify
-              now?
+              {{$t("We noticed you haven't verified your email address. Go to verify now?")}}
             </div>
             <div class="btn-group1">
               <el-button
                 class="btn spec-1"
                 type="primary"
                 @click="verifyVisible = false"
-                >Cancel
+                >{{$t('Cancel')}}
               </el-button>
               <el-button class="btn m-r-35" type="primary" @click="toVerify"
-                >Verify</el-button
+                >{{$t('Verify')}}</el-button
               >
             </div>
           </div>
@@ -467,13 +464,12 @@
           <div class="box-email">
             <img src="./assets/email.png" />
             <div class="content">
-              <h3 class="title">Email Security Verification</h3>
+              <h3 class="title">{{$t('Email Security Verification')}}</h3>
               <div class="desc">
-                For security reason.We need to verify your email address.<br />Please
-                click "Send" to get the verification code in your inbox
+                {{$t('For security reason.We need to verify your email address.')}}<br />{{$t("Please click 'Send' to get the verification code in your inbox")}}
               </div>
               <div class="email">
-                Send To: {{ $store.state.userInfo.email }}
+                {{$t('Send To')}}: {{ $store.state.userInfo.email }}
               </div>
               <div class="inputbox">
                 <input
@@ -482,7 +478,7 @@
                   v-model="authCode"
                   placeholder="Enter Verification Code"
                 />
-                <span v-if="!hasSendCode" @click="sendCode">Send</span>
+                <span v-if="!hasSendCode" @click="sendCode">{{$t('Send')}}</span>
                 <span v-if="hasSendCode">{{ time }}</span>
               </div>
               <button
@@ -490,7 +486,7 @@
                 :class="{ highlight: highlight }"
                 @click="verifyClick"
               >
-                Verify
+                {{$t('Verify')}}
               </button>
             </div>
           </div>
@@ -1221,6 +1217,7 @@ export default {
             this.$store.commit("referenceNumber", r.Data.Results.vendorShop.referenceNumber);
             localStorage.setItem("c_apiShopId", r.Data.Results.shopId);
             localStorage.setItem("vendorId", r.Data.Results.vendorId);
+            localStorage.setItem("countryType", r.Data.Results.vendorShop.country);
             						this.$store.commit("setCountry", {
 							symbol: r.Data.Results.vendorShop.shopCurrencySymbol || '$',
 							name: '',

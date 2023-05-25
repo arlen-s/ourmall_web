@@ -16,11 +16,11 @@
           <div slot="title">
             <p class="c-title" style="color: #e6a23c">
               <i class="el-icon-warning"></i>
-              <b>Notice: </b>
-              You have {{ waitConfirmCnt }} purchase order(s) need your
-              reconfirm,
-              <a href="javascript:;" @click="filterWaitConfirm">click here</a>
-              to view details.
+              <b>{{$t('Notice')}}: </b>
+             {{$t('You have')}}  {{ waitConfirmCnt }} 
+             {{$t("purchase order(s) need your reconfirm,")}}
+              <a href="javascript:;" @click="filterWaitConfirm">{{$t('click here')}}</a>
+            {{$t('to view details.')}}  
             </p>
           </div>
         </el-alert>
@@ -39,14 +39,14 @@
                     type="primary"
                     @click="filtergetItem('c_showCancel')"
                   >
-                    Show cancelled orders
+                   {{$t('Show cancelled orders')}} 
                   </el-link>
                   <el-link
                     v-else
                     type="primary"
                     @click="filtergetItem('c_showCancel')"
                   >
-                    Show all valid orders
+                   {{$t('Show all valid orders')}} 
                   </el-link>
                 </div>
                 <el-form :inline="true" size="mini">
@@ -226,7 +226,7 @@
                       @visible-change="getVendors"
                       v-model="vendorsSelect.selected"
                       clearable
-                      placeholder="All my vendors"
+                      :placeholder="$t('All my vendors')"
                     >
                       <el-option
                         v-for="item in vendorsSelect.selectList"
@@ -238,10 +238,10 @@
                   </el-form-item>
                   <el-form-item>
                     <el-button type="primary" @click="filterGetItem"
-                      >Filter</el-button
+                      >{{$t('Filter')}}</el-button
                     >
                     <el-button type="danger" @click="clearFilter"
-                      >Clear</el-button
+                      >{{$t('Clear')}}</el-button
                     >
                   </el-form-item>
                 </el-form>
@@ -263,7 +263,7 @@
                 <el-popover placement="bottom" trigger="hover">
                   <div class="order-time-tips">
                     <p v-if="row.timeCreated">
-                      <span>Create:</span>
+                      <span>{{$t('Create')}}:</span>
                       {{ moment.unix(row.timeCreated).format("ll [at] LTS") }}
                     </p>
                     <p v-if="row.timeRead">
@@ -287,27 +287,27 @@
                   {{ row.vendorName }}</span
                 >
                 <span v-else style="color: #303133">
-                  --- <span style="color: #909399">(NOT Joined)</span></span
+                  --- <span style="color: #909399">({{$t('NOT Joined')}})</span></span
                 >
                 <div v-if="row.vendorId == 0">
-                  <span style="color: #909399">(NOT Joined)</span>
+                  <span style="color: #909399">({{$t('NOT Joined')}})</span>
                 </div>
               </template>
             </el-table-column>
             <el-table-column label="Order Includes" width="200">
               <template v-slot="{ row }">
                 <div style="white-space: nowrap">
-                  <span class="tx-gray-600">Orders: </span>
+                  <span class="tx-gray-600">{{$t('Orders')}}: </span>
                   <span style="color: #303133">{{
                     row.orderStatusCnt ? row.orderStatusCnt.orderCnt : 0
                   }}</span>
                 </div>
                 <div style="white-space: nowrap">
-                  <span class="tx-gray-600">Products: </span>
+                  <span class="tx-gray-600">{{$t('Products')}}: </span>
                   <span style="color: #303133">{{ row.totalCnt || "0" }}</span>
                 </div>
                 <div style="white-space: nowrap">
-                  <span class="tx-gray-600">My stores: </span>
+                  <span class="tx-gray-600">{{$t('My stores')}}: </span>
                   <span style="color: #303133">{{
                     row.shops.length || "0"
                   }}</span>
@@ -331,7 +331,7 @@
             <el-table-column label="Amount" prop="realAmount" width="235">
               <template slot-scope="{ row }">
                 <div style="white-space: nowrap">
-                  <span class="tx-gray-600">Income: </span>
+                  <span class="tx-gray-600">{{$t('Income')}}: </span>
                   <span style="color: #303133">
                     {{
                       row.orderStatusCnt
@@ -355,7 +355,7 @@
                   </span>
                 </div>
                 <div style="white-space: nowrap">
-                  <span class="tx-gray-600">Profit: </span>
+                  <span class="tx-gray-600">{{$t('Profit')}}: </span>
                   <span
                     :style="`color: ${isProfit(row) ? '#303133;' : '#67C23A;'}`"
                   >
@@ -390,7 +390,7 @@
                   </span>
                 </div>
                 <div style="white-space: nowrap">
-                  <span class="tx-gray-600">Fulflled: </span>
+                  <span class="tx-gray-600">{{$t('Fulfilled')}}: </span>
                   <span style="color: #303133">
                     {{ scope.row.itemSyncCnt }}
                     <span v-if="scope.row.itemSyncFailCnt !== '0'">
@@ -406,7 +406,7 @@
                             class="mg-t-15 mg-b-15"
                             style="white-space: nowrap"
                           >
-                            <span class="tx-gray-600">Vendor shipped: </span>
+                            <span class="tx-gray-600">{{$t('Vendor shipped')}}: </span>
                             <a href="javascript:void(0)">
                               {{
                                 scope.row.orderStatusCnt
@@ -441,13 +441,13 @@
                                     : "---"
                                 }}
                               </a>
-                              unfulfilled / partially fulfilled)
+                              {{$t('unfulfilled / partially fulfilled')}})
                             </span>
                           </div>
                           <el-alert
                             class="icon-color"
                             :closable="false"
-                            title="You may download these tracking information and fulfilled these orders in your store manualy."
+                            :title="$t('You may download these tracking information and fulfilled these orders in your store manualy.')"
                             type="info"
                             show-icon
                           >
@@ -457,7 +457,7 @@
                               type="primary"
                               size="small"
                               @click="exportDeliver(scope.row.id, 1)"
-                              >Download ALL tracking information</el-button
+                              >{{$t('Download ALL tracking information')}}</el-button
                             >
                             <el-button
                               v-if="
@@ -473,15 +473,15 @@
                               type="primary"
                               size="small"
                               @click="exportDeliver(scope.row.id, 2)"
-                              >Download NOT FULFILLED tracking
-                              information</el-button
+                              >{{$t('Download NOT FULFILLED tracking information')}}
+                              </el-button
                             >
                           </div>
                           <a slot="reference" href="javascript:void(0)">
                             {{ scope.row.itemSyncFailCnt }}
                           </a>
                         </el-popover>
-                        sync failed </span
+                        {{$t('sync failed')}} </span
                       >)
                     </span>
                   </span>
@@ -536,13 +536,13 @@
                 >
                   <div>
                     <el-link type="primary" @click="gotoInvoice(scope.row)"
-                      >View Details</el-link
+                      >{{$t('View Details')}}</el-link
                     >
                     <i class="el-icon-arrow-down el-icon--right"></i>
                   </div>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item disabled>
-                      <b class="black"> More Action </b>
+                      <b class="black"> {{$t('More Action')}} </b>
                     </el-dropdown-item>
                     <el-dropdown-item
                       v-if="scope.row.status == 1 || scope.row.status == 2"
@@ -550,7 +550,7 @@
                         type: 'Change another vendor',
                         data: scope.row,
                       }"
-                      >Change another vendor</el-dropdown-item
+                      >{{$t('Change another vendor')}}</el-dropdown-item
                     >
                     <el-dropdown-item
                       v-if="scope.row.status != 7"
@@ -558,7 +558,7 @@
                         type: 'Invite vendor to process',
                         data: scope.row,
                       }"
-                      >Invite vendor to process</el-dropdown-item
+                      >{{$t('Invite vendor to process')}}</el-dropdown-item
                     >
                     <!-- paymentType=4 的 payStatus=1的 不能取消订单 -->
                     <template
@@ -571,7 +571,7 @@
                           type: 'Cancel this order',
                           data: scope.row,
                         }"
-                        >Cancel this order
+                        >{{$t('Cancel this order')}}
                       </el-dropdown-item>
                     </template>
                   </el-dropdown-menu>
@@ -579,31 +579,31 @@
                 <el-dropdown v-else @command="handleCommand">
                   <div>
                     <el-link type="success" @click="confirmMoneyOnly(scope.row)"
-                      >Confirm payment</el-link
+                      >{{$t('Confirm payment')}}</el-link
                     >
                     <i class="el-icon-arrow-down el-icon--right"></i>
                   </div>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item disabled>
-                      <b class="black"> More Action </b>
+                      <b class="black"> {{$t('More Action')}} </b>
                     </el-dropdown-item>
                     <el-dropdown-item
                       v-if="isPay(scope.row)"
                       style="color: #67c23a"
                       :command="{ type: 'pay', data: scope.row }"
                     >
-                      Pay
+                      {{$t('Pay')}}
                     </el-dropdown-item>
                     <el-dropdown-item
                       :command="{ type: 'View Details', data: scope.row }"
-                      >View Details</el-dropdown-item
+                      >{{$t('View Details')}}</el-dropdown-item
                     >
                     <el-dropdown-item
                       :command="{
                         type: 'Invite vendor to process',
                         data: scope.row,
                       }"
-                      >Invite vendor to process</el-dropdown-item
+                      >{{$t('Invite vendor to process')}}</el-dropdown-item
                     >
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -648,7 +648,7 @@
             margin: 10px 0px 20px;
           "
         >
-          Selected saved! Now you can Check the purchase orders
+         {{$t('Selected saved! Now you can Check the purchase orders')}} 
         </p>
         <el-table :data="selectedSaveDialog.info" border style="width: 100%">
           <el-table-column label="#Invoice Number" prop="code">
@@ -662,7 +662,7 @@
                 {{ scope.row.vendorName }}</span
               >
               <span v-else style="color: #303133">
-                --- <span style="color: #909399">(NOT Joined)</span></span
+                --- <span style="color: #909399">({{$t('NOT Joined')}})</span></span
               >
             </template>
           </el-table-column>
@@ -671,7 +671,7 @@
               <span v-if="scope.row.realAmount > 0" class="tx-danger"
                 >US$ <span>{{ scope.row.realAmount }}</span></span
               >
-              <span class="tx-danger" v-else>Not set up</span>
+              <span class="tx-danger" v-else>{{$t('Not set up')}}</span>
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="Action" width="150">
@@ -681,7 +681,7 @@
                   style="font-size: 12px; font-weight: normal"
                   type="primary"
                   @click="gotoInvoice(scope.row)"
-                  >View Details</el-link
+                  >{{$t('View Details')}}</el-link
                 >
               </div>
               <div>
@@ -689,7 +689,7 @@
                   style="font-size: 12px; font-weight: normal"
                   type="primary"
                   @click="sendtoVendor(scope.row)"
-                  >Send to vendor</el-link
+                  >{{$t('Send to vendor')}}</el-link
                 >
               </div>
             </template>
@@ -714,7 +714,7 @@
         >
           <el-tab-pane name="shareLink">
             <span slot="label"
-              ><i class="iconfont icon-link"></i> Share by link</span
+              ><i class="iconfont icon-link"></i> {{$t('Share by link')}}</span
             >
             <div class="d-flex mg-y-20">
               <div
@@ -726,7 +726,7 @@
                   white-space: nowrap;
                 "
               >
-                Share link:
+                {{$t('Share link')}}:
               </div>
               <div>
                 <!--<el-link :underline="false" :href="invoiceInfo.url" target="_blank">{{invoiceInfo.url}}</el-link>-->
@@ -751,7 +751,7 @@
                     v-clipboard:copy="invoiceInfo.url"
                     v-clipboard:success="onCopy"
                     v-clipboard:error="onError"
-                    >Copy Link</el-button
+                    >{{$t('Copy Link')}}</el-button
                   >
                 </div>
               </div>
@@ -759,7 +759,7 @@
           </el-tab-pane>
           <el-tab-pane name="shareWeixin">
             <span slot="label"
-              ><i class="iconfont icon-shejiao"></i> Share by APP</span
+              ><i class="iconfont icon-shejiao"></i> {{$t('Share by APP')}}</span
             >
             <div>
               <div class="d-flex mg-y-20">
@@ -772,7 +772,7 @@
                     white-space: nowrap;
                   "
                 >
-                  Title:
+                  {{$t('Title')}}:
                 </div>
                 <div style="width: 70%">
                   <el-input
@@ -793,7 +793,7 @@
                     white-space: nowrap;
                   "
                 >
-                  Desc:
+                  {{$t('Desc')}}:
                 </div>
                 <div style="width: 70%">
                   <el-input
@@ -820,7 +820,7 @@
                     white-space: nowrap;
                   "
                 >
-                  Share:
+                 {{$t('Share')}}:
                 </div>
                 <div style="width: 70%" class="d-flex">
                   <div
@@ -834,7 +834,7 @@
                   <div>
                     <el-tooltip placement="bottom">
                       <div slot="content">
-                        <p class="tx-center mg-b-10">Scan share to WeChat</p>
+                        <p class="tx-center mg-b-10">{{$t('Scan share to WeChat')}}</p>
                         <img :src="invoiceInfo.qrcode" width="130" />
                         <img
                           src="images/weixin.png"
@@ -849,7 +849,7 @@
                         />
                       </div>
                       <a class="share-weixin" href="javascript:;">
-                        <i class="fa fa-weixin"></i> Share
+                        <i class="fa fa-weixin"></i> {{$t('Share')}}
                       </a>
                     </el-tooltip>
                   </div>
@@ -868,12 +868,12 @@
             type="primary"
             plain
             @click="saveRemark('1')"
-            >Clear</el-button
+            >{{$t('Clear')}}</el-button
           >
         </div>
         <div>
           <el-button size="small" @click="sendInvoiceOpen = false"
-            >Close</el-button
+            >{{$t('Close')}}</el-button
           >
         </div>
       </div>
@@ -886,19 +886,19 @@
       <template v-if="DialogReconfirm.item">
         <div style="padding: 0 20px">
           <div style="margin-bottom: 10px">
-            Vendor name:
+            {{$t('Vendor name')}}:
             <b style="color: #909399">{{ DialogReconfirm.item.vendorName }}</b>
           </div>
           <div>
-            Includes:
+            {{$t('Includes')}}:
             <b style="color: #5c6ac4">{{
               DialogReconfirm.item.orderCnt ? DialogReconfirm.item.orderCnt : 0
             }}</b>
-            Shopify orders /
+           Shopify orders /
             <b style="color: #5c6ac4">{{
               DialogReconfirm.item.totalCnt ? DialogReconfirm.item.totalCnt : 0
             }}</b>
-            products
+           {{$t('products')}} 
           </div>
         </div>
         <div slot="footer" class="dialog-footer d-flex">
@@ -908,10 +908,10 @@
             type="primary"
             @click="runReconfirm(1)"
           >
-            Allow vendor to process these orders
+            {{$t('Allow vendor to process these orders')}}
           </el-button>
           <el-button size="small" @click="runReconfirm(2)"
-            >View details</el-button
+            >{{$t('View details')}}</el-button
           >
         </div>
       </template>
@@ -923,11 +923,11 @@
       :before-close="cancelOrderDialogClose"
     >
       <div style="margin: 20px">
-        <p class="mg-b-10">Do you want to cancel this order?</p>
+        <p class="mg-b-10">{{$t('Do you want to cancel this order?')}}</p>
         <p style="word-break: break-word">
-          Don't worry, after cancelling this purchase order, you can still find
-          your Shopify orders in the "Waiting for sourcing" menu and re-place
-          the purchase order.
+          {{$t("Don't worry, after cancelling this purchase order, you can still find your")}}
+          {{$t("Shopify orders in the 'Waiting for sourcing' menu and re-place the purchase order")}}
+
         </p>
         <el-form ref="form" label-width="80px">
           <el-form-item label="Reason">
@@ -943,15 +943,15 @@
           :loading="cancelOrderDialog.loading"
           type="primary"
           @click="postCanceOrder"
-          >Confirm</el-button
+          >{{$t('Confirm')}}</el-button
         >
-        <el-button @click="cancelOrderDialogClose">Discard</el-button>
+        <el-button @click="cancelOrderDialogClose">{{$t('Discard')}}</el-button>
       </span>
     </el-dialog>
 
     <el-dialog
       :visible="changeAnotherVendorDialog.visible"
-      title="Change purchase order to another vendor"
+      :title="$t('Change purchase order to another vendor')"
       width="600px"
       :before-close="closeCAVDialog"
     >
@@ -978,8 +978,7 @@
         </el-form>
         <div style="margin: 0 20px">
           <el-checkbox v-model="changeAnotherVendorDialog.changeDispatch"
-            >Also allocate the products in this purchase order to the new
-            supplier</el-checkbox
+            >{{$t('Also allocate the products in this purchase order to the new supplier')}}</el-checkbox
           >
         </div>
       </div>
@@ -988,9 +987,9 @@
           :loading="changeAnotherVendorDialog.loading"
           type="primary"
           @click="postCAVDialog"
-          >Confirm</el-button
+          >{{$t('Confirm')}}</el-button
         >
-        <el-button @click="closeCAVDialog">Discard</el-button>
+        <el-button @click="closeCAVDialog">{{$t('Discard')}}</el-button>
       </span>
     </el-dialog>
     <el-backtop
@@ -1219,10 +1218,10 @@ export default {
   methods: {
     confirmMoneyOnly(val) {
       this.$confirm(
-        "After your confirmation for the payment, we will notify the vendor by email. You can also proactively notify the vendor to speed the delivery up.",
-        "Have you finished the payment?",
+        this.$t("After your confirmation for the payment, we will notify the vendor by email. You can also proactively notify the vendor to speed the delivery up"),
+        this.$t("Have you finished the payment?"),
         {
-          confirmButtonText: "Confirm the payment",
+          confirmButtonText: this.$t("Confirm the payment"),
           cancelButtonText: "Discard",
           type: "info",
         }
@@ -1442,7 +1441,7 @@ export default {
               this.$hideLoading();
               if (r.ErrorCode == "9999") {
                 this.$elementMessage(
-                  "Your request is been submitted, please wait one moment.",
+                  this.$t("Your request is been submitted, please wait one moment."),
                   "success"
                 );
                 openDownload(r.Data.Results.file);
@@ -1591,11 +1590,11 @@ export default {
       });
     },
     onCopy(e) {
-      this.$elementMessage("Has been copied to the clipboard", "success");
+      this.$elementMessage(this.$t("Has been copied to the clipboard"), "success");
     },
     onError(e) {
       this.$elementMessage(
-        "Copy to clipboard failed, please copy manually",
+        this.$t("Copy to clipboard failed, please copy manually"),
         "error"
       );
     },
@@ -1751,7 +1750,7 @@ export default {
     postCanceOrder() {
       if (!this.cancelOrderDialog.stopReason) {
         this.$message({
-          message: "The reason must be entered",
+          message: this.$t("The reason must be entered"),
           type: "error",
         });
         return;

@@ -17,10 +17,10 @@
         <div class="one-liner">
           <div class="card-label">
             <div>
-              <div>Card Number <span>*</span></div>
+              <div>{{$t('Card Number')}} <span>*</span></div>
             </div>
             <div class="right">
-              <div class=" mg-r-5">Expiration<span>*</span></div>
+              <div class=" mg-r-5">{{$t('Expiration')}}<span>*</span></div>
               <div>CVV<span>*</span></div>
             </div>
           </div>

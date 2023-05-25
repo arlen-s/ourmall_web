@@ -53,7 +53,7 @@
               left: 0;
               z-index: 9;
               width: 100%;
-              height: 70px;
+              height: 70px;                            
               padding: 0 15px;
             ">
 						<div style="width: 1100px; margin: 0 auto; padding: 0px 30px 0 0">
@@ -398,7 +398,7 @@
                                 row.customerProperties.length
                               ">
 															<div style="display: inline-block" class="mg-r-5"
-																v-for="item in row.customerProperties">
+																v-for="(item, i) in row.customerProperties" :key="i">
 																{{ item.name }}:
 																<span style="color: #909399">{{
                                   item.value
@@ -1097,11 +1097,11 @@
 					      :timestamp="activity.timestamp">
 					      {{activity.content}}
 					    </el-timeline-item>-->
-								<template v-for="operate in currentPageDataLog">
-									<el-timeline-item>
+								<template v-for="(operate, a) in currentPageDataLog" >
+									<el-timeline-item :key="a">
 										{{ operate.date }}
 									</el-timeline-item>
-									<el-timeline-item v-for="(activity, index) in operate.listInfo" color="#5c6ac4">
+									<el-timeline-item v-for="(activity, index) in operate.listInfo" :key="index" color="#5c6ac4">
 										<div class="d-flex justify-content-between" style="align-items: flex-start">
 											<span>{{ activity.content }}</span>
 											<span style="
@@ -1125,7 +1125,7 @@
                   padding: 10px;
                 ">
 								<ul class="figure-list">
-									<li v-for="(file, index) in fileList">
+									<li v-for="(file, index) in fileList" :key="index">
 										<figure :style="{
                         backgroundImage: 'url(' + file.url + ')',
                         backgroundSize: 'cover',
@@ -1159,12 +1159,12 @@
 							</div>
 							<div v-show="checked">
 								<el-timeline v-if="currentmessages.length">
-									<template v-for="msg in currentmessages">
-										<el-timeline-item>
+									<template v-for="(msg, b) in currentmessages">
+										<el-timeline-item :key="b">
 											{{ msg.date }}
 										</el-timeline-item>
 										<template v-for="(activity, index) in msg.listInfo">
-											<el-timeline-item color="#5c6ac4" :timestamp="activity.datetime"
+											<el-timeline-item :key="index" color="#5c6ac4" :timestamp="activity.datetime"
 												placement="top" v-if="activity.type == 1">
 												<el-card>
 													<div class="d-flex timeline-customer">
@@ -1176,14 +1176,14 @@
 															<p class="mg-t-5" style="word-break: break-all"
 																v-html="activity.content"></p>
 															<p class="mg-t-10" v-if="activity.imgJson">
-																<img v-for="img in activity.imgJson" :src="img"
+																<img v-for="(img, t) in activity.imgJson" :key="t" :src="img"
 																	width="60" class="mg-l-10" />
 															</p>
 														</div>
 													</div>
 												</el-card>
 											</el-timeline-item>
-											<el-timeline-item color="#5c6ac4" :timestamp="activity.datetime"
+											<el-timeline-item :key="index" color="#5c6ac4" :timestamp="activity.datetime"
 												placement="top" v-if="activity.type == 2">
 												<el-card :body-style="{ background: '#9eea6a' }">
 													<div class="d-flex justify-content-end tx-right timeline-self">
@@ -1192,7 +1192,7 @@
 															<p class="mg-t-5" style="word-break: break-all"
 																v-html="activity.content"></p>
 															<p class="mg-t-10" v-if="activity.imgJson">
-																<img v-for="img in activity.imgJson" :src="img"
+																<img v-for="(img, t) in activity.imgJson" :key="t" :src="img"
 																	width="60" class="mg-l-10" />
 															</p>
 														</div>
@@ -1652,7 +1652,7 @@
 								<el-table :row-class-name="tableRowClassName" :header-cell-style="getRowClass2"
 									:cell-style="cellStyle" :data="invoiceData3" stripe border class="table-with-body">
 									<el-table-column label="Items">
-										<template slot="header" slot-scope="scope">
+										<template slot="header">
 											<div v-if="!searchName && !searchTrack">
 												<div class="d-flex align-items-center justify-content-between">
 													<div>
@@ -2257,7 +2257,7 @@
 						</el-alert>
 					</div>
 					<div class="platform-select">
-						<div v-for="(type,index) in dialogPay.payTypes" :key="type.accountType">
+						<div v-for="type in dialogPay.payTypes" :key="type.accountType">
 							<a href="javascript:;" :class="{ active: dialogPay.platformType == type.accountType }"
 								@click="changePlatform(type.accountType)">
 								<div class="d-flex">

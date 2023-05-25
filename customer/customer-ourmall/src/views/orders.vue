@@ -4,7 +4,7 @@
 			<div class="left">
 				<div class="title">
 					<i class="iconfont icon-shopify"></i>
-					<h2>All Unfulfilled Shopify Orders</h2>
+					<h2>{{$t('All Unfulfilled Shopify Orders')}}</h2>
 				</div>
 			</div>
 			<div class="right">
@@ -13,14 +13,14 @@
 				      <el-button type="primary" size="medium" style="color: #FFFFFF;
     background-color: #aeb5e2;
     border-color: #aeb5e2;">
-							Update Order
+							{{$t('Update Order')}}
 						</el-button>
 				    </el-tooltip>
 				</template>
 				<template v-else>
 					<el-tooltip class="item" effect="dark" content="Use this button to update your Order List if missing orders.The process may take a while to finish." placement="left">
 				     <el-button :disabled="!!(updateTime && (updateTime > now))" type="primary" size="medium" :loading="updateOrderLoading" @click="updateOrder">
-						Update Order
+						{{$t('Update Order')}}
 					</el-button>
 				    </el-tooltip>
 				</template>
@@ -38,12 +38,12 @@
 					<a class="nav-link" href="javascript:;" role="tab" @click="tab(1)" :class="tabActive == 1 ? 'active':''">
 						<!--<i class="el-icon-s-release"></i>-->
 						<img src="images/unpurchase.png" height="24"/>
-						 Not purchased ({{tableDataTab1.length}})
+						 {{$t('Not purchased')}} ({{tableDataTab1.length}})
 					</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="javascript:;" style="padding: 9px 15px;" role="tab" @click="tab(2)" :class="tabActive == 2 ? 'active':''">
-						<i class="iconfont icon-shopify"></i> Unfulfilled ({{tableDataTab2.length}})
+						<i class="iconfont icon-shopify"></i> {{$t('Unfulfilled')}} ({{tableDataTab2.length}})
 					</a>
 				</li>
 			</ul>
@@ -52,7 +52,7 @@
 					<div class="ordertab-navtop" ref="orderTabNavTop">
 						<template>
 						<div>
-							<span class="mg-r-10">Periods of orders:</span>
+							<span class="mg-r-10">{{$t('Periods of orders')}}:</span>
 							<el-tag @click="changeTimeFilter(k)" v-for="(time,k) in $dict.timeFilter" :type="timeFilter == k ? '':'info'" :key="k" size="medium" class="mg-r-10">
 								{{time}}
 							</el-tag>
@@ -75,7 +75,7 @@
 						</template>
 						<template v-if="storeList.length>0">
 						<div>
-							<span class="mg-r-10">Shopify orders:</span>
+							<span class="mg-r-10">{{$t('Shopify orders')}}:</span>
 							<el-tag @click="changeTag(tag)" :type="storeTag == tag.shopifyAccountId ? '':'info'" :key="tag.shopifyAccountId" size="medium" v-for="tag in storeList" class="mg-r-10">
 								{{tag.store}} ({{tag.listInfo.length}})
 							</el-tag>
@@ -84,7 +84,7 @@
 						</template>
 						<template v-if="supplierList.length>0">
 						<div>
-							<span class="mg-r-10">Quick select of Shopify order items:</span>
+							<span class="mg-r-10">{{$t('Quick select of Shopify order items')}}:</span>
 							<template v-if="$route.params.id">
 								<el-tag @click="changeSupplierTag(tag)" :type="supplierTag == tag.vendorId ? '':'info'" :key="tag.vendorId" size="medium" 
 									v-for="tag in supplierList" v-if="(tag.vendorId != '999e' && $route.params.id == tag.id) || tag.vendorId == '999e'" class="mg-r-10">
@@ -152,13 +152,13 @@
 												<div class="mg-y-15 mg-t-20">
 													<div class="d-flex mg-b-10">
 														<div class="d-flex" style="width: 90%;">
-															<div style="width: 100px;text-align: right;color: #999;" class="">Order Date :</div>
+															<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Order Date')}} :</div>
 															<div class="mg-l-5 pd-r-15">{{data.timeCreated?data.timeCreated:'---'}}</div>
 														</div>
 													</div>
 													<div class="d-flex mg-b-10">
 														<div class="d-flex" style="width: 90%;">
-															<div style="width: 100px;text-align: right;color: #999;" class="">Customer :</div>
+															<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Customer')}} :</div>
 															<div class="mg-l-5 pd-r-15">
 																{{data.shippingJson && data.shippingJson.name ? data.shippingJson.name : '---'}}
 															</div>
@@ -174,7 +174,7 @@
 													</div>
 													<div class="d-flex mg-b-10">
 														<div class="d-flex" style="width: 90%;">
-															<div style="width: 100px;text-align: right;color: #999;" class="">Address:</div>
+															<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Address')}}:</div>
 															<div class="mg-l-5 pd-r-15">
 																{{data.shippingJson && data.shippingJson.address1 ? data.shippingJson.address1 : ''}} {{data.shippingJson && data.shippingJson.city ? data.shippingJson.city : ''}} {{data.shippingJson && data.shippingJson.province ? data.shippingJson.province : ''}} 
 																<br />
@@ -189,7 +189,7 @@
 										<div class="table_info_item">
 											<el-tag v-if="!data.fulfillmentStatus" size="small" type="warning">
 												<span class="-EFlq"></span>
-												Unfulfilled
+												{{$t('Unfulfilled')}}
 											</el-tag>
 											<el-tag v-else-if="data.fulfillmentStatus == 'partial'" size="small" :type="data.fulfillmentStatus == 'partial' ? 'danger' : ''">
 												<span class="-EFlq"></span>
@@ -221,7 +221,7 @@
 												<span>
 													x {{ data.unfulfillQuantity }}
 												</span>
-												<span style="color: #c05717;margin-left: 20px;">({{data.fulfillQuantity}} of {{ data.quantity }} purchased items are delivered)</span>
+												<span style="color: #c05717;margin-left: 20px;">({{data.fulfillQuantity}} of {{ data.quantity }} {{$t('purchased items are delivered')}})</span>
 											</p>
 											<p v-if="data.unfulfillQuantity == 0">
 												<span>({{data.fulfillQuantity}} of {{ data.quantity }} fulfilled)</span>
@@ -232,7 +232,7 @@
 												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">Vendor: </span> {{ data.vendorName?data.vendorName:'---' }}
 											</p>
 											<p>
-												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">Cost per unit: </span> {{ data.costPrice? 'US$ '+data.costPrice:'---' }}
+												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">{{$t('Cost per unit')}}: </span> {{ data.costPrice? 'US$ '+data.costPrice:'---' }}
 											</p>
 										</div>
 										<div class="table_info_item" v-if="data.invoiceItems">
@@ -244,7 +244,7 @@
 														<div class="d-flex mg-b-15">
 															<span class="mg-r-10"># {{item.code}}</span>
 															<span class="mg-r-10">{{item.vendorName}}</span>
-															<el-link type="primary" @click="gotoInvoice(item)">View the details</el-link>
+															<el-link type="primary" @click="gotoInvoice(item)">{{$t('View the details')}}</el-link>
 														</div>
 													</div>
 												</el-popover>
@@ -263,7 +263,7 @@
 					<div class="ordertab-navtop" ref="orderTabNavTop">
 						<template>
 						<div>
-							<span class="mg-r-10">Periods of orders:</span>
+							<span class="mg-r-10">{{$t('Periods of orders')}}:</span>
 							<el-tag @click="changeTimeFilter(k)" v-for="(time,k) in $dict.timeFilter" :type="timeFilter == k ? '':'info'" :key="k" size="medium" class="mg-r-10">
 								{{time}}
 							</el-tag>
@@ -286,7 +286,7 @@
 						</template>
 						<template v-if="storeList.length>0">
 						<div>
-							<span class="mg-r-10">Shopify orders:</span>
+							<span class="mg-r-10">{{$t('Shopify orders')}}:</span>
 							<el-tag @click="changeTag(tag)" :type="storeTag == tag.shopifyAccountId ? '':'info'" :key="tag.shopifyAccountId" size="medium" v-for="tag in storeList" class="mg-r-10">
 								{{tag.store}} ({{tag.listInfo.length}})
 							</el-tag>
@@ -295,7 +295,7 @@
 						</template>
 						<template v-if="supplierList.length>0">
 						<div>
-							<span class="mg-r-10">Quick select of Shopify order items:</span>
+							<span class="mg-r-10">{{$t('Quick select of Shopify order items')}}:</span>
 							<template v-if="$route.params.id">
 								<el-tag @click="changeSupplierTag(tag)" :type="supplierTag == tag.vendorId ? '':'info'" :key="tag.vendorId" size="medium" 
 									v-for="tag in supplierList" v-if="(tag.vendorId != '999e' && $route.params.id == tag.id) || tag.vendorId == '999e'" class="mg-r-10">
@@ -364,13 +364,13 @@
 												<div class="mg-y-15 mg-t-20">
 													<div class="d-flex mg-b-10">
 														<div class="d-flex" style="width: 90%;">
-															<div style="width: 100px;text-align: right;color: #999;" class="">Order Date :</div>
+															<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Order Date')}} :</div>
 															<div class="mg-l-5 pd-r-15">{{data.timeCreated?data.timeCreated:'---'}}</div>
 														</div>
 													</div>
 													<div class="d-flex mg-b-10">
 														<div class="d-flex" style="width: 90%;">
-															<div style="width: 100px;text-align: right;color: #999;" class="">Customer :</div>
+															<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Customer')}} :</div>
 															<div class="mg-l-5 pd-r-15">
 																{{data.shippingJson && data.shippingJson.name ? data.shippingJson.name : '---'}}
 															</div>
@@ -386,7 +386,7 @@
 													</div>
 													<div class="d-flex mg-b-10">
 														<div class="d-flex" style="width: 90%;">
-															<div style="width: 100px;text-align: right;color: #999;" class="">Address:</div>
+															<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Address')}}:</div>
 															<div class="mg-l-5 pd-r-15">
 																{{data.shippingJson && data.shippingJson.address1 ? data.shippingJson.address1 : ''}} {{data.shippingJson && data.shippingJson.city ? data.shippingJson.city : ''}} {{data.shippingJson && data.shippingJson.province ? data.shippingJson.province : ''}} 
 																<br />
@@ -405,7 +405,7 @@
 											</el-tag>
 
 										</div>
-										<div class="table_info_item">{{data.items ? data.items.length : '0'}} Items</div>
+										<div class="table_info_item">{{data.items ? data.items.length : '0'}} {{$t('Items')}}</div>
 									</div>
 									<div v-else class="table_info_node">
 										<div class="table_info_item" style="flex: 2;">
@@ -430,7 +430,7 @@
 												<span>
 													x {{ data.unfulfillQuantity }}
 												</span>
-												<span style="color: #c05717;margin-left: 20px;">({{data.fulfillQuantity}} of {{ data.quantity }} purchased items are delivered)</span>
+												<span style="color: #c05717;margin-left: 20px;">({{data.fulfillQuantity}} of {{ data.quantity }} {{$t('purchased items are delivered')}})</span>
 											</p>
 											<p v-if="data.unfulfillQuantity == 0">
 												<span>({{data.fulfillQuantity}} of {{ data.quantity }} fulfilled)</span>
@@ -441,7 +441,7 @@
 												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">Vendor: </span> {{ data.vendorName?data.vendorName:'---' }}
 											</p>
 											<p>
-												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">Cost per unit: </span> {{ data.costPrice? 'US$ '+data.costPrice:'---' }}
+												<span style="display: inline-block;width: 100px;text-align: right;color: #999;">{{$t('Cost per unit')}}: </span> {{ data.costPrice? 'US$ '+data.costPrice:'---' }}
 											</p>
 										</div>
 										<div class="table_info_item" v-if="data.invoiceItems">
@@ -453,7 +453,7 @@
 														<div class="d-flex mg-b-15">
 															<span class="mg-r-10"># {{item.code}}</span>
 															<span class="mg-r-10">{{item.vendorName}}</span>
-															<el-link type="primary" @click="gotoInvoice(item)">View the details</el-link>
+															<el-link type="primary" @click="gotoInvoice(item)">{{$t('View the details')}}</el-link>
 														</div>
 													</div>
 												</el-popover>
@@ -486,9 +486,9 @@
 		</div>
 		<div ref="ordersFooter" class="alert-wrap d-flex justify-content-between">
 			<div>
-				<div class="is-bold">{{selectData.length}} shopify orders have been selected and can now be dispatched to your vendors.</div>
+				<div class="is-bold">{{selectData.length}} {{$t('shopify orders have been selected and can now be dispatched to your vendors')}}.</div>
 				<div class="d-flex">
-					<span style="margin-right: 10px;">Dispatch to the vendor:</span>
+					<span style="margin-right: 10px;">{{$t('Dispatch to the vendor')}}:</span>
 					<div class="d-flex align-items-center">
 						<el-tag v-if="dynamicTags.length>0" :key="tag.id" size="medium" v-for="(tag,i) in dynamicTags" closable :disable-transitions="false" @close="handleClose(i)">
 							{{tag.vendorName}}
@@ -506,16 +506,16 @@
 												{{relation.vendorName?relation.vendorName:'---'}} <span v-if="relation.vendorRemark">({{relation.vendorRemark}})</span>
 											</div>
 										</div>
-										<div v-else class="tx-center">No data</div>
+										<div v-else class="tx-center">{{$t('No data')}}</div>
 									</div>
 									<el-divider></el-divider>
 									<template v-if="vendorName == '' || vendorData.length > 0">
-										<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>Add a new vendor</el-button>
+										<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>{{$t('Add a new vendor')}}</el-button>
 									</template>
 									<template v-if="vendorName && vendorData.length == 0">
 										<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>Add "{{vendorName}}"</el-button>
 									</template>
-									<el-button @click="hidepopoverCustomer">Close</el-button>
+									<el-button @click="hidepopoverCustomer">{{$t('Close')}}</el-button>
 								</div>
 							</el-popover>
 						</div>
@@ -526,7 +526,7 @@
 					</div>
 				</div>
 			</div>
-			<el-button class="button-new-tag" type="success" size="small" @click="getInvocie">Make a purchase order</el-button>
+			<el-button class="button-new-tag" type="success" size="small" @click="getInvocie">{{$t('Make a purchase order')}}</el-button>
 		</div>
 		<el-dialog title="Add a new vendor" :visible.sync="addVendorDialog.isShow" :width="'620px'" :close-on-click-modal="false" class="add-vendor-dialog">
 			<el-divider></el-divider>
@@ -547,8 +547,8 @@
 			</el-row>
 			<el-divider></el-divider>
 			<div slot="footer" class="dialog-footer">
-				<el-button size="small" @click="addVendorDialog.isShow = false;">Close</el-button>
-				<el-button size="small" type="primary" @click="saveVendor(2)" :loading="addVendorDialog.loading">Save</el-button>
+				<el-button size="small" @click="addVendorDialog.isShow = false;">{{$t('Close')}}</el-button>
+				<el-button size="small" type="primary" @click="saveVendor(2)" :loading="addVendorDialog.loading">{{$t('Save')}}</el-button>
 <!--				<el-button size="small" type="primary" @click="saveVendor(2)" :loading="addVendorDialog.loading">Save and change the vendor</el-button>-->
 			</div>
 		</el-dialog>

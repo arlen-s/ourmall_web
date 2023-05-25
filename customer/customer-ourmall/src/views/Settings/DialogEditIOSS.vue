@@ -38,8 +38,8 @@
     </div>
     <el-divider></el-divider>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="data.isShow = false">Cancel</el-button>
-      <el-button :loading="data.loading" type="primary" @click="save('ruleForm')">Save</el-button>
+      <el-button @click="data.isShow = false">{{$t('Cancel')}}</el-button>
+      <el-button :loading="data.loading" type="primary" @click="save('ruleForm')">{{$t('Save')}}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -51,7 +51,7 @@ export default {
     let checkCountrys = (rule, value, callback) => { //验证国家
       setTimeout(()=>{
         if(!value || !value.length){
-          callback(new Error('Please select at least 1 destination country.'))
+          callback(new Error(this.$t('Please select at least 1 destination country.')))
         }
         callback();
       },100);
@@ -59,7 +59,7 @@ export default {
     let iossIdLen = (rule, value, callback) => { //验证ioss
       setTimeout(() => {
         if(!value || value.length < 12 || !/^[0-9A-Za-z]*$/.test(value)){ 
-        callback(new Error('Please enter an IOSS ID with 12 alphanumeric characters.'))
+        callback(new Error(this.$t('Please enter an IOSS ID with 12 alphanumeric characters.')))
       }
       callback();
       },100);
@@ -70,7 +70,7 @@ export default {
           {required: true, message: 'Please enter description.', trigger: 'blur'},
         ],
         iossId: [
-          {required: true, message: 'Please enter an IOSS ID with 12 alphanumeric characters.', trigger: 'blur'},
+          {required: true, message: this.$t('Please enter an IOSS ID with 12 alphanumeric characters.'), trigger: 'blur'},
           {validator: iossIdLen, trigger: 'blur'},
         ],
         countrys: [
@@ -91,7 +91,7 @@ export default {
           }
           if(this.data.id){  //修改保存
             params.id = this.data.id;
-            this.$confirm("After saving, your IOSS will be updated to the corresponding order. Are you sure to save?", {
+            this.$confirm(this.$t("After saving, your IOSS will be updated to the corresponding order. Are you sure to save?"), {
               confirmButtonText: "Confirm",
               cancelButtonText: "Cancel",
               type: "info",

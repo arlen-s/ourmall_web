@@ -100,12 +100,12 @@
                     type="danger"
                     :disabled="!filterParams.timeFilter"
                     @click="clearFilter('date')"
-                  >Clear</el-link>
+                  >{{$t('Clear')}}</el-link>
                 </div>
                 <el-button
                   size="mini"
                   slot="reference"
-                >Date Ranges<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+                >{{$t('Date Ranges')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
               </el-popover>
               <!-- 筛选Payment -->
               <el-popover
@@ -130,12 +130,12 @@
                     type="danger"
                     :disabled="!filterParams.financial_status.length"
                     @click="clearFilter('financial')"
-                  >Clear</el-link>
+                  >{{$t('Clear')}}</el-link>
                 </div>
                 <el-button
                   size="mini"
                   slot="reference"
-                >Payment Status<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+                >{{$t('Payment Status')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
               </el-popover>
               <!-- 筛选状态 -->
               <el-popover
@@ -160,12 +160,12 @@
                     type="danger"
                     :disabled="!filterParams.fulfillStatus.length"
                     @click="clearFilter('fulfill')"
-                  >Clear</el-link>
+                  >{{$t('Clear')}}</el-link>
                 </div>
                 <el-button
                   size="mini"
                   slot="reference"
-                >Fulfillment Status<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+                >{{$t('Fulfillment Status')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
               </el-popover>
               <!-- 排序 -->
               <el-popover
@@ -190,25 +190,25 @@
                     type="danger"
                     :disabled="!filterParams.sortBy"
                     @click="clearFilter('sort')"
-                  >Clear</el-link>
+                  >{{$t('Clear')}}</el-link>
                 </div>
                 <el-button
                   size="mini"
                   slot="reference"
-                >SortBy<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+                >{{$t('SortBy')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
               </el-popover>
             </el-button-group>
           </div>
           <div style=" min-width: 130px;">
-            <el-button type="primary" size="mini" @click="filterItems()">Filter</el-button>
-            <el-button type="danger" size="mini" @click="clearFilter()">Clear</el-button>
+            <el-button type="primary" size="mini" @click="filterItems()">{{$t('Filter')}}</el-button>
+            <el-button type="danger" size="mini" @click="clearFilter()">{{$t('Clear')}}</el-button>
           </div>
         </div>
         <div class="right" style="margin:10px">
           <el-button v-if="routerName == 'AbnormalOrder'" type="primary" size="mini"
             :disabled="!checkedOrder.length"
             @click="exportDialogOpen"
-          ><i class=" fa fa-download"></i> Export ({{checkedOrder.length}})</el-button>
+          ><i class=" fa fa-download"></i> {{$t('Export')}} ({{checkedOrder.length}})</el-button>
         </div>
       </div>
       <!-- 筛选状态栏 -->
@@ -281,7 +281,6 @@
       >
         <el-table-column v-if="routerName == 'AbnormalOrder'" width="40" fixed>
           <template slot="header"
-            slot-scope="scope"
           >
             <el-checkbox v-model="AllChecked" @change="changeAllChecked"></el-checkbox>
           </template>
@@ -333,9 +332,8 @@
         <el-table-column width="120">
           <template
             slot="header"
-            slot-scope="scope"
           >
-            <div class=" tx-right">Total</div>
+            <div class=" tx-right">{{$t('Total')}}</div>
           </template>
           <template slot-scope="scope">
             <div class=" tx-right">
@@ -418,13 +416,13 @@
     >
       <el-divider></el-divider>
       <div style="padding: 20px;">
-        <p class="mg-b-10">Export to   {{$store.state.userInfo.email}}</p>
-        <p class="mg-b-10">Selected: <b>{{checkedOrder.length}}</b> orders</p>
+        <p class="mg-b-10">{{$t('Export to')}} {{$store.state.userInfo.email}}</p>
+        <p class="mg-b-10">{{$t('Selected')}}: <b>{{checkedOrder.length}}</b> {{$t('orders')}}</p>
       </div>
       <el-divider></el-divider>
       <div slot="footer" class="dialog-footer">
-				<el-button size="small" @click="exportDialog.isShow = false;">Cancel</el-button>
-				<el-button size="small" type="primary" @click="exportOrders" :loading="exportDialog.loading">Export orders</el-button>
+				<el-button size="small" @click="exportDialog.isShow = false;">{{$t('Cancel')}}</el-button>
+				<el-button size="small" type="primary" @click="exportOrders" :loading="exportDialog.loading">{{$t('Export orders')}}</el-button>
 			</div>
     </el-dialog>
     <el-backtop class="goto-top" target=".main-scroll  .el-scrollbar__wrap" :right="20" :bottom="120">
@@ -499,23 +497,23 @@ export default {
       popPaymentFilter: false,
       filterDate: [],
       dateArr: {
-        1: "Today",
-        2: "Last 7 days",
-        3: "Last 30 days",
-        4: "Last 90 days",
-        5: "Last 12 months",
-        6: "Custom",
+        1: this.$t("Today"),
+        2: this.$t("Last 7 days"),
+        3: this.$t("Last 30 days"),
+        4: this.$t("Last 90 days"),
+        5: this.$t("Last 12 months"),
+        6: this.$t("Custom"),
       },
       sortArr: {
-        1: "Order number (ascending)",
-        2: "Order number (descending)",
-        3: "Date (oldest first)",
-        4: "Date (newest first)",
+        1: this.$t("Order number (ascending)"),
+        2: this.$t("Order number (descending)"),
+        3: this.$t("Date (oldest first)"),
+        4: this.$t("Date (newest first)"),
       },
       paymentArr: {
         paid: { text: "Paid", type: "info", r: 3 },
         partially_refunded: {
-          text: "Partially refunded",
+          text: this.$t("Partially refunded"),
           type: "danger",
           r: 2,
         },
@@ -633,7 +631,7 @@ export default {
             duration:0,
             dangerouslyUseHTMLString: true,
             showClose: true,
-            message: `<strong>Your Orders are exporting</strong><br/>Your export will be delivered by email to: ${this.$store.state.userInfo.email}. <br/>Depending on how many Orders you’re exporting, this could take some time.`,
+            message: `<strong>${$t('Your Orders are exporting</strong><br/>Your export will be delivered by email to')}: ${this.$store.state.userInfo.email}. ${$t('<br/>Depending on how many Orders you’re exporting, this could take some time.')}`,
             type: 'success'
             });
         }else{
@@ -828,10 +826,10 @@ export default {
       });
     },
     onCopy(e) {
-      this.$elementMessage('Has been copied to the clipboard', 'success');
+      this.$elementMessage(this.$t('Has been copied to the clipboard'), 'success');
     },
     onError(e) {
-      this.$elementMessage('Copy to clipboard failed, please copy manually', 'error');
+      this.$elementMessage(this.$t('Copy to clipboard failed, please copy manually'), 'error');
     },
   },
 };

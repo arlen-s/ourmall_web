@@ -4,7 +4,7 @@
 			<div class="left">
 				<div class="title">
 					<i class="el-icon-s-finance"></i>
-					<h2>Pay</h2>
+					<h2>{{$t('Pay')}}</h2>
 				</div>
 			</div>
 			<div class="right">
@@ -17,28 +17,28 @@
 						<div v-if="paystatus == 1">
 							<div class="d-flex">
 								<img src="../../assets/pay/payStatus1.png" height="30"/>
-								<span class="tx-bold">Waiting for the payment result to be returned.</span>
+								<span class="tx-bold">{{$t('Waiting for the payment result to be returned.')}}</span>
 							</div>
-							<p>You may need to wait a little while</p>
-							<el-button type="primary" plain @click="goBack">View order</el-button>
+							<p>{{$t('You may need to wait a little while')}}</p>
+							<el-button type="primary" plain @click="goBack">{{$t('View order')}}</el-button>
 						</div>
 						<div v-if="paystatus == 2">
 							<div class="d-flex">
 								<img src="../../assets/pay/payStatus2.png" height="30"/>
-								<span class="tx-bold">Payment successful</span>
+								<span class="tx-bold">{{$t('Payment successful')}}</span>
 							</div>
-							<p>You have successfully completed your order.</p>
-							<el-button type="primary" plain @click="goBack">View order</el-button>
+							<p>{{$t('You have successfully completed your order.')}}</p>
+							<el-button type="primary" plain @click="goBack">{{$t('View order')}}</el-button>
 						</div>
 						<div v-if="paystatus == 3">
 							<div class="d-flex">
 								<img src="../../assets/pay/payStatus3.png" height="30"/>
-								<span class="tx-bold">Payment failed</span>
+								<span class="tx-bold">{{$t('Payment failed')}}</span>
 							</div>
-							<p>Sorry, we can't complete the payment. </p>
+							<p>{{$t("Sorry, we can't complete the payment.")}} </p>
 							<div class="d-flex">
-								<el-button type="primary" @click="orderPay('repay')">Pay again</el-button>
-								<el-button type="primary" plain @click="goBack">View order</el-button>
+								<el-button type="primary" @click="orderPay('repay')">{{$t('Pay again')}}</el-button>
+								<el-button type="primary" plain @click="goBack">{{$t('View order')}}</el-button>
 							</div>
 						</div>
 					</div>
@@ -46,17 +46,17 @@
 						<div class="pay-item" v-for="item in items" :key="item.orderId">
 							<div class="title d-flex" style="justify-content: space-between;">
 								<span>
-									Order {{item.codeName}}
+								{{$t('Order')}}{{item.codeName}}
 								</span>
 								<i class="el-icon-arrow-right"></i>
 							</div>
 							<div class="item-body">
 								<div>
-									<span class="tx-bold">Order No. : </span>
+									<span class="tx-bold">{{$t('Order No.')}} : </span>
 									{{item.orderId}}
 								</div>
 								<div>
-									<span class="tx-bold">Receiving: </span>
+									<span class="tx-bold">{{$t('Receiving')}}: </span>
 									{{item.shippingJsonInfo && item.shippingJsonInfo.zip ? item.shippingJsonInfo.zip : '---'}}
 									{{item.shippingJsonInfo && item.shippingJsonInfo.address1 ? item.shippingJsonInfo.address1 : '---'}}
 									{{item.shippingJsonInfo && item.shippingJsonInfo.city ? item.shippingJsonInfo.city : '---'}}
@@ -65,7 +65,7 @@
 								</div>
 							</div>
 							<el-table stripe style="width: 100%" ref="gridTable" :data="item.items" tooltip-effect="dark" :row-key="(row) => row.id">
-								<el-table-column label="Product information">
+								<el-table-column :label="$t('Product information')">
 									<template slot-scope="scope">
 										<div class="d-flex">
 											<img :src="scope.row.imgUrl" width="80" height="80" />
@@ -83,12 +83,12 @@
 										</div>
 									</template>
 								</el-table-column>
-								<el-table-column label="Store price" width="150">
+								<el-table-column :label="$t('Store price')" width="150">
 									<template slot-scope="scope">
 										{{item.currency}} {{Number(scope.row.price).toFixed(2)}}
 									</template>
 								</el-table-column>
-								<el-table-column label="Supply unit price" width="200">
+								<el-table-column :label="$t('Supply unit price')" width="200">
 									<template slot-scope="scope">
 										<span >{{$store.state.country.symbol}} {{Number(scope.row.vendorPrice).toFixed(2)}}</span>
 									</template>
@@ -106,38 +106,38 @@
 							</el-table>
 							<div class="item-total" style="position: relative;">
 								<div style="position: absolute;left: 40px;">
-									Shipping days : {{item.agingDaysBegin ? item.agingDaysBegin : 0}} - {{item.agingDaysEnd ? item.agingDaysEnd : 0}} days
+								{{$t('Shipping days')}}	 : {{item.agingDaysBegin ? item.agingDaysBegin : 0}} - {{item.agingDaysEnd ? item.agingDaysEnd : 0}} {{$t('days')}}
 								</div>							
 								<span>
-									Subtotal（{{$store.state.country.symbol}}）:
+									{{$t('Subtotal')}}（{{$store.state.country.symbol}}）:
 									<span class="tx-bold">{{item.itemAllAmount ? item.itemAllAmount : '---'}}</span>
 								</span>
 								<span>
-									Freight（{{$store.state.country.symbol}}）:
+									{{$t('Freight')}}（{{$store.state.country.symbol}}）:
 									<span class="tx-bold">{{item.shippingAllAmount ? item.shippingAllAmount : '---'}}</span>
 								</span>
 							</div>
 						</div>
 						<div class="pay-type">
 							<div class="other d-flex" style="justify-content: space-between;">
-								<p>Discount:</p>
+								<p>{{$t('Discount')}}:</p>
 								<div class="discount">
 									<el-input style="width: 400px" v-model="coupon" placeholder="Enter discount code" @keyup.enter.native="getCoupon">
-										 <el-button slot="append" type="primary" @click="getCoupon">Exchange</el-button>
+										 <el-button slot="append" type="primary" @click="getCoupon">{{$t('Exchange')}}</el-button>
 									</el-input>
 								</div>
 							</div>
 							<div class="pay-bouns" v-if="bonusStatus == 1" :class="{ dis: bonus + credits< totalAllGoodsAndFreight}" @click="changeBonusPlatform(6)">
 								<span style="margin-right: 30px;">
-									Bonus:
+									{{$t('Bonus')}}:
 									<span class="tx-bold"> ({{$store.state.country.symbol}} {{bonus}})</span>
 								</span>
-								<el-tooltip class="item" effect="dark" content="The supplier has opened a credit limit for you. When your account balance is insufficient, you can deduct the credit limit" placement="top">
+								<el-tooltip class="item" effect="dark" :content="$t('The supplier has opened a credit limit for you. When your account balance is insufficient, you can deduct the credit limit')" placement="top">
       						<i class="el-icon-question" style="color:red;line-height:80px;margin-right:5px"></i>
     						</el-tooltip>
 								
 								<span style="margin-right: 30px;">
-									Credits:
+									{{$t('Credits')}}:
 									<span class="tx-bold"> ({{$store.state.country.symbol}} {{credits}})</span>
 								</span>
 								<div class="active" v-show="platformType != 6 ||  bonus + credits < totalAllGoodsAndFreight">
@@ -148,7 +148,7 @@
 								</div>
 							</div>
 							<div class="other">
-								<p>Payment method:</p>
+								<p>{{$t('Payment method')}}:</p>
 								<div class="types" v-if="payTypes.length">
 									<div v-for="type in payTypes" :key="type.accountType" @click="changePlatform(type.accountType)" :class="{ active: platformType == type.accountType, disabled: bonusStatus == 1 && platformType == 6 && bonus > totalAllGoodsAndFreight}">
 										<img :src="type.icon" alt="" width="100%"/>
@@ -156,7 +156,7 @@
 									</div>
 								</div>
 								<div v-if="!payTypes.length && (bonusStatus == 2)">
-									There is no alternative method of payment
+									{{$t('There is no alternative method of payment')}}
 								</div>
 							</div>
 						</div>
@@ -165,46 +165,46 @@
 							<template>
 								<div>
 									<span class="left">
-										Quantity of order :
+										{{$t('Quantity of order')}} :
 									</span>
 									<span class="tx-bold"> {{items.length}}</span>
 								</div>
 								<div :class="couponInfo.type == 1 ? 'line-through' : ''">
 									<span class="left">
-										Total amount of goods（{{$store.state.country.symbol}}）:
+										{{$t('Total amount of goods')}}（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{totalAllGoodsAmount ? mathTofixed(totalAllGoodsAmount) : '---'}}</span>
 								</div>
 								<div :class="couponInfo.type == 1 ? 'line-through' : ''">
 									<span class="left">
-										Tax Amount（{{$store.state.country.symbol}}）:
+										{{$t('Tax Amount')}}（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{taxAmount ? mathTofixed(taxAmount) : '---'}}</span>
 								</div>								
 								<div v-show="couponInfo.type == 1">
 									<span class="left">
-										Discounted price of goods（{{$store.state.country.symbol}}）:
+										{{$t('Discounted price of goods')}}（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{couponInfo.disItemAmount ? mathTofixed(couponInfo.disItemAmount) : '---'}}</span>
 								</div>
 								<div :class="couponInfo.type == 3 ? 'line-through' : ''">
 									<span class="left">
-										Total freight amount（{{$store.state.country.symbol}}）:
+										{{$t('Total freight amount')}}（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{totalAllFreight ? mathTofixed(totalAllFreight) : '---'}}</span>
 								</div>
 								<div v-show="couponInfo.type == 2">
 									<span class="left">
-										Shop discount（{{$store.state.country.symbol}}）:
+									{{$t('Shop discount')}}	（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold" style="color:#FF0000;"> {{couponInfo.discountAmount ? - couponInfo.discountAmount : '---'}}</span>
 								</div>
 								<div v-show="couponInfo.type == 3">
-									<span class="tx-bold" style="color:#FF0000;display:block;width:100%;"> This document is free of freight</span>
+									<span class="tx-bold" style="color:#FF0000;display:block;width:100%;">{{$t('This document is free of freight')}} </span>
 								</div>
 								<div class="">
 									<span class="left">
-										Amount due (including freight)（{{$store.state.country.symbol}}）:
+										{{$t('Amount due (including freight)')}}（{{$store.state.country.symbol}}）:
 									</span>
 									<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
 								</div>
@@ -215,10 +215,10 @@
 			</el-row>
 			<div v-if="!paystatus>0" class="pay-submit" :style="{width: width}">
 				<span class="left">
-					Amount due (including freight)（{{$store.state.country.symbol}}）:
+					{{$t('Amount due (including freight)')}}（{{$store.state.country.symbol}}）:
 					<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
 				</span>
-				 <el-button  type="primary" :disabled="platformType == '13'" @click="orderPay(openType)">Submit orders</el-button>
+				 <el-button  type="primary" :disabled="platformType == '13'" @click="orderPay(openType)">{{$t('Submit orders')}}</el-button>
 				 
 			</div>
 		</div>
@@ -237,10 +237,10 @@
 	<el-divider></el-divider>
 	<div slot="footer" class="dialog-footer" @click="dialogVisibleKTPay = false">
 		<el-button>
-			Cancel
+			{{$t('Cancel')}}
 		</el-button>
 		<el-button type="primary" @click="continuePay()">
-			Pay
+			{{$t('Pay')}}
 		</el-button>
 	</div>
 </el-dialog>
@@ -430,7 +430,7 @@ import { arrayEach } from 'xe-utils/methods';
 				let success_url = window.location.origin + '/orderPay?paystatus=2&payType=13'
 				let id = this.payparams.id;
 				let apiUserId = localStorage.getItem("c_apiUserId")?localStorage.getItem("c_apiUserId"):"";
-				let url = `https://api.myourmall.com/kaitaiCheckout.php?id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=${formType}`
+				let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=${formType}`
 				if(Object.keys(this.KasikornbankInfo).length && this.shopName !== ''){
 								let obj = {
 									sessionId:seId,
@@ -462,7 +462,7 @@ import { arrayEach } from 'xe-utils/methods';
 					// 	html: obj
 					// }
 				} else {
-					this.$elementMessage('请稍后重试～', "error");
+					this.$elementMessage(this.$t('请稍后重试～'), "error");
 				}
 			},
 			mathTofixed(num){
@@ -634,7 +634,7 @@ import { arrayEach } from 'xe-utils/methods';
 			orderPay(openType) {
 				this.openType = openType;
 				if(!this.platformType){
-					this.$elementMessage("Please select payment method", "error");
+					this.$elementMessage(this.$t("Please select payment method"), "error");
 					return;
 				}
 				

@@ -3,11 +3,11 @@
 		<div class="pagetitle">
 			<div class="left">
 				<div class="title title-color">
-					<h2>Store products</h2>
+					<h2>{{$t('Store products')}}</h2>
 				</div>
 			</div>
 			<div class="right">
-				<el-button type="primary" icon="el-icon-plus" size="medium" @click="addClick">Publish</el-button>
+				<el-button type="primary" icon="el-icon-plus" size="medium" @click="addClick">{{$t('Publish')}}</el-button>
 			</div>
 		</div>
 		<el-card>
@@ -29,8 +29,8 @@
 						</el-date-picker>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" @click="getItems">Query</el-button>
-						<el-button type="warning" @click="ResetClick">Reset</el-button>
+						<el-button type="primary" @click="getItems">{{$t('Query')}}</el-button>
+						<el-button type="warning" @click="ResetClick">{{$t('Reset')}}</el-button>
 					</el-form-item>
 				</el-form>
 			</el-row>
@@ -61,7 +61,7 @@
 					</el-table-column>
 					<el-table-column label="Operation">
 						<template slot-scope="scope">
-							<el-link type="primary"  @click="detailClick(scope.row)">Details</el-link>
+							<el-link type="primary"  @click="detailClick(scope.row)">{{$t('Details')}}</el-link>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -100,7 +100,7 @@
 							:on-remove="handleRemove">
 							<i class="el-icon-plus"></i>
 						</el-upload>
-						<div>You can only upload 5 pictures</div>
+						<div>{{$t('You can only upload 5 pictures')}}</div>
 					</el-form-item>
 					<el-form-item label="Product Title:" prop="title">
 						<el-input size="small" v-model="publishForm.title"></el-input>
@@ -115,7 +115,7 @@
 							<el-form-item label="——" prop="priceTo">
 								<el-input v-model="publishForm.priceTo" type="number" style="width: 100px" size="small"></el-input>
 								<span style="color: #ccc">
-									 {{$store.state.country.symbol}}  *Price units default to  {{$store.state.country.shopCurrency}}
+									 {{$store.state.country.symbol}}  *{{$t('Price units default to')}} {{$store.state.country.shopCurrency}}
 								</span>
 							</el-form-item>
 						</el-col>
@@ -129,8 +129,8 @@
 				</el-form>
 			</div>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="publishClose">Cancel</el-button>
-				<el-button type="primary" @click="publish">Publish</el-button>
+				<el-button @click="publishClose">{{$t('Cancel')}}</el-button>
+				<el-button type="primary" @click="publish">{{$t('Publish')}}</el-button>
 			</span>
 		</el-dialog>
 	</div>
@@ -172,13 +172,13 @@ export default {
 			},
 			publishRules: {
 				imgUrl: [
-					{ required: true, message: 'Please upload pictures'},
+					{ required: true, message: this.$t('Please upload pictures')},
 				],
 				title: [
-					{ required: true, message: 'Please enter title'},
+					{ required: true, message: this.$t('Please enter title')},
 				],
 				priceFrom: [
-					{ required: true, message: 'Please enter price', trigger: 'blur'},
+					{ required: true, message: this.$t('Please enter price'), trigger: 'blur'},
 				],
 				priceTo: [
 					{ validator: validatePrice, trigger: 'blur'},

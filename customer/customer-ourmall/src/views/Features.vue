@@ -3,8 +3,8 @@
     <Header :title="'FEATURES'" />
     <div class="header2">
       <div class="content">
-        <div class="row1">Transform Your eCommerce business Into a Powerhouse</div>
-        <div class="row2">Importify helps people like you to automate their dropshipping business.</div>
+        <div class="row1">{{$t('Transform Your eCommerce business Into a Powerhouse')}}</div>
+        <div class="row2">{{$t('Importify helps people like you to automate their dropshipping business.')}}</div>
       </div>
     </div>
     <div class="body">
@@ -16,31 +16,26 @@
           <el-col :span="8">
             <div class="info">
               <i class="i1"></i>
-              <h3>Product Research</h3>
-              <div class=" text">
-                Are you tired of searching the millions o
-                products on AliExpress for potential winners?
-                Importify allows you to spy on other Shopify
-                stores and find guaranteed winning products
-                to sell in your niche.
+              <h3>{{$t('Product Research')}}</h3>
+              <div class=" text">{{$t('Are you tired of searching the millions o products on AliExpress for potential winners?')}}{{$t('Are you tired of searching the millions o products on AliExpress for potential winners?')}}                
               </div>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="info">
               <i class="i2"></i>
-              <h3>One-click import products</h3>
+              <h3>{{$t('One-click import products')}}</h3>
               <div class=" text">
-                Import products from 30+ top dropshipping vendors, Aliexpress, Alibaba, Amazon, Etsy, Dhgate, Lazada, Shopee, Banggood, Taobao, 1688, Gearbest, Walmart, and many more.
+                {{$t('Import products from 30+ top dropshipping vendors, Aliexpress, Alibaba, Amazon, Etsy, Dhgate, Lazada, Shopee, Banggood, Taobao, 1688, Gearbest, Walmart, and many more.')}}
               </div>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="info">
               <i class="i3"></i>
-              <h3>Pricing Rules</h3>
+              <h3>{{$t('Pricing Rules')}}</h3>
               <div class=" text">
-                Tired of calculating your target profit margin? Create pricing rules before importing, quickly adjust prices for sales.
+                {{$t('Tired of calculating your target profit margin? Create pricing rules before importing, quickly adjust prices for sales.')}}
               </div>
             </div>
           </el-col>
@@ -52,27 +47,27 @@
           <el-col :span="8">
             <div class="info">
               <i class="i4"></i>
-              <h3>Product Customization</h3>
+              <h3>{{$t('Product Customization')}}</h3>
               <div class=" text">
-                Use our chrome extension to modify the title, description, images, variants, pricing of the imported products.
+                {{$t('Use our chrome extension to modify the title, description, images, variants, pricing of the imported products.')}}
               </div>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="info">
               <i class="i5"></i>
-              <h3>Automate your orders</h3>
+              <h3>{{$t('Automate your orders')}}</h3>
               <div class=" text">
-               The Importify Chrome Extension allows you to fulfill your orders quickly by placing the customer address automatically on the checkout page.
+               {{$t('The Importify Chrome Extension allows you to fulfill your orders quickly by placing the customer address automatically on the checkout page.')}}
               </div>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="info">
               <i class="i6"></i>
-              <h3>Easy vendor Change</h3>
+              <h3>{{$t('Easy vendor Chang')}}e</h3>
               <div class=" text">
-               Replace your product vendor with a new vendor and connect them to your store with a click.
+               {{$t('Replace your product vendor with a new vendor and connect them to your store with a click.')}}
               </div>
             </div>
           </el-col>
@@ -84,27 +79,27 @@
           <el-col :span="8">
             <div class="info">
               <i class="i7"></i>
-              <h3>Auto Dispatch Collections</h3>
+              <h3>{{$t('Auto Dispatch Collections')}}</h3>
               <div class=" text">
-                Auto-dispatch products to your Store collections supported on Shopify, WooCommerce, and Jumpseller.
+                {{$t('Auto-dispatch products to your Store collections supported on Shopify, WooCommerce, and Jumpseller.')}}
               </div>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="info">
               <i class="i8"></i>
-              <h3>Split Variants</h3>
+              <h3>{{$t('Split Variants')}}</h3>
               <div class=" text">
-                Importify gives you the ability to Split variants into Separate products.
+                {{$t('Importify gives you the ability to Split variants into Separate products.')}}
               </div>
             </div>
           </el-col>
           <el-col :span="8">
             <div class="info">
               <i class="i9"></i>
-              <h3>Connect Existing Products</h3>
+              <h3>{{$t('Connect Existing Products')}}</h3>
               <div class=" text">
-                If you have products that are already on a Shopify, Woocommerce or Jumpseller store, you can connect and manage them in Importify.
+                {{$t('If you have products that are already on a Shopify, Woocommerce or Jumpseller store, you can connect and manage them in Importify.')}}
               </div>
             </div>
           </el-col>

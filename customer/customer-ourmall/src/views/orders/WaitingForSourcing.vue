@@ -25,7 +25,7 @@
             <el-select
               filterable
               size="mini"
-              placeholder="My Vendor"
+              :placeholder="$t('My Vendor')"
               v-model="filterParams.vendorId"
               @change="filterItems('vendor')"
             >
@@ -42,7 +42,7 @@
               size="mini"
               :key="cascaderKey"
               v-model="filterParams.shopifyStore"
-              placeholder="All my stores"
+              :placeholder="$t('All my stores')"
               :options="options"
               :props="{ expandTrigger: 'hover' }"
               @change="filterItems('store')"
@@ -123,11 +123,11 @@
                   type="danger"
                   :disabled="!filterParams.timeFilter"
                   @click="clearFilter('date')"
-                  >Clear</el-link
+                  >{{$t('Clear')}}</el-link
                 >
               </div>
               <el-button size="mini" slot="reference"
-                >Date Ranges<i class="el-icon-caret-bottom el-icon--right"></i
+                >{{$t('Date Ranges')}}<i class="el-icon-caret-bottom el-icon--right"></i
               ></el-button>
             </el-popover>
             <!-- 过滤订单号 -->
@@ -142,7 +142,7 @@
                 class="d-flex mg-b-10"
                 style="justify-content: space-between; font-size: 12px"
               >
-                <span class="mg-r-5">Order ID From: #</span>
+                <span class="mg-r-5">{{$t('Order ID From:')}} #</span>
                 <el-input-number
                   size="mini"
                   :controls="false"
@@ -157,7 +157,7 @@
                 class="d-flex mg-b-10"
                 style="justify-content: space-between; font-size: 12px"
               >
-                <span>Order ID To: #</span>
+                <span>{{$t('Order ID To:')}} #</span>
                 <el-input-number
                   size="mini"
                   :controls="false"
@@ -173,14 +173,14 @@
                   type="primary"
                   size="mini"
                   @click="tableSelect('range')"
-                  >Confirm</el-button
+                  >{{$t('Confirm')}}</el-button
                 >
                 <el-button size="mini" @click="tableSelect('remove')"
-                  >Reset</el-button
+                  >{{$t('Reset')}}</el-button
                 >
               </div>
               <el-button size="mini" slot="reference"
-                >Order ID Range<i
+                >{{$t('Order ID Range')}}<i
                   class="el-icon-caret-bottom el-icon--right"
                 ></i
               ></el-button>
@@ -188,10 +188,10 @@
           </el-button-group>
           <div style="min-width: 130px; height: 29px">
             <el-button type="primary" size="mini" @click="filterItems()"
-              >Filter</el-button
+              >{{$t('Filter')}}</el-button
             >
             <el-button type="danger" size="mini" @click="clearFilter()"
-              >Clear</el-button
+              >{{$t('Clear')}}</el-button
             >
           </div>
         </div>
@@ -240,7 +240,7 @@
           closable
           @close="tableSelect('remove')"
         >
-          ID Range: <span>{{ filterParams.orderMin || "From" }}</span> -
+          {{$t('ID Range')}}: <span>{{ filterParams.orderMin || "From" }}</span> -
           <span>{{ filterParams.orderMax || "To" }}</span>
         </el-tag>
       </div>
@@ -298,7 +298,7 @@
                     v-if="selectedSkuNum(item)"
                     class="mg-r-15"
                     style="color: #909399"
-                    >({{ selectedSkuNum(item) }} orders selected)</span
+                    >({{ selectedSkuNum(item) }} {{$t('orders selected')}})</span
                   >
                 </div>
               </el-col>
@@ -343,9 +343,9 @@
                     v-if="selectedSkuNum(item)"
                     class="mg-r-15"
                     style="color: #909399"
-                    >({{ selectedSkuNum(item) }} orders selected)</span
+                    >({{ selectedSkuNum(item) }} {{$t('orders selected')}})</span
                   >
-                  <span v-else style="color: #909399">(No order selected)</span>
+                  <span v-else style="color: #909399">({{$t('No order selected')}})</span>
                   <i v-if="item.loading" class="el-icon-loading"></i>
                 </div>
               </el-col>
@@ -427,7 +427,7 @@
         style="padding: 30px 0"
         :style="{ height: tableHeight + 'px' }"
       >
-        <span style="color: #909399; font-size: 12px">No Data</span>
+        <span style="color: #909399; font-size: 12px">{{$t('No Data')}}</span>
       </div>
     </div>
     <!-- table end -->
@@ -440,18 +440,18 @@
             size="mini"
             @click="unAllocate"
           >
-            Un-allocate selected products
+            {{$t('Un-allocate selected products')}}
           </el-button>
         </div>
         <div class="right">
           <div style="margin-right: 50px">
             <span style="margin-right: 5px; color: #c0c4cc"
-              >Total vendors:</span
+              >{{$t('Total vendors')}}:</span
             >
             {{ totalVendorsNum }}
           </div>
           <div style="margin-right: 50px">
-            <span style="margin-right: 5px; color: #c0c4cc">Total orders:</span>
+            <span style="margin-right: 5px; color: #c0c4cc">{{$t('Total orders')}}:</span>
             {{ totalOrdersNum }}
           </div>
           <div>
@@ -461,7 +461,7 @@
               size="mini"
               @click="openToGenInvoice"
             >
-              Place {{ purchaseNum }} purchase orders
+              Place {{ purchaseNum }} {{$t('purchase orders')}}
             </el-button>
           </div>
         </div>
@@ -474,13 +474,13 @@
     >
       <div class="dialog-to-invoice">
         <div class="dialog-title">
-          You're going to place
-          <span class="tx-danger">{{ purchaseNum }}</span> orders to
-          {{ totalVendorsNum }} vendors
+         {{$t("You're going to place")}} 
+          <span class="tx-danger">{{ purchaseNum }}</span>{{$t('orders to')}} 
+          {{ totalVendorsNum }} {{$t('vendors')}}
         </div>
         <div class="dialog-text">
-          You can choose the payment method you can accept, we will submit your
-          orders and options to your vendors
+          {{$t('You can choose the payment method you can accept, we will submit your')}}
+          {{$t('orders and options to your vendors')}}
         </div>
         <div class="dialog-choose">
           <el-checkbox-group v-model="dialogToGenInvoice.paymentType">
@@ -492,10 +492,10 @@
         <el-divider v-if="dialogToGenInvoice.onlyOne.length"></el-divider>
         <div v-if="dialogToGenInvoice.onlyOne.length" style="padding-top: 15px">
           <div style="margin-bottom: 10px; font-size: 12px">
-            <span style="margin-right: 5px; color: #909399">Warm tips:</span>
-            You have set the following products to be allocated to the vendors
-            only once. Therefore, the following items will need to be
-            re-allocated after the orders are generated again.
+            <span style="margin-right: 5px; color: #909399">{{$t('Warm tips')}}:</span>
+           {{$t('You have set the following products to be allocated to the vendors')}} 
+           {{$t('only once. Therefore, the following items will need to be')}} 
+           {{$t('re-allocated after the orders are generated again.')}} 
           </div>
           <el-table
             :data="dialogToGenInvoice.onlyOne"
@@ -539,10 +539,10 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="dialogToGenInvoice.isShow = false"
-          >Cancel</el-button
+          >{{$t('Cancel')}}</el-button
         >
         <el-button type="primary" size="small" @click="toGenInvoice">
-          Place {{ purchaseNum }} orders NOW
+          {{$t('Place')}} {{ purchaseNum }} {{$t('orders NOW')}}
         </el-button>
       </span>
     </el-dialog>
@@ -624,7 +624,7 @@ export default {
       },
       dialogToGenInvoiceDefault: "{}",
       paymentArr: [
-        { text: "By AliExpress VIP link", val: 2 },
+        { text: this.$t("By AliExpress VIP link"), val: 2 },
         { text: "PayPal", val: 1 },
         { text: "Bank transfer", val: 3 },
       ],
@@ -806,7 +806,7 @@ export default {
     unAllocate() {
       //取消分配
       this.$confirm(
-        `Un-allocate selected products? (orders: ${this.totalOrdersNum}, products: ${this.checkedVariableId.length})`,
+        `${$t('Un-allocate selected products?')} (orders: ${this.totalOrdersNum}, products: ${this.checkedVariableId.length})`,
         "",
         {
           confirmButtonText: "Confirm",
@@ -823,7 +823,7 @@ export default {
             if (r.ErrorCode == "9999") {
               this.$emit("getNum");
               this.getItems(true);
-              this.$elementMessage("UN-allocate Success", "success");
+              this.$elementMessage(this.$t("UN-allocate Success"), "success");
             } else {
               this.$elementMessage(r.Message, "error");
             }
@@ -879,11 +879,11 @@ export default {
       }
       if (type == "range") {
         if (!(this.orderMin || this.orderMax)) {
-          this.$elementMessage("请输入单号范围", "error");
+          this.$elementMessage(this.$t("请输入单号范围"), "error");
           return;
         }
         if (this.orderMin > this.orderMax) {
-          this.$elementMessage("起始单号必须小于结束单号", "error");
+          this.$elementMessage(this.$t("起始单号必须小于结束单号"), "error");
           return;
         }
         this.filterParams.orderMin = this.orderMin;

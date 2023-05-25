@@ -5,7 +5,7 @@
         <div class="left">
           <div class="title">
             <i class="el-icon-s-order"></i>
-            <h2>Place Order</h2>
+            <h2>{{$t('Place Order')}}</h2>
           </div>
         </div>
         <div class="right"></div>
@@ -15,21 +15,21 @@
           <el-col :span="24">
             <el-card shadow="always" style="margin-bottom: 10px">
               <div class="add-card-header">
-                <div><router-link to="/cart"><i class="el-icon-arrow-left"></i> Back</router-link></div>
+                <div><router-link to="/cart"><i class="el-icon-arrow-left"></i> {{$t('back')}}</router-link></div>
                 <div>
                   <el-link type="success" icon="el-icon-plus" class="mg-r-20" 
                     @click="openAddAdd()"
                   >
-                    Add New Address
+                    {{$t('Add New Address')}}
                   </el-link>
-                  <el-link type="primary" @click="$router.push({path:'/manage-addresses'})">Manage-Addresses</el-link>
+                  <el-link type="primary" @click="$router.push({path:'/manage-addresses'})">{{$t('Manage-Addresses')}}</el-link>
                 </div>
               </div>
               <template v-if="addList.length">
                 <swiper ref="mySwiper" :options="swiperOptions" class="mg-b-20">
                   <swiper-slide v-for="add in addList" :key="add.id">
                     <el-card class="add-card" :class="{default: add.isDefault == '1', active: add.id == activeAddressId}" @click.native="selectActive(add)">
-                      <div class="default-tx">Default Address</div>
+                      <div class="default-tx">{{$t('Default Address')}}</div>
                       <div class="name">{{add.firstName}} {{add.lastName}}</div>
                       <el-divider></el-divider>
                       <div class="add-row tx-ellipsis1">
@@ -39,7 +39,7 @@
                       <div class="add-row tx-ellipsis1">{{codeToCountry(add.country)}} ({{add.country}})</div>
                       <div class="add-row tx-ellipsis1">{{add.phone}}</div>
                       <div class="action">
-                        <el-link type="primary" @click.stop="openAddAdd(add)">Edit</el-link>
+                        <el-link type="primary" @click.stop="openAddAdd(add)">{{$t('Edit')}}</el-link>
                       </div>
                       <div class="active-badge">
                         <i class="el-icon-check"></i>
@@ -67,14 +67,14 @@
                 <el-row :gutter="25">
                   <el-col :span="8">
                     <el-card class="add-ads-placeholder" @click.native="openAddAdd()">
-                      <span>Add New Address</span>
+                      <span>{{$t('Add New Address')}}</span>
                     </el-card>
                   </el-col>
                 </el-row>
               </div>
               <el-row v-if="activeAddressId" :gutter="10" class=" mg-b-10">
                 <el-col :span="24">
-                  Address: <b style="color: #909399;">{{`${activeAddObj.address1} ${activeAddObj.street} ${activeAddObj.city}`}}</b>
+                  {{$t('Address')}}: <b style="color: #909399;">{{`${activeAddObj.address1} ${activeAddObj.street} ${activeAddObj.city}`}}</b>
                 </el-col>
               </el-row>
               <el-row v-if="activeAddressId" v-loading="logisticLoading" :gutter="10">
@@ -122,7 +122,7 @@
         <!-- order info -->
         <el-row :gutter="10" class="order-info-wrap">
           <el-col :span="24">
-            <h2>Order Information</h2>
+            <h2>{{$t('Order Information')}}</h2>
           </el-col>
           <el-col :span="24">
             <el-card class=" mg-b-15">
@@ -195,13 +195,13 @@
               </el-table>
               <div class="total-box">
                 <div class="total-row r1">
-                  <span style=" margin-right: 35px;">1 Unit</span> Product Price: <span class=" mg-l-5">${{priceTotal}}</span> 
+                  <span style=" margin-right: 35px;">1 Unit</span> {{$t('Product Price')}}: <span class=" mg-l-5">${{priceTotal}}</span> 
                 </div>
                 <div class="total-row r2">
-                  Shipping Cost: <span class=" mg-l-5">{{activeLogistic ? `$ ${Number(activeLogistic.freight).toFixed(2)}` : '---'}}</span> 
+                 {{$t('Shipping Cost')}}: <span class=" mg-l-5">{{activeLogistic ? `$ ${Number(activeLogistic.freight).toFixed(2)}` : '---'}}</span> 
                 </div>
                 <div class="total-row r3">
-                  Total Amount: <span class=" mg-l-5">$ {{totalAmount}}</span> 
+                  {{$t('Total Amount')}}: <span class=" mg-l-5">$ {{totalAmount}}</span> 
                 </div>
               </div>
             </el-card>
@@ -209,7 +209,7 @@
           <el-col :span="24">
             <div class="submit-box">
               <el-button class="submit-btn" type="primary" :loading="placeOrderLoading" @click="setPlaceOrder" id="placeOrderSubmit">
-                <span id="placeOrderSubmitInner">Submit</span>
+                <span id="placeOrderSubmitInner">{{$t('submit')}}</span>
               </el-button>
             </div>
           </el-col>
@@ -387,11 +387,11 @@ export default {
     setPlaceOrder(){
       //下单
       if(!this.activeAddObj){
-        this.$elementMessage('Please select a shipping address', "error");
+        this.$elementMessage(this.$t('Please select a shipping address'), "error");
         return;
       }
       if(!this.activeLogistic){
-        this.$elementMessage('Please select a shipping method', "error");
+        this.$elementMessage(this.$t('Please select a shipping method'), "error");
         return;
       }
       let params = {
@@ -510,7 +510,7 @@ export default {
       //保存地址成功
       this.getAddList( undefined, this.dialogEditAdd.addressId);
       this.dialogEditAdd.isShow = false;
-      this.$elementMessage('save successfully', "success");
+      this.$elementMessage(this.$t('save successfully'  ), "success");
     },
     formatAttr(attr){
       attr = attr.split("||")

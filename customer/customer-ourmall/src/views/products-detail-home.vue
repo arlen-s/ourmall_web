@@ -14,7 +14,7 @@
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/products-market' }">
               <!-- {{$root.$children[0].pName.a}} -->
-              Products Market
+              {{$t('Products Market')}}
             </el-breadcrumb-item>
             <template v-if="breadCrumbs && breadCrumbs.L && breadCrumbs.l1">
               <el-breadcrumb-item
@@ -78,11 +78,11 @@
               <!-- <div class="proCost">{{$showSybmol()}} {{ Number(price)!='0.00' ? $exchangeRate(Number(price).toFixed(2)) : (minPrice||maxPrice) ? `${$exchangeRate(minPrice)} - ${$exchangeRate(maxPrice)}` : $exchangeRate(price)}}</div> -->
               <!-- 选属性 -->
               <div class="other-info" id="special-info" v-if="vatDom">
-                <div class="title">   Mehrwertsteuer-Informationen :</div>
+                <div class="title">   {{$t('VAT information')}} :</div>
                 <div class="right-fit">
-                    <span class="tx-bold">können Sie klicken </span>
-                      <el-link type="primary" @click="showVatDom"> hier </el-link>
-                      <span>für Informationen zur Mehrwertsteuer</span>
+                    <span class="tx-bold">{{$t('you can click')}} </span>
+                      <el-link type="primary" @click="showVatDom"> {{$t('here')}} </el-link>
+                      <span>{{$t('for VAT information')}}</span>
                 </div>  
               </div>
               <div class="other-info">
@@ -107,10 +107,10 @@
                 </div>
               </div>
               <div class="d-flex warehouse-sty" style="align-items: baseline;">
-                <div class="title">Versand :</div>
+                <div class="title">{{$t('Shipping')}} :</div>
                 <div class>
                   <div class="d-flex text mg-b-15">
-                    <div class="mg-l-10 " style="width: 100px;">Versand nach</div>
+                    <div class="mg-l-10 " style="width: 100px;">{{$t('Shipping to')}}</div>
                     <el-select
                       size="small"
                       v-model="shippingContry"
@@ -130,7 +130,7 @@
                     </el-select>
                   </div>
                   <div class="d-flex text">
-                    <div class="mg-l-10" style="width: 100px;">Versandgebühr</div>
+                    <div class="mg-l-10" style="width: 100px;">{{$t('Shipping fee')}}</div>
                     <el-select
                       size="small"
                       v-model="shippingFee"
@@ -166,7 +166,7 @@
               </ul>
               <!-- 这里 -->
               <div class="d-flex  warehouse-sty" style="align-items: baseline; margin:20px 0 10px 0;">
-                <div class="title">Qualität :</div>
+                <div class="title">{{$t('Quality')}} :</div>
                 <div class="mg-l-20 d-flex">
                   <el-input-number
                     size="small"
@@ -177,7 +177,7 @@
                     label="description text"
                   ></el-input-number>
                   <div class="mg-l-20 d-flex">
-                    <div>Inventar :</div>
+                    <div>{{$t('inventory')}} :</div>
                     <div class="tx-bold mg-l-10">{{qualityNum}}</div>
                   </div>
                 </div>
@@ -187,14 +187,14 @@
                 type="primary"
                 @click="import_pro($event)"
                 :disabled="isAdd == 1"
-              >Zur Liste hinzufügent</el-button>
+              >{{$t('Add to List')}}</el-button>
               <el-button
                 class="addCart"
                 type="primary"
                 @click="addToCart($event)"
                 :disabled="qualityNum == 0 ? true : false"
-                style="width:auto;"
-              >Zum Warenkorb hinzufügen</el-button> 
+                style="width:auto"
+              >{{$t('Add to Cart')}}</el-button> 
               <!-- 1.9 平铺     -->
               <!-- <div v-if="$store.state.configJson.detailPage.imgSize == 'Tile'" class="inner-description" v-html="web"> -->
 
@@ -215,42 +215,42 @@
       <el-row style="margin-bottom:50px">
         <el-col>
           <el-tabs v-model="activeTabsBom" @tab-click="handleClick">
-            <el-tab-pane label="Specifications" name="first">
+            <el-tab-pane :label="$t('Specifications')" name="first">
               <div v-if="showSpace &&  checkData.attachment.length> 0">
-               <h3>Download der Anlage</h3>
+               <h3>{{$t('Download the attachment')}}</h3>
               <div class="product-information2">
                 <span class="fly-box"  v-for="(item, c) in checkData.attachment" :key="c" @click="downFile(item.url,item.name)"><i class="el-icon-document"></i>{{item.name}}</span>
               </div>   
               </div>
               <div style="margin-top:30px"  v-if="showSpace">
-              <h3 >Produktinformation</h3>
+              <h3 >{{$t('product information')}}</h3>
               <div class="product-information">
                 <div>
                   <span>sku</span>
                   <span>{{checkData.sku || ''}}</span>
                 </div>
                 <div>
-                  <span>Produktkategorie</span>
+                  <span>{{$t('Product category')}}</span>
                   <span>{{checkData.productCategory}}</span>
                 </div>
                 <div>
-                  <span>Produktname</span>
+                  <span>{{$t('product name')}}</span>
                   <span>{{checkData.productName || ''}}</span>
                 </div>
                 <div>
-                  <span>Spezifikation</span>
+                  <span>{{$t('Specification')}}</span>
                   <span>{{checkData.propertyValue || '/'}}</span>
                 </div>
                 <div>
-                  <span>Material</span>
+                  <span>{{$t('material')}}</span>
                   <span>{{checkData.material || ''}}</span>
                 </div>
                 <div>
-                  <span>Größe</span>
+                  <span>{{$t('size')}}</span>
                   <span>{{checkData.productLength}}*{{checkData.productWidth}}*{{checkData.productHeight}} （V{{ Number(checkData.productLength)* Number(checkData.productWidth)*Number(checkData.productHeight)}} cm³）</span>
                 </div>
                 <div>
-                  <span>Gewicht</span>
+                  <span>{{$t('weight')}}</span>
                   <span>{{checkData.weight}}</span>
                 </div>
               </div>
@@ -279,7 +279,7 @@
               
               </div>
             </el-tab-pane>
-            <el-tab-pane label="product description" name="second">
+            <el-tab-pane :label="$t('product description')" name="second">
               <div v-html="web"></div>
             </el-tab-pane>
             <el-tab-pane label="After Sales Service" name="three" v-if="salesGuaranteeTimeValue">
@@ -289,7 +289,7 @@
                 :src="returnImg"
                 fit="contain"></el-image>
                 <strong class="sp" v-if="!salesGuaranteeTimeValue"></strong>
-                <strong class="sp" v-else>Rückgabe innerhalb von{{salesGuaranteeTimeValue}}{{timeType}}</strong>
+                <strong class="sp" v-else>{{$t('Returnable with in')}}{{salesGuaranteeTimeValue}}{{timeType}}</strong>
                   
               </div>
             </el-tab-pane>
@@ -345,7 +345,7 @@
         <el-table-column property="name" label="Carrier"></el-table-column>
       </el-table>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="shoppingDialog = false">Schließen Sie</el-button>
+        <el-button @click="shoppingDialog = false">{{$t('Close')}}</el-button>
       </div>
     </el-dialog>
     <el-dialog
@@ -354,9 +354,9 @@
   width="40%">
   <el-row>
     <el-col>
-        <span class="pad-20">Der Preis eines Artikels ohne Steuern wird auf der Grundlage des vom Verkäufer festgelegten Artikelpreises und des geltenden Steuersatzes berechnet. Für weitere Einzelheiten können Sie sich an den Verkäufer wenden.</span>
+        <span class="pad-20">{{$t('The tax-inclusive price of an item is calculated based on the item price set by the seller and the applicable tax rate. You can contact the seller for more details.')}}</span>
         <span class="pad-10">
-           Mehrwertsteuersatz (Bestimmung nur in Deutschland): {{vatValue}} %
+          {{$t('VAT rate(Destination only in Germany)')}}: {{vatValue}} %
         </span>
         <div style="padding:20px">
             <el-table
@@ -388,7 +388,7 @@
  
 
   <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogVisibleHide = false">eingeben.</el-button>
+    <el-button type="primary" @click="dialogVisibleHide = false">{{$t('enter')}}</el-button>
   </span>
 </el-dialog>
   </div>

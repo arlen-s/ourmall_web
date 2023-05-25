@@ -154,14 +154,14 @@
              $store.state.referenceNumber || ''
           }}</a></span> 
 			<span class="tms" @click="showAcy">
-				《PRIVACY STATEMENT》
+				《{{$t('PRIVACY STATEMENT')}}》
 			</span>
 			<span class="tms" @click="showRms">
-				《Terms and Conditions》
+				《{{$t('Terms and Conditions')}}》
 			</span>
     </div>
 		<el-dialog
-  title="PRIVACY STATEMENT"
+  :title="$t('PRIVACY STATEMENT')"
   :visible.sync="dialogVisibleAcy"
   width="60%">
   <div style="padding:10px" class="desc-box">
@@ -485,7 +485,7 @@
   </span>
 </el-dialog>
 <el-dialog
-  title="Terms and Conditions"
+  :title="$t('Terms and Conditions')"
   :visible.sync="dialogVisibleRms"
   width="60%">
   <div class="desc-box">

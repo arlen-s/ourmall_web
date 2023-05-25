@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-money"></i>
-          <h2>Payment Record</h2>
+          <h2>{{$t('Payment Record')}}</h2>
         </div>
       </div>
       <div class="right"></div>
@@ -15,9 +15,9 @@
         style="margin-bottom: 10px; font-size: 12px"
       >
         <el-breadcrumb-item :to="{ path: '/Recharge' }"
-          >Recharge</el-breadcrumb-item
+          >{{$t('Recharge')}}</el-breadcrumb-item
         >
-        <el-breadcrumb-item>Payment Record</el-breadcrumb-item>
+        <el-breadcrumb-item>{{$t('Payment Record')}}</el-breadcrumb-item>
       </el-breadcrumb>
       <el-card>
         <el-row
@@ -55,7 +55,7 @@
                     {{ scope.row.code }}
                   </div>
                   <div>
-                    <span style="color: #909399">trade code：</span>
+                    <span style="color: #909399">{{$t('trade code')}}：</span>
                     {{ scope.row.tradeCode }}
                   </div>
                 </template>

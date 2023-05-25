@@ -7,7 +7,7 @@
       >
         <el-card class="box-card signup-bg">
           <div slot="header">
-            Users login
+            {{$t('Users login')}}
           </div>
           <el-row>
             <el-col

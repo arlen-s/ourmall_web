@@ -3,15 +3,15 @@
 		<div class="box">
 			<img src="../assets/verifyEmail.png" alt="">
 			<div class="content">
-				<h3 class="title">Email Security Verification</h3>
-				<div class="desc">For security reason.We need to verify your email address.Please click "Send" to get the verification code in your inbox</div>
-				<div class="email">Send To: {{$store.state.userInfo.email}}</div>
+				<h3 class="title">{{$t('Email Security Verification')}}</h3>
+				<div class="desc">{{$t("For security reason.We need to verify your email address.Please click 'Send' to get the verification code in your inbox")}}</div>
+				<div class="email">{{$t('Send To')}}: {{$store.state.userInfo.email}}</div>
 				<div class="inputbox">
 					<input class="form-control" type="text" v-model="authCode" placeholder="Enter Verification Code">
-					<span v-if="!hasSendCode" @click="sendCode">Send</span>
+					<span v-if="!hasSendCode" @click="sendCode">{{$t('Send')}}</span>
 					<span v-if="hasSendCode">{{time}}</span>
 				</div>
-				<button class="btn" :class="{'highlight': highlight}" @click="verifyClick">Verify</button>
+				<button class="btn" :class="{'highlight': highlight}" @click="verifyClick">{{$t('Verify')}}</button>
 			</div>
 		</div>
 	</div>
@@ -53,7 +53,7 @@ export default {
 			}, r => {
 				if (r.ErrorCode == '9999') {
 					this.$message({
-						message: "The Code was sent successfully",
+						message: this.$t("The Code was sent successfully"),
 						type: "success",
 					});
 					vm.time = 300;

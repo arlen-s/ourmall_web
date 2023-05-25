@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="Add Tracking"
+    :title="$t('Add Tracking')"
     :visible.sync="dialog.visible"
     :close-on-click-modal="false"
     :before-close="initDialog"
@@ -14,17 +14,17 @@
         label-width="130px"
         class="demo-ruleForm"
       >
-        <el-form-item label="Track number" prop="number">
+        <el-form-item :label="$t('Track number')" prop="number">
           <el-input
             v-model="ruleForm.number"
-            placeholder="Please input the tracking number"
+            :placeholder="$t('Please input the tracking number')"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Track company" prop="company">
+        <el-form-item :label="$t('Track company')" prop="company">
           <el-select
             style="width: 100%"
             v-model="ruleForm.company"
-            placeholder="Please select logistics company"
+            :placeholder="$t('Please select logistics company')"
           >
             <el-option
               v-for="(item, index) of companyList"
@@ -37,8 +37,8 @@
       </el-form>
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="save('ruleForm')"> Confirm </el-button>
-      <el-button @click="initDialog()"> Cancel </el-button>
+      <el-button type="primary" @click="save('ruleForm')"> {{$t('Confirm')}} </el-button>
+      <el-button @click="initDialog()"> {{$t('Cancel')}} </el-button>
     </div>
   </el-dialog>
 </template> 
@@ -67,14 +67,14 @@ export default {
         number: [
           {
             required: true,
-            message: "Please input the tracking number",
+            message: this.$t("Please input the tracking number"),
             trigger: "blur",
           },
         ],
         company: [
           {
             required: true,
-            message: "Please select logistics company",
+            message: this.$t("Please select logistics company"),
             trigger: "change",
           },
         ],
@@ -121,7 +121,7 @@ export default {
             params,
             (r) => {
               if (r.ErrorCode == "9999") {
-                this.$elementMessage("Your request has been sent", 'success');
+                this.$elementMessage(this.$t("Your request has been sent"), 'success');
                 this.initDialog();
                 this.$parent.getItem();
               } else {

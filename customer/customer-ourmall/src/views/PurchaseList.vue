@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-receiving"></i>
-          <h2>Purchase List</h2>
+          <h2>{{$t('Purchase List')}}</h2>
         </div>
       </div>
       <div class="right"></div>
@@ -50,10 +50,10 @@
                     </el-form-item>
                     <el-form-item>
                       <el-button type="primary" @click="filterGetItem()"
-                        >Filter</el-button
+                        >{{$t('Filter')}}</el-button
                       >
                       <el-button type="danger" @click="clearFilter()"
-                        >Clear</el-button
+                        >{{$t('Clear')}}</el-button
                       >
                     </el-form-item>
                   </el-form>
@@ -94,12 +94,12 @@
             </el-row>
             <!-- 表格 -->
             <el-row :gutter="0" class="table-title">
-              <el-col :span="9" class="tx-center">Products</el-col>
-              <el-col :span="2" class="tx-center">Price</el-col>
-              <el-col :span="2" class="tx-center">Quantity</el-col>
-              <el-col :span="3" class="tx-center">Status</el-col>
-              <el-col :span="4" class="tx-center">Tracking Number</el-col>
-              <el-col :span="4" class="tx-center">Action</el-col>
+              <el-col :span="9" class="tx-center">{{$t('Products')}}</el-col>
+              <el-col :span="2" class="tx-center">{{$t('Price')}}</el-col>
+              <el-col :span="2" class="tx-center">{{$t('Quantity')}}</el-col>
+              <el-col :span="3" class="tx-center">{{$t('Status')}}</el-col>
+              <el-col :span="4" class="tx-center">{{$t('Tracking Number')}}</el-col>
+              <el-col :span="4" class="tx-center">{{$t('Action')}}</el-col>
             </el-row>
             <el-row
               v-for="item in items"
@@ -112,12 +112,12 @@
                   moment.unix(item.timeCreated).format("ll [at] LTS")
                 }}</span>
                 <span class="mg-r-20" style="color: #909399">
-                  Order Number:
+                  {{$t('Order Number')}}:
                   <span class="mg-l-5" style="color: #606266">{{
                     item.code
                   }}</span>
                 </span>
-                <el-button size="mini" plain @click="toDetail(item)">View Details</el-button>
+                <el-button size="mini" plain @click="toDetail(item)">{{$t('View Details')}}</el-button>
               </el-col>
               <div style="clear: both"></div>
               <div
@@ -126,7 +126,7 @@
                 class="product-row"
               >
                 <el-col :span="9" class="td-product-info">
-                  <a  v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74"
+                  <a
                     :href="`/item/${sku.productId}/${sku.name
                       .replace(/\s+/g, '-')
                       .replace(/[^\w]/g, '_')}.html`"
@@ -144,26 +144,8 @@
                       </div>
                     </el-image>
                   </a>
-                  <a v-else
-                    :href="`/itemOld/${sku.productId}/${sku.name
-                      .replace(/\s+/g, '-')
-                      .replace(/[^\w]/g, '_')}.html`"
-                    target="_blank"
-                  >
-                    <el-image
-                      class="product-img"
-                      :fit="'cover'"
-                      @click="productClick(sku.productId)"
-                      :src="sku.product ? sku.product.imgUrl : sku.propertyImage"
-                      lazy
-                    >
-                      <div slot="error" class="image-slot">
-                        <i class="el-icon-picture-outline"></i>
-                      </div>
-                    </el-image>
-                  </a>
                   <div class="right">
-                    <a   v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74"
+                    <a
                       @click="productClick(sku.productId)"
                       class="name tx-ellipsis2"
                       :href="`/item/${
@@ -175,18 +157,6 @@
                     >
                       {{ sku.name }}
                     </a>
-                    <a   v-else
-                      @click="productClick(sku.productId)"
-                      class="name tx-ellipsis2"
-                      :href="`/itemOld/${
-                        sku.productId
-                      }/${sku.name
-                        .replace(/\s+/g, '-')
-                        .replace(/[^\w]/g, '_')}.html`"
-                      target="_blank"
-                    >
-                      {{ sku.name }}
-                    </a>                    
                     <div>{{formatAttr(sku.stock ? sku.stock.propertyValue : sku.propertyValue)}}</div>
                     <div class="sku">
                       SKU
@@ -222,7 +192,7 @@
                 >
                   <el-dropdown v-if="!si && (item.status == 1 || (/3|4|5/.test(item.status) && item.abnormalStatus == 0))" @command="handleCommand">
                     <el-button plain>
-                      Action <i class="el-icon-arrow-down el-icon--right"></i>
+                      {{$t('Action')}} <i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item
@@ -230,14 +200,14 @@
                         :command="{ item, type: 'pay' }"
                         style="color: #5c6ac4"
                       >
-                        Pay
+                       Pay
                       </el-dropdown-item>
                       <el-dropdown-item
                         v-if="item.status == 1"
                         :command="{ item, type: 'cancel' }"
                         style="color: #f56c6c"
                       >
-                        Cancel
+                        {{$t('Cancel')}}
                       </el-dropdown-item>
                       <el-dropdown-item
                         :command="{ item, type: 'dispute' }"
@@ -253,16 +223,16 @@
               <el-col :span="24" class="t-row-2">
                 <span class="mg-r-20">1 Unit</span>
                 <span class="mg-r-5"
-                  >Amount:
+                  >{{$t('Amount')}}:
                   <b style="color: #f56c6c; font-size: 16px"
                     >$ {{ Number(item.realAmount).toFixed(2) }}</b
                   ></span
                 >
-                <span style="color: #909399">(Shipping Cost Included)</span>
+                <span style="color: #909399">({{$t('Shipping Cost Included')}})</span>
               </el-col>
             </el-row>
             <el-row v-if="!items.length" :gutter="15">
-              <el-col :span="24" style=" text-align: center; color: #909399;">no data</el-col>
+              <el-col :span="24" style=" text-align: center; color: #909399;">{{$t('no data')}}</el-col>
             </el-row>
           </el-card>
         </el-col>
@@ -385,7 +355,7 @@ export default {
           this.openPay(command.item);
           break;
         case "cancel":
-          this.$confirm("Do you want to cancel the order?", "", {
+          this.$confirm(this.$t("Do you want to cancel the order?"), "", {
             confirmButtonClass: " el-button--danger",
             type: "warning",
           })
@@ -402,7 +372,7 @@ export default {
                   if (r.ErrorCode == 9999) {
                     this.getItem(true);
                     this.$message({
-                      message: "Order was successfully cancelled",
+                      message: this.$t("Order was successfully cancelled"),
                       type: "success",
                     });
                   } else {

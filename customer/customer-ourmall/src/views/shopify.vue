@@ -8,26 +8,23 @@
         <div class="rows">
           <div class="content">
             <div class="title">
-              THE BRIDGE CONNECTING SUPPLIERS AND YOU, MAKING DROPSHIPPING
-              BUSINESS MORE CONVENIENT.
+              {{$t('THE BRIDGE CONNECTING SUPPLIERS AND YOU, MAKING DROPSHIPPING BUSINESS MORE CONVENIENT')}}
             </div>
             <div class="flex">
               <img src="../../public/images/shopify/register.png" />
               <span
-                >Your supplier only needs to register an account to quickly
-                build the system</span
+                >{{$t('Your supplier only needs to register an account to quickly build the system')}}</span
               >
             </div>
             <div class="flex">
               <img src="../../public/images/shopify/order.png" />
               <span
-                >One-click hosting of stores, fast synchronization of
-                orders</span
+                >{{$t('One-click hosting of stores, fast synchronization of orders')}}</span
               >
             </div>
             <div class="flex">
               <img src="../../public/images/shopify/logistics.png" />
-              <span>Automatically synchronize logistics information</span>
+              <span>{{$t('Automatically synchronize logistics information')}}</span>
             </div>
           </div>
           <div class="image">
@@ -36,10 +33,10 @@
         </div>
       </div>
       <div class="body">
-        <div class="title">Quick Access</div>
-        <div class="txt">Do you have an OurMall supplier for you</div>
+        <div class="title">{{$t('Quick Access')}}</div>
+        <div class="txt">{{$t('Do you have an OurMall supplier for you')}}</div>
         <div class="row1">
-          <div class="tit">Already have a supplier</div>
+          <div class="tit">{{$t('Already have a supplier')}}</div>
           <div class="input">
             <div class="field">
               <div class="field__body">
@@ -55,12 +52,10 @@
           </div>
         </div>
         <div class="row2">
-          <div class="tit">I don't have a supplier</div>
+          <div class="tit">{{$t("I don't have a supplier")}}</div>
           <div class="txt">
             <span
-              >Let your supplier fulfill your order more systematically, copy
-              the link and send it to your supplier, and immediately invite your
-              supplier to settle in,
+              >{{$t('Let your supplier fulfill your order more systematically, copy the link and send it to your supplier, and immediately invite your supplier to settle in,')}}
             </span>
             <a class="url" href="https://www.ourmall.com"
               >https://www.ourmall.com</a
@@ -70,12 +65,12 @@
               v-clipboard:copy="'https://www.ourmall.com'"
               v-clipboard:success="onCopy"
               v-clipboard:error="onError"
-              >Copy Link</span
+              >{{$t('Copy Link')}}</span
             >
           </div>
         </div>
       </div>
-      <div class="footer">© 2015-2021OurMall All Rights Reserved.</div>
+      <div class="footer">© {{$t('2015-2021OurMall All Rights Reserved')}}.</div>
     </div>
   </div>
 </template>

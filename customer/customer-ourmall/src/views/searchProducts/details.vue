@@ -6,7 +6,7 @@
 		</div>
 		<el-card>
 			<div class="publishDetail">
-				<h1 class="detail-title">Base Information</h1>
+				<h1 class="detail-title">{{$t('Base Information')}}</h1>
 				<el-form label-width="140px" class="demo-ruleForm">
 					<el-form-item label="Picture:" prop="picture" v-if="publishDetail.imgUrlJson">
 						<el-image
@@ -40,7 +40,7 @@
 
 		<el-card class="mg-t-20" v-if="publishDetail.status != 1">
 			<div class="publishDetail">
-				<h1 class="detail-title">Platform Reply</h1>
+				<h1 class="detail-title">{{$t('Platform Reply')}}</h1>
 					<el-form label-width="140px" class="demo-ruleForm" v-if="publishDetail.status == '9'">
 						<el-form-item label="Fail Reason:">
 							{{ publishDetail.remark }}

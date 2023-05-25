@@ -1,19 +1,19 @@
 <template>
   <div v-loading="loading" class="upload-logo">
     <div class="title">
-      <h2>Logo</h2>
-      <p>最大建议尺寸 200px * 200px, 图片可自适应</p>
+      <h2>{{$t('Logo')}}</h2>
+      <p>{{$t('最大建议尺寸 200px * 200px, 图片可自适应')}}</p>
     </div>
     <div v-if="!logo" class="upload-box">
       <a class="upload-btn" href="javascript:;" @click="openUploadImg">
-        <i class="el-icon-plus"></i>添加图片
+        <i class="el-icon-plus"></i>{{$t('添加图片')}}
       </a>
     </div>
     <div v-else class="logo-preview">
       <div class="img-box" :style="{backgroundImage: `url(${logo})`}"></div>
       <div class="action">
-        <el-link type="primary" @click="openUploadImg">更改</el-link>
-        <el-link type="danger" @click="delImg">删除</el-link>
+        <el-link type="primary" @click="openUploadImg">{{$t('更改')}}</el-link>
+        <el-link type="danger" @click="delImg">{{$t('删除')}}</el-link>
       </div>
     </div>
     <input type="file" id="uploadImg" style="display: none;" accept="image/jpeg, image/png, image/gif, image/webp" @change="Base64($event)">

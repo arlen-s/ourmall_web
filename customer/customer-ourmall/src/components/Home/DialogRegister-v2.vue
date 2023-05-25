@@ -25,7 +25,7 @@
         <el-button type="primary" @click="register" :loading="data.loading">CREATE AN ACCOUNT</el-button>
       </div>
       <div style=" display: flex; justify-content: flex-end; align-items: center; color: #909399;">
-        Already had an account? <span style=" margin: 0 15px;">|</span> <el-link type="primary" @click="switchTo('login')">Log in</el-link>
+        Already had an account? <span style=" margin: 0 15px;">|</span> <el-link type="primary" @click="switchTo('login')">{{$t('Login')}}</el-link>
       </div>
     </div>
   </el-dialog>

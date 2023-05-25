@@ -7,21 +7,21 @@
       <div class="left">
         <div class="title" style="margin-bottom: 10px;">
           <i class="el-icon-shopping-bag-1"></i>
-          <h2>My Allocated Products</h2>
+          <h2>{{$t('My Allocated Products')}}</h2>
         </div>
         <el-breadcrumb separator-class="el-icon-arrow-right" style=" font-size: 12px">
-          <el-breadcrumb-item :to="{ path: '/vendors' }" style="color: #5c6ac4;">Vendors</el-breadcrumb-item>
-          <el-breadcrumb-item style="color: #C0C4CC;">My Allocated Products</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/vendors' }" style="color: #5c6ac4;">{{$t('Vendors')}}</el-breadcrumb-item>
+          <el-breadcrumb-item style="color: #C0C4CC;">{{$t('My Allocated Products')}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <div class="right">
         <el-button type="primary" size="medium" :disabled="!checkdeStatus.checkedArr.length"
           style=" margin-right: 10px;" @click="openAllocateToVendor()"
-        >Batch Re-allocate</el-button>
+        >{{$t('Batch Re-allocate')}}</el-button>
         <el-button type="danger" size="medium" 
           :disabled="!checkdeStatus.checkedArr.length"
           @click="confirmUnAllocate('multi')"
-        >Batch Un-allocate</el-button>
+        >{{$t('Batch Un-allocate')}}</el-button>
         
       </div>
     </div>
@@ -83,11 +83,11 @@
                 <el-button
                   type="primary"
                   @click="filterGetItem"
-                >Filter</el-button>
+                >{{$t('Filter')}}</el-button>
                 <el-button
                   type="danger"
                   @click="clearFilter('all')"
-                >Clear</el-button>
+                >{{$t('Clear')}}</el-button>
               </el-form-item>
             </el-form>
             <div style=" margin-bottom: 5px;">
@@ -110,14 +110,14 @@
                         v-model="allChecked"
                         @change="changeAllChecked"
                       ></el-checkbox>
-                      <div class="title">My Product</div>
+                      <div class="title">{{$t('My Product')}}</div>
                     </div>
                   </el-col>
                   <el-col :span="6">
-                    <div class=" title">My store</div>
+                    <div class=" title">{{$t('My store')}}</div>
                   </el-col>
                   <el-col :span="6">
-                    <div class=" title">Vendor</div>
+                    <div class=" title">{{$t('Vendor')}}</div>
                   </el-col>
                   <el-col :span="2">
                   </el-col>
@@ -133,7 +133,7 @@
           :style="[{height: `${tableHeight}px`}, {overflowX: 'hidden'}]"
         >
           <el-col v-if="!items.length">
-            <p style="margin-top: 25px; font-size: 16px; color: #909399; text-align: center;">No product</p>
+            <p style="margin-top: 25px; font-size: 16px; color: #909399; text-align: center;">{{$t('No product')}}</p>
           </el-col>
           <!-- 横列表 -->       
           <el-row :gutter="10" v-for="item in items" :key="item.id">
@@ -165,7 +165,7 @@
                   <div class="info-wrap">
                     <div class="row1">{{item.storeName}}</div>
                     <div class="row1">
-                      <span style="color: #909399">Sale price: </span>
+                      <span style="color: #909399">{{$t('Sale price')}}: </span>
                       <span v-if="item.saleCurrency">{{ ce[item.saleCurrency] ? ce[item.saleCurrency].symbol : item.saleCurrency}} </span>
                       {{item.salePrice}}
                     </div>
@@ -175,7 +175,7 @@
                   <div class="info-wrap">
                     <div class="row1">{{item.vendorName}}</div>
                     <div class="row1">
-                      <span style="color: #909399">Puchase price: </span>
+                      <span style="color: #909399">{{$t('Purchase price')}}: </span>
                       <span>$ </span>
                       {{item.purchasePrice}}
                     </div>
@@ -361,7 +361,7 @@ export default {
       }
     },
     confirmUnAllocate(type, item){
-      this.$confirm(type == 'single' ?  'Un-allocate selected products?': `Un-allocate selected (${this.checkdeStatus.variableIdArr.length}) products? `, '', {
+      this.$confirm(type == 'single' ?  this.$t('Un-allocate selected products?'): `Un-allocate selected (${this.checkdeStatus.variableIdArr.length}) products? `, '', {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
         type: 'warning'

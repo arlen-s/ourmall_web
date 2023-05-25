@@ -7,7 +7,7 @@
       <div class="left">
         <div class="title">
           <i class=" iconfont icon-support"></i>
-          <h2>My support</h2>
+          <h2>{{$t('My support')}}</h2>
         </div>
       </div>
       <div class="right">
@@ -16,7 +16,7 @@
           icon="el-icon-plus"
           size="small"
           @click="openAddComment"
-        >Create a ticket</el-button>
+        >{{$t('Create a ticket')}}</el-button>
       </div>
     </div>
     <div
@@ -79,7 +79,7 @@
                     type="primary"
                     @click="viewDetail(scope.row)"
                   >
-                    Detail
+                    {{$t('Detail')}}
                   </el-link>
                 </template>
               </el-table-column>

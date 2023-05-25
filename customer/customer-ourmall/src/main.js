@@ -5,6 +5,9 @@ import store from './store'
 // import './plugins/element.js'
 // import './plugins/element-theme/index.css'
 import VueClipboard from 'vue-clipboard2'
+import VueI18n from 'vue-i18n'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import { showLoading, hideLoading, baseURLglobal, numberToCurrency, userFailure, getTableHeight, Logout, getCookie, showSybmol, exchangeRate,loadJs } from './components/component.js'
 import './assets/scss/common.scss'
 import './assets/scss/design-reset.scss'
@@ -16,6 +19,8 @@ import axiosWrap from './plugins/axiosWrap'
 import ApiCall from './plugins/apiCall'
 // import { wxshare } from './plugins/wxshare'
 import VueTour from 'vue-tour'
+import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale'
 import ce from './assets/ce.json'
 import 'xe-utils'
 // import VXETable from 'vxe-table'
@@ -26,6 +31,7 @@ import VueSimpleVerify from 'vue-simple-verify'
 import '../node_modules/vue-simple-verify/dist/vue-simple-verify.css'
 Vue.component('vue-simple-verify', VueSimpleVerify) //拖拽验证
 import VuCountryIntl from 'vue-country-intl';
+import i18n from '@/lang'
 // 引入css
 import '../theme/index.css'
 import 'vue-country-intl/lib/vue-country-intl.css'
@@ -37,6 +43,7 @@ if(process.env.NODE_ENV !== "production"){
 	Vue.config.devtools = true;
 }
 Vue.use(Viewer)
+Vue.use(ElementUI)
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: require('./assets/none-img.png'),
@@ -82,7 +89,7 @@ Vue.use(VueAxios, axiosWrap)
 Vue.prototype.$apiCall = ApiCall;
 VueClipboard.config.autoSetContainer = true
 Vue.use(VueClipboard)
-
+i18n.locale=  localStorage.getItem('countryType') == 'DE'? 'de' : 'de'
 Vue.prototype.$Burying = function (params) {
   if (!window.location.href.includes('godropshipping.com')) {
     return ;
@@ -297,6 +304,7 @@ router.afterEach((to, from) => {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 });
 new Vue({
+  i18n,
   store,
   router,
   render: h => h(App)

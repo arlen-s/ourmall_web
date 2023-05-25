@@ -3,7 +3,7 @@
     <div class="title">
       <div class="left">
         <Logo style="margin-right: 15px" />
-        <div class="welcome">Hi, welcome to {{$root.$children[0].baseUrl == '/my' ? 'GoDropshipping' : 'OurMall'}}</div>
+        <div class="welcome">{{$t('Hi, welcome to')}} {{$root.$children[0].baseUrl == '/my' ? 'GoDropshipping' : 'OurMall'}}</div>
       </div>
       <div class="right">
         <a
@@ -97,15 +97,14 @@
       <template v-else>
         <div class="login-icon"><i class="iconfont icon-login-icon"></i></div>
         <p>
-          Welcome to {{$root.$children[0].pName.a}}! Please sign in or register an account to
-          start the chat.
+         {{$t('Welcome to')}}  {{$root.$children[0].pName.a}}! {{$t('Please sign in or register an account to start the chat.')}}
         </p>
         <div class="login-action">
           <button class="btn signin" @click="$root.$children[0].openLogin()">
-            Sign in
+            {{$t('Sign in')}}
           </button>
           <button class="btn reg" @click="$root.$children[0].signUpOpen()">
-            Register
+            {{$t('Register')}}
           </button>
         </div>
       </template>
@@ -189,7 +188,7 @@
       <img v-for="img in viewImg" :key="img" :src="img">
     </div>
     <div v-if="menuVisible" class="right-menu" @click="revocation">
-      <a href="javascript:;">Recall</a>
+      <a href="javascript:;">{{$t('Recall')}}</a>
     </div>
   </div>
 </template>
@@ -266,11 +265,11 @@ export default {
       //上传文件
       let ex = event.target.files[0].name.split('.').pop();
       if(ex.indexOf('exe') > -1 || ex.indexOf('bat') > -1){
-        this.$alertMsg({message: 'This file format is not supported', position: this.$route.name == 'chat' ? 'bottom-center' : 'bottom-left'})
+        this.$alertMsg({message: this.$t('This file format is not supported'), position: this.$route.name == 'chat' ? 'bottom-center' : 'bottom-left'})
         return;
       }
       if(event.target.files[0].size > 2097152){
-        this.$alertMsg({message: 'The file size can not over 2MB', position: this.$route.name == 'chat' ? 'bottom-center' : 'bottom-left'})
+        this.$alertMsg({message: this.$t('The file size can not over 2MB'), position: this.$route.name == 'chat' ? 'bottom-center' : 'bottom-left'})
         return;
       }
       this.sendLoading = true;
@@ -305,7 +304,7 @@ export default {
     },
     sendMsg() {
       if(!this.message){
-        this.$alertMsg({message: 'Please input your message', position: this.$route.name == 'chat' ? 'bottom-center' : 'bottom-left'})
+        this.$alertMsg({message: this.$t('Please input your message'), position: this.$route.name == 'chat' ? 'bottom-center' : 'bottom-left'})
         return;
       }
       this.sendLoading = true;

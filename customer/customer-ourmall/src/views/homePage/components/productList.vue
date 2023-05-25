@@ -3,7 +3,7 @@
         <h2 class="list-title">{{data.listTitle}}</h2>
         <div class="more-but" @click="goMore()">{{data.moreText}} <i class="el-icon-arrow-right"></i></div>
         <div class="noProduct" v-if="data.isOpen && defaultProductList.length == 0">
-          <div>该分类下目前还没有商品</div>
+          <div>{{$t('该分类下目前还没有商品')}}</div>
           <!-- <el-button type="primary" @click="goToAdd">
             添加商品
           </el-button> -->

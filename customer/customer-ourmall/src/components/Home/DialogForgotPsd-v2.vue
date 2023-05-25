@@ -33,8 +33,8 @@
       </el-form>
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button  @click="data.isShow = false">Discard</el-button>
-      <el-button :loading="data.loading"  type="primary"  @click="saveNewPSD">Confirm</el-button>
+      <el-button  @click="data.isShow = false">{{$t('Discard')}}</el-button>
+      <el-button :loading="data.loading"  type="primary"  @click="saveNewPSD">{{$t('Confirm')}}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -45,7 +45,7 @@ export default {
   data(){
     let checkPassword = (rule, value, callback) => {
       if(!/^(?=.*[A-Za-z])(?=.*\d)[^]{8,32}$/.test(value)){
-        callback(new Error('The password must contain letters, and numbers, Minimum 8 characters'))
+        callback(new Error(this.$t('The password must contain letters, and numbers, Minimum 8 characters')))
       }else{
         callback();
       }

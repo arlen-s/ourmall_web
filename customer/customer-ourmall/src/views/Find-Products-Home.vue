@@ -32,7 +32,7 @@
               >
               </el-input>
             <div class="search-but" @click="search()">
-              SEARCH
+              {{$t('Search')}}
             </div>
           </div>
       </div>
@@ -61,7 +61,7 @@
                 <div class="type-icon">
                   <i class="iconfont icon-weibiaoti5"></i>
                 </div>
-                <div class="type-text">More categories</div>
+                <div class="type-text">{{$t('More categories')}}</div>
               </div>
               <el-dropdown-menu class="more-dropdown" slot="dropdown">
                 <el-dropdown-item
@@ -93,7 +93,7 @@
               class="more"
               @click="goMore('go')"
               v-if="productList && productList.length != 0 && productList.length > 6"
-            >View More ></div>
+            >{{$t('View More')}} ></div>
           </div>
         </div>
           
@@ -159,11 +159,11 @@
                       <!-- 这里 -->
                         <el-dropdown>
                           <el-button type="primary">
-                            Add to Import List<i class="el-icon-arrow-down el-icon--right"></i>
+                           {{$t('Add to Import List')}} <i class="el-icon-arrow-down el-icon--right"></i>
                           </el-button>
                           <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">Add to Import List</el-dropdown-item>
-                            <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
+                            <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">{{$t('Add to Import List')}}</el-dropdown-item>
+                            <el-dropdown-item @click.native="goToDetail(item)">{{$t('Add to Cart')}}</el-dropdown-item>
                           </el-dropdown-menu>
                         </el-dropdown>
                     </div>
@@ -175,7 +175,7 @@
         </div>
         <div v-else>
           <el-card>
-            <b>There are no products in this category</b>
+            <b>{{$t('There are no products in this category')}}</b>
           </el-card>
         </div>
       </div>
@@ -199,14 +199,14 @@
                 info.proList.length != 0 &&
                 info.proList.length > 6
               "
-              >View More ></div
+              >{{$t('View More')}} ></div
             >
           </div>
             
           </div>
           <div v-if="!info.proList || info.proList.length == 0">
             <el-card>
-              <b>There are no products in this category</b>
+              <b>{{$t('There are no products in this category')}}</b>
             </el-card>
           </div>
           <div class="out"  v-else>
@@ -254,11 +254,11 @@
                         <!-- 这里 -->
                         <el-dropdown>
                           <el-button type="primary">
-                            Add to Import List<i class="el-icon-arrow-down el-icon--right"></i>
+                            {{$t('Add to Import List')}}<i class="el-icon-arrow-down el-icon--right"></i>
                           </el-button>
                           <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">Add to Import List</el-dropdown-item>
-                            <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
+                            <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">{{$t('Add to Import List')}}</el-dropdown-item>
+                            <el-dropdown-item @click.native="goToDetail(item)">{{$t('Add to Cart')}}</el-dropdown-item>
                           </el-dropdown-menu>
                         </el-dropdown>
                       </div>
@@ -474,7 +474,7 @@ export default {
       );
     });
     document.title = 
-    `How to find products? Find products in ${this.$root.$children[0].pName.a} Products Market! Dropshipping from Worldwide to Worldwide! :: ${this.$root.$children[0].baseUrl == '/my' ? 'GoDropShipping':'OurMall DropShipping'} App`;
+    `${this.$t('How to find products? Find products in')} ${this.$root.$children[0].pName.a}${$t('Products Market! Dropshipping from Worldwide to Worldwide!')} :: ${this.$root.$children[0].baseUrl == '/my' ? 'GoDropShipping':'OurMall DropShipping'} App`;
   },
   methods: {
     getMenu(){
@@ -513,24 +513,24 @@ export default {
     saveNewPSD(){
       //保存新密码
       if(!this.dialogForgotPsd.email){
-        this.$message({ message: 'Email must be filled in', type: "error" });
+        this.$message({ message: this.$t('Email must be filled in'), type: "error" });
         return;
       }
       if(!this.dialogForgotPsd.captcha){
-        this.$message({ message: 'CAPTCHA must be filled in', type: "error" });
+        this.$message({ message: this.$t('CAPTCHA must be filled in'), type: "error" });
         return;
       }
       if(!this.dialogForgotPsd.password){
-        this.$message({ message: 'New password must be filled in', type: "error" });
+        this.$message({ message: this.$t('New password must be filled in'), type: "error" });
         return;
       }
       if(this.dialogForgotPsd.password != this.dialogForgotPsd.rePassword){
-        this.$message({ message: 'The new password and confirm password must be the same', type: "error" });
+        this.$message({ message: this.$t('The new password and confirm password must be the same'), type: "error" });
         return;
       }
       let pwdRegex = /^(?=.*[A-Za-z])(?=.*\d)[^]{8,32}$/;
       if(!pwdRegex.test(this.dialogForgotPsd.password)){
-        this.$message({ message: 'The password must contain letters, and numbers, Minimum 8 characters', type: "error" });
+        this.$message({ message: this.$t('The password must contain letters, and numbers, Minimum 8 characters'), type: "error" });
         return;
       }
       this.dialogForgotPsd.loading = true;
@@ -559,11 +559,11 @@ export default {
     signIn(){
       //登录
       if(!this.dialogSignin.email){
-        this.$message({ message: 'Email must be filled in', type: "error" });
+        this.$message({ message: this.$t('Email must be filled in'), type: "error" });
         return;
       }
       if(!this.dialogSignin.password){
-        this.$message({ message: 'Password must be filled in', type: "error" });
+        this.$message({ message: this.$t('Password must be filled in'), type: "error" });
         return;
       }
       this.$Burying({
@@ -607,24 +607,24 @@ export default {
     register(){
       //注册
       if(!this.dialogSignup.email){
-        this.$message({ message: 'Email must be filled in', type: "error" });
+        this.$message({ message: this.$t('Email must be filled in'), type: "error" });
         return;
       }
       if(!this.dialogSignup.captcha){
-        this.$message({ message: 'CAPTCHA must be filled in', type: "error" });
+        this.$message({ message: this.$t('CAPTCHA must be filled in'), type: "error" });
         return;
       }
       if(!this.dialogSignup.password){
-        this.$message({ message: 'Password must be filled in', type: "error" });
+        this.$message({ message: this.$t('Password must be filled in'), type: "error" });
         return;
       }
       if(this.dialogSignup.password != this.dialogSignup.rePassword){
-        this.$message({ message: 'The password and confirm password must be the same', type: "error" });
+        this.$message({ message: this.$t('The password and confirm password must be the same'), type: "error" });
         return;
       }
       let pwdRegex = /^(?=.*[A-Za-z])(?=.*\d)[^]{8,32}$/;
       if(!pwdRegex.test(this.dialogSignup.password)){
-        this.$message({ message: 'The password must contain letters, and numbers, Minimum 8 characters', type: "error" });
+        this.$message({ message: this.$t('The password must contain letters, and numbers, Minimum 8 characters'), type: "error" });
         return;
       }
 
@@ -786,7 +786,7 @@ export default {
     },
     goLogin() {
       if (!this.shopUrl) {
-        this.$elementMessage("Please enter Shopify store name", "error");
+        this.$elementMessage(this.$t("Please enter Shopify store name"), "error");
         return false;
       }
       this.win = window.open("/blank.html", "Shopify");
@@ -824,7 +824,7 @@ export default {
     },
     gotoLogin() {
       if (!this.shopUrl) {
-        this.$elementMessage("Please enter Shopify store name", "error");
+        this.$elementMessage(this.$t("Please enter Shopify store name"), "error");
         return false;
       }
       if (localStorage.getItem("c_ourMallUserInfo")) {

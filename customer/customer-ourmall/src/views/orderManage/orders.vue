@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-s-order"></i>
-          <h2>Order Management</h2>
+          <h2>{{$t('Order Management')}}</h2>
         </div>
       </div>
       <div class="right">
@@ -14,18 +14,21 @@
           @click="updateFn"
           :disabled="isDisabled"
         >
-          Update order</el-button
+        {{$t('Update order')}}  </el-button
         >
         <el-button type="primary" v-if="status == 1" @click="ImportFn"
-          >Import order</el-button
+          >{{$t('Import order')}}</el-button
         >
+        <!-- <el-button type="primary" v-if="status == 2" @click="batchWareHouse"
+          >Bulk associated warehouse</el-button
+        >         -->
         <!--  v-if="status == 1 || (status == 2 && activeName == 1)" -->
         <el-button
           v-if="!(status == 2 && (activeName == 2 || activeName == 3))"
           type="primary"
           @click="exportOrder"
         >
-          Export order</el-button
+        {{$t('Export order')}}</el-button
         >
       </div>
     </div>
@@ -71,7 +74,7 @@
                       <template v-else>
                         <el-form-item>
                           <el-input
-                            placeholder="Your No."
+                            :placeholder="$t('Your No.')"
                             v-model="filterParams.codeName"
                             clearable
                             @keyup.enter.native="filterItem"
@@ -80,7 +83,7 @@
                         </el-form-item>
                         <el-form-item>
                           <el-input
-                            placeholder="Order Number"
+                            :placeholder="$t('Order Number')"
                             v-model="filterParams.orderId"
                             clearable
                             @keyup.enter.native="filterItem"
@@ -89,14 +92,14 @@
                         </el-form-item>
                         <el-form-item>
                           <el-input
-                            placeholder="Customer"
+                            :placeholder="$t('Customer')"
                             v-model="filterParams.receiverName"
                             clearable
                             @keyup.enter.native="filterItem"
                             @clear="clearFilter('receiverName')"
                           ></el-input>
                         </el-form-item>
-                        <el-form-item label="Shop name: ">
+                        <el-form-item :label="$t('Shop name') ">
                           <el-select
                             filterable
                             remote
@@ -117,7 +120,7 @@
                         <template v-if="status == 6">
                           <el-form-item>
                             <el-input
-                              placeholder="Payment Number"
+                              :placeholder="$t('Payment Number')"
                               v-model="filterParams.sysCode"
                               clearable
                               @keyup.enter.native="filterItem"
@@ -156,33 +159,33 @@
                       </template>
                       <el-form-item>
                         <el-button type="primary" @click="filterItem"
-                          >Filter</el-button
+                          >{{$t('Filter')}}</el-button
                         >
                         <el-button type="danger" @click="clearFilter"
-                          >Clear</el-button
+                          >{{$t('Clear')}}</el-button
                         >
                       </el-form-item>
                       <el-form-item style="width:200px;"></el-form-item>
                       <el-form-item class="btns-wrap">
                         <template v-if="status == 1 && activeName == 1">
                           <el-button type="primary" @click="quoteFn"
-                            >Create a quote
+                            >{{$t('Create a quote')}}
                           </el-button>
                           <el-button type="primary" @click="quoteCancelFn"
-                            >Quit quotation
+                            >{{$t('Quit quotation')}}
                           </el-button>
                         </template>
                         <template v-if="status == 2 && activeName == 1">
                           <el-button type="primary" @click="payFn"
-                            >Bulk payment</el-button
+                            >{{$t('Bulk payment')}}</el-button
                           >
                           <el-button type="primary" @click="payCancelFn"
-                            >Cancel payment
+                            >{{$t('Cancel payment')}}
                           </el-button>
                         </template>
                         <template v-if="status == 4 && activeName == 1">
                           <el-button type="primary" @click="syncFn"
-                            >Manually synced
+                            >{{$t('Manually synced')}}
                           </el-button>
                         </template>
                         <template
@@ -191,12 +194,12 @@
                           "
                         >
                           <el-button type="primary" @click="BatchContinuePay(1)"
-                            >Continue Pay
+                            >{{$t('Continue Pay')}}
                           </el-button>
                         </template>
                         <template v-if="status == 4 && activeName == 3">
                           <el-button type="primary" @click="BatchContinuePay(2)"
-                            >Re quote
+                            >{{$t('Re quote')}}
                           </el-button>
                         </template>
                       </el-form-item>
@@ -241,10 +244,10 @@
                 </el-table-column>
                 <el-table-column label="order type" v-if="status == 3">
                     <template slot-scope="scope">
-                        <p>{{scope.row.shippingType== 1? 'Wholesale order' : 'offline order'}}</p>
+                        <p>{{scope.row.shippingType== 1? $t('Wholesale order') : $t('offline order')}}</p>
                     </template>
                 </el-table-column>                
-                <el-table-column label="Your shop order num" width="100">
+                <el-table-column :label="$t('Your shop order num')" width="100">
                   <template slot-scope="scope">
                     <el-popover
                       width="1000"
@@ -315,7 +318,7 @@
                                 </template>
                               </template>
                               <span style="width: 200px;display: inline-block;">
-                                Weight：{{
+                               {{$t('Weight')}}：{{
                                   item.vendorProductWeight || "---"
                                 }}
                                 g
@@ -323,11 +326,11 @@
                             </p>
                             <p>
                               <span style="width: 200px;display: inline-block;">
-                                Shop price：{{ scope.row.currency }}
+                               {{$t('Shop price')}}：{{ scope.row.currency }}
                                 {{ Number(item.price).toFixed(2) }}</span
                               >
                               <span style="width: 250px;display: inline-block;">
-                                Supply unit price：
+                               {{$t('Supply unit price')}}：
                                 <span v-if="item.vendorSku">
                                   <template
                                     v-if="
@@ -367,7 +370,7 @@
                                   >
                                 </span>
                                 <span style="color: #F56C6C;" v-else
-                                  >Please make an offer</span
+                                  >{{$t('Please make an offer')}}</span
                                 >
                               </span>
                               <span
@@ -441,7 +444,7 @@
                     </el-popover>
                   </template>
                 </el-table-column>
-                <el-table-column label="Order Number" width="200">
+                <el-table-column :label="$t('Order Number')" width="200">
                   <template slot-scope="scope">
                     <el-popover
                       width="1000"
@@ -512,7 +515,7 @@
                                 </template>
                               </template>
                               <span style="width: 200px;display: inline-block;">
-                                Weight：{{
+                               {{$t('Weight')}}：{{
                                   item.vendorProductWeight || "---"
                                 }}
                                 g
@@ -520,11 +523,11 @@
                             </p>
                             <p>
                               <span style="width: 200px;display: inline-block;">
-                                Shop price：{{ scope.row.currency }}
+                               {{$t('Shop price')}}：{{ scope.row.currency }}
                                 {{ Number(item.price).toFixed(2) }}</span
                               >
                               <span style="width: 250px;display: inline-block;">
-                                Supply unit price：
+                                {{$t('Supply unit price')}}：
                                 <span v-if="item.vendorSku">
                                   <template
                                     v-if="
@@ -564,7 +567,7 @@
                                   >
                                 </span>
                                 <span style="color: #F56C6C;" v-else
-                                  >Please make an offer</span
+                                  >{{$t('Please make an offer')}}</span
                                 >
                               </span>
                               <span
@@ -614,7 +617,7 @@
                                 v-if="item.isManage == 2"
                                 style="width: 200px;display: inline-block;text-align: right;color: red;"
                               >
-                                Removed</span
+                                {{$t('Removed')}}</span
                               >
                             </p>
                           </div>
@@ -627,7 +630,7 @@
                             <el-link
                               type="primary"
                               @click="deleteOrder(item, scope.row)"
-                              >Delete</el-link
+                              >{{$t('Delete')}}</el-link
                             >
                           </div>
                         </div>
@@ -651,7 +654,7 @@
                     <span>{{ scope.row.store || "---" }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="Created Time" width="200">
+                <el-table-column ：label="$t('Created Time)" width="200">
                   <template slot-scope="scope">
                     <span>{{
                       moment(scope.row.timeCreated).format(
@@ -660,7 +663,7 @@
                     }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="Shipping address" min-width="250">
+                <el-table-column :label="$t('Shipping address')" min-width="250">
                   <template slot-scope="scope">
                     <el-tooltip class="item" effect="dark" placement="right">
                       <div slot="content">
@@ -699,32 +702,32 @@
                     </el-tooltip>
                   </template>
                 </el-table-column>
-                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
+                <el-table-column :label="$t('warehouse')" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>
                 </el-table-column>    
-                <el-table-column label="address" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
+                <el-table-column :label="$t('address')" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
                   <template slot-scope="scope">                
                     <el-tooltip class="item" effect="dark" :content="scope.row.warehouseAddress" placement="top-start">
                        <i class="el-icon-chat-dot-square"></i>
                      </el-tooltip>
                   </template>
                 </el-table-column>                                
-                <el-table-column label="Customer" width="150">
+                <el-table-column :label="$t('Customer')" width="150">
                   <template slot-scope="scope">
                     <span>{{ scope.row.receiverName || "---" }}</span>
                   </template>
                 </el-table-column>
                 <template v-if="status == 1">
-                  <el-table-column label="Products" width="150">
+                  <el-table-column :label="$t('Products')" width="150">
                     <template slot-scope="scope">
                       <span>{{ scope.row.unBindQuantity || "---" }}</span>
                     </template>
                   </el-table-column>
                 </template>
                 <template v-if="status == 2 || status == 4">
-                  <el-table-column label="Shipping Method" width="150">
+                  <el-table-column :label="$t('Shipping Method')" width="150">
                     <template slot-scope="scope">
                       <div v-if="scope.row.isMailFree">
                           Kostenloser Versand
@@ -780,7 +783,7 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    :label="`Shipping cost(${$store.state.country.symbol})`"
+                    :label="`${$t('Shipping cost')}(${$store.state.country.symbol})`"
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -804,7 +807,7 @@
                 </template>
                 <template v-if="status == 2">
                   <el-table-column
-                    :label="`Total(${$store.state.country.symbol})`"
+                    :label="`${$t('Total')}(${$store.state.country.symbol})`"
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -818,7 +821,7 @@
                 </template>
                 <template v-if="status == 4">
                   <el-table-column
-                    :label="`pay total(${$store.state.country.symbol})`"
+                    :label="`${$t('pay total')}(${$store.state.country.symbol})`"
                     width="100"
                   >
                     <template slot-scope="scope">
@@ -868,7 +871,7 @@
                         type="primary"
                         @click="payFn('row', scope.row)"
                       >
-                        Pay
+                        {{$t('Pay')}}
                       </el-link>
                       <el-link
                         v-if="status == 4"
@@ -876,7 +879,7 @@
                         type="primary"
                         @click="syncFn('row', scope.row)"
                       >
-                        Manually synced
+                        {{$t('Manually synced')}}
                       </el-link>
                     </div>
                   </template>
@@ -915,7 +918,7 @@
 									</template>
 								</el-table-column> -->
 
-                <el-table-column label="Payment number" width="200">
+                <el-table-column :label="$t('Payment number')" width="200">
                   <template slot-scope="scope">
                     <span>{{
                       scope.row.accountPayment &&
@@ -925,7 +928,7 @@
                     }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="Payment time" width="300">
+                <el-table-column :label="$t('Payment time')" width="300">
                   <template slot-scope="scope">
                     <span>{{
                       moment
@@ -935,7 +938,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  :label="`Payment amount(${$store.state.country.symbol})`"
+                  :label="`${$t('Payment amount')}(${$store.state.country.symbol})`"
                   width="200"
                 >
                   <template slot-scope="scope">
@@ -964,7 +967,7 @@
                 </el-table-column>
                 <template v-if="activeName == 2">
                   <el-table-column
-                    label="Inventory lock remaining time"
+                    :label="$t('Inventory lock remaining time')"
                     width="200"
                   >
                     <template slot-scope="scope">
@@ -972,7 +975,7 @@
                     </template>
                   </el-table-column>
                 </template>
-                <el-table-column label="Order quantity" min-width="100">
+                <el-table-column :label="$t('Order quantity')" min-width="100">
                   <template slot-scope="scope">
                     <el-link
                       v-if="scope.row.shopifyOrderCnt"
@@ -985,7 +988,7 @@
                   </template>
                 </el-table-column>
                 <template v-if="activeName == 2">
-                  <el-table-column label="Status" width="200">
+                  <el-table-column :label="$t('Status')" width="200">
                     <template slot-scope="scope">
                       <template>
                         <span v-if="scope.row.accountPayment">{{
@@ -999,7 +1002,7 @@
                   </el-table-column>
                 </template>
                 <template v-if="activeName == 3">
-                  <el-table-column label="Status" width="200">
+                  <el-table-column :label="$t('Status')" width="200">
                     <template slot-scope="scope">
                       <template>
                         <span v-if="scope.row.paymentType">{{
@@ -1056,9 +1059,9 @@
                   :reserve-selection="true"
                 >
                 </el-table-column>
-                <el-table-column label="order type" v-if="status == 3">
+                <el-table-column :label="$t('order type')" v-if="status == 3">
                     <template slot-scope="scope">
-                        <p>{{scope.row.shippingType== 1? 'Wholesale order' : 'offline order'}}</p>
+                        <p>{{scope.row.shippingType== 1? $t('Wholesale order') : $t('offline order')}}</p>
                     </template>
                 </el-table-column>
                 <el-table-column label="Your shop order num" width="100">
@@ -1128,11 +1131,11 @@
                             </p>
                             <p>
                               <span style="width: 200px;display: inline-block;">
-                                Shop price：{{ scope.row.currency }}
+                              {{ $t('Shop price')}}：{{ scope.row.currency }}
                                 {{ Number(item.price).toFixed(2) }}</span
                               >
                               <span style="width: 200px;display: inline-block;">
-                                Supply unit price：
+                              {{ $t('Supply unit price')}}：
                                 <span v-if="item.vendorSku">
                                   <template
                                     v-if="
@@ -1172,7 +1175,7 @@
                                   >
                                 </span>
                                 <span style="color: #F56C6C;" v-else
-                                  >Please make an offer</span
+                                  >{{$t('Please make an offer')}}</span
                                 >
                               </span>
                               <span
@@ -1222,7 +1225,7 @@
                                 v-if="item.isManage == 2"
                                 style="width: 200px;display: inline-block;text-align: right;color: red;"
                               >
-                                Removed</span
+                                {{$t('Removed')}}</span
                               >
                             </p>
                           </div>
@@ -1301,11 +1304,11 @@
                             </p>
                             <p>
                               <span style="width: 200px;display: inline-block;">
-                                Shop price：{{ scope.row.currency }}
+                                {{$t('Shop price')}}：{{ scope.row.currency }}
                                 {{ Number(item.price).toFixed(2) }}</span
                               >
                               <span style="width: 200px;display: inline-block;">
-                                Supply unit price：
+                                {{$t('Supply unit price')}}：
                                 <span v-if="item.vendorSku">
                                   <template
                                     v-if="
@@ -1345,7 +1348,7 @@
                                   >
                                 </span>
                                 <span style="color: #F56C6C;" v-else
-                                  >Please make an offer</span
+                                  >{{$t('Please make an offer')}}</span
                                 >
                               </span>
                               <span
@@ -1395,7 +1398,7 @@
                                 v-if="item.isManage == 2"
                                 style="width: 200px;display: inline-block;text-align: right;color: red;"
                               >
-                                Removed</span
+                               {{$t('Removed')}} </span
                               >
                             </p>
                           </div>
@@ -1417,7 +1420,7 @@
                     <span>{{ scope.row.store || "---" }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="Created Time" width="200">
+                <el-table-column :label="$t('Created Time')" width="200">
                   <template slot-scope="scope">
                     <span>{{
                       moment(scope.row.timeCreated).format(
@@ -1426,7 +1429,7 @@
                     }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="Shipping address" min-width="250">
+                <el-table-column :label="$t('Shipping address')" min-width="250">
                   <template slot-scope="scope">
                     <el-tooltip class="item" effect="dark" placement="right">
                       <div slot="content">
@@ -1465,17 +1468,17 @@
                     </el-tooltip>
                   </template>
                 </el-table-column>
-                <el-table-column label="Customer" width="150">
+                <el-table-column :label="$t('Customer')" width="150">
                   <template slot-scope="scope">
                     <span>{{ scope.row.receiverName || "---" }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="warehouse" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
+                <el-table-column :label="$t('warehouse')" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
                   <template slot-scope="scope">
                     <span>{{ scope.row.warehouseName || "---" }}</span>
                   </template>
                 </el-table-column>   
-                <el-table-column label="address" width="150" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
+                <el-table-column :label="$t('address')" width="150" v-if="vendorId != 148982 || vendorId != 146428|| vendorId != 144875|| vendorId != 144843|| vendorId != 143779|| vendorId != 143654|| vendorId != 140694|| vendorId != 74">
                   <template slot-scope="scope">                
                     <el-tooltip class="item" effect="dark" :content="scope.row.warehouseAddress" placement="top-start">
                        <i class="el-icon-chat-dot-square"></i>
@@ -1494,7 +1497,7 @@
                         type="primary"
                         v-if="activeName == 3"
                         @click="AbnormalContinuePay(scope.row, 2)"
-                        >Re quote</el-link
+                        >{{$t('Re quote')}}</el-link
                       >
                     </div>
                     <div>
@@ -1503,7 +1506,7 @@
                         type="primary"
                         @click="AbnormalContinuePay(scope.row, 1)"
                       >
-                        Continue Pay</el-link
+                        {{$t('Continue Pay')}}</el-link
                       >
                     </div>
                   </template>
@@ -1521,13 +1524,13 @@
                   <el-table-column label="Action" width="150">
                     <template slot-scope="scope">
                       <el-link type="primary" @click="addTracking(scope.row)"
-                        >Request Fullfill</el-link
+                        >{{$t('Request Fullfill')}}</el-link
                       >
                     </template>
                   </el-table-column>
                 </template>
                 <template v-if="status == 3 || status == 5 || status == 6">
-                  <el-table-column label="Shipping Method" width="250">
+                  <el-table-column :label="$t('Shipping Method')" width="250">
                     <template slot-scope="scope">
                       <span>{{
                         scope.row.trackCompany
@@ -1557,7 +1560,7 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    :label="`Shipping cost(${$store.state.country.symbol})`"
+                    :label="`${$t('Shipping cost')}(${$store.state.country.symbol})`"
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1579,7 +1582,7 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    :label="`pay total(${$store.state.country.symbol})`"
+                    :label="`${$t('pay total')}(${$store.state.country.symbol})`"
                     width="150"
                   >
                     <template slot-scope="scope">
@@ -1608,7 +1611,7 @@
                   </el-table-column>
                 </template>
                 <template v-if="status == 6">
-                  <el-table-column label="status" width="100">
+                  <el-table-column :label="$t('status')" width="100">
                     <template slot-scope="scope">
                       <span>{{
                         statusArr[scope.row.status]
@@ -1676,10 +1679,10 @@
       <el-divider></el-divider>
       <div class="pay-info">
         <div class="mg-b-10" v-if="dialogPay.orderNum">
-          Order Number: <b>{{ dialogPay.orderNum }}</b>
+         {{$t('Order Number')}}: <b>{{ dialogPay.orderNum }}</b>
         </div>
         <div v-if="dialogPay.amount">
-          Total Amount:
+         {{$t('Total Amount')}}:
           <b class="tx-danger"
             >{{ $exchangeRate(dialogPay.amount.toFixed(2)) }}
             {{ $store.state.country.symbol }}</b
@@ -1711,7 +1714,7 @@
                   <div class="icon-wrap" style="width:150px;">
                     <img :src="type.icon" alt="" height="30" />
                   </div>
-                  <span>Pay with {{ type.name }}</span>
+                  <span>{{$t('Pay with')}} {{ type.name }}</span>
                 </div>
                 <div
                   class="active"
@@ -1745,7 +1748,7 @@
                     <img src="../../assets/pay/6.png" alt="" height="30" />
                   </div>
                   <span
-                    >Bonus(${{
+                    >{{$t('Bonus')}}(${{
                       Number((invoiceInfo.relationship || {}).bonus)
                     }})</span
                   >
@@ -1782,7 +1785,7 @@
                     invoiceInfo.relationship.bonusStatus == 2
               "
             >
-              There is no alternative method of payment
+              {{$t('There is no alternative method of payment')}}
             </div>
           </div>
           <div class="action">
@@ -1793,7 +1796,7 @@
               style="width: 120px; font-size: 18px"
               @click="orderPay"
             >
-              Pay
+              {{$t('')}}Pay
             </el-button>
           </div>
         </div>
@@ -1801,11 +1804,11 @@
       <template v-if="dialogPay.step == 2">
         <div class="paying">
           <i class="mg-r-10 el-icon-loading"></i>
-          <p>Please do not close the page during payment</p>
+          <p>{{$t('Please do not close the page during payment')}}</p>
           <!-- <p>Please click the "I have paid" button on the payment page after completing the payment </p> -->
         </div>
         <div class="close-pay" @click="closePay">
-          <el-button type="info" round plain>Close pay</el-button>
+          <el-button type="info" round plain>{{$t('Close pay')}}</el-button>
         </div>
       </template>
       <template v-if="dialogPay.step == 3">
@@ -1818,13 +1821,13 @@
         <div v-else class="pay-success">
           <i class="el-icon-success"></i>
           <p>
-            Your order has been successfully paid
+            {{$t('Your order has been successfully paid')}}
             <!-- and the order amount is
 						<span class="tx-danger"> ${{ dialogPay.amount.toFixed(2) }}</span> -->.
           </p>
         </div>
         <div class="close-pay" @click="closePay">
-          <el-button type="info" round plain>Close pay</el-button>
+          <el-button type="info" round plain>{{$t('Close pay')}}</el-button>
         </div>
       </template>
     </el-dialog>
@@ -1847,14 +1850,14 @@
     >
       <div class="abnormal-dialog">
         <h1 v-if="abnormalType == 1 && !canPay">
-          The selected orders are abnormal and payment cannot be continued
+          {{$t('The selected orders are abnormal and payment cannot be continued')}}
         </h1>
         <h1 v-if="abnormalType == 1 && canPay">
-          Payment can continue after excluding the following goods
+          {{$t('Payment can continue after excluding the following goods')}}
         </h1>
         <h1 v-if="abnormalType == 2">
-          After removing the off shelf goods, the order will be returned to the
-          price to be quoted
+          {{$t('After removing the off shelf goods, the order will be returned to the')}}{{$t('price to be quoted')}}
+          
         </h1>
         <el-table :data="abnormalData">
           <el-table-column label="Goods SKU">
@@ -1868,7 +1871,7 @@
         </el-table>
         <div class="btn-area">
           <el-button size="small" v-if="canPay" @click="abnormalClose"
-            >Cancel</el-button
+            >{{$t('Cancel')}}</el-button
           >
           <el-button
             size="small"
@@ -1876,7 +1879,7 @@
             type="primary"
             @click="AbnormalReClick"
           >
-            Confirm</el-button
+            {{$t('Confirm')}}</el-button
           >
         </div>
       </div>
@@ -1898,26 +1901,51 @@
           action=""
         >
           <el-button slot="trigger" size="small" type="primary"
-            >select file</el-button
+            >{{$t('选取文件')}}</el-button
           >
           <div class="el-upload__tip" slot="tip">
             <div>
-              click to download
-              <!-- <a class="template" @click="downloadFile">Order Import Template</a> -->
-              <el-button size="mini" type="primary" @click="downloadFile">Order Import Template</el-button>
+              {{$t('点击下载')}}
+              <a class="template" @click="downloadFile">{{$t('订单导入模板')}}</a>
             </div>
-            Please fill in the form according to the specification, only support xlsx format file<br />
-            The uploaded file cannot exceed 2M, and only the first 99 pieces of data are processed
+           {{$t('请按规范填写表格，仅支持xlsx格式文件')}}<br />
+           {{$t('上传的文件不能超过2M，只处理前99条数据')}} 
           </div>
         </el-upload>
       </div>
       <div slot="footer">
         <el-button size="mini" @click="ImportCancel">cancel</el-button>
         <el-button size="mini" type="primary" @click="createUpload"
-          >submit</el-button
+          >{{$t('submit')}}</el-button
         >
       </div>
     </el-dialog>
+    <!-- <el-dialog
+      title="select warehouse"
+      :visible.sync="dialogVisibleHouse"
+      width="30%"
+      @open="openStorehouse()"
+      :before-close="handleClose">
+    <el-row>
+        <el-col>
+            <el-form ref="form" :model="formHouse" label-width="100px">
+  <el-form-item label="warehouse：">
+        <el-checkbox-group v-model="formHouse.type">
+      <el-checkbox v-for="item in storehouseList" :key="item.id" :label="item.id" name="type">{{item.countryName}}</el-checkbox>
+    </el-checkbox-group>
+  </el-form-item>
+
+
+
+
+</el-form>
+        </el-col>
+    </el-row>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisibleHouse = false">cancel</el-button>
+    <el-button type="primary" @click="buildOrder">sure</el-button>
+  </span>
+</el-dialog> -->
     <add-tracking-dialog
       :dialog="addTrackingDialog"
       v-if="addTrackingDialog.visible"
@@ -2058,62 +2086,62 @@ export default {
         //   val: 1,
         // },
         2: {
-          text: "Vendor quoted order",
+          text: this.$t("Vendor quoted order"),
           type: "warning",
           val: 2,
         },
         4: {
-          text: "Payment Not Received",
+          text: this.$t("Payment Not Received"),
           type: "warning",
           val: 4,
         },
         3: {
-          text: "Pending payment",
+          text: this.$t("Pending payment"),
           type: "warning",
           val: 3,
         },
         5: {
-          text: "Waiting for fulfill",
+          text: this.$t("Waiting for fulfill"),
           type: "warning",
           val: 5,
         },
         6: {
-          text: "Fulfilled",
+          text: this.$t("Fulfilled"),
           type: "success",
           val: 6,
         },
         7: {
-          text: "Completed",
+          text: this.$t("Completed"),
           type: "success",
           val: 7,
         },
         8: {
-          text: "Logistics synchronization failed ",
+          text: this.$t("Logistics synchronization failed"),
           type: "info",
           val: 8,
         },
         9: {
-          text: "Unable to purchase",
+          text: this.$t("Unable to purchase"),
           type: "info",
           val: 9,
         },
         10: {
-          text: "Products Off shelf",
+          text: this.$t("Products Off shelf"),
           type: "info",
           val: 10,
         },
         11: {
-          text: "Payment to be completed",
+          text: this.$t("Payment to be completed"),
           type: "warning",
           val: 11,
         },
         12: {
-          text: "Waiting for fulfill",
+          text: this.$t("Waiting for fulfill"),
           type: "warning",
           val: 12,
         },
         14: {
-          text: "Quit quotation",
+          text: this.$t("Quit quotation"),
           type: "warning",
           val: 14,
         },
@@ -2121,17 +2149,17 @@ export default {
       statusPayArr: {
         //状态
         1: {
-          text: "Pending Payment",
+          text: this.$t("Pending Payment"),
           type: "danger",
           val: 1,
         },
         4: {
-          text: "Payment failed",
+          text: this.$t("Payment failed"),
           type: "warning",
           val: 4,
         },
         5: {
-          text: "Vendor Verifying Payment",
+          text: this.$t("Vendor Verifying Payment"),
           type: "warning",
           val: 5,
         },
@@ -2139,12 +2167,12 @@ export default {
       paymentTypeArr: {
         //状态
         1: {
-          text: "Vendor Verifying Payment",
+          text: this.$t("Vendor Verifying Payment"),
           type: "danger",
           val: 1,
         },
         4: {
-          text: "Payment result to be returned",
+          text: this.$t("Payment result to be returned"),
           type: "warning",
           val: 4,
         },
@@ -2264,9 +2292,9 @@ export default {
       if (ids.length == 0) {
         ids.push(i.id);
       }
-      this.$confirm("确定删除该商品？", "Tips", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t("确定删除该商品？"), "Tips", {
+        confirmButtonText: this.$t("确定"),
+        cancelButtonText: this.$t("取消"),
         type: "warning",
       })
         .then(() => {
@@ -2278,7 +2306,7 @@ export default {
             (r) => {
               if (r.ErrorCode == 9999) {
                 this.getItem();
-                this.$elementMessage("Delete Successful!", "success");
+                this.$elementMessage(this.$t("Delete Successful!"), "success");
               } else {
                 this.$elementMessage(r.Message, "error");
               }
@@ -2303,7 +2331,7 @@ export default {
     },
     batchWareHouse(){        
         if (this.checkIds.length == 0) {
-          this.$message.error('Please select an order')
+          this.$message.error(this.$t('Please select an order'))
           return
         }
         this.dialogVisibleHouse = true
@@ -2346,12 +2374,12 @@ export default {
     },
     createUpload() {
       if (!this.uploadfileList.length) {
-        this.$elementMessage("Please choose file", "error");
+        this.$elementMessage(this.$t("Please choose file"), "error");
         return;
       }
       if (this.uploadfileList[0].raw.size / 1024 / 1024 > 2) {
         this.$message({
-          message: "file cannot over 2MB",
+          message: this.$t("file cannot over 2MB"),
           type: "error",
         });
         return;
@@ -2372,7 +2400,7 @@ export default {
       };
       this.$apiCall(apiUrl, param, (r) => {
         if (r.ErrorCode == "9999") {
-          this.$elementMessage("Create Success", "success");
+          this.$elementMessage(this.$t("Create Success"), "success");
           openDownload(r.Data.Results.file);
           this.getItem();
           this.createVisible = false;
@@ -2496,7 +2524,7 @@ export default {
               this.abnormalData.length == 0 &&
               this.abnormalType == 2
             ) {
-              this.$elementMessage("No goods need to be eliminated", "error");
+              this.$elementMessage(this.$t("No goods need to be eliminated"), "error");
             } else if (
               this.abnormalData.length == 0 &&
               this.abnormalType == 1
@@ -2528,7 +2556,7 @@ export default {
               this.abnormalData.length == 0 &&
               this.abnormalType == 2
             ) {
-              this.$elementMessage("No goods need to be eliminated", "error");
+              this.$elementMessage(this.$t("No goods need to be eliminated"), "error");
             } else if (
               this.abnormalData.length == 0 &&
               this.abnormalType == 1
@@ -2573,7 +2601,7 @@ export default {
     },
     exportOrder() {
       if (!this.checkIds.length)
-        this.$elementMessage("Please select an order first", "error");
+        this.$elementMessage(this.$t("Please select an order first"), "error");
       this.$showLoading();
       if ($("#ifilePro").length == 0) {
         $("body").append(
@@ -3100,7 +3128,7 @@ export default {
         this.sync(type, item);
       } else {
         if (!this.checkIds.length) {
-          this.$elementMessage("Please select an order first", "error");
+          this.$elementMessage(this.$t("Please select an order first"), "error");
         } else {
           this.sync();
         }
@@ -3141,7 +3169,7 @@ export default {
         this.checkOpenPay(item);
       } else {
         if (!this.checkIds.length) {
-          this.$elementMessage("Please select an order first", "error");
+          this.$elementMessage(this.$t("Please select an order first"), "error");
         } else {
           this.checkOpenPay();
         }
@@ -3174,7 +3202,7 @@ export default {
         });
       }
       if (flag > 0) {
-        this.$elementMessage("No logistics", "error");
+        this.$elementMessage(this.$t("No logistics"), "error");
         return;
       }
       let params;
@@ -3223,16 +3251,16 @@ export default {
       });
     },
     payCancelFn(type, item) {
-      let text =
-        "Are you sure to abandon payment for the selected order? After abandoning, the order will disappear from the list, which cannot be restored, please operate with caution";
+      let text =this.$t("Are you sure to abandon payment for the selected order? After abandoning, the order will disappear from the list, which cannot be restored, please operate with caution");
+        
       if (type == "row") {
-        text =
-          "Are you sure to abandon payment for the selected order? After abandoning, the order will disappear from the list, which cannot be restored, please operate with caution";
+        text = this.$t("Are you sure to abandon payment for the selected order? After abandoning, the order will disappear from the list, which cannot be restored, please operate with caution");
+          
         // text = "取消支付后，该订单返回至待发起付款列表。";
         this.payCancel(type, text, item);
       } else {
         if (!this.checkIds.length) {
-          this.$elementMessage("Please select an order first", "error");
+          this.$elementMessage(this.$t("Please select an order first"), "error");
         } else {
           this.payCancel(type, text);
         }
@@ -3289,7 +3317,7 @@ export default {
         this.quote(type, item);
       } else {
         if (!this.checkIds.length) {
-          this.$elementMessage("Please select an order first", "error");
+          this.$elementMessage(this.$t("Please select an order first"), "error");
         } else {
           this.quote();
         }
@@ -3297,7 +3325,7 @@ export default {
     },
     quote(type, item) {
       this.$confirm(
-        "Are you sure to initiate a quotation for the selected order?",
+        this.$t("Are you sure to initiate a quotation for the selected order?"),
         "",
         {
           confirmButtonText: "Confirm",
@@ -3336,7 +3364,7 @@ export default {
         this.$elementMessage("Please select an order first", "error");
       } else {
         this.$confirm(
-          "Are you sure to abandon the quotation for the selected order? After giving up, it cannot be restored, please operate with caution",
+        this.$t("Are you sure to abandon the quotation for the selected order? After giving up, it cannot be restored, please operate with caution"),
           "",
           {
             confirmButtonText: "Confirm",
@@ -3469,8 +3497,8 @@ export default {
             // },
             {
               id: 2,
-              name: 1,
-              title: "Vendor quoted order",
+              name: 2,
+              title: this.$t("Vendor quoted order"),
             },
           ];
           break;
@@ -3479,17 +3507,17 @@ export default {
             {
               id: 3,
               name: 1,
-              title: "Pending payment",
+              title: this.$t("Pending payment"),
             },
             {
               id: 22,
               name: 2,
-              title: "Payment to be completed",
+              title: this.$t("Payment to be completed"),
             },
             {
               id: 23,
               name: 3,
-              title: "Payment has not arrived",
+              title: this.$t("Payment has not arrived"),
             },
           ];
           break;
@@ -3498,7 +3526,7 @@ export default {
             {
               id: 5,
               name: 1,
-              title: "Waiting for fulfillment",
+              title: this.$t("Waiting for fulfillment"),
             },
             {
               id: 6,
@@ -3512,17 +3540,17 @@ export default {
             {
               id: 8,
               name: 1,
-              title: "Logistics synchronization failed",
+              title: this.$t("Logistics synchronization failed"),
             },
             {
               id: 9,
               name: 2,
-              title: "Unable to purchase",
+              title: this.$t("Unable to purchase"),
             },
             {
               id: 10,
               name: 3,
-              title: "Products Off shelf",
+              title: this.$t("Products Off shelf"),
             },
           ];
           break;

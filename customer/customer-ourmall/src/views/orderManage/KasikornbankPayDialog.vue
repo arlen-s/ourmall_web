@@ -1,14 +1,16 @@
 <template>
   <el-dialog
-    title="开泰银行支付"
+    :title="$t('开泰银行支付')"
     :visible.sync="dialog.visible"
     :close-on-click-modal="false"
     :before-close="initDialog"
-    :fullscreen="true"
+    top="5vh"
+    width="70%"
   >
     <div class="scroll-box">
-      <p v-if="innerWidth===0">请耐心等待，正在努力为您创建链接中～</p>
-      <div v-append="html"></div>
+      <!-- <div v-append="html"></div> -->
+      <!-- <form method="POST" style="display:none" id="formPay" :action="this.html.action_url"></form> -->
+      <iframe id="sss111" style="display:none"></iframe>
     </div>
     <!-- <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="save()">
@@ -17,7 +19,7 @@
         <el-button @click="initDialog()">
             {{ $t("order.取消") }}
         </el-button> 
-    </div> -->
+    </div>-->
   </el-dialog>
 </template> 
 <script>
@@ -29,65 +31,68 @@ export default {
       default: () => {
         return {
           visible: false,
-          html: "",
-        };
+          row: {},
+        }
       },
     },
   },
-  data() {
+  data () {
     return {
       dialogModal: this.dialog,
-      html: '',
-      innerWidth: 0,
-    };
+      html: "",
+    }
+  },
+  mounted () {
+
   },
   watch: {
     dialog: {
       handler: function (val) {
         if (val) {
-          console.log(val)
-          this.html = val.html
+          // let info = val.row;
+          this.$nextTick(() => {
+            let htmlObj = JSON.stringify(val.html)
+            document.querySelector('#sss111').src = `./payment.html?obj=${htmlObj}`
+            document.querySelector('#sss111').style.display = ''
+            // this.html = val.html
+            // const container = document.querySelector('#formPay')
+            // const script = document.createElement('script')
+            // script.type = 'text/javascript'
+            // script.src = 'https://dev-kpaymentgateway.kasikornbank.com/ui/v2/kpayment.min.js'
+            // script.setAttribute('data-apikey', val.html.dataApikey)
+            // script.setAttribute('data-amount', val.html.dataAmount)
+            // script.setAttribute('data-currency', 'THB')
+            // script.setAttribute('data-payment-methods', 'card')
+            // script.setAttribute('data-name', 'Your Shop Name')
+            // script.setAttribute('data-smartpay-id', val.html.dataSmartpayId)
+            // script.setAttribute('data-mid', val.html.dataMid)
+            // container?.appendChild(script)
+            // setTimeout(() => {
+            //   container.style.display = ''
+            // },300)
+          })
         }
       },
       deep: true,
       immediate: true,
     },
   },
-  mounted() {
-    this.watchSize();
-  },
   methods: {
-    initDialog() {
-      this.dialog.visible = false;
-      this.dialog.html = "";
+    initDialog () {
+      this.dialog.visible = false
+      this.dialog.row = {}
     },
-    watchSize() {
-      let t
-      if(this.innerWidth === 0){
-        this.$showLoading();
-        t = setTimeout(() => {
-          this.innerWidth = document.getElementById('bankPay').offsetWidth
-          this.watchSize()
-        },500)  
-      } else {
-        this.$hideLoading();
-        clearTimeout(t)
-      }
-    },
-    save() {},
+    save () { },
   },
 };
 </script>
 <style scoped>
 ::v-deep .el-dialog__body {
-  /* border: 1px solid #eee; */
+  border: 1px solid #eee;
 }
 .scroll-box {
   height: 60vh;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 </style>
+

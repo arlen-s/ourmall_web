@@ -58,11 +58,11 @@
             >
               Create {{$root.$children[0].pName.a}} Account
             </el-button>
-            <span class=" mg-r-5">Already have an account?</span>
-            <el-link type="primary" @click="openSingIn">Sign in</el-link>
+            <span class=" mg-r-5">{{$t('Already have an account?')}}</span>
+            <el-link type="primary" @click="openSingIn">{{$t('Sign in')}}</el-link>
           </div>
         </form>
-        <el-divider ><span>or Sign in with</span></el-divider>
+        <el-divider ><span>{{$t('or Sign in with')}}</span></el-divider>
         <OtherLogin :platformArr="platformArr" @selectLogin="selectLogin"/>
       </div>
     </el-dialog>

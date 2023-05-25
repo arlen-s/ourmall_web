@@ -7,7 +7,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-shopping-bag-1"></i>
-          <h2>Products</h2>
+          <h2>{{$t('Products')}}</h2>
         </div>
       </div>
       <div class="right">
@@ -15,7 +15,7 @@
 					<span v-if="updateTime && (updateTime > now)" class=" mg-r-10">
 						({{formatminute(updateTime - now)}})
 					</span>
-					Update Product
+					{{$t('Update Product')}}
 				</el-button>
       </div>
     </div>
@@ -65,7 +65,7 @@
                   remote
                   :remote-method="remoteMethodVendor"
                   :loading="selectLoading"
-                  placeholder="Enter vendor name"
+                  :placeholder="$t('Enter vendor name')"
                   v-model="filterParams.relationshipId"
                   @change="filterGetItem"
                 >
@@ -111,11 +111,11 @@
                 <el-button
                   type="primary"
                   @click="filterGetItem"
-                >Filter</el-button>
+                >{{$t('Filter')}}</el-button>
                 <el-button
                   type="danger"
                   @click="clearFilter"
-                >Clear</el-button>
+                >{{$t('Clear')}}</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -127,7 +127,7 @@
           :style="{height: `${tableHeight}px`}"
         >
           <el-col v-if="!items.length">
-            <p style="margin-top: 25px; font-size: 16px; color: #909399; text-align: center;">no product</p>
+            <p style="margin-top: 25px; font-size: 16px; color: #909399; text-align: center;">{{$t('no product')}}</p>
           </el-col>
           <el-col
             v-for="item in items"
@@ -142,20 +142,20 @@
               <div class="d-flex justify-content-between mg-b-10">
                 <el-dropdown size="mini">
                   <span class="el-dropdown-link">
-                    All Action<i class="el-icon-arrow-down el-icon--right"></i>
+                    {{$t('All Action')}}<i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item v-if="item.adminUrl" style=" width: 80px; text-align: center;">
                       <a
                         :href="item.adminUrl"
                         target="_blank"
-                      >Edit</a>
+                      >{{$t('Edit')}}</a>
                     </el-dropdown-item>
                     <el-dropdown-item
                       style=" width: 80px; text-align: center;"
                       @click.native="delP(item)"
                     >
-                      <span class=" tx-danger">Delete</span>
+                      <span class=" tx-danger">{{$t('Delete')}}</span>
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -165,7 +165,7 @@
                   target="_blank"
                   style="color: #5c6ac4;"
                 >
-                  Open in  website <i
+                  {{$t('Open in  website')}} <i
                     class="fa fa-share-square-o"
                     aria-hidden="true"
                   ></i>
@@ -188,7 +188,7 @@
                   <span
                     class=" mg-r-10"
                     style="color: #909399;"
-                  >Retail price:</span>
+                  >{{$t('Retail price')}}:</span>
                   <span v-if="item.minShopPrice == item.maxShopPrice">{{item.currency}} {{item.minShopPrice}}</span>
                   <span v-else>{{item.currency}} {{item.ShopminPrice}} - {{item.ShopmaxPrice}}</span>
                 </div>
@@ -196,15 +196,15 @@
                   <span
                     class=" mg-r-10"
                     style="color: #909399;"
-                  >Retail price:</span>
-                  <span> NOT SET</span>
+                  >{{$t('Retail price')}}:</span>
+                  <span>{{$t('NOT SET')}} </span>
                 </div>
                 <!-- 采购价 -->
                 <div v-if="item.minPrice || item.maxPrice">
                   <span
                     class=" mg-r-10"
                     style="color: #909399;"
-                  >Supplier price:</span>
+                  >{{$t('Supplier price')}}:</span>
                   <span v-if="item.minPrice == item.maxPrice">{{$store.state.country.symbol}} {{$exchangeRate(item.minPrice)}}</span>
                   <span v-else>{{$store.state.country.symbol}} {{$exchangeRate(item.minPrice)}} - {{$store.state.country.symbol}} {{$exchangeRate(item.maxPrice)}}</span>
                 </div>
@@ -212,21 +212,21 @@
                   <span
                     class=" mg-r-10"
                     style="color: #909399;"
-                  >Supplier price:</span>
-                  <span> NOT SET</span>
+                  >{{$t('Supplier price')}}:</span>
+                  <span>{{$t('NOT SET')}} </span>
                 </div>
                 <div>
                   <span
                     class=" mg-r-10"
                     style="color: #909399;"
-                  >Shopify store:</span>
+                  >{{$t('Shopify store')}}:</span>
                   {{item.shopName ? item.shopName : 'Unknown'}}
                 </div>
                 <div>
                   <span
                     class=" mg-r-10"
                     style="color: #909399;"
-                  >Vendors:</span>
+                  >{{$t('Vendors')}}:</span>
                   {{item.vendorCnt}}
                 </div>
               </div>
@@ -331,7 +331,7 @@ export default {
       });
     },
     delP(item) {
-      this.$confirm("Are you sure you want to delete it?", "", {
+      this.$confirm(this.$t("Are you sure you want to delete it?"), "", {
         confirmButtonText: "Delete",
         cancelButtonText: "Cancel",
         type: "error",

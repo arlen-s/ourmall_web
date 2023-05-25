@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-shopping-cart-full"></i>
-          <h2>Cart</h2>
+          <h2>{{$t('Cart')}}</h2>
         </div>
       </div>
       <div class="right"></div>
@@ -15,8 +15,8 @@
           <el-card>
             <el-row :gutter="15" style=" position: relative; top: -5px;">
               <el-col :span="24">
-                <router-link to="/purchase-list" style=" margin-right: 15px"><i class=" el-icon-arrow-left"></i> back</router-link>
-                <span style=" color: #909399;">All Items <b>{{this.items.length}}</b></span>
+                <router-link to="/purchase-list" style=" margin-right: 15px"><i class=" el-icon-arrow-left"></i> {{$t('back')}}</router-link>
+                <span style=" color: #909399;">{{$t('All Items')}} <b>{{this.items.length}}</b></span>
               </el-col>
             </el-row>
             <el-table ref="cartTable" :data="items" class="cart-list" @selection-change="handleSelectionChange">
@@ -25,15 +25,15 @@
               </el-table-column>
               <!-- 商品图片 -->
               <el-table-column
-                label="Check All"
+                :label="$t('Check All')"
                 class="check-title"
                 width="120"
               >
                 <template slot="header">
-                  <div class="check-title">Check All</div>
+                  <div class="check-title">{{$t('Check All')}}</div>
                 </template>
                 <template slot-scope="scope">
-                  <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
+                  <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank">
                     <el-image
                       class="product-img"
                       @click="productClick(scope.row.productId)"
@@ -46,19 +46,6 @@
                       </div>
                     </el-image>
                   </a>
-                  <a :href="`/itemOld/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`" target="_blank" v-else>
-                    <el-image
-                      class="product-img"
-                      @click="productClick(scope.row.productId)"
-                      :fit="'cover'"
-                      :src="scope.row.propertyImage"
-                      lazy
-                    >
-                      <div slot="error" class="image-slot">
-                        <i class="el-icon-picture-outline"></i>
-                      </div>
-                    </el-image>
-                  </a>                  
                 </template>
               </el-table-column>
               <!-- 商品信息 -->
@@ -70,7 +57,7 @@
                   <div class="product-info">
                     <div class="name tx-ellipsis1" @click="productClick(scope.row.productId)">
                       <a :href="`/item/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`"  target="_blank" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">Digital Themrmometer Hygrometer Living Ro Digital Themrmometer Hygrometer Living Ro</a>
-                       <a :href="`/itemOld/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`"  target="_blank" v-else>Digital Themrmometer Hygrometer Living Ro Digital Themrmometer Hygrometer Living Ro</a>
+                       <a :href="`/itemOld/${scope.row.productId}/${scope.row.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`"  target="_blank" v-else>{{$t('Digital Themrmometer Hygrometer Living Ro Digital Themrmometer Hygrometer Living Ro')}}</a>
                     </div>
                     <div class="tx-ellipsis1">{{formatAttr(scope.row.propertyValue)}}</div>
                     <div class="sku">
@@ -119,7 +106,7 @@
                 <template slot-scope="scope">
                   <el-button type="danger" size="mini" icon="el-icon-delete"
                     @click="delCart(scope.row, scope.$index)"
-                  >Delete</el-button>
+                  >{{$t('Delete')}}</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -130,14 +117,14 @@
     <div class="bottom-action">
       <div class="left">
         <el-checkbox :indeterminate="!!(multipleSelection.length && multipleSelection.length != items.length)" v-model="all" @change="checkAll($event)">
-          Check All
+          {{$t('Check All')}}
         </el-checkbox>
-        <el-link type="warning" :disabled="!multipleSelection.length" @click="delSelect">Delete selected items</el-link>
+        <el-link type="warning" :disabled="!multipleSelection.length" @click="delSelect">{{$t('Delete selected items')}}</el-link>
       </div>
       <div class="right">
-        <div class="total-amount">Amount: <span>$ {{totalAmount}}</span></div>
+        <div class="total-amount">{{$t('Amount')}}: <span>$ {{totalAmount}}</span></div>
         <div class="submit-btn-wrap">
-          <el-button type="primary" :disabled="!multipleSelection.length" @click="toPlaceOrder" id="backendBulkPurchase">Bulk Purchase</el-button>
+          <el-button type="primary" :disabled="!multipleSelection.length" @click="toPlaceOrder" id="backendBulkPurchase">{{$t('Bulk Purchase')}}</el-button>
         </div>
       </div>
     </div>
@@ -209,7 +196,7 @@ export default {
     },
     delSelect(){
       //批量删除
-      this.$confirm('Do you want to delete selected items?', '', {
+      this.$confirm($t(this.$t('Do you want to delete selected items?')), '', {
         confirmButtonClass: " el-button--danger",
         type: "error",
 

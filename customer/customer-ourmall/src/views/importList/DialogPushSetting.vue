@@ -67,8 +67,8 @@
             </template>
           </el-table-column>
           <el-table-column label="Price" width="250">
-            <template slot="header" slot-scope="scope">
-              <span class=" mg-r-20">Price</span>
+            <template slot="header">
+              <span class=" mg-r-20">{{$t('Price')}}</span>
             </template>
             <template slot-scope="scope">
               <el-input-number
@@ -92,9 +92,9 @@
             </template>
           </el-table-column>
           <el-table-column label="Compare Price" width="250">
-            <template slot="header" slot-scope="scope">
+            <template slot="header">
               <el-checkbox style=" margin-right: 20px;" v-model="dialogPushSetting.isComparePrice">
-                Compare Price
+              {{$t('Compare Price')}}  
               </el-checkbox>
             </template>
             <template
@@ -117,7 +117,7 @@
               >
                 <el-option label="Plus" value="1"></el-option>
                 <el-option label="Multiply" value="2"></el-option>
-                <el-option label="固定价格" value="3"></el-option>
+                <el-option label="Fixed Price" value="3"></el-option>
               </el-select>
             </template>
           </el-table-column>
@@ -136,8 +136,8 @@
       </el-form>
       <div>
         <div style="margin-bottom: 5px; padding-left: 15px">
-          You can set a specific cent value for your price or comparison
-          price.
+          {{$t('You can set a specific cent value for your price or comparison')}} {{$t('price.')}}
+          
         </div>
         <div class="d-flex" style="margin-bottom: 5px; padding: 0 15px">
           <div style="margin-right: 30px">
@@ -146,7 +146,7 @@
               v-model="dialogPushSetting.isPriceCent"
               size="mini"
             >
-              Assign Cent
+             {{$t('Assign Cent')}} 
             </el-checkbox>
             <el-input-number
               v-model="dialogPushSetting.priceCent"
@@ -161,7 +161,7 @@
               style="margin-right: 10px"
               v-model="dialogPushSetting.isComparePriceCent"
             >
-              Assign compare at Cent
+             {{$t('Assign compare at Cent')}} 
             </el-checkbox>
             <el-input-number
               v-model="dialogPushSetting.comparePriceCent"
@@ -182,7 +182,7 @@
             </el-switch>
             <!-- Auto convert currency to
             <el-tag type="info" size="mini">{{ currency }}</el-tag> -->
-            According to store currency
+          {{$t('According to store currency')}}  
           </div>
         </div>
       </div>
@@ -194,15 +194,15 @@
         type="primary"
         style="margin-right: 10px"
         @click="applyPriceSetting"
-        >Apply for products in Import List</el-link
+        >{{$t('Apply for products in Import List')}}</el-link
       >
-      <el-button @click="dialogPushSetting.isShow = false">Cancel</el-button>
+      <el-button @click="dialogPushSetting.isShow = false">{{$t('Cancel')}}</el-button>
       <el-button
         type="primary"
         :loading="dialogPushSetting.loading"
         @click="savePushSetting()"
       >
-        Save
+      {{$t('Save')}}  
       </el-button>
     </div>
   </el-dialog>

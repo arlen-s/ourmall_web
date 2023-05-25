@@ -15,7 +15,7 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/products-market' }">
           <!-- {{$root.$children[0].pName.a}} -->
-           Products Market
+           {{$t('Products Market')}}
           </el-breadcrumb-item>
           <template v-if="breadCrumbs && breadCrumbs.L && breadCrumbs.l1">
             <el-breadcrumb-item  :to="{path: `/category/${breadCrumbs.l1.id}/${breadCrumbs.l1.name.replace(/\s+/g,'-')}.html`}">
@@ -135,10 +135,10 @@
           </div>
         </div>
 		<div class="d-flex" style="align-items: baseline;">
-			<div class=" title">Shipping : </div>
+			<div class=" title">{{$t('Shipping')}} : </div>
 			<div class="">
 				<div class="d-flex text mg-b-15">
-					<div class="mg-l-20 title" style="width: 100px;">Shipping to</div>
+					<div class="mg-l-20 title" style="width: 100px;">{{$t('Shipping to')}}</div>
 					<el-select size="small" v-model="shippingContry" filterable placeholder="Please select" no-match-text="No data" no-data-text="No data" class="mg-l-20" @change="changeShippingCountry">
 					    <el-option
 					      v-for="item in shippingContrys"
@@ -149,7 +149,7 @@
 					</el-select>
 				</div>
 				<div class="d-flex text">
-					<div class="mg-l-20 title" style="width: 100px;">Shipping fee</div>
+					<div class="mg-l-20 title" style="width: 100px;">{{$t('Shipping fee')}}</div>
 					<el-select size="small" v-model="shippingFee" placeholder="Please select" class="mg-l-20" no-data-text="No data" style="width: 400px;">
 					    <el-option
 					      v-for="item in shippingFees"
@@ -191,13 +191,13 @@
                     type="primary"
                     @click="import_pro($event)"
                     :disabled="isAdd == 1"
-                    >Add to List
+                    >{{$t('Add to List')}}
             </el-button>
             <el-button class="addCart"
               type="primary"
               @click="addToCart($event)"
               :disabled="qualityDisabled"
-              >Add to Cart
+              >{{$t('Add to Cart')}}
             </el-button>
         <!-- 1.9 平铺     -->
         <div v-if="$store.state.configJson.detailPage.imgSize == 'Tile'" class="inner-description" v-html="web">
@@ -309,7 +309,7 @@
     <el-table-column property="name" label="Carrier"></el-table-column>
   </el-table>
   <div slot="footer" class="dialog-footer">
-    <el-button  @click="shoppingDialog = false">Close</el-button>
+    <el-button  @click="shoppingDialog = false">{{$t('Close')}}</el-button>
   </div>
 </el-dialog>
 </div>

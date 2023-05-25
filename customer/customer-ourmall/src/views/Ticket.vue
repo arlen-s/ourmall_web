@@ -7,11 +7,11 @@
 			<div class="left">
 				<div class="title">
 					<i class=" iconfont icon-support"></i>
-					<h2>My support</h2>
+					<h2>{{$t('My support')}}</h2>
 				</div>
 			</div>
 			<div class="right">
-				<el-button type="primary" icon="el-icon-plus" size="small" @click="openAddComment">Create a ticket</el-button>
+				<el-button type="primary" icon="el-icon-plus" size="small" @click="openAddComment">{{$t('Create a ticket')}}</el-button>
 			</div>
 		</div>
 		<div class="pagebody" v-loading="loading">
@@ -22,7 +22,7 @@
 							<!-- left -->
 							<div class="left">
 								<div class="t-list">
-									<div v-if="!items.length" style="text-align: center;color: #909399;">no data</div>
+									<div v-if="!items.length" style="text-align: center;color: #909399;">{{$t('no data')}}</div>
 									<el-scrollbar ref="leftScroll" style="height:100%">
 										<div>
 											<div v-for="item in items" :key="item.id" class="t-card" :class="{active: msgId == item.id}" @click.stop="viewDetail(item, $event)">
@@ -52,15 +52,15 @@
 							<div v-if="items.length" v-loading="msgLoading" class="right">
 								<div class="header" v-if="activeItem">
 									<div v-if="activeItem.contents" class="row-1">
-										<span class="title">Request:</span>
+										<span class="title">{{$t('Request')}}:</span>
 										<span class="text">{{activeItem.contents}}</span>
 									</div>
 									<div v-if="activeItem.shopName" class="row-1">
-										<span class="title">Store name:</span>
+										<span class="title">{{$t('Store name')}}:</span>
 										<span class=" text">{{activeItem.shopName}}</span>
 									</div>
 									<div v-if="activeItem.attach && activeItem.attach.length" class="row-1">
-										<span class="title">Attach:</span>
+										<span class="title">{{$t('Attach')}}:</span>
 										<div class=" text">
 											<el-image v-for="img in activeItem.attach" :key="img" style="width: 40px; height: 40px" :src="img" :preview-src-list="activeItem.attach">
 											</el-image>
@@ -70,7 +70,7 @@
 								<div class="chat-list-box" id="chatListBox">
 									<div class="chat-list">
 										<div v-if="!msgList.length" class="no-msg">
-											No Message
+											{{$t('No Message')}}
 										</div>
 										<div v-for="msg in msgList" :key="msg.id" class="chat" :class="{my: msg.type == 1}">
 											<div class="chat-content">
@@ -109,7 +109,7 @@
 											<input type="text" placeholder="Message" v-model="messageText" @keyup.enter="addMsg">
 										</div>
 										<div>
-											<el-button type="primary" :loading="sendMsgLoading" @click="addMsg">Send</el-button>
+											<el-button type="primary" :loading="sendMsgLoading" @click="addMsg">{{$t('Send')}}</el-button>
 										</div>
 									</div>
 									<div class="row2">
@@ -139,9 +139,9 @@
 						<el-input type="textarea" v-model="DialogEditComment.contents"></el-input>
 					</el-form-item>
 					<el-row :gutter="15" class="d-flex align-items-center mg-b-10">
-						<el-col :span="5" style="min-width: 155px;"><span style="font-size: 16px; font-weight: bold;">Attach image file</span></el-col>
+						<el-col :span="5" style="min-width: 155px;"><span style="font-size: 16px; font-weight: bold;">{{$t('Attach image file')}}</span></el-col>
 						<el-upload ref="uploadFile" :on-change="handleChange" :before-remove="handleRemove" action="" :auto-upload="false" accept="image/gif,image/jpeg,image/jpg,image/png" class="upload-file">
-							<el-button ref="uploadBtn" size="small" type="primary" :loading="DialogEditComment.uploadLoading">Browse</el-button>
+							<el-button ref="uploadBtn" size="small" type="primary" :loading="DialogEditComment.uploadLoading">{{$t('Browse')}}</el-button>
 
 						</el-upload>
 					</el-row>
@@ -152,10 +152,10 @@
 			</div>
 			<div slot="footer" class="dialog-footer d-flex justify-content-end">
 				<div class=" mg-r-15">
-					<el-button size="small" type="primary" :loading="DialogEditComment.loading" @click="saveComment">Send your request</el-button>
+					<el-button size="small" type="primary" :loading="DialogEditComment.loading" @click="saveComment">{{$t('Send your request')}}</el-button>
 				</div>
 				<div>
-					<el-button size="small" @click="DialogEditComment.visible = false">Cancel</el-button>
+					<el-button size="small" @click="DialogEditComment.visible = false">{{$t('Cancel')}}</el-button>
 				</div>
 			</div>
 		</el-dialog>

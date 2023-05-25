@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-s-home"></i>
-          <h2>Dashboard</h2>
+          <h2>{{$t('Dashboard')}}</h2>
         </div>
       </div>
       <div class="right"></div>
@@ -38,8 +38,8 @@
                       <img class="walletIcon" src="../../public/images/qianbao.png" alt="">
                     </div>
                     <div class="grid-bottom">
-                      <h2 class="tx-primary">balance({{$store.state.country.symbol}}): {{balance || '0.00'}}</h2>
-                      <p>wallet</p>
+                      <h2 class="tx-primary">{{$t('balance')}}({{$store.state.country.symbol}}): {{balance || '0.00'}}</h2>
+                      <p>{{$t('wallet')}}</p>
                     </div>
                   </div>
                 </el-card>
@@ -47,7 +47,7 @@
               <el-col :span="8" class="d-box">
                 <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px',height:'232px' }">
                 <div slot="header" class="clearfix">
-                      <span>system notification</span>
+                      <span>{{$t('system notification')}}</span>
                     </div>
                     <div v-for="o in advData.slice(0,5)" :key="o.id" class="text item fit-box">
                       <p class="text-style" @click="lookLog(o.id)">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="grid-bottom">
                       <h2 class="tx-primary">{{ dashBoardData.orderCnt }}</h2>
-                      <p>This month Orders</p>
+                      <p>{{$t('This month Orders')}}</p>
                     </div>
                   </div>
                 </el-card>
@@ -84,7 +84,7 @@
                           {{$store.state.country.symbol}}
                           {{ $exchangeRate(dashBoardData.orderRevenue) }}
                         </h2>
-                        <p>This month Revenue</p>
+                        <p>{{$t('This month Revenue')}}</p>
                       </div>
                     </div>
                     <div>
@@ -119,7 +119,7 @@
                           {{$store.state.country.symbol}}
                           {{ $exchangeRate(dashBoardData.orderCost) }}
                         </h2>
-                        <p>This month Cost</p>
+                        <p>{{$t('This month Cost')}}</p>
                       </div>
                     </div>
                     <div>
@@ -155,7 +155,7 @@
                   justify-content-between
                 "
               >
-                <h2>Statistics</h2>
+                <h2>{{$t('Statistics')}}</h2>
                 <div>
                   <el-date-picker
                     :picker-options="pickerOptions0"
@@ -201,7 +201,7 @@
               <el-col :span="16">
                 <el-card>
                   <div class="grid-content">
-                    <h2>Reference</h2>
+                    <h2>{{$t('Reference')}}</h2>
                   </div>
                   <div class="grid-content mg-t-20">
                     <el-table :data="tableData" stripe style="width: 100%">
@@ -232,7 +232,7 @@
                       size="small"
                       type="primary"
                       @click="showMoreReference"
-                      >Show More</el-button
+                      >{{$t('Show More')}}</el-button
                     >
                   </div>
                 </el-card>
@@ -240,7 +240,7 @@
               <el-col :span="8">
                 <el-card>
                   <div class="grid-content">
-                    <h2>Quick Summary</h2>
+                    <h2>{{$t('Quick Summary')}}</h2>
                   </div>
                   <el-divider></el-divider>
                   <div
@@ -261,9 +261,9 @@
                     </div>
                     <div class="grid-bottom">
                       <h2 class="tx-primary">
-                        {{ dashBoardData.waitPlaceOrder }} Orders
+                        {{ dashBoardData.waitPlaceOrder }} {{$t('orders')}}
                       </h2>
-                      <p>Waiting to place order</p>
+                      <p>{{$t('Waiting to place order')}}</p>
                     </div>
                   </div>
                   <el-divider></el-divider>
@@ -288,7 +288,7 @@
                       <h2 class="tx-primary">
                         {{ dashBoardData.invoiceCnt }} Orders
                       </h2>
-                      <p>Waiting for tracking code</p>
+                      <p>{{$t('Waiting for tracking code')}}</p>
                     </div>
                   </div>
                   <el-divider></el-divider>
@@ -309,7 +309,7 @@
                       <h2 class="tx-primary">
                         {{ dashBoardData.shopCnt }} Stores
                       </h2>
-                      <p>Authorized</p>
+                      <p>{{$t('Authorized')}}</p>
                     </div>
                   </div>
                   <!-- <el-divider></el-divider>
@@ -335,8 +335,8 @@
           <el-row :gutter="20" class="mg-b-20" style="min-height: 200px">
             <el-col :span="24" class="card-box" v-loading="card1Loading">
               <div class="d-flex justify-content-between">
-                <h2>My Vendors</h2>
-                <el-link class="mg-r-15" @click="goto('vendors')">MORE</el-link>
+                <h2>{{$t('My Vendors')}}</h2>
+                <el-link class="mg-r-15" @click="goto('vendors')">{{$t('MORE')}}</el-link>
               </div>
               <!-- 第一个card列表 -->
               <el-card
@@ -365,7 +365,7 @@
                                 <div slot="error" class="image-slot">
                                   <div class="no-pic">
                                     <i></i>
-                                    <span>No Picture</span>
+                                    <span>{{$t('No Picture')}}</span>
                                   </div>
                                 </div>
                               </el-image>
@@ -391,7 +391,7 @@
                               v-if="item.price || Number(item.price)"
                               class="cost"
                             >
-                              Purchase price:
+                              {{$t('Purchase price')}}:
                               <span
                                 >{{ $store.state.country.symbol }}
                                 {{ $exchangeRate(item.price) }}</span
@@ -399,14 +399,14 @@
                               /piece
                             </div>
                             <div v-else class="cost">
-                              Purchase price:
-                              <span style="font-size: 14px">NOT SET</span>
+                              {{$t('Purchase price')}}:
+                              <span style="font-size: 14px"> {{$t('NOT SET')}}</span>
                             </div>
                           </div>
                         </el-col>
                       </template>
                       <el-col v-else class="no-product" :span="24">
-                        no product
+                        {{$t('no product')}}
                       </el-col>
                     </el-row>
                   </el-col>
@@ -421,7 +421,7 @@
                       "
                     >
                       <h3 style="font-size: 16px; font-weight: bold">
-                        Statistics
+                        {{$t('Statistics')}}
                       </h3>
                       <div v-if="vendor.vendorName">
                         <i class="s-avaver">{{
@@ -432,13 +432,13 @@
                     </div>
                     <div v-if="vendor.vendorCnt.skuCnt" class="mg-b-20">
                       <span class="mg-r-5" style="color: #909399"
-                        >Dispatched Items:</span
+                        > {{$t('Dispatched Items')}}:</span
                       >
                       <span>{{ vendor.vendorCnt.skuCnt }}</span>
                     </div>
                     <div v-if="vendor.vendorCnt.invoiceCnt" class="mg-b-20">
                       <span class="mg-r-5" style="color: #909399"
-                        >Valid Invoices:</span
+                        >{{$t('Valid Invoices')}}:</span
                       >
                       <router-link
                         :to="{
@@ -452,7 +452,7 @@
                       >
                     </div>
                     <div v-if="vendor.vendorCnt.invoiceAmount" class="mg-b-20">
-                      <span style="color: #909399">Valid Amount Due:</span>
+                      <span style="color: #909399">{{$t('Valid Amount Due')}}:</span>
                       <span
                         >{{ $store.state.country.symbol }}
                         {{
@@ -486,7 +486,7 @@
           </el-row>
           <el-row v-if="items2.length" :gutter="20" class="mg-b-20">
             <el-col :span="24" class="card-box" v-loading="card2Loading">
-              <h2>Order’s items that you can dispatch to vendors</h2>
+              <h2>{{$t('Order’s items that you can dispatch to vendors')}}</h2>
               <el-card>
                 <el-row :gutter="20">
                   <el-col :span="18" class="left border-r">
@@ -508,7 +508,7 @@
                                 <div slot="error" class="image-slot">
                                   <div class="no-pic">
                                     <i></i>
-                                    <span>No Picture</span>
+                                    <span>{{$t('No Picture')}}</span>
                                   </div>
                                 </div>
                               </el-image>
@@ -525,7 +525,7 @@
                         :span="24"
                         class="text-center"
                         style="color: ##c0c4cc"
-                        >No Data</el-col
+                        >{{$t('No Data')}}</el-col
                       >
                     </el-row>
                   </el-col>
@@ -540,7 +540,7 @@
                       @click="goto('shopifyOrders', { vid: '999e' })"
                     >
                       <i class="el-icon-plus"></i><br /><br />
-                      Dispatch order’s items to vendors
+                      {{$t('Dispatch order’s items to vendors')}}
                     </a>
                   </el-col>
                 </el-row>
@@ -575,7 +575,7 @@
         >
           <el-tab-pane name="shareWeixin">
             <span slot="label"
-              ><i class="iconfont icon-shejiao"></i> Share by APP</span
+              ><i class="iconfont icon-shejiao"></i> {{$t('Share by APP')}}</span
             >
             <div>
               <div class="d-flex mg-y-20">
@@ -636,7 +636,7 @@
                     white-space: nowrap;
                   "
                 >
-                  Share:
+                  {{$t('Share')}}:
                 </div>
                 <div style="width: 70%" class="d-flex">
                   <div
@@ -650,7 +650,7 @@
                   <div>
                     <el-tooltip placement="bottom">
                       <div slot="content">
-                        <p class="tx-center mg-b-10">Scan share to WeChat</p>
+                        <p class="tx-center mg-b-10">{{$t('Scan share to WeChat')}}</p>
                         <img :src="invoiceInfo.qrcode" width="130" />
                         <img
                           src="images/weixin.png"
@@ -665,7 +665,7 @@
                         />
                       </div>
                       <a class="share-weixin" href="javascript:;">
-                        <i class="fa fa-weixin"></i> Share
+                        <i class="fa fa-weixin"></i> {{$t('Share')}}
                       </a>
                     </el-tooltip>
                   </div>
@@ -675,7 +675,7 @@
           </el-tab-pane>
           <el-tab-pane name="shareLink">
             <span slot="label"
-              ><i class="iconfont icon-link"></i> Share by link</span
+              ><i class="iconfont icon-link"></i> {{$t('Share by link')}}</span
             >
             <div class="d-flex mg-y-20">
               <div
@@ -687,7 +687,7 @@
                   white-space: nowrap;
                 "
               >
-                Share link:
+                {{$t('Share link')}}:
               </div>
               <div>
                 <!--<el-link :underline="false" :href="invoiceInfo.url" target="_blank">{{invoiceInfo.url}}</el-link>-->
@@ -712,7 +712,7 @@
                     v-clipboard:copy="invoiceInfo.url"
                     v-clipboard:success="onCopy"
                     v-clipboard:error="onError"
-                    >Copy Link</el-button
+                    >{{$t('Copy Link')}}</el-button
                   >
                 </div>
               </div>
@@ -729,12 +729,12 @@
             type="primary"
             plain
             @click="saveRemark('1')"
-            >Clear</el-button
+            >{{$t('Clear')}}</el-button
           >
         </div>
         <div>
           <el-button size="small" @click="sendInvoiceOpen = false"
-            >Close</el-button
+            >{{$t('Close')}}</el-button
           >
         </div>
       </div>
@@ -749,11 +749,11 @@
     >
       <div style="padding: 0 25px">
         <p style="margin-bottom: 10px">
-          Your vendor
+          {{$t('Your vendor')}}
           <b style="margin: 0 5px; color: #606266; font-size: 14px">{{
             DialogDispatchSetting.vendorName
           }}</b>
-          is inviting you to allocate your Orders
+         {{$t('is inviting you to allocate your Orders')}} 
         </p>
         <p
           style="
@@ -762,25 +762,24 @@
             border-bottom: 1px #e4e7ed solid;
           "
         >
-          Your store name:
+          {{$t('Your store name')}}:
           <b style="margin: 0 5px; color: #606266; font-size: 14px">
             {{ this.$store.state.userInfo.name }}</b
           >
         </p>
         <div style="margin-bottom: 10px">
-          <span style="margin-right: 15px">Dispatch order method:</span>
+          <span style="margin-right: 15px">{{$t('Dispatch order method')}}:</span>
           <b style="color: #606266"
-            >All my unfulfilled / partially fulfilled orders</b
+            >{{$t('All my unfulfilled / partially fulfilled orders')}}</b
           >
         </div>
         <div style="margin-bottom: 15px">
-          <span style="margin-right: 15px">Cycle time:</span>
-          <b style="color: #606266">Every 1 day</b>
+          <span style="margin-right: 15px">{{$t('Cycle time')}}:</span>
+          <b style="color: #606266">{{$t('Every 1 day')}}</b>
         </div>
         <div style="color: #909399">
           <i class="el-icon-info" style="margin-right: 5px"></i>
-          You can modify your order dispatch rules at any time in the menu "My
-          Orders >> Dispatch settings"
+         {{$t("You can modify your order dispatch rules at any time in the menu 'My Orders >> Dispatch settings'")}}
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
@@ -788,14 +787,14 @@
           <el-button
             :disabled="DialogDispatchSetting.loading"
             @click="DialogDispatchSetting.isShow = false"
-            >Remind later</el-button
+            >{{$t('Remind later')}}</el-button
           >
           <el-button
             type="primary"
             :disabled="DialogDispatchSetting.loading"
             :loading="DialogDispatchSetting.loading"
             @click="saveDispatchSetting"
-            >I agree</el-button
+            >{{$t('I agree')}}</el-button
           >
         </div>
       </div>
@@ -808,10 +807,10 @@
     >
       <div style="padding: 20px">
         <p style="margin-bottom: 10px">
-          According to your settings, we found some data for you:
+          {{$t('According to your settings, we found some data for you')}}:
         </p>
         <p>
-          Shopify order:
+         {{$t('Shopify order')}}:
           <b style="margin-right: 15px; color: #5c6ac4">{{
             DialogDispatchPreview.orderCnt
           }}</b>
@@ -825,14 +824,14 @@
           :disabled="DialogDispatchPreview.loading"
           @click="DialogDispatchPreview.isShow = false"
         >
-          Dispatch in the Next Cycle
+        {{$t('Dispatch in the Next Cycle')}}  
         </el-button>
         <el-button
           :loading="DialogDispatchPreview.loading"
           :disabled="DialogDispatchPreview.loading"
           type="primary"
           @click="runDispatchRule"
-          >Dispatch Immediately</el-button
+          >{{$t('Dispatch Immediately')}}</el-button
         >
       </div>
     </el-dialog>
@@ -890,7 +889,7 @@
       <div slot="footer" class="dialog-footer d-flex justify-content-end">
         <div>
           <el-button size="small" @click="moreReference.isShow = false"
-            >Close</el-button
+            >{{$t('Close')}}</el-button
           >
         </div>
       </div>
@@ -905,11 +904,11 @@
     >
       <div style="padding: 0 25px">
         <p style="margin-bottom: 10px">
-          Your vendor
+          {{$t('Your vendor')}}
           <b style="margin: 0 5px; color: #606266; font-size: 14px">{{
             DialogEntrustStore.vendorName
           }}</b>
-          is inviting you to allocate your Orders
+         {{$t('is inviting you to allocate your Orders')}} 
         </p>
         <p
           style="
@@ -918,14 +917,14 @@
             border-bottom: 1px #e4e7ed solid;
           "
         >
-          Your store name:
+         {{$t('Your store name')}}:
           <b style="margin: 0 5px; color: #606266; font-size: 14px">
             {{ DialogEntrustStore.shopName }}</b
           >
         </p>
         <div style="color: #909399">
           <i class="el-icon-info" style="margin-right: 5px"></i>
-          You can modify your store settings at any time in the menu "My Stores"
+         {{$t("You can modify your store settings at any time in the menu 'My Stores'")}} 
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
@@ -933,21 +932,21 @@
           <el-button
             :disabled="DialogEntrustStore.loading"
             @click="DialogEntrustStore.isShow = false"
-            >Remind later</el-button
+            >{{$t('Remind later')}}</el-button
           >
           <el-button
             type="primary"
             :disabled="DialogEntrustStore.loading"
             :loading="DialogEntrustStore.loading"
             @click="saveEntrustStore"
-            >I agree</el-button
+            >{{$t('I agree')}}</el-button
           >
         </div>
       </div>
     </el-dialog>
     <div class="el-tips" type="primary" circle @click="tips = !tips">
-      <div>Newbie</div>
-      <div>guide</div>
+      <div>{{$t('Newbie')}}</div>
+      <div>{{$t('guide')}}</div>
     </div>
     <el-dialog
       title="Newbie guide"
@@ -958,25 +957,21 @@
     >
       <div class="tips-content">
         <p class="ctx">
-          <el-tag type="warning" class="mg-r-10">Step 1</el-tag> Complete
-          personal information
+          <el-tag type="warning" class="mg-r-10">Step 1</el-tag> {{$t('Complete  personal information')}}
         </p>
         <p class="ctx">
-          <el-tag type="warning" class="mg-r-10">Step 2</el-tag>Authorize to
-          bind the store
+          <el-tag type="warning" class="mg-r-10">Step 2</el-tag>{{$t('Authorize to bind the store')}}
         </p>
         <p class="ctx">
-          <el-tag type="warning" class="mg-r-10">Step 3</el-tag>Publish the push
-          product
+          <el-tag type="warning" class="mg-r-10">Step 3</el-tag>{{$t('Publish the push product')}}
         </p>
         <p class="ctx">
-          <el-tag type="warning" class="mg-r-10">Step 4</el-tag>Start pulling
-          orders
+          <el-tag type="warning" class="mg-r-10">Step 4</el-tag>{{$t('Start pulling   orders')}}
         </p>
       </div>
       <div class="flex-center">
         <el-button class="btn spec-1" type="primary" @click="tips = false"
-          >Already
+          >{{$t('Already')}}
         </el-button>
       </div>
     </el-dialog>
@@ -986,7 +981,7 @@
   width="40%">
   <div v-html="advLook.content" style="padding:0 20px" class="set-css"></div>
   <span slot="footer" class="dialog-footer">
-   <el-button type="primary" @click="dialogVisibleLog = false">enter</el-button>
+   <el-button type="primary" @click="dialogVisibleLog = false">{{$t('enter')}}</el-button>
   </span>
 </el-dialog>
   </div>
@@ -1061,12 +1056,12 @@ export default {
       statisticDateFrom: "",
       statisticDateTo: "",
       dateArr: {
-        1: "Today",
-        2: "Last 7 days",
-        3: "Last 30 days",
-        4: "Last 90 days",
-        5: "Last 12 months",
-        6: "Custom",
+        1: this.$t("Today"),
+        2: this.$t("Last 7 days"),
+        3: this.$t("Last 30 days"),
+        4: this.$t("Last 90 days"),
+        5: this.$t("Last 12 months"),
+        6: this.$t("Custom"),
       },
       userInfo: localStorage.getItem("c_ourMallUserInfo")
         ? JSON.parse(localStorage.getItem("c_ourMallUserInfo"))
@@ -1304,7 +1299,7 @@ export default {
                 this.$set(item, "isAdded", 1);
               }
             });
-            this.$elementMessage("Add vendors success", "success");
+            this.$elementMessage(this.$t("Add vendors success"), "success");
           } else {
             this.$elementMessage(r.Message, "error");
             if (r.ErrorCode == "1002" || r.ErrorCode == "1003") {
@@ -1753,11 +1748,11 @@ export default {
       );
     },
     onCopy(e) {
-      this.$elementMessage("Has been copied to the clipboard", "success");
+      this.$elementMessage(this.$t("Has been copied to the clipboard"), "success");
     },
     onError(e) {
       this.$elementMessage(
-        "Copy to clipboard failed, please copy manually",
+        this.$t("Copy to clipboard failed, please copy manually"),
         "error"
       );
     },
@@ -1853,7 +1848,7 @@ export default {
     },
     cancelInvoice(item) {
       //作废
-      this.$confirm("Are you sure you want to cancel it?", "", {
+      this.$confirm(this.$("Are you sure you want to cancel it?"), "", {
         confirmButtonText: "OK",
         cancelButtonText: "Cancel",
         type: "error",

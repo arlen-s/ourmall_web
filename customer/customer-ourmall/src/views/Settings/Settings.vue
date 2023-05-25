@@ -3,9 +3,9 @@
     <div class="pagetitle">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{path: '/dashboard'}"
-          >Dashboard</el-breadcrumb-item
+          >{{$t('Dashboard')}}</el-breadcrumb-item
         >
-        <el-breadcrumb-item>Settings</el-breadcrumb-item>
+        <el-breadcrumb-item>{{$t('Settings')}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div v-loading="loading" class="pagebody">
@@ -13,7 +13,7 @@
         <el-col :span="24">
           <el-card>
             <el-alert
-              title="According to the new European VAT e-commerce rules, declaration without lOSS will result in a delay in customs clearance and the recipient will be required to pay VAT, as the parcel will be detained when contact of the recipient is incorrect."
+              :title="$t('According to the new European VAT e-commerce rules, declaration without lOSS will result in a delay in customs clearance and the recipient will be required to pay VAT, as the parcel will be detained when contact of the recipient is incorrect.')"
               type="info"
               show-icon
               :closable="false"
@@ -21,23 +21,23 @@
             >
             </el-alert>
             <div class="options-wrap">
-              <h3>IOSS Options</h3>
+              <h3>{{$t('IOSS Options')}}</h3>
               <div>
-                <el-radio v-model="isOpenIoss" :label="false" @change="openIoss">No IOSS</el-radio>
-                <p class=" mg-b-15">The amount of the orders (shipping cost included) will be declared and recipients will be required by the customs to pay VAT when parcels arrive in the destination countries of EU</p>
-                <el-radio v-model="isOpenIoss" :label="true"  @change="openIoss">Declare with my own IOSS</el-radio>
-                <p>Please enter correct and valid IOSS IDs, which should be linked to corresponding destination countries. IOSS ID will not be applied if the destination country is not linked to a correct IOSS ID</p>
+                <el-radio v-model="isOpenIoss" :label="false" @change="openIoss">{{$t('No IOSS')}}</el-radio>
+                <p class=" mg-b-15">{{$t('The amount of the orders (shipping cost included) will be declared and recipients will be required by the customs to pay VAT when parcels arrive in the destination countries of EU')}}</p>
+                <el-radio v-model="isOpenIoss" :label="true"  @change="openIoss">{{$t('Declare with my own IOSS')}}</el-radio>
+                <p>{{$t('Please enter correct and valid IOSS IDs, which should be linked to corresponding destination countries. IOSS ID will not be applied if the destination country is not linked to a correct IOSS ID')}}</p>
               </div>
             </div>
             <div class="settings-wrap">
-              <h3>My IOSS Settings</h3>
+              <h3>{{$t('My IOSS Settings')}}</h3>
               <div class=" action d-flex">
                 <div class="left">
-                  <el-button icon="el-icon-plus" type="primary" size="small" plain @click="openEditIOSS()">Add IOSS</el-button>
+                  <el-button icon="el-icon-plus" type="primary" size="small" plain @click="openEditIOSS()">{{$t('Add IOSS')}}</el-button>
                 </div>
                 <div class="right">
-                  <span>Linked Countries: <b style=" color: #5c6ac4;">{{linked.linkedNum}}</b></span>
-                  <span>Unlinked Countries: <b style=" color: #909399;">{{linked.unlinkedNum}}</b></span>
+                  <span>{{$t('Linked Countries')}}: <b style=" color: #5c6ac4;">{{linked.linkedNum}}</b></span>
+                  <span>{{$t('Unlinked Countries')}}: <b style=" color: #909399;">{{linked.unlinkedNum}}</b></span>
                 </div>
               </div>
               <el-table
@@ -45,7 +45,7 @@
                 stripe
                 style="width: 100%"
               >
-                <el-table-column label="Description" prop="name"></el-table-column>
+                <el-table-column :label="$t('Description')" prop="name"></el-table-column>
                 <el-table-column label="IOSS ID" prop="iossId" width="200"></el-table-column>
                 <el-table-column label="Destination Country" >
                   <template slot-scope="scope">
@@ -238,7 +238,7 @@ export default {
       })
     },
     delIOSS(item, i){
-      this.$confirm("Are you sure to delete the IOSS?", {
+      this.$confirm(this.$t("Are you sure to delete the IOSS?"), {
         confirmButtonText: "Confirm",
         cancelButtonText: "Cancel",
         confirmButtonClass: " el-button--danger",

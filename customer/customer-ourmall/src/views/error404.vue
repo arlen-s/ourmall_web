@@ -8,10 +8,10 @@
     </div>
     <div class="c-404"></div>
     <div class="text">
-      The page you are looking for can't be found.
+      {{$t("The page you are looking for can't be found.")}}
     </div>
     <div class="action">
-      <el-button type="primary" @click="gohome()">({{sec}}) BACK TO HOMEPAGE</el-button>
+      <el-button type="primary" @click="gohome()">({{sec}}) {{$t('BACK TO HOMEPAGE')}}</el-button>
     </div>
 	<template v-if="code && code.footer && code.footer.length > 0">
 		<div v-for="(item, index) in code.footer" :key="index" v-html="item"></div>

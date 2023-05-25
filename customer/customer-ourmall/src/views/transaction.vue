@@ -4,7 +4,7 @@
 			<div class="left">
 				<div class="title">
 					<i class="el-icon-s-finance"></i>
-					<h2>Transaction</h2>
+					<h2>{{$t('Transaction')}}</h2>
 				</div>
 			</div>
 			<div class="right">
@@ -30,12 +30,12 @@
 										</el-form-item>
 										<el-form-item>
 											<el-radio-group v-model="dateFilter" size="mini" @change="filterDate">
-												<el-radio-button label="1">Today</el-radio-button>
-												<el-radio-button label="2">Yestoday
+												<el-radio-button label="1">{{$t('Today')}}</el-radio-button>
+												<el-radio-button label="2">{{$t('Yesterday')}}
 												</el-radio-button>
-												<el-radio-button label="3">Last 7 days
+												<el-radio-button label="3">{{$t('Last 7 days')}}
 												</el-radio-button>
-												<el-radio-button label="4">Last 30 days
+												<el-radio-button label="4">{{$t('Last 30 days')}}
 												</el-radio-button>
 											</el-radio-group>
 										</el-form-item>
@@ -79,8 +79,8 @@
 												@clear="clearFilter('shopifyOrder')"></el-input>
 										</el-form-item>
 										<el-form-item>
-											<el-button type="primary" @click="filterItem">Filter</el-button>
-											<el-button type="danger" @click="clearFilter">Clear</el-button>
+											<el-button type="primary" @click="filterItem">{{$t('Filter')}}</el-button>
+											<el-button type="danger" @click="clearFilter">{{$t('Clear')}}</el-button>
 										</el-form-item>
 									</el-form>
 								</div>
@@ -140,7 +140,7 @@
 											View detail
 										</el-link> -->
 										<el-link :disabled="scope.row.type != '1'" class="mg-r-20" type="primary" @click="openExportDetail(scope.row)">
-											View detail
+											{{$t('View detail')}}
 										</el-link>
 									</div>
 								</template>
@@ -179,12 +179,12 @@
 										</el-form-item>
 										<el-form-item>
 											<el-radio-group v-model="dateFilter" size="mini" @change="filterDate">
-												<el-radio-button label="1">Today</el-radio-button>
-												<el-radio-button label="2">Yestoday
+												<el-radio-button label="1">{{$t('Today')}}</el-radio-button>
+												<el-radio-button label="2">{{$t('Yesterday')}}
 												</el-radio-button>
-												<el-radio-button label="3">Last 7 days
+												<el-radio-button label="3">{{$t('Last 7 days')}}
 												</el-radio-button>
-												<el-radio-button label="4">Last 30 days
+												<el-radio-button label="4">{{$t('Last 30 days')}}
 												</el-radio-button>
 											</el-radio-group>
 										</el-form-item>
@@ -228,8 +228,8 @@
 												@clear="clearFilter('shopifyOrder')"></el-input>
 										</el-form-item>
 										<el-form-item>
-											<el-button type="primary" @click="filterItem">Filter</el-button>
-											<el-button type="danger" @click="clearFilter">Clear</el-button>
+											<el-button type="primary" @click="filterItem">{{$t('Filter')}}</el-button>
+											<el-button type="danger" @click="clearFilter">{{$t('Clear')}}</el-button>
 										</el-form-item>
 									</el-form>
 								</div>
@@ -289,7 +289,7 @@
 											View detail
 										</el-link> -->
 										<el-link :disabled="scope.row.type != '1'" class="mg-r-20" type="primary" @click="openExportDetail(scope.row)">
-											View detail
+											{{$t('View detail')}}
 										</el-link>
 									</div>
 								</template>
@@ -323,12 +323,12 @@
 				<el-row class="tltle">
 					<el-col :span="12">
 						<div class="grid-content">
-							The export of time：{{moment().format("YYYY-MM-DD HH:mm:ss")}}
+							{{$t('The export of time')}}：{{moment().format("YYYY-MM-DD HH:mm:ss")}}
 						</div>
 					</el-col>
 					<el-col :span="12">
 						<div class="grid-content">
-							Petitioner：{{ $store.state.userInfo.name}}
+							{{$t('Petitioner：')}}{{ $store.state.userInfo.name}}
 						</div>
 					</el-col>
 				</el-row>
@@ -336,31 +336,31 @@
 					<el-row>
 						<el-col :span="12">
 							<div class="grid-content">
-								Create Date：{{moment.unix(item.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}
+								{{$t('Create Date')}}：{{moment.unix(item.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}
 							</div>
 						</el-col>
 						<el-col :span="12">
 							<div class="grid-content">
-								Payment code：{{item.sysCode}}
-							</div>
-						</el-col>
-					</el-row>
-					<el-row>
-						<el-col :span="12">
-							<div class="grid-content">
-								Trade type：{{filterText('tradeType',item.type)}}
-							</div>
-						</el-col>
-						<el-col :span="12">
-							<div class="grid-content">
-								Trade amount({{$store.state.country.symbol}})：{{$exchangeRate(item.totalAmount)}}
+								{{$t('Payment code')}}：{{item.sysCode}}
 							</div>
 						</el-col>
 					</el-row>
 					<el-row>
 						<el-col :span="12">
 							<div class="grid-content">
-								Third Party Number：{{item.code}}
+								{{$t('Trade type')}}：{{filterText('tradeType',item.type)}}
+							</div>
+						</el-col>
+						<el-col :span="12">
+							<div class="grid-content">
+								{{$t('Trade amount')}}({{$store.state.country.symbol}})：{{$exchangeRate(item.totalAmount)}}
+							</div>
+						</el-col>
+					</el-row>
+					<el-row>
+						<el-col :span="12">
+							<div class="grid-content">
+								{{$t('Third Party Number')}}：{{item.code}}
 							</div>
 						</el-col>
 					</el-row>
@@ -368,9 +368,9 @@
 			</div>
 			<el-divider></el-divider>
 			<div slot="footer" class="dialog-footer">
-				<el-button @click="viewDetail.isShow = false">Cancel</el-button>
+				<el-button @click="viewDetail.isShow = false">{{$t('Cancel')}}</el-button>
 				<el-button type="primary" @click="exportDetailFn" :loading="viewDetail.exportLoading">
-					Export
+					{{$t('Export')}}
 				</el-button>
 			</div>
 		</el-dialog>

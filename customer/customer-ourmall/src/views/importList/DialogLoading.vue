@@ -8,7 +8,7 @@
   >
     <div class="LoadingModal">
       <el-progress  type="circle"  :percentage="loadingNum" :color="colors"></el-progress>
-      <div class="text">Loading time to long, check detailed progress</div>
+      <div class="text">{{$t('Loading time to long, check detailed progress')}}</div>
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button  @click="closePush">Close</el-button>

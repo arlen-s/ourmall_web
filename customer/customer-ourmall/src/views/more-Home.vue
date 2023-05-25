@@ -27,7 +27,7 @@
           <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/products-market' }">
               <!-- {{$root.$children[0].pName.a}} -->
-              Products Market
+              {{$t('Products Market')}}
             </el-breadcrumb-item>
             <el-breadcrumb-item v-if="activeCategory.l1">
               <a v-if="activeCategory.L > 1" @click="gotoCategory(1)">{{ activeCategory.l1.name }}</a>
@@ -49,43 +49,43 @@
             <Categories :categories="commodityTypeMoreList" />
             <div class="filter-box">
               <div class="box-card">
-                <p class="price">Unit Price</p>
+                <p class="price">{{$t('Unit Price')}}</p>
                 <div>
                   <el-input placeholder="Min" style="width:60px" v-model="min">
-                    <span slot="prefix">{{$store.state.country.symbol}}</span>
+                    <span slot="prefix">$</span>
                   </el-input>
                   <span> — </span>
                   <el-input placeholder="Max" style="width:60px" v-model="max">
-                    <span slot="prefix">{{$store.state.country.symbol}}</span>
+                    <span slot="prefix">$</span>
                   </el-input>
-                  <el-button type="primary" @click="searchPrice">GO</el-button>
+                  <el-button type="primary" @click="searchPrice">{{$('GO')}}</el-button>
                 </div>
                  <el-divider></el-divider>
-                <p class="price">Qty Available</p>
+                <p class="price">{{$t('Qty Available')}}</p>
                 <div>
                   <el-input placeholder="Min" style="width:60px" v-model="minQty">
                   </el-input>
                   <span> — </span>
                   <el-input placeholder="Max" style="width:60px" v-model="maxQty">
                   </el-input>
-                  <el-button type="primary"  @click="searchPrice">GO</el-button>
+                  <el-button type="primary"  @click="searchPrice">{{$('GO')}}</el-button>
                 </div>   
                  <el-divider></el-divider>
                  <div class="top-title">
-                    <p class="price">First Available</p>
-                    <span @click="restDay">Clear</span>
+                    <p class="price">{{$t('First Available')}}</p>
+                    <span @click="restDay">{{$t('Clear')}}</span>
                  </div>
                 
                 <div>
                 <el-radio-group v-model="radioDay" @change="searchPrice">
                   <div>
-                      <el-radio :label="7">Last 7 days</el-radio>
+                      <el-radio :label="7">{{$t('Last 7 days')}}</el-radio>
                   </div>
                   <div>
-                      <el-radio :label="14">Last 14 days</el-radio>
+                      <el-radio :label="14">{{$t('Last 14 days')}}</el-radio>
                   </div>
                   <div>
-                      <el-radio :label="30">Last 30 days</el-radio>
+                      <el-radio :label="30">{{$t('Last 30 days')}}</el-radio>
                   </div>
                   
                 </el-radio-group>
@@ -96,7 +96,7 @@
 
           <div v-if="items && items.length == 0" style="flex:1">
         <div class="top-filter-box">
-        <span> Sort by</span>
+        <span> {{$t('Sort by')}}</span>
         <div class="right"
           @click="changePrice()"
          >{{priceObj.label}}
@@ -121,13 +121,13 @@
             <el-card class="mg-l-20" style="width:auto">
               <div class="noProduct">
                 <img src="../../public/images/productShop/none.png" />
-                <b class="mg-t-10">There are no products in this category</b>
+                <b class="mg-t-10">{{$t('There are no products in this category')}}</b>
               </div>
             </el-card>
           </div>
           <div v-loading="loading" style="flex:1" v-else>
             <div class="top-filter-box">
-              <span> Sort by</span>
+              <span> {{$t('Sort by')}}</span>
         <div class="right"
           @click="changePrice()"
          >{{priceObj.label}}
@@ -169,8 +169,7 @@
                   >{{$store.state.country.symbol}} {{item.minPrice === item.maxPrice ? item.minPrice : `${item.minPrice}~${item.maxPrice} `}}</b>
                   <p
                     v-show="item.estimatedLeadTimeType"
-                  >über: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{getType(item.estimatedLeadTimeType)}}</p>
-                  <p>Kostenloser Versand</p>
+                  >about: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{item.estimatedLeadTimeType}}</p>
                   <!-- <div class="imports">
                         <span>Imports:
                            <span style="color:#525FB0">{{ item.imports }}</span>
@@ -233,7 +232,7 @@
       <div class="login-page">
         <div class="login-box">
           <div class="box mg-b-5">
-            <p>Please enter your shopify store name to connect the dashboard page:</p>
+            <p>{{$t('Please enter your shopify store name to connect the dashboard page')}}:</p>
             <div class="mg-b-30">
               <input
                 type="text"

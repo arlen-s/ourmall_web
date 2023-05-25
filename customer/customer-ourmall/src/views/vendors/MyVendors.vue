@@ -43,9 +43,9 @@
                   </el-form-item>-->
               <el-form-item>
                 <el-button type="primary" @click="filterGetItem"
-                  >Filter</el-button
+                  >{{$t('Filter')}}</el-button
                 >
-                <el-button type="" @click="clearFilter">Clear</el-button>
+                <el-button type="" @click="clearFilter">{{$t('Clear')}}</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -67,11 +67,11 @@
                 {{ row.vendorId }}</span
               >
               <span v-else style="color: #303133">
-                --- <span style="color: #909399">(NOT Joined)</span></span
+                --- <span style="color: #909399">({{$t('NOT Joined')}})</span></span
               >
             </div>
             <div style="color: #909399">
-              Vender Name:
+              {{$t('Vender Name')}}:
               <span style="color: #303133">{{ row.vendorName || "---" }}</span>
               <span v-if="row.vendorRemark" class="mg-l-5 vendorRemark">
                 <el-tooltip
@@ -85,7 +85,7 @@
               </span>
             </div>
             <div style="color: #909399">
-              AliExpress Shop Name:
+             {{$t('AliExpress Shop Name')}}:
               <span v-if="row.shopName" style="color: #303133">
                 <a
                   style="color: #5c6ac4"
@@ -175,7 +175,7 @@
                 <div>{{scope.row.bonus}}</div>
               <div>
                 <el-link type="primary" @click="openBonusDetail(scope.row.id)">
-                     View Detail
+                     {{$t('View Detail')}}
                   </el-link>
               </div>
               </div> 
@@ -185,7 +185,7 @@
         <el-table-column label="Sales statistics" min-width="230">
           <template slot-scope="scope">
             <div style="color: #909399">
-              Product allocated:
+              {{$t('Product allocated')}}:
               <span style="color: #303133">
                 <el-link
                   style="font-size: 12px"
@@ -196,7 +196,7 @@
               </span>
             </div>
             <div style="color: #909399">
-              Purchase amount:
+              {{$t('Purchase amount')}}:
               <span style="color: #303133">
                 <el-link
                   class="purchase-amount"
@@ -211,7 +211,7 @@
         <el-table-column label="Date" min-width="200">
           <template slot-scope="scope">
             <div style="color: #909399">
-              Created at:
+              {{$t('Created at')}}:
               <span style="color: #303133">{{
                 scope.row.timeCreated
                   ? moment(scope.row.timeCreated).format("ll")
@@ -219,7 +219,7 @@
               }}</span>
             </div>
             <div style="color: #909399">
-              Latest cooperation at:
+              {{$t('Latest cooperation at')}}:
               <span style="color: #303133">{{
                 scope.row.timeCooperated
                   ? moment(scope.row.timeCooperated).format("ll")
@@ -235,24 +235,24 @@
                 class="mg-r-20"
                 type="primary"
                 @click="newEditVendor(scope.row)"
-                >Edit</el-link
+                >{{$t('Edit')}}</el-link
               >
               <el-link
                 v-if="scope.row.canDelete"
                 type="danger"
                 @click="delVendor(scope.row)"
-                >Delete</el-link
+                >{{$t('Delete')}}</el-link
               >
             </div>
             <div>
               <el-link type="primary" @click="gotoInvoice(scope.row)"
-                >Sourcing Now</el-link
+                >{{$t('Sourcing Now')}}</el-link
               >
               <el-link
                 v-if="!scope.row.vendorId"
                 type="primary"
                 @click="openInviteDialog(scope.row.id)"
-                >Invite Vendor</el-link
+                >{{$t('Invite Vendor')}}</el-link
               >
             </div>
           </template>
@@ -284,20 +284,20 @@
       :before-close="handleClosenewAddVendor"
     >
       <div style="margin: 20px">
-        <span class="mg-r-5"> How to add:</span>
+        <span class="mg-r-5"> {{$t('How to add')}}:</span>
         <el-radio-group
           class="add-vendor"
           @change="addVendoorChange"
           v-model="newAddVendorDialog.radio"
         >
-          <el-radio :label="1">By Vendor Name</el-radio>
-          <el-radio :label="2">By AliExpress Url</el-radio>
+          <el-radio :label="1">{{$t('By Vendor Name')}}</el-radio>
+          <el-radio :label="2">{{$t('By AliExpress Url')}}</el-radio>
           <el-radio :label="3">By {{$root.$children[0].pName.a}} ID</el-radio>
         </el-radio-group>
       </div>
       <div style="margin: 20px" v-show="newAddVendorDialog.radio === 1">
         <div style="display: flex; align-items: center">
-          <span style="flex: 0 0 20%">Vendor's Name: </span>
+          <span style="flex: 0 0 20%">{{$t("Vendor's Name")}}: </span>
           <el-input
             size="small"
             style="flex: 0 0 50%"
@@ -308,10 +308,10 @@
       </div>
       <div style="margin: 0 20px" v-show="newAddVendorDialog.radio === 2">
         <p class="mg-b-10" style="color: #333">
-          Vendor's AliExpress shop or product URL
+          {{$t("Vendor's AliExpress shop or product URL")}}
           <el-tooltip effect="dark" placement="bottom">
             <div slot="content" class="">
-              <div>How to get the vendor's AliExpress shop / product URL?</div>
+              <div>{{$t("How to get the vendor's AliExpress shop / product URL?")}}</div>
               <div>
                 <el-image
                   style="width: 100px; height: 100px"
@@ -394,7 +394,7 @@
             class="mg-b-10 contact"
             style="cursor: pointer"
           >
-            Contact：<i
+            {{$t('CONTACT')}}：<i
               :class="
                 newEditDialog.isUnfold
                   ? 'el-icon-caret-top'
@@ -469,12 +469,12 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="newEditDialog.visible = false">Close</el-button>
+        <el-button @click="newEditDialog.visible = false">{{$t('Close')}}</el-button>
         <el-button
           type="primary"
           :loading="newEditDialog.loading"
           @click="newSaveVendor"
-          >Save</el-button
+          >{{$t('Save')}}</el-button
         >
       </span>
     </el-dialog>
@@ -500,13 +500,13 @@
               v-clipboard:copy="inviteDialog.inviteCode"
               v-clipboard:success="onCopy"
               v-clipboard:error="onError"
-              >Copy Link</el-button
+              >{{$t('Copy Link')}}</el-button
             >
           </span>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="inviteDialog.visible = false">Close</el-button>
+        <el-button @click="inviteDialog.visible = false">{{$t('Close')}}</el-button>
       </span>
     </el-dialog>
     <el-dialog
@@ -568,7 +568,7 @@
       </div>
       <el-divider></el-divider>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="BonusVisible = false">Close</el-button>
+        <el-button @click="BonusVisible = false">{{$t('Close')}}</el-button>
       </span>
     </el-dialog>
     <el-backtop
@@ -818,7 +818,7 @@ export default {
     },
     delVendor(item) {
       //删除
-      this.$confirm("Are you sure you want to delete it?", "", {
+      this.$confirm(this.$t("Are you sure you want to delete it?"), "", {
         confirmButtonText: "Delete",
         cancelButtonText: "Discard",
         type: "error",
@@ -871,7 +871,7 @@ export default {
     },
     newSaveVendor() {
       if (!this.newEditDialog.name) {
-        this.$elementMessage("Customer name required", "error");
+        this.$elementMessage(this.$t("Customer name required"), "error");
         return;
       }
       this.newEditDialog.loading = true;
@@ -900,8 +900,8 @@ export default {
           this.newEditDialog.visible = false;
           this.$elementMessage(
             this.newEditDialog.id
-              ? "customer successfully edited"
-              : "customer successfully added",
+              ? this.$t("customer successfully edited")
+              : this.$t("customer successfully added"),
             "success"
           );
           this.getItem(true);

@@ -4,12 +4,12 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-s-shop"></i>
-          <h2>My Stores</h2>
+          <h2>{{$t('My Stores')}}</h2>
         </div>
       </div>
       <div class="right">
         <el-button type="primary" @click="openConnectStore"
-          >Add a new store</el-button
+          >{{$t('Add a new store')}}</el-button
         >
       </div>
     </div>
@@ -52,10 +52,10 @@
                     </el-form-item>
                     <el-form-item>
                       <el-button type="primary" @click="filterGetItem"
-                        >Filter</el-button
+                        >{{$t('Filter')}}</el-button
                       >
                       <el-button type="danger" @click="clearFilter"
-                        >Clear</el-button
+                        >{{$t('Clear')}}</el-button
                       >
                     </el-form-item>
                   </el-form>
@@ -87,7 +87,7 @@
               <el-table-column label="Date">
                 <template slot-scope="scope">
                   <div style="color: #909399">
-                    Creation date:
+                    {{$t('Creation date')}}:
                     <span style="color: #303133">{{
                       scope.row.timeCreated
                         ? moment
@@ -97,7 +97,7 @@
                     }}</span>
                   </div>
                   <div style="color: #909399">
-                    Auth date:
+                    {{$t('Auth date')}}:
                     <span style="color: #303133">{{
                       scope.row.timeAuth
                         ? moment.unix(scope.row.timeAuth).format("ll [at] LTS")
@@ -147,12 +147,12 @@
                 <template slot-scope="scope">
                   <div>
                     <el-link type="danger" @click="delStore(scope.row)"
-                      >Delete</el-link
+                      >{{$t('Delete')}}</el-link
                     >
                   </div>
                   <div v-if="scope.row.vendorName">
                     <el-link type="danger" @click="entrustedRemove(scope.row)"
-                      >Remove entrusted vendor</el-link
+                      >{{$t('Remove entrusted vendor')}}</el-link
                     >
                   </div>
                   <!-- <div v-if="!scope.row.vendorName">
@@ -164,7 +164,7 @@
                     <el-link
                       type="primary"
                       @click="connectStoreAgain(scope.row)"
-                      >Reauthorize</el-link
+                      >{{$t('Reauthorize')}}</el-link
                     >
                   </div>
                 </template>
@@ -315,7 +315,7 @@
                   v-if="!platform.enabled"
                   href="javascript:;"
                   class="comingSoon"
-                  >Coming Soon</a
+                  >{{$t('Coming Soon')}}</a
                 >
               </div>
             </template>
@@ -337,8 +337,7 @@
           <div v-if="!vipData.service">
             <i class="el-icon-info"></i>
             <span class="mg-l-5">{{ $root.$children[0].shopName }}</span>
-            vendor is authorizing the store on Ourmall Dropshipping App, please
-            be noted.
+            {{$t('vendor is authorizing the store on Ourmall Dropshipping App, please be noted.')}}
           </div>
         </el-form-item>
         <template v-if="activePlatform == 'woo'">
@@ -396,9 +395,9 @@
         </template>
         <el-form-item label="Api Permission:" v-if="activePlatform == 'shopify'">
           <div>
-            <el-checkbox v-model="checkedOrder" disabled>order</el-checkbox>
-            <el-checkbox v-model="checkPublish">published 
-               <el-tooltip class="item" effect="dark" content="If you do not check the relevant permissions, it will affect the use of related functions, please operate with caution" placement="right">
+            <el-checkbox v-model="checkedOrder" disabled>{{$t('Order')}}</el-checkbox>
+            <el-checkbox v-model="checkPublish">{{$t('published')}} 
+               <el-tooltip class="item" effect="dark" :content="$t('If you do not check the relevant permissions, it will affect the use of related functions, please operate with caution')" placement="right">
                  <i class="el-icon-info"></i> 
               </el-tooltip>              
               </el-checkbox>
@@ -409,7 +408,7 @@
       <el-divider></el-divider>
       <div slot="footer" class="dialog-footer">
         <el-button size="small" @click="connectStoreOpen = false"
-          >Close</el-button
+          >{{$t('Close')}}</el-button
         >
         <el-button
           size="small"
@@ -417,7 +416,7 @@
           :disabled="ableClick"
           @click="connectStoreFn"
           v-if="errorMessage == ''"
-          >Connect</el-button
+          >{{$t('Connect')}}</el-button
         >
       </div>
     </el-dialog>
@@ -432,21 +431,20 @@
       <template v-if="depositDialog.type == 1">
         <el-divider></el-divider>
         <p style="margin: 40px 12%; color: rgba(127, 127, 127, 1)">
-          Are you sure you want to cancel the hosting store "{{
+          {{$t('Are you sure you want to cancel the hosting store')}} "{{
             depositDialog.name
-          }}", after you close the hosting, the supplier will not be able to
-          actively quote your order!
+          }}", {{$t('after you close the hosting, the supplier will not be able to actively quote your order!')}}
         </p>
         <el-divider></el-divider>
         <div slot="footer" class="dialog-footer">
           <el-button size="small" @click="depositDialog.isShow = false"
-            >Close</el-button
+            >{{$t('Close')}}</el-button
           >
           <el-button
             size="small"
             type="primary"
             @click="depositStore(depositDialog.row, 2)"
-            >Sure</el-button
+            >{{$t('Sure')}}</el-button
           >
         </div>
       </template>
@@ -456,9 +454,8 @@
             <i class="el-icon-check"></i>
           </div>
           <div class="txt">
-            You have successfully hosted the {{ depositDialog.name }} store.
-            After the successful hosting, your supplier will take the initiative
-            to quote for your pending orders!
+            {{$t('You have successfully hosted the')}} {{ depositDialog.name }}store.
+            {{$t('After the successful hosting, your supplier will take the initiative to quote for your pending orders!')}}
           </div>
         </div>
       </template>
@@ -474,7 +471,7 @@
     >
       <el-divider></el-divider>
       <div style="padding: 0 25px">
-        <p class="mg-t-20 mg-b-20">Choose a vendor</p>
+        <p class="mg-t-20 mg-b-20">{{$t('Choose a vendor')}}</p>
         <div
           :style="{
             minHeight: DialogEntrustSet.inputVisible2 ? '450px' : '200px',
@@ -526,11 +523,11 @@
                       type="primary"
                       :underline="false"
                       style="font-weight: normal"
-                      >Select</el-link
+                      >{{$t('Select')}}</el-link
                     >
                   </div>
                 </div>
-                <div v-else class="tx-center">No data</div>
+                <div v-else class="tx-center">{{$t('No data')}}</div>
               </div>
               <el-divider></el-divider>
               <template
@@ -539,8 +536,7 @@
                 "
               >
                 <el-button type="primary" plain @click="openAddVendor"
-                  ><i class="fa fa-user-plus mg-r-10"></i>Add a new
-                  vendor</el-button
+                  ><i class="fa fa-user-plus mg-r-10"></i>{{$t('Add a new vendor')}}</el-button
                 >
               </template>
               <template
@@ -565,20 +561,20 @@
               DialogEntrustSet.isShow = false;
               DialogEntrustSet.inputVisible2 = false;
             "
-            >Cancel</el-button
+            >{{$t('Cancel')}}</el-button
           >
           <el-button
             type="primary"
             :disabled="DialogEntrustSet.loading"
             :loading="DialogEntrustSet.loading"
             @click="saveEntrustSet"
-            >Save</el-button
+            >{{$t('Save')}}</el-button
           >
         </div>
       </div>
     </el-dialog>
     <el-dialog
-      title="Add a new vendor"
+      :title="$t('Add a new vendor')"
       :visible.sync="addVendorDialog.isShow"
       :width="'620px'"
       :close-on-click-modal="false"
@@ -619,14 +615,14 @@
       <el-divider></el-divider>
       <div slot="footer" class="dialog-footer">
         <el-button size="small" @click="addVendorDialog.isShow = false"
-          >Close</el-button
+          >{{$t('Close')}}</el-button
         >
         <el-button
           size="small"
           type="primary"
           @click="saveVendor(2)"
           :loading="addVendorDialog.loading"
-          >Save</el-button
+          >{{$t('Save')}}</el-button
         >
         <!--				<el-button size="small" type="primary" @click="saveVendor(2)" :loading="addVendorDialog.loading">Save and change the vendor</el-button>-->
       </div>
@@ -647,9 +643,9 @@
   <el-form>
     <el-form-item label="Api Permission:">
           <div>
-            <el-checkbox v-model="checkedOrder" disabled>order</el-checkbox>
-            <el-checkbox v-model="checkPublish">published 
-               <el-tooltip class="item" effect="dark" content="If you do not check the relevant permissions, it will affect the use of related functions, please operate with caution" placement="right">
+            <el-checkbox v-model="checkedOrder" disabled>{{$t('Order')}}</el-checkbox>
+            <el-checkbox v-model="checkPublish">{{$t('published')}} 
+               <el-tooltip class="item" effect="dark" :content="$t('If you do not check the relevant permissions, it will affect the use of related functions, please operate with caution')" placement="right">
                  <i class="el-icon-info"></i> 
               </el-tooltip>              
               </el-checkbox>
@@ -659,8 +655,8 @@
   </el-form>
  </div>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisibleShopify = false">close</el-button>
-    <el-button type="primary" @click="againCertification()">Reauthorize</el-button>
+    <el-button @click="dialogVisibleShopify = false">{{$t('close')}}</el-button>
+    <el-button type="primary" @click="againCertification()">{{$t('Reauthorize')}}</el-button>
   </span>
 </el-dialog>
   </div>
@@ -877,7 +873,7 @@ export default {
     },
     saveVendor(type) {
       if (!this.addVendorDialog.name) {
-        this.$elementMessage("Customer name required", "error");
+        this.$elementMessage(this.$t("Customer name required"), "error");
         return;
       }
       this.addVendorDialog.loading = true;
@@ -892,7 +888,7 @@ export default {
         if (r.ErrorCode == 9999) {
           this.DialogEntrustSet.vendorName = "";
           this.addVendorDialog.isShow = false;
-          this.$elementMessage("Customers successfully added", "success");
+          this.$elementMessage(this.$t("customers successfully added"), "success");
           this.getVendor();
         } else {
           this.$elementMessage(r.Message, "error");
@@ -983,7 +979,7 @@ export default {
     },
     entrustedRemove(item) {
       //删除
-      this.$confirm("Are you sure you want to remove entrusted vendor? ", "", {
+      this.$confirm(this.$t("Are you sure you want to remove entrusted vendor?"), "", {
         confirmButtonText: "Remove",
         cancelButtonText: "Cancel",
         type: "error",

@@ -4,6 +4,7 @@
       <div
         class="type-item"
         v-for="(item, index) in commodityTypeList"
+        :key="index"
         :class="{'selected': index === commodityType}"
         @click="selectedCommodityType({index, id: item.id})"
       >
@@ -21,11 +22,12 @@
             <div class="type-icon">
               <i class="iconfont icon-weibiaoti5"></i>
             </div>
-            <div class="type-text">More categories</div>
+            <div class="type-text">{{$t('More categories')}}</div>
           </div>
           <el-dropdown-menu class="more-dropdown" slot="dropdown">
             <el-dropdown-item
               v-for="(item, index) in commodityTypeMoreList"
+              :key="index"
               :command="{index: index+9, id: item.id}"
               :class="{'action': categoryId == item.id}"
             >{{item.name}}</el-dropdown-item>
@@ -36,45 +38,47 @@
 <!--    :height="tableHeight"-->
     <div ref="" class="commodity-tab-wrapper">
       <div class="table-header">
-        <div class="table-info1">AliExpress store information</div>
-        <div class="table-info2">Detailed seller ratings</div>
-        <div class="table-info3">Recent Products</div>
-        <div class="table-info4">Action</div>
+        <div class="table-info1">{{$t('AliExpress store information')}}</div>
+        <div class="table-info2">{{$t('Detailed seller ratings')}}</div>
+        <div class="table-info3">{{$t('Recent Products')}}</div>
+        <div class="table-info4">{{$t('Action')}}</div>
       </div>
       <!-- :style="{height: tableHeight - 38 + 'px'}" -->
       <div ref="gridTable" class="table-body" >
         <div
-          v-for="row in items"
+          v-for="(row,i) in items"
+          :key="i"
           class="vendors-wrapper"
         >
           <div class="item-wrapper">
             <div class="table-info1">
               <div class="store-name">{{row.name}}</div>
-              <a class="storeInfo-a" :href="row.url" target="_blank">Store No.{{row.aliId}}</a>
-              <div class="store-introduce">This store has been open since</div>
-              <div style="font-size: 12px;"><span style="color: #ed4500;">{{moment(row.openDate).format('ll')}}</span>   <span class="mg-l-20">{{row.rate}}% Positive feedback</span></div>
-              <a class="storeInfo-a" :href="row.license" target="_blank">Business License</a>
+              <a class="storeInfo-a" :href="row.url" target="_blank">{{$t('Store No.')}}{{row.aliId}}</a>
+              <div class="store-introduce">{{$t('This store has been open since')}}</div>
+              <div style="font-size: 12px;"><span style="color: #ed4500;">{{moment(row.openDate).format('ll')}}</span>   <span class="mg-l-20">{{row.rate}}% {{$t('Positive feedback')}}</span></div>
+              <a class="storeInfo-a" :href="row.license" target="_blank">{{$t('Business License')}}</a>
             </div>
             <div class="table-info2">
               <div class="categories" v-if="Number(row.descRate)">
                 <div class="categories-item">
-                  <span class="info">Item as Described</span>
-                  <span :style="{color: Number(row.descCompare) >= 0 ? '#5fa05f' : '#ed4500'}">{{row.descRate}} {{ Number(row.descCompare) >= 0 ? "Above" : "Below" }} Average</span></div>
+                  <span class="info">{{$t('Item as Described')}}</span>
+                  <span :style="{color: Number(row.descCompare) >= 0 ? '#5fa05f' : '#ed4500'}">{{row.descRate}} {{ Number(row.descCompare) >= 0 ? "Above" : "Below" }} {{$t('Average')}}</span></div>
                 <div class="categories-item">
-                  <span class="info">Communication</span>
-                  <span :style="{color: Number(row.commCompare) >= 0 ? '#5fa05f' : '#ed4500'}">{{row.commRate}} {{ Number(row.commCompare) >= 0 ? "Above" : "Below"}} Average</span>
+                  <span class="info">{{$t('Communication')}}</span>
+                  <span :style="{color: Number(row.commCompare) >= 0 ? '#5fa05f' : '#ed4500'}">{{row.commRate}} {{ Number(row.commCompare) >= 0 ? "Above" : "Below"}} {{$t('Average')}}</span>
                 </div>
                 <div class="categories-item">
-                  <span class="info">Shipping Speed</span>
-                  <span :style="{color: Number(row.shipCompare) >= 0 ? '#5fa05f' : '#ed4500'}">{{row.shipRate}} {{ Number(row.shipCompare) >= 0 ? "Above" : "Below"}} Average</span>
+                  <span class="info">{{$t('Shipping Speed')}}</span>
+                  <span :style="{color: Number(row.shipCompare) >= 0 ? '#5fa05f' : '#ed4500'}">{{row.shipRate}} {{ Number(row.shipCompare) >= 0 ? "Above" : "Below"}} {{$t('Average')}}</span>
                 </div>
               </div>
-              <div v-else class="not-categories">Detailed Seller Ratings information is unavailable when there're less than 10 ratings.</div>
+              <div v-else class="not-categories">{{$t("Detailed Seller Ratings information is unavailable when there're less than 10 rating")}}.</div>
             </div>
             <div class="table-info3">
               <div class="product-images" v-if="row.products && row.products.length">
                 <el-image
-                  v-for="item in row.products.slice(0,4)"
+                  v-for="(item,i) in row.products.slice(0,4)"
+                  :key="i"
                   style="width: 100px; height: 100px; background-color:#fff;"
                   :src="item.imgUrl"
                   fit="contain"
@@ -97,7 +101,7 @@
             </div>
             <div class="table-info4">
               <div class="store-action">
-                <div class="mg-b-10"> <el-link type="primary" :href="row.url" target="_blank">Visit Store</el-link></div>
+                <div class="mg-b-10"> <el-link type="primary" :href="row.url" target="_blank">{{$t('Visit Store')}}</el-link></div>
                 <div>
                   <el-button
                     :disabled="row.isAdded === 1"
@@ -201,7 +205,7 @@ export default {
               }
             })
             this.ballAnimation(event)
-            this.$elementMessage("Add vendors success", "success");
+            this.$elementMessage(this.$t("Add vendors success"), "success");
           } else {
             this.$elementMessage(r.Message, "error");
             if (r.ErrorCode == "1002" || r.ErrorCode == "1003") {

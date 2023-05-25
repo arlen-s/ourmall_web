@@ -4,56 +4,56 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-location"></i>
-          <h2>Address Management</h2>
+          <h2>{{$t('Address Managemen')}}t</h2>
         </div>
       </div>
       <div class="right">
-        <el-button type="primary" @click="openAddAdd()">Add New Address</el-button>
+        <el-button type="primary" @click="openAddAdd()">{{$t('Add New Address')}}</el-button>
       </div>
     </div>
     <div class="pagebody" v-loading="loading">
       <el-row v-if="items.length" :gutter="15" class="mg-b-20">
         <el-col v-for="item in items" :key="item.id" :sm="24" :lg="12" :xl="8" class=" mg-b-15">
           <el-card class="add-card" :class="{default: item.isDefault == 1}">
-            <div v-if="item.isDefault == 1" class="badge-default">Default Shipping Address</div>
+            <div v-if="item.isDefault == 1" class="badge-default">{{$t('Default Shipping Address')}}</div>
             <div class="add-row tx-ellipsis1">
-              <span class=" title">First name:</span> {{item.firstName}}
+              <span class=" title">{{$t('First name')}}:</span> {{item.firstName}}
             </div>
             <div class="add-row tx-ellipsis1">
-              <span class=" title">Last name:</span> {{item.lastName}}
+              <span class=" title">{{$t('Last name')}}:</span> {{item.lastName}}
             </div>
             <div class="add-row tx-ellipsis1">
-              <span class="title">Phone:</span> {{item.phone || '--'}}
+              <span class="title">{{$t('Phone')}}:</span> {{item.phone || '--'}}
             </div>
             <div class="add-row">
-              <span class="title">Address:</span> <span class="tx-ellipsis1">{{item.address1}}</span>
+              <span class="title">{{$t('Address')}}:</span> <span class="tx-ellipsis1">{{item.address1}}</span>
             </div>
             <div class="add-row-2">
               <div class="row-sub tx-ellipsis1">
-                <span class="title">City:</span> {{item.city}}
+                <span class="title">{{$t('City')}}:</span> {{item.city}}
               </div>
               <div class="row-sub tx-ellipsis1">
-                <span class="title">Postcode:</span> {{item.postcode || '--'}}
+                <span class="title">{{$t('Postcode')}}:</span> {{item.postcode || '--'}}
               </div>
             </div>
             <div class="add-row-2 tx-ellipsis1">
               <div class="row-sub">
-                <span class="title">Province:</span> {{item.province}}
+                <span class="title">{{$t('Province')}}:</span> {{item.province}}
               </div>
               <div class="row-sub tx-ellipsis1">
-                <span class="title">Country:</span> {{item.country ? `${codeToCountry(item.country)} (${item.country})` : '---'}}
+                <span class="title">{{$t('Country')}}:</span> {{item.country ? `${codeToCountry(item.country)} (${item.country})` : '---'}}
               </div>
             </div>
             <div class="action">
-              <el-button type="primary" size="mini" @click="openAddAdd(item)">Edit</el-button>
-              <el-button type="danger" size="mini" @click="delAdd(item)">Delete</el-button>
+              <el-button type="primary" size="mini" @click="openAddAdd(item)">{{$t('Edit')}}</el-button>
+              <el-button type="danger" size="mini" @click="delAdd(item)">{{$t('Delete')}}</el-button>
             </div>
           </el-card>
         </el-col>
       </el-row>
       <el-row v-else :gutter="10">
         <el-col :span="24" class=" tx-center" style=" padding: 25px; color: #909399; font-size: 18px;">
-          No address
+          {{$t('No address')}}
         </el-col>
       </el-row>
     </div>  
@@ -110,7 +110,7 @@ export default {
   methods:{
     delAdd(item){
       //删除地址
-      this.$confirm('Do you want to delete?', '', {
+      this.$confirm(this.$t('Do you want to delete?'), '', {
         confirmButtonClass: " el-button--danger",
         type: "error",
 
@@ -119,7 +119,7 @@ export default {
         this.$apiCall('api.Address.deleteAddress', {addressId: item.id}, r => {
           this.loading = false;
           if (r.ErrorCode == "9999") {
-            this.$elementMessage('delete successfully', "success");
+            this.$elementMessage(this.$t('delete successfully'), "success");
             this.getAddList();
           }else{
             this.$elementMessage(r.Message, "error");
@@ -131,7 +131,7 @@ export default {
       //保存地址成功
       this.getAddList();
       this.dialogEditAdd.isShow = false;
-      this.$elementMessage('save successfully', "success");
+      this.$elementMessage(this.$t('save successfully'), "success");
     },
     openAddAdd(item){
       this.dialogEditAdd = JSON.parse(this.dialogEditAddDefault)

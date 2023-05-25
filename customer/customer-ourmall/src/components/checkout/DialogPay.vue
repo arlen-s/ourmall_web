@@ -10,14 +10,14 @@
 			:show-close="dialogPay.step == 1"
 		>
       <div class="pay-info">
-				<div v-if="dialogPay.orderNum">Order Number: <b>{{dialogPay.orderNum}}</b></div>
-				<div v-if="dialogPay.amount">Total Amount: <b class=" tx-danger">{{dialogPay.amount.toFixed(2)}}{{$store.state.country.symbol}}</b></div>
+				<div v-if="dialogPay.orderNum">{{$t('Order Number')}}: <b>{{dialogPay.orderNum}}</b></div>
+				<div v-if="dialogPay.amount">{{$t('Total Amount:')}} <b class=" tx-danger">{{dialogPay.amount.toFixed(2)}}{{$store.state.country.symbol}}</b></div>
 			</div>
       <template v-if="dialogPay.step == 1">
 				<div class="pay-platform">
 					<div class="d-flex title">
-						<h3>Payment Methods</h3>
-						<span>All transactions are secure and encrypted.</span>
+						<h3>{{$t('Payment Methods')}}</h3>
+						<span>{{$t('All transactions are secure and encrypted.')}}</span>
 					</div>	
 					<div class="platform-select">
 						<div>
@@ -45,7 +45,7 @@
 										<use xlink:href="#icon-bank-card"></use>
 									</svg>
 								</div>
-								<span>Pay with Credit Card</span>
+								<span>{{$t('Pay with Credit Card')}}</span>
 							</a>
 						</div>
 					</div>
@@ -55,7 +55,7 @@
 						> Pay </el-button>
 					</div>
 					<div class="footer">
-						<div class="ft">We Accept</div>
+						<div class="ft">{{$t('We Accept')}}</div>
 						<div class="fd">
 							<svg class="icon" aria-hidden="true" style="width: 50px; height: 40px;">
 								<use xlink:href="#icon-master"></use>
@@ -71,9 +71,9 @@
 				</div>
 			</template>
       <template v-if="dialogPay.step == 2">
-				<div class="paying"><i class=" mg-r-10 el-icon-loading"></i>Please do not close the page during payment</div>
+				<div class="paying"><i class=" mg-r-10 el-icon-loading"></i>{{$t('Please do not close the page during payment')}}</div>
 				<div class="close-pay" @click="closePay">
-					<button size="medium">Close Pay</button>
+					<button size="medium">{{$t('Close Pay')}}</button>
 				</div>
 			</template>	
 			<template v-if="dialogPay.step == 3">
@@ -82,10 +82,10 @@
 				</div>
 				<div v-else class="pay-success">
 					<i class="el-icon-success"></i>
-					Your order has been successfully paid and the order amount is  <span class=" tx-danger"> ${{dialogPay.amount.toFixed(2)}}</span>.
+					{{$t('Your order has been successfully paid and the order amount is')}}  <span class=" tx-danger"> ${{dialogPay.amount.toFixed(2)}}</span>.
 				</div>
 				<div class="close-pay" @click="closePay">
-					<button size="medium">Close</button>
+					<button size="medium">{{$t('Close')}}</button>
 				</div>
 			</template>	
     </el-dialog>

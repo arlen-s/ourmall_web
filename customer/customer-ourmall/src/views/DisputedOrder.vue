@@ -5,7 +5,7 @@
         <div class="left">
           <div class="title">
             <i class="iconfont icon-shopify"></i>
-            <h2>Disputed order</h2>
+            <h2>{{$t('Disputed order')}}</h2>
           </div>
         </div>
       </div>
@@ -17,7 +17,7 @@
             <el-tabs v-model="activeName" @tab-click="search">
               <el-tab-pane label="Awaiting Response" name="1">
                 <span slot="label">
-                  Awaiting Response
+                  {{$t('Awaiting Response')}}
                   <span>({{ total }})</span>
                 </span>
               </el-tab-pane>
@@ -63,7 +63,7 @@
                                 type="primary"
                                 class="search_btn"
                                 @click.stop="search"
-                                >Search</el-button
+                                >{{$t('Search')}}</el-button
                               >
                             </el-form-item>
                             <!-- 下拉框 -->

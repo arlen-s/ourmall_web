@@ -51,8 +51,8 @@
     </div>
     <el-divider></el-divider>
     <div slot="footer" class="dialog-footer">
-      <el-button  @click="data.isShow = false">Discard</el-button>
-      <el-button :loading="data.loading" :disabled="data.isReadonly && !sec" type="primary"  @click="saveNewPSD">Confirm</el-button>
+      <el-button  @click="data.isShow = false">{{$t('Discard')}}</el-button>
+      <el-button :loading="data.loading" :disabled="data.isReadonly && !sec" type="primary"  @click="saveNewPSD">{{$t('Confirm')}}</el-button>
     </div>
   </el-dialog>
 </template>

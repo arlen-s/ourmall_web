@@ -11,10 +11,10 @@
     <div class="right">
       <ul>
         <li>
-          <router-link to="/" :class="{active: $route.name == 'home'}">Home</router-link>
+          <router-link to="/" :class="{active: $route.name == 'home'}">{{$t('Home')}}</router-link>
         </li>
         <li>
-          <router-link to="/products-market">Find Products</router-link>
+          <router-link to="/products-market">{{$t('Find Products')}}</router-link>
         </li>
         <template v-if="$store.state.userInfo">
           <li class="import-link">
@@ -22,7 +22,7 @@
               <i>
                 <i v-if="this.$root.$children[0].importNum" class="badge">{{this.$root.$children[0].importNum > 99 ? '99+' : this.$root.$children[0].importNum}}</i>
               </i>
-              My Import List
+              {{$t('My Import List')}}
             </router-link>
           </li>
           <li>
@@ -46,7 +46,7 @@
                   command="dashboard"
                 >
                   <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i> My
-                  Profile
+                  {{$t('Profile')}}
                 </el-dropdown-item>
                 <el-dropdown-item
                   class="d-flex"
@@ -54,7 +54,7 @@
                   command="exit"
                 >
                   <i class="mg-r-15 fa fa-sign-out" aria-hidden="true"></i>
-                  Logout
+                  {{$t('Logout')}}
                 </el-dropdown-item>
               </el-dropdown-menu>  
             </el-dropdown>
@@ -62,10 +62,10 @@
         </template>  
         <template v-else>
           <li>
-            <a href="javascript:;" @click="openDialogLogin">Login</a>
+            <a href="javascript:;" @click="openDialogLogin">{{$t('Login')}}</a>
           </li>
           <li class="reg">
-            <a href="javascript:;" @click="openRegister">Register</a>
+            <a href="javascript:;" @click="openRegister">{{$t('Register')}}</a>
           </li>
         </template>
       </ul>

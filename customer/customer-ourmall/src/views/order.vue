@@ -5,7 +5,7 @@
 				<div class="title">
 					<i class="el-icon-s-order"></i>
 					<h2>
-						Assign orders to vender
+						{{$t('Assign orders to vender')}}
 					</h2>
 				</div>
 			</div>
@@ -48,13 +48,13 @@
 			<el-card style="margin-bottom: 10px;">
 				<div ref="pageSteps" class="d-flex align-item-center page-steps" style="background: #ecf8ff;font-size: 16px;padding: 10px 30px;border-radius: 4px;">
 					<div :class="pageStep >= 1 ? 'active' : ''">
-						Step One: Select not shipped orders
+						{{$t('Step One: Select not shipped orders')}}
 					</div>
 					<div style="width: 200px;text-align: center;">
 						<i class="el-icon-arrow-right" style="font-size: 24px;color: #C0C4CC;"></i>
 					</div>
 					<div :class="pageStep == 2 ? 'active' : ''">
-						Step Two: Confirm and send these orders to the vendor
+						{{$t('Step Two: Confirm and send these orders to the vendor')}}
 					</div>
 				</div>
 			</el-card>
@@ -63,7 +63,7 @@
 					<div ref="pageChoose" style="margin-bottom: 20px;" class="d-flex align-items-center">
 						<div>
 							<span style="font-size: 16px;color: #303133;font-weight: bold;margin-right: 10px;">First</span>
-							<span>Choose one vendor:</span>
+							<span>{{$t('Choose one vendor')}}:</span>
 						</div>
 						<el-popover ref="popoverCustomer" popper-class="with-shadow" trigger="focus" width="300" placement="bottom">
 							<el-input style="width: 300px;margin-left: 20px;" slot="reference" placeholder="Choose one vendor" prefix-icon="el-icon-search" v-model="vendorName" ref="customerAutocomplete"></el-input>
@@ -76,7 +76,7 @@
 								<div class="divheight"></div>
 								<el-divider></el-divider>
 								<template v-if="vendorName == '' || vendorData.length > 0">
-									<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>Add a new vendor</el-button>
+									<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>{{$t('Add a new vendor')}}</el-button>
 								</template>
 								<template v-if="vendorName && vendorData.length == 0">
 									<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>Add "{{vendorName}}"</el-button>
@@ -88,15 +88,15 @@
 				<el-divider></el-divider>
 				<div>
 					<div class="d-flex">
-						<span style="font-size: 16px;color: #303133;font-weight: bold;margin-right: 10px;">Second</span>
-						<span>Choose orders:</span>
+						<span style="font-size: 16px;color: #303133;font-weight: bold;margin-right: 10px;">{{$t('seconds')}}</span>
+						<span>{{$t('Choose orders')}}:</span>
 						<div>
 							
 						</div>
 					</div>
 					<div v-if="!relationshipId">
 						<div :style="{height:tableHeight+'px',lineHeight: tableHeight+'px'}" style="border: 1px solid #DCDFE6;text-align: center;margin-top: 20px;">
-							<span>Please choose one vendor first</span>
+							<span>{{$t('Please choose one vendor first')}}</span>
 						</div>
 					</div>
 					<div class="mg-t-20" v-else>
@@ -114,16 +114,16 @@
 									</template>
 								</el-table-column>
 								<el-table-column>
-									<template slot="header" slot-scope="scope">
+									<template slot="header">
 								        <div v-if="!searchName">
-								        Product Name
+								        {{$t('Product Name')}}
 								        <el-button size="mini" type="text" @click="searchName = true">
 								        	<i class="el-icon-search mg-l-5"></i>
 								        </el-button>
 								        </div>
 								        <div v-if="searchName" class="d-flex">
 								        	<el-input size="mini" type="text"
-											  placeholder="Product Name"
+											  :placeholder="$t('Product Name')"
 											  v-model="searchNameInput"
 											  clearable>
 											  <el-button @click="Filter(2,'name')" type="primary" size="mini" slot="prepend" icon="el-icon-back"></el-button>
@@ -137,16 +137,16 @@
 									</template>
 								</el-table-column>
 								<el-table-column>
-									<template slot="header" slot-scope="scope">
+									<template slot="header">
 										<div v-if="!searchSku">
-								        Product SKU
+								        {{$t('Product SKU')}}
 								        <el-button size="mini" type="text" @click="searchSku = true">
 								        	<i class="el-icon-search mg-l-5"></i>
 								        </el-button>
 								        </div>
 								        <div v-if="searchSku" class="d-flex">
 								        	<el-input size="mini" type="text"
-											  placeholder="Product SKU"
+											  :placeholder="$t('Product SKU')"
 											  v-model="searchSkuInput"
 											  clearable>
 											  <el-button @click="Filter(2,'sku')" type="primary" size="mini" slot="prepend" icon="el-icon-back"></el-button>
@@ -178,7 +178,7 @@
 						</div>
 						<div>
 							<el-table border v-if="pageStep == 2" :height="tableHeight" :stripe="true" :data="multipleSelectData" tooltip-effect="dark" style="width: 100%">
-								<el-table-column label="Product name">
+								<el-table-column :label="$t('Product name')">
 									<template slot-scope="scope">
 										<p>{{ scope.row.name }}</p>
 										<p>SKU: {{ scope.row.sku }}</p>
@@ -193,9 +193,9 @@
 								<el-table-column label="Subtotal">
 									<template slot-scope="scope">US$ {{ scope.row.subTotal }}</template>
 								</el-table-column>
-								<el-table-column label="Details">
+								<el-table-column :label="$t('Details')">
 									<template slot-scope="scope">
-										<el-button style="font-size: 12px;" type="text" @click="openDetails(scope.$index)">Details</el-button>
+										<el-button style="font-size: 12px;" type="text" @click="openDetails(scope.$index)">{{$t('Details')}}</el-button>
 									</template>
 								</el-table-column>
 							</el-table>
@@ -210,21 +210,21 @@
 											<div class="mg-l-5 pd-r-15 tx-bold">{{pageStep == 1 ? multipleSelection.length : multipleSelectData.length}}</div>
 										</div>-->
 										<div class="d-flex justify-content-end">
-											<div class="tx-bold">Total Quantity selected :</div>
+											<div class="tx-bold">{{$t('Total Quantity selected')}}:</div>
 											<div class="mg-l-5 pd-r-15 tx-bold">
 												{{totalQty}}
 												
 											</div>
-											<el-link v-if="pageStep == 1 && totalQty>0" @click="selectClear" style="margin-left: 5px;" type="danger">Clear selection</el-link>
+											<el-link v-if="pageStep == 1 && totalQty>0" @click="selectClear" style="margin-left: 5px;" type="danger">{{$t('Clear selection')}}</el-link>
 										</div>
 										<div v-if="pageStep == 1" class="d-flex justify-content-end" style="margin-top: 20px;">
 											<!--<el-button size="medium" type="danger" @click="selectClear">Clear</el-button>-->
-											<el-button size="medium" type="primary" @click="Send('1')"> Go to Next</el-button>
+											<el-button size="medium" type="primary" @click="Send('1')"> {{$t('Go to Next')}}</el-button>
 											<!--<el-button size="medium" type="primary" @click="Send('1')">Save selection and send to vendor</el-button>-->
 										</div>
 										<div v-if="pageStep == 2" class="d-flex justify-content-between" style="margin-top: 20px;">
-											<el-button size="medium" type="danger" @click="Send('2')">Abort to assign</el-button>
-											<el-button size="medium" type="primary" @click="getInvocie">Confirm and send these orders to this vendor</el-button>
+											<el-button size="medium" type="danger" @click="Send('2')">{{$t('Abort to assign')}}</el-button>
+											<el-button size="medium" type="primary" @click="getInvocie">{{$t('Confirm and send these orders to this vendor')}}</el-button>
 										</div>
 									</div>
 								</el-col>
@@ -256,7 +256,7 @@
 								</el-table-column>
 								<el-table-column label="Details">
 									<template slot-scope="scope">
-										<el-button style="font-size: 12px;" type="text" @click="openDetails(scope.$index)">Details</el-button>
+										<el-button style="font-size: 12px;" type="text" @click="openDetails(scope.$index)">{{$t('Details')}}</el-button>
 									</template>
 								</el-table-column>
 							</el-table>
@@ -271,7 +271,7 @@
 						</i>-->
 					</div>
 					<div>
-						<span>You can check the invoice by scan this QR Code or visit this URL by your web browser:</span>
+						<span>{{$t('You can check the invoice by scan this QR Code or visit this URL by your web browser')}}:</span>
 						<el-link :underline="false" style="text-decoration: underline;margin: 0 3px;">{{shareUrl}}</el-link>
 					</div>
 				</div>
@@ -281,7 +281,7 @@
 		<el-dialog custom-class="openDetails" :visible.sync="detailsOpen" width="50%" :close-on-click-modal="false">
 			<el-divider></el-divider>
 			<div slot="title" class="d-flex align-item-center">
-				<span style="line-height: 24px;font-size: 18px;color: #303133;">Details</span>
+				<span style="line-height: 24px;font-size: 18px;color: #303133;">{{$t('Details')}}</span>
 			</div>
 			<div>
 				<div style="margin: 20px;padding: 15px;
@@ -290,14 +290,14 @@
     margin-bottom: 25px;
     border-radius: 4px;">
 					<div class="d-flex" style="color: #303133;margin-bottom: 10px;">
-						<span style="margin-right: 5px;white-space: nowrap;">Product name:</span>
+						<span style="margin-right: 5px;white-space: nowrap;">{{$t('Product name')}}:</span>
 						<span>{{detailsInfo.name}}</span>
 					</div>
 					<div class="d-flex" style="color: #303133;margin-bottom: 10px;">
-						<span style="margin-right: 5px;white-space: nowrap;">Unit Cost:</span> US$ <span>{{detailsInfo.costPrice}}</span>
+						<span style="margin-right: 5px;white-space: nowrap;">{{$t('Unit Cost')}}:</span> US$ <span>{{detailsInfo.costPrice}}</span>
 					</div>
 					<div class="d-flex" style="color: #303133;">
-						<span style="margin-right: 5px;white-space: nowrap;">Total Quantity:</span>
+						<span style="margin-right: 5px;white-space: nowrap;">{{$t('Total Quantity')}}:</span>
 						<span>{{detailsInfo.quantity}}</span>
 					</div>
 				</div>
@@ -334,13 +334,13 @@
 									<div class="mg-y-15 mg-t-20">
 										<div class="d-flex mg-b-10">
 											<div class="d-flex" style="width: 90%;">
-												<div style="width: 100px;text-align: right;color: #999;" class="">Time Created :</div>
+												<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Time Created')}} :</div>
 												<div class="mg-l-5 pd-r-15">{{scope.row.order && scope.row.order.timeCreated ? scope.row.order.timeCreated : '---'}}</div>
 											</div>
 										</div>
 										<div class="d-flex mg-b-10">
 											<div class="d-flex" style="width: 90%;">
-												<div style="width: 100px;text-align: right;color: #999;" class="">Receiver :</div>
+												<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Receiver')}} :</div>
 												<div class="mg-l-5 pd-r-15">{{scope.row.order && scope.row.order.shippingJson && scope.row.order.shippingJson.name ? scope.row.order.shippingJson.name : '---'}}</div>
 											</div>
 											<el-tooltip class="item" effect="dark" content="copy" placement="left">
@@ -349,7 +349,7 @@
 										</div>
 										<div class="d-flex">
 											<div class="d-flex" style="width: 90%;">
-												<div style="width: 100px;text-align: right;color: #999;" class="">Address :</div>
+												<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Address')}} :</div>
 												<div class="mg-l-5 pd-r-15" style="max-width:75%;">
 													{{scope.row.order && scope.row.order.shippingJson && scope.row.order.shippingJson.zip ? scope.row.order.shippingJson.zip : '---'}} {{scope.row.order && scope.row.order.shippingJson && scope.row.order.shippingJson.address1 ? scope.row.order.shippingJson.address1 : '---'}} {{scope.row.order && scope.row.order.shippingJson && scope.row.order.shippingJson.city ? scope.row.order.shippingJson.city : '---'}} {{scope.row.order && scope.row.order.shippingJson && scope.row.order.shippingJson.province ? scope.row.order.shippingJson.province : '---'}}
 												</div>
@@ -366,7 +366,7 @@
 										</div>
 										<div class="d-flex">
 											<div class="d-flex" style="width: 90%;">
-												<div style="width: 100px;text-align: right;color: #999;" class="">Company:</div>
+												<div style="width: 100px;text-align: right;color: #999;" class="">{{$t('Company')}}:</div>
 												<div class="mg-l-5 pd-r-15">{{scope.row.order.shippingJson.company}}</div>
 											</div>
 										</div>
@@ -389,10 +389,10 @@
 
 			<el-divider></el-divider>
 			<div slot="footer" class="dialog-footer">
-				<el-button size="small" @click="detailsOpen = false">Close</el-button>
+				<el-button size="small" @click="detailsOpen = false">{{$t('Close')}}</el-button>
 			</div>
 		</el-dialog>
-		<el-dialog title="Add a new vendor" :visible.sync="addVendorDialog.isShow" :width="'620px'" :close-on-click-modal="false" class="add-vendor-dialog">
+		<el-dialog :title="$t('Add a new vendor')" :visible.sync="addVendorDialog.isShow" :width="'620px'" :close-on-click-modal="false" class="add-vendor-dialog">
 			<el-divider></el-divider>
 			<el-row>
 				<el-col :span="24">
@@ -411,9 +411,9 @@
 			</el-row>
 			<el-divider></el-divider>
 			<div slot="footer" class="dialog-footer">
-				<el-button size="small" @click="addVendorDialog.isShow = false;">Close</el-button>
-				<el-button size="small" type="primary" @click="saveVendor(1)" :loading="addVendorDialog.loading">Save</el-button>
-				<el-button size="small" type="primary" @click="saveVendor(2)" :loading="addVendorDialog.loading">Save and change the vendor</el-button>
+				<el-button size="small" @click="addVendorDialog.isShow = false;">{{$t('Close')}}</el-button>
+				<el-button size="small" type="primary" @click="saveVendor(1)" :loading="addVendorDialog.loading">{{$t('Save')}}</el-button>
+				<el-button size="small" type="primary" @click="saveVendor(2)" :loading="addVendorDialog.loading">{{$t('Save and change the vendor')}}</el-button>
 			</div>
 		</el-dialog>
 		<el-dialog @open="openSend" :show-close="selectedSaveDialog.showClose" :title="selectedSaveDialog.title" :visible.sync="selectedSaveDialog.isShow" width="50%" 
@@ -422,20 +422,20 @@
 			<div v-show="selectedSaveDialog.step == 1" style="padding: 20px 150px 20px;">
 				<div class="d-flex" style="font-size: 16px;color: #303133;">
 					<i style="color: #67C23A;font-size: 24px;" class="el-message__icon el-icon-success"></i>
-					<span>Selected saved</span>
+					<span>{{$t('Selected saved')}}</span>
 				</div>
 				<div style="margin: 15px 0 0 35px;color: #303133;">
-					<span>Now you can:</span>
+					<span>{{$t('Now you can')}}:</span>
 					<p style="margin: 10px 0;">
 						<!--<i class="el-icon-arrow-right"></i>-->
 						<el-link type="primary" @click="sendToVendor">
-							Send purchase orders to the vendor
+							{{$t('Send purchase orders to the vendor')}}
 						</el-link>
 					</p>
 					<p>
 						<!--<i class="el-icon-arrow-right"></i>-->
 						<el-link type="primary" @click="checkList">
-							Check the list again
+							{{$t('Check the list again')}}
 						</el-link>
 					</p>
 				</div>
@@ -446,40 +446,40 @@
 					    <span slot="label"><i class="iconfont icon-shejiao"></i> Share by APP</span>
 					    <div>
 					    	<div class="d-flex mg-y-20">
-								<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Title:</div>
+								<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Title')}}:</div>
 								<div style="width: 70%;">
 									<el-input type="text" size="small" v-model="shareTitle"></el-input>
 								</div>
 							</div>
 							<div class="d-flex mg-y-20">
-								<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Desc:</div>
+								<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Title')}}x:</div>
 								<div style="width: 70%;">
 									<el-input type="textarea" resize="none" :autosize="{ minRows: 3, maxRows: 6}" size="small" v-model="shareDesc"></el-input>
 									<div class="mg-t-20 tx-right">
-										<el-button size="mini" type="primary" plain @click="saveRemark('1')">Clear</el-button>
-										<el-button size="mini" type="primary" @click="saveRemark('2')">Save</el-button>
+										<el-button size="mini" type="primary" plain @click="saveRemark('1')">{{$t('Clear')}}</el-button>
+										<el-button size="mini" type="primary" @click="saveRemark('2')">{{$t('Save')}}</el-button>
 									</div>
 								</div>
 							</div>
 							<div class="d-flex mg-y-20">
-								<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Share:</div>
+								<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Share')}}:</div>
 								<div style="width: 70%;" class="d-flex">
 									<div class="skype-share" style="margin-right: 30px;" :data-href="shareTitle + shareDesc" data-lang="en-US" :data-text="shareUrl" data-style="large" ></div>
 									<div>
 										<el-tooltip placement="bottom">
 										  	<div slot="content">
-										  		<p class="tx-center mg-b-10">Scan share to WeChat</p>
+										  		<p class="tx-center mg-b-10">{{$t('Scan share to WeChat')}}</p>
 										  		<img :src="qrcode" width="130"/>
 										  	</div>
 										  	<a class="share-weixin" href="javascript:;">
 												<i class="fa fa-weixin"></i>
-												Share
+												{{$t('Share')}}
 											</a>
 										</el-tooltip>
 									</div>
 									<a class="share-weixin share-download" href="javascript:;" @click="downloadInvoice">
 										<i class="fa fa-download"></i>
-										Download
+										{{$t('Download')}}
 									</a>
 								</div>
 							</div>
@@ -488,7 +488,7 @@
 				    <el-tab-pane name="shareLink">
 				    	<span slot="label"><i class="iconfont icon-link"></i> Share by link</span>
 				    	<div class="d-flex mg-y-20">
-							<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Share link:</div>
+							<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Share link')}}:</div>
 							<div>
 								<el-link :underline="false" :href="shareUrl" target="_blank">{{shareUrl}}</el-link>
 								
@@ -498,7 +498,7 @@
 							<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;"></div>
 							<div>
 								<div>
-									<el-button size="mini" type="success" v-clipboard:copy="shareUrl" v-clipboard:success="onCopy" v-clipboard:error="onError">Copy Link</el-button>
+									<el-button size="mini" type="success" v-clipboard:copy="shareUrl" v-clipboard:success="onCopy" v-clipboard:error="onError">{{$t('Copy Link')}}</el-button>
 								</div>
 							</div>
 						</div>
@@ -507,7 +507,7 @@
 				<el-divider></el-divider>
 			</div>
 			<div v-if="selectedSaveDialog.step == 2" slot="footer" class="dialog-footer">
-				<el-button size="small" @click="selectedSaveDialog.isShow = false;">Close</el-button>
+				<el-button size="small" @click="selectedSaveDialog.isShow = false;">{{$t('Close')}}</el-button>
 			</div>
 		</el-dialog>
 	</div>
@@ -766,7 +766,7 @@ import html2canvas from 'html2canvas';
 					if(r.ErrorCode == 9999) {
 						this.vendorName = "";
 						this.addVendorDialog.isShow = false;
-						this.$elementMessage("Customers successfully added", 'success');
+						this.$elementMessage(this.$t("Customers successfully added"), 'success');
 						if(type == 2) {
 							this.relationshipId = r.Data.Results;
 							this.vendor = this.addVendorDialog.name;
@@ -859,7 +859,7 @@ import html2canvas from 'html2canvas';
 					if(r.ErrorCode == "9999") {
 						
 						
-						this.$elementMessage('A new order successfully created', 'success');
+						this.$elementMessage(this.$t('A new order successfully created'), 'success');
 						this.$router.push({
 							name: "invoices",
 							query: {
@@ -886,10 +886,10 @@ import html2canvas from 'html2canvas';
 				});
 			},
 			onCopy(e) {
-				this.$elementMessage('Has been copied to the clipboard', 'success');
+				this.$elementMessage(this.$t('Has been copied to the clipboard'), 'success');
 			},
 			onError(e) {
-				this.$elementMessage('Copy to clipboard failed, please copy manually', 'error');
+				this.$elementMessage(this.$t('Copy to clipboard failed, please copy manually'), 'error');
 			},
 			openDetails(i) {
 				this.detailsInfo = this.tableData[i];

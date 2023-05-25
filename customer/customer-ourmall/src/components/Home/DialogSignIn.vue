@@ -8,8 +8,8 @@
     >
       <div class="body-wrap">
         <div class=" d-flex mg-b-15">
-          No Account? 
-          <el-link class=" mg-l-10" type="primary" @click="openSingUp" >Sign up here</el-link>
+          {{$t('No Account? ')}}
+          <el-link class=" mg-l-10" type="primary" @click="openSingUp" >{{$t('Sign up here')}}</el-link>
         </div>
         <div>
           <div class="ipt-box">
@@ -22,10 +22,10 @@
             <el-button :loading="data.loading"
               type="primary" style="padding: 12px 40px;"
               @click="signIn"
-            >Sign in</el-button>
-            <el-link @click="forgotPS">Forgot your password?</el-link>
+            >{{$t('Sign in')}}</el-button>
+            <el-link @click="forgotPS">{{$t('Forgot your password?')}}</el-link>
           </div>
-          <el-divider ><span>or Sign in with</span></el-divider>
+          <el-divider ><span>{{$t('or Sign in with')}}</span></el-divider>
           <OtherLogin :platformArr="platformArr" @selectLogin="selectLogin"/>
         </div>
       </div>

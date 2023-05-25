@@ -9,10 +9,10 @@
   <div class="contentpanel search-product" :style="{paddingTop: ($store.state.configJson.sort.length && $store.state.configJson.sort[0].type != 'slider') || !$store.state.configJson.header.isTransparent ? `${$store.state.configJson.header.logoWidth}px` : '120px'}">
     <div class="breadcrum">
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/' }">Home</el-breadcrumb-item>
-        <el-breadcrumb-item>Search Products</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/' }">{{$t('Home')}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{$t('Search Products')}}</el-breadcrumb-item>
       </el-breadcrumb>
-      <el-link class="history" type="primary" @click="goHistory">History</el-link>
+      <el-link class="history" type="primary" @click="goHistory">{{$t('History')}}</el-link>
     </div>
     <div class="publish">
       <el-form :model="publishForm" :rules="publishRules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
@@ -28,7 +28,7 @@
             :on-remove="handleRemove">
             <i class="el-icon-plus"></i>
           </el-upload>
-          <div>You can only upload 5 pictures</div>
+          <div>{{$t('You can only upload 5 pictures')}}</div>
         </el-form-item>
         <el-form-item label="Product Title:" prop="title">
           <el-input @focus="loginOrNot" size="small" v-model="publishForm.title"></el-input>
@@ -43,7 +43,7 @@
             <el-form-item label="——" prop="priceTo">
               <el-input @focus="loginOrNot" v-model="publishForm.priceTo" type="number" style="width: 100px" size="small"></el-input>
               <span style="color: #ccc">
-                {{$store.state.country.symbol}} *Price units default to {{$store.state.country.shopCurrency}}
+                {{$store.state.country.symbol}} *{{$t('Price units default to')}} {{$store.state.country.shopCurrency}}
               </span>
             </el-form-item>
           </el-col>
@@ -56,7 +56,7 @@
         </el-form-item>
       </el-form>
       <div class="search-btn">
-        <el-button type="primary" @click="publish">Publish</el-button>
+        <el-button type="primary" @click="publish">{{$t('Publish')}}</el-button>
       </div>
     </div>
   </div>

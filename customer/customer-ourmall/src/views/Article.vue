@@ -14,7 +14,7 @@
         </router-link>
       <ul class="home-nav">
         <li>
-          <router-link :to="{path: '/'}">Home</router-link>
+          <router-link :to="{path: '/'}">{{$t('Home')}}</router-link>
         </li>
         <!-- <li>
           <router-link :to="{path: '/products-market'}">Products Market</router-link>
@@ -75,13 +75,13 @@
         <h1></h1>
         <ul class="home-nav">
           <li>
-            <router-link :to="{path: '/'}">Home</router-link>
+            <router-link :to="{path: '/'}">{{$t('Home')}}</router-link>
           </li>
           <li>
-            <router-link :to="{path: '/products-market'}">Products Market</router-link>
+            <router-link :to="{path: '/products-market'}">{{$t('Products Market')}}</router-link>
           </li>
           <li>
-            <router-link :to="{path: '/Waiting-for-allocated'}">Request for Quote</router-link>
+            <router-link :to="{path: '/Waiting-for-allocated'}">{{$t('Request for Quote')}}</router-link>
           </li>
           <li v-if="$store.state.userInfo">
             <el-dropdown @command="handleCommand">
@@ -98,7 +98,7 @@
                   <i
                     class="fa fa-tachometer"
                     aria-hidden="true"
-                  ></i> Dashboard
+                  ></i> {{$t('Dashboard')}}
                 </el-dropdown-item>
                 <el-dropdown-item
                   class=" align-items-endd-flex"
@@ -108,7 +108,7 @@
                   <i
                     class="mg-r-15 fa fa-user-o"
                     aria-hidden="true"
-                  ></i> My Profile
+                  ></i> {{$t('My Profile')}}
                 </el-dropdown-item>
                 <el-dropdown-item
                   class="d-flex"
@@ -118,14 +118,14 @@
                   <i
                     class=" mg-r-15 fa fa-sign-out"
                     aria-hidden="true"
-                  ></i> Logout
+                  ></i> {{$t('Logout')}}
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </li>
           <li v-else>
             <!--<router-link to="/login">LOGIN</router-link>-->
-            <a href="javascript:;" @click="login">LOGIN</a>
+            <a href="javascript:;" @click="login">{{$t('LOGIN')}}</a>
           </li>
         </ul>
       </div>
@@ -143,7 +143,7 @@
               class=" mg-r-5"
               type="primary"
               @click="gohome"
-            >Home</el-link>
+            >{{$t('Home')}}</el-link>
             <span
               class=" mg-r-5"
               style="color: #909399;"
@@ -226,7 +226,7 @@
                           <el-col
                             :span="5"
                             style="min-width: 155px;"
-                          ><span style="font-size: 16px; font-weight: bold;">Attach image file</span></el-col>
+                          ><span style="font-size: 16px; font-weight: bold;">{{$t('Attach image file')}}</span></el-col>
                           <el-upload
                             ref="uploadFile"
                             :on-change="handleChange"
@@ -241,7 +241,7 @@
                               size="small"
                               type="primary"
                               :loading="DialogEditComment.uploadLoading"
-                            >Browse</el-button>
+                            >{{$t('Browse')}}</el-button>
 
                           </el-upload>
                         </el-row>
@@ -252,7 +252,7 @@
                           <el-input v-model="DialogEditComment.email"></el-input>
                         </el-form-item>
                       </el-form>
-                      <div>Customer Support Email: <a href="javascript:;">suppor<i class="fa fa-at" aria-hidden="true"></i>ourmall.com</a></div>
+                      <div>{{$t('Customer Support Email')}}: <a href="javascript:;">suppor<i class="fa fa-at" aria-hidden="true"></i>ourmall.com</a></div>
                     </div>
                     
                     <div
@@ -265,7 +265,7 @@
                           type="primary"
                           :loading="DialogEditComment.loading"
                           @click="saveComment"
-                        >Send your request</el-button>
+                        >{{$t('Send your request')}}</el-button>
                       </div>
                       <!--<div>
 						          <el-button
@@ -302,11 +302,11 @@
             <router-link to="/">
               <img src="./../../public/images/logo4.png">
             </router-link>
-            <div class="footer-copyright">&copy; 2021, Powered by OurMall </div>
+            <div class="footer-copyright">&copy; 2021,{{$t('Powered by OurMall')}} </div>
           </div>
           <div class="footer-nav">
             <nav>
-              <router-link to="/">Home</router-link>
+              <router-link to="/">{{$t('Home')}}</router-link>
             </nav>
             <nav
               v-for="nav in navList"
@@ -338,19 +338,19 @@ export default {
       navList: [
         {
           id: "privacy",
-          name: "Privacy policy",
+          name: this.$t("Privacy policy"),
         },
         {
           id: "terms",
-          name: "Terms of use",
+          name: this.$t("Terms of use"),
         },
         {
           id: "refund",
-          name: "Refund Policy",
+          name: this.$t("Refund Policy"),
         },
         {
           id: "contact",
-          name: "Contact Us",
+          name: this.$t("Contact Us"),
         },
       ],
       active: this.$route.name,
@@ -358,11 +358,11 @@ export default {
       keywords: "",
       list: {
         1: {
-          name: "Getting Started",
+          name: this.$t("Getting Started"),
           items: [],
         },
         2: {
-          name: "Main Features",
+          name: this.$t("Main Features"),
           items: [],
         },
         3: {
@@ -511,7 +511,7 @@ export default {
     },
     gotoLogin() {
       if (!this.shopUrl) {
-        this.$elementMessage("Please enter Shopify store name", "error");
+        this.$elementMessage(this.$t("Please enter Shopify store name"), "error");
         return false;
       }
       if (localStorage.getItem("c_ourMallUserInfo")) {
@@ -572,14 +572,14 @@ export default {
       //保存新建工单
       if (!this.DialogEditComment.contents) {
         this.$message({
-          message: "The question must not be empty",
+          message: this.$("The question must not be empty"),
           type: "error",
         });
         return false;
       }
       if (!this.DialogEditComment.email) {
         this.$message({
-          message: "The email must not be empty",
+          message: this.$t("The email must not be empty"),
           type: "error",
         });
         return false;
@@ -600,7 +600,7 @@ export default {
             if (this.$refs.uploadFile) this.$refs.uploadFile.clearFiles();
             this.DialogEditComment = JSON.parse(this.DialogEditCommentDefault);
             this.$message({
-              message: "Send Success,We will contact you soon.",
+              message: this.$t("Send Success,We will contact you soon."),
               type: "success",
             });
           } else {

@@ -4,7 +4,7 @@
        <div class="left">
           <div class="title">
             <i class="el-icon-upload2"></i>
-            <h2>Import List</h2>
+            <h2>{{$t('Import List')}}</h2>
           </div>
         </div>
      </div>
@@ -84,37 +84,6 @@
 			  @gotoImportList="gotoImportList"
 			/>
       </span>
-      <span v-else>
-			<subPageHC ref="main" :key="pageKey"
-			  :tab="tab" 
-			  :loadingImport="loadingImport"
-			  :pushLoading="pushLoading"
-			  :exportLoading="exportLoading"
-			  :delLoading="delLoading"
-			  :AllChecked="AllChecked"
-			  :items="items"
-			  :tags="tags"
-			  :allCnt="allCnt"
-			  :doneCnt="doneCnt"
-			  :filtersParams="filtersParams"
-			  :shopOptArr="shopOptArr"
-			  :filterAccountProps="filterAccountProps"
-			  @changeAllItems="changeAllItems"
-			  @batItems="batItems"
-			  @openTagMgt="openTagMgt"
-			  @removeCheckedTags="removeCheckedTags"
-			  @singPush="singPush"
-			  @editProduct="editProduct"
-			  @delItem="delItem"
-			  @importPorduct="importPorduct"
-			  @openPushSetting="openPushSetting"
-			  @setFilter="setFilter"
-			  @clearFilter="clearFilter"
-			  @delItem2="delItem2"
-			  @gotoImportList="gotoImportList"
-			/>
-      </span>
-
 		</div>
        <el-row v-if="items.length" :gutter="20">
         <el-col :span="24" class="d-flex justify-content-center">
@@ -155,7 +124,6 @@ import DialogEditProduct from '@/views/importList/DialogEditProduct'
 import DialogSelectImg from "@/views/importList/DialogSelectImg"
 import DialogPushSetting from "@/views/importList/DialogPushSetting"
 import subPage from '@/views/importList/Sub'
-import subPageHC from '@/views/importList/SubHC'
 export default {
 	props: ['fromPage'],
   data(){
@@ -331,8 +299,7 @@ export default {
     DialogEditProduct,
     DialogSelectImg,
     DialogPushSetting,
-	  subPage,
-    subPageHC,
+	subPage,
   },
   watch:{
     $route: "gotoPage",
@@ -370,7 +337,7 @@ export default {
   },
   methods: {
     gotoImportList(itms){ //提交至刊登
-      this.$confirm("Are you sure you want to push?", "Tips", {
+      this.$confirm(this.$t('Are you sure you want to push?'), "Tips", {
         confirmButtonText: "Confirm",
         cancelButtonText: "Cancel",
       }).then(()=>{
@@ -386,7 +353,7 @@ export default {
       })
     },
     delItem2(itms){ //findsImportTaskDetail接口列表的删除
-      this.$confirm("Do you want to delete tish task?", "Tips", {
+      this.$confirm(this.$t('Do you want to delete tish task?'), "Tips", {
         confirmButtonText: "Confirm",
         cancelButtonText: "Cancel",
         confirmButtonClass: "el-button--danger",
@@ -457,7 +424,7 @@ export default {
         if (r.ErrorCode == 9999) {
           if (s) {
             this.$elementMessage(
-              "The update  has started, it will take a while to finish.",
+              this.$t('The update  has started, it will take a while to finish.'),
               "success"
             );
             this.$apiCall("api.Product.applyPriceSetting", {}, (r) => {
@@ -658,7 +625,7 @@ export default {
         return;
       }
       this.$confirm(
-        `Do you want to delete the ${ids.length} product(s)?`,
+        `${this.$t('Do you want to delete the')} ${ids.length} ${this.$t('product(s)?')} `,
         "",
         {
           cancelButtonText: "Discard",
@@ -693,7 +660,7 @@ export default {
         return;
       }
       this.$confirm(
-        `Do you want to Export the ${ids.length} product(s)?`,
+         `${this.$t('Do you want to Export the')} ${ids.length} ${this.$t('product(s)?')} `,
         "",
         {
           cancelButtonText: "Discard",
@@ -707,7 +674,7 @@ export default {
           this.pushLoading = false;
           if (r.ErrorCode == 9999) {
             this.exportLoading = false;
-            this.$elementMessage("Export success", "success");
+            this.$elementMessage(this.$t('Export success'), "success");
             window.open(r.Data.Results.file,"_blank");
             this.changeAllItems(false);
             this.getItems(true);
@@ -728,7 +695,7 @@ export default {
         }
       });
       if (!items.length) {
-        this.$elementMessage("Please select the products", "error");
+        this.$elementMessage(this.$t('Please select the products'), "error");
         return;
       }
       let ids = [];
@@ -805,7 +772,7 @@ export default {
     importPorduct(importUrl){
       //导入商品链接
       if (!importUrl) {
-        this.$elementMessage("URL required", "error");
+        this.$elementMessage(this.$t('URL required'), "error");
         return;
       }
       this.loadingImport = true;
@@ -821,7 +788,7 @@ export default {
         (r) => {
           this.loadingImport = false;
           if (r.ErrorCode == 9999) {
-            this.$elementMessage("Import success", "success");
+            this.$elementMessage(this.$t('Import success'), "success");
             this.toPage(1);
           } else {
             this.$elementMessage(r.Message, "error");
@@ -915,7 +882,7 @@ export default {
         if (tag.checked) tagIds.push(tag.id);
       });
       if (!tagIds.length) {
-        this.$elementMessage("Please select the tags", "error");
+        this.$elementMessage(this.$t("Please select the tags"), "error");
         return;
       }
       this.loading = true;
@@ -928,7 +895,7 @@ export default {
         (r) => {
           if (r.ErrorCode == 9999) {
             this.removeCheckedTags();
-            this.$elementMessage("Tags added successfully", "success");
+            this.$elementMessage(this.$t("Tags added successfully"), "success");
             this.getItems();
           } else {
             this.$elementMessage(r.Message, "error");

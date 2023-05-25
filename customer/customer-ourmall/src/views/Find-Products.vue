@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-s-goods"></i>
-          <h2>{{$root.$children[0].pName.a}} Products Market</h2>
+          <h2>{{$root.$children[0].pName.a}} {{$t('Products Market')}}</h2>
         </div>
       </div>
       <el-row :gutter="20" style="margin-right: 20px;">
@@ -36,13 +36,13 @@
         </el-col>
         <el-col :span="3">
           <el-button type="primary" @click="search()" style="margin-top: 4px">
-            SEARCH
+            {{$t('Search')}}
           </el-button>
         </el-col>
       </el-row>
       <div class="right" style="margin-top:10px">
         <el-button type="primary" @click="quotation()" size="small">
-          <i class="el-icon-plus"></i> Request Quotation
+          <i class="el-icon-plus"></i> {{$t('Request Quotation')}}
       </el-button>
       </div>
       
@@ -69,7 +69,7 @@
               <div class="type-icon">
                 <i class="iconfont icon-weibiaoti5"></i>
               </div>
-              <div class="type-text">More categories</div>
+              <div class="type-text">{{$t('More categories')}}</div>
             </div>
             <el-dropdown-menu class="more-dropdown" slot="dropdown">
               <el-dropdown-item
@@ -100,7 +100,7 @@
         class="more"
           @click="goMore('go')"
           v-if="productList && productList.length != 0 && productList.length > 6"
-          >MORE</div
+          >{{$t('MORE')}}</div
         >
       </div>
       <el-card
@@ -171,11 +171,11 @@
                   <!-- 这里 -->
                   <el-dropdown>
                     <el-button type="primary">
-                      Add to Import List<i class="el-icon-arrow-down el-icon--right"></i>
+                     {{$t('Add to Import List')}} <i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">Add to Import List</el-dropdown-item>
-                      <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
+                      <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">{{$t('Add to Import List')}}</el-dropdown-item>
+                      <el-dropdown-item @click.native="goToDetail(item)">{{$t('Add to Cart')}}</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </div>
@@ -186,7 +186,7 @@
       </el-card>
       <div v-else>
         <el-card>
-          <b>There are no products in this category</b>
+          <b>{{$t('There are no products in this category')}}</b>
         </el-card>
       </div>
     </div>
@@ -207,12 +207,12 @@
               info.proList.length != 0 &&
               info.proList.length > 6
             "
-            >MORE</div
+            >{{$t('MORE')}}</div
           >
         </div>
         <div v-if="info.proList && info.proList.length == 0">
           <el-card>
-            <b>There are no products in this category</b>
+            <b>{{$t('There are no products in this category')}}</b>
           </el-card>
         </div>
         <el-card class="out" style="position: relative" v-else>
@@ -279,11 +279,11 @@
                     <!-- 这里 -->
                     <el-dropdown>
                       <el-button type="primary">
-                        Add to Import List<i class="el-icon-arrow-down el-icon--right"></i>
+                        {{$t('Add to Import List')}}<i class="el-icon-arrow-down el-icon--right"></i>
                       </el-button>
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">Add to Import List</el-dropdown-item>
-                        <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
+                        <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">{{$t('Add to Import List')}}</el-dropdown-item>
+                        <el-dropdown-item @click.native="goToDetail(item)">{{$t('Add to Cart')}}</el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
                   </div>

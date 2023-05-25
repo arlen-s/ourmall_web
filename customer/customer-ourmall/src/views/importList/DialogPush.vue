@@ -116,15 +116,15 @@
             active-text="Also publish to Online Store"
           >
           </el-switch> -->
-          <el-button @click="dialogPush.isShow = false">Close</el-button>
+          <el-button @click="dialogPush.isShow = false">{{$t('Close')}}</el-button>
           <el-button
             type="primary"
             v-if="dialogPush.isAction"
             :loading="dialogPush.loading"
             @click="pushToShopify"
             :disabled="!dialogPush.items.length"
-          >
-            Push to Store
+          >{{$t('Push to Store')}}
+            
           </el-button>
         </div>
     </el-dialog>
@@ -151,7 +151,7 @@ export default {
   methods:{
     pushToShopify(){
       if (!this.SelectedPushStoresNum) {
-        this.$elementMessage("Please select the stores", "error");
+        this.$elementMessage(this.$t('Please select the stores'), "error");
         return;
       }
       this.LoadingVisible = true;

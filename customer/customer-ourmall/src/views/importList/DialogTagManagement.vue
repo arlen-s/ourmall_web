@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    title="Tag management"
+    :title="$t('Tag management')"
     :close-on-click-modal="false"
     :visible.sync="dialogTagManagement.isShow"
     v-loading="dialogTagManagement.loading"
@@ -16,7 +16,7 @@
           style="margin: 0"
         >
           <el-form-item
-            label="New Tag"
+            :label="$t('New Tag')"
             style="margin-right: 5px; margin-bottom: 0"
             size="mini"
           >
@@ -48,7 +48,7 @@
       </div>
       <div v-else style="padding-left: 30px">
         <el-button size="mini" type="primary" @click="changeEntTag(true)"
-          >+Add New Tags</el-button
+          >+{{$t('Add New Tags')}}</el-button
         >
       </div>
     </div>
@@ -125,7 +125,7 @@ export default {
       });
     },
     delTag(tag) {
-      this.$confirm("Are you sure to delete it?？")
+      this.$confirm(this.$t('Are you sure to delete it'))
         .then(() => {
           this.dialogTagManagement.loading = true;
           this.$apiCall("api.Product.deleteTag", { id: tag.id }, (r) => {
@@ -162,7 +162,7 @@ export default {
           }
         );
       } else {
-        this.$elementMessage("Please enter the tag", "error");
+        this.$elementMessage(this.$t('Please enter the tag'), "error");
       }
     },
     saveEntTag() {
@@ -183,7 +183,7 @@ export default {
           }
         );
       } else {
-        this.$elementMessage("Please enter the New tag", "error");
+        this.$elementMessage(this.$t('Please enter the New tag'), "error");
       }
     },
     changeEntTag(type) {

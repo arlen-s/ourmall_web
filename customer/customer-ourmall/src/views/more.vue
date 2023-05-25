@@ -5,7 +5,7 @@
         <div class="left">
           <div class="title">
             <i class="el-icon-s-goods"></i>
-            <h2>{{$root.$children[0].pName.a}} Products Market</h2>
+            <h2>{{$root.$children[0].pName.a}} {{$t('Products Market')}}</h2>
           </div>
         </div>
         <el-row :gutter="20" style="margin-right: 20px;">
@@ -38,13 +38,13 @@
           </el-col>
           <el-col :span="3">
             <el-button type="primary" @click="search()" style="margin-top: 4px"
-              >SEARCH</el-button
+              >{{$t('Search')}}</el-button
             >
           </el-col>
         </el-row>
         <div class="right">
           <el-button type="primary" @click="quotation()" size="small">
-          <i class="el-icon-plus"></i> Request Quotation
+          <i class="el-icon-plus"></i> {{$t('Request Quotation')}}
       </el-button>
         </div>
       </div>
@@ -52,14 +52,14 @@
       <div class="pagetitle" style="height:53px">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/find-products' }"
-            >{{$root.$children[0].pName.a}} Products Market</el-breadcrumb-item
+            >{{$root.$children[0].pName.a}} {{$t('Products Market')}}</el-breadcrumb-item
           >
           <el-breadcrumb-item v-if="this.content">
-            <span>Keywords <b>{{ this.content }}</b> results</span>
+            <span>{{$t('Keywords')}} <b>{{ this.content }}</b> {{$t('results')}}</span>
             <span v-if="this.content && this.categoryId"> in {{ this.categoryId }}</span>
           </el-breadcrumb-item>
           <el-breadcrumb-item v-else-if="!this.categoryId && !this.content">
-            IN ALL CATEGORIES
+            {{$t('IN ALL CATEGORIES')}}
           </el-breadcrumb-item>
           <el-breadcrumb-item v-else>
             {{ this.categoryId }}
@@ -69,7 +69,7 @@
       <!-- 列表 -->
       <div v-if="items && items.length == 0" style="width: 100%">
         <el-card>
-          <b>There are no products in this category</b>
+          <b>{{$t('There are no products in this category')}}</b>
         </el-card>
       </div>
       <el-card body-style="padding:20px 0 20px 0;" v-loading="loading" v-else>
@@ -140,11 +140,11 @@
                 <!-- 这里 -->
                 <el-dropdown>
                   <el-button type="primary">
-                    Add to Import List<i class="el-icon-arrow-down el-icon--right"></i>
+                    {{$t('Add to Import List')}}<i class="el-icon-arrow-down el-icon--right"></i>
                   </el-button>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">Add to Import List</el-dropdown-item>
-                    <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
+                    <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">{{$t('Add to Import List')}}</el-dropdown-item>
+                    <el-dropdown-item @click.native="goToDetail(item)">{{$t('Add to Cart')}}</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>

@@ -10,13 +10,13 @@
           :closable="false"
         >
           <div slot="title" class="table-wrap">
-            * In this tab, we will only filter your 
-            <span class="el-tag el-tag--info el-tag--small el-tag--light"><span class="-EFlq bg3"></span> Paid </span>
+            * {{$t('In this tab, we will only filter your')}} 
+            <span class="el-tag el-tag--info el-tag--small el-tag--light"><span class="-EFlq bg3"></span> {{$t('Paid')}} </span>
              + 
-             <span><span class="el-tag el-tag--warning el-tag--small el-tag--light"><span class="-EFlq bg1"></span> Unfulfilled </span></span> 
+             <span><span class="el-tag el-tag--warning el-tag--small el-tag--light"><span class="-EFlq bg1"></span> {{$t('Unfulfilled')}} </span></span> 
               / 
-             <span><span class="shopfiy-status el-tag el-tag--danger el-tag--small el-tag--light"><span class="-EFlq bg2"></span> Partially Fulfilled </span></span>
-              Orders which you can allocate to your vendor to process.
+             <span><span class="shopfiy-status el-tag el-tag--danger el-tag--small el-tag--light"><span class="-EFlq bg2"></span> {{$t('Partially Fulfilled')}} </span></span>
+              {{$t('Orders which you can allocate to your vendor to process.')}}
           </div>
         </el-alert>
       </div>
@@ -86,22 +86,22 @@
                 </el-date-picker>
               </div>
               <div class=" d-flex justify-content-end">
-								<el-link type="danger" :disabled="!filterParams.timeFilter" @click="clearFilter('date')">Clear</el-link>
+								<el-link type="danger" :disabled="!filterParams.timeFilter" @click="clearFilter('date')">{{$t('Clear')}}</el-link>
 							</div>
-              <el-button size="mini" slot="reference">Date Ranges<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+              <el-button size="mini" slot="reference">{{$t('Date Ranges')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
             </el-popover>
             <!-- 筛选状态 -->
             <el-popover placement="bottom" title="" trigger="click" popper-class="d-block"
               v-model="popFulfillFilter"
             >
               <el-checkbox-group v-model="filterParams.fulfillStatus" @change="filterItems('fulfill')">
-                <el-checkbox label="unfulfilled">Unfulfilled</el-checkbox>
-                <el-checkbox label="partial">Partially fulfilled</el-checkbox>
+                <el-checkbox label="unfulfilled">{{$t('Unfulfilled')}}</el-checkbox>
+                <el-checkbox label="partial">{{$t('Partially fulfilled')}}</el-checkbox>
               </el-checkbox-group>
               <div class=" d-flex justify-content-end">
-								<el-link type="danger" :disabled="!filterParams.fulfillStatus.length" @click="clearFilter('fulfill')">Clear</el-link>
+								<el-link type="danger" :disabled="!filterParams.fulfillStatus.length" @click="clearFilter('fulfill')">{{$t('Clear')}}</el-link>
 							</div>
-              <el-button size="mini" slot="reference">Fulfillment Status<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+              <el-button size="mini" slot="reference">{{$t('Fulfillment Status')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
             </el-popover>
             <!-- 排序 -->
             <el-popover placement="bottom" title="" trigger="click" popper-class="d-block"
@@ -111,14 +111,14 @@
                 <el-radio v-for="(sort,k) in sortArr" :key="k" :label="k">{{sort}}</el-radio>
               </el-radio-group>
               <div class=" d-flex justify-content-end">
-								<el-link type="danger" :disabled="!filterParams.sortBy" @click="clearFilter('sort')">Clear</el-link>
+								<el-link type="danger" :disabled="!filterParams.sortBy" @click="clearFilter('sort')">{{$t('Clear')}}</el-link>
 							</div>
-              <el-button size="mini" slot="reference">SortBy<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
+              <el-button size="mini" slot="reference">{{$t('SortBy')}}<i class="el-icon-caret-bottom el-icon--right"></i></el-button>
             </el-popover>
           </el-button-group>
           <div style=" min-width: 130px;">
-            <el-button type="primary" size="mini" @click="filterItems()">Filter</el-button>
-            <el-button type="danger" size="mini" @click="clearFilter()">Clear</el-button>
+            <el-button type="primary" size="mini" @click="filterItems()">{{$t('Filter')}}</el-button>
+            <el-button type="danger" size="mini" @click="clearFilter()">{{$t('Clear')}}</el-button>
           </div>
           <!-- 全部勾选提示 -->
             <el-alert
@@ -134,14 +134,14 @@
                   type="warning"
                   v-if="CAllChecked.num == tableDataCopy.length"
                   @click="changeAllCheckedT(false)"
-                  >{{ CAllChecked.num }} orders selected, uncheck</el-link
+                  >{{ CAllChecked.num }} {{$t('orders selected, uncheck')}}</el-link
                 >
                 <el-link
                   type="primary"
                   v-if="CAllChecked.num && CAllChecked.num < tableDataCopy.length"
                   @click="changeAllCheckedT(true)"
                 >
-                  {{ CAllChecked.num }} orders selected, select all ({{
+                  {{ CAllChecked.num }} {{$t('orders selected, select all')}} ({{
                     tableDataCopy.length
                   }}) orders
                 </el-link>
@@ -179,27 +179,27 @@
             <a v-if="tableData.length" href="javascript:;" class=" mg-r-10" @click="changeAllExpand">
               <i class=" fa" :class="isAllExpand ? 'fa-minus-square' : 'fa-plus-square'"></i>
             </a>
-            <span class=" title-tx">Order</span>
+            <span class=" title-tx">{{$t('Order')}}</span>
           </el-col>
           <el-col :xl="3" :lg="5" :xs="5" style=" min-width: 100px;">
-            <span class=" title-tx">My Store</span>
+            <span class=" title-tx">{{$t('My Store')}}</span>
           </el-col>
           <el-col :xl="3" :lg="3" :xs="3">
-            <span class=" title-tx">Date</span>
+            <span class=" title-tx">{{$t('Date')}}</span>
           </el-col>
           <el-col :span="3" class="hidden-lg-and-down">
-            <span class=" title-tx customer-title">Customer</span>
+            <span class=" title-tx customer-title">{{$t('Customer')}}</span>
           </el-col>
           <el-col :span="1" :xs="1" class="hidden-xl-only">
           </el-col>
           <el-col :span="3" :xs="3" style="justify-content: flex-end;">
-            <span class=" title-tx" style="margin-right: 40px;">Total</span>
+            <span class=" title-tx" style="margin-right: 40px;">{{$t('Total')}}</span>
           </el-col>
           <el-col :span="3" :xs="3">
-            <span class=" title-tx">Fulfillment</span>
+            <span class=" title-tx">{{$t('Fulfillment')}}</span>
           </el-col>
           <el-col :span="2" :xs="2">
-            <span class=" title-tx">Items</span>
+            <span class=" title-tx">{{$t('Items')}}</span>
           </el-col>
           <el-col :span="4" :xs="4">
           </el-col>
@@ -276,14 +276,14 @@
               </el-col>
               <!-- Items -->
               <el-col :span="2" class="hidden-md-and-down">
-                <span>{{item.items.length}} Items</span>
+                <span>{{item.items.length}} {{$t('Items')}}</span>
               </el-col>
               <!-- 操作 -->
               <el-col :span="4">
                 <el-link  class="mg-l-20" style="display: inline;min-width:170px" :underline="false" type="primary"
                   @click="openAllocateToVendor(item)"
-                >
-                  Allocate all to vendor
+                >{{$t('Allocate all to vendor')}}
+                 
                 </el-link>
               </el-col>
             </el-row>
@@ -304,7 +304,7 @@
                   <div style=" flex: 1; font-size: 12px;">
                     <p class=" tx-ellipsis2">{{ item.name }}</p>
                     <div v-if="item.customerProperties && item.customerProperties.length">
-                      <div style="display: inline-block" class="mg-r-5" v-for="val in item.customerProperties">
+                      <div style="display: inline-block" class="mg-r-5" v-for="(val, i) in item.customerProperties" :key="i">
                         <span style="color: #909399;">{{val.name}}: </span>
                         {{val.value}}
                       </div>
@@ -321,14 +321,14 @@
                   <span>
                     x {{ item.unfulfillQuantity }}
                   </span>
-                  <span style="color: #c05717; margin-left: 20px;">({{item.fulfillQuantity}} of {{ item.quantity }} purchased items are delivered)</span>
+                  <span style="color: #c05717; margin-left: 20px;">({{item.fulfillQuantity}} of {{ item.quantity }} {{$t('purchased items are delivered')}})</span>
                 </p>
                 <p v-if="item.unfulfillQuantity == 0">
-                  <span>({{item.fulfillQuantity}} of {{ item.quantity }} fulfilled)</span>
+                  <span>({{item.fulfillQuantity}} of {{ item.quantity }} {{$t('fulfilled')}})</span>
                 </p>
               </el-col>
               <el-col :span="3" style=" margin-left: -15px;">
-               <el-link type="primary" @click="openAllocateToVendor(item)">Allocate to vendor</el-link>
+               <el-link type="primary" @click="openAllocateToVendor(item)">{{$t('Allocate to vendor')}}</el-link>
               </el-col> 
             </el-row>
           </div>
@@ -336,7 +336,7 @@
         </template>
       </vxe-list>
       <div v-else-if="!loading" class="nodata" :style="{height: tableHeight + 'px'}">
-        No data
+        {{$t('No data')}}
       </div>
     </div>
     <div ref="tableFooter">
@@ -366,7 +366,7 @@
     </div>
     <el-dialog
       v-loading="dialogAllocated.loading"
-      :title="dialogAllocated.status == 1 ? 'Select a vendor' : 'Product has been allocated'"
+      :title="dialogAllocated.status == 1 ? this.$t('Select a vendor') : this.$t('Product has been allocated')"
       :visible.sync="dialogAllocated.isShow"
       :width="dialogAllocated.status == 1 ? '700px' : '1000px'"
       class="dialog-allocated"
@@ -377,7 +377,7 @@
           <el-input
             style="margin-right: 5px; width: 300px"
             v-model="dialogAllocated.vendorLike"
-            placeholder="Vendor name / contact / shop name etc."
+            :placeholder="$t('Vendor name / contact / shop name etc.')"
             size="mini"
             clearable
             @keyup.native="getVendors(1)"
@@ -406,7 +406,7 @@
                 cancel-button-text='Cancel'
                 @onConfirm="selectVendor(scope.row)"
               >
-                <el-button slot="reference" type="primary" size="mini">Select</el-button>
+                <el-button slot="reference" type="primary" size="mini">{{$t('Select')}}</el-button>
               </el-popconfirm>
             </template>
           </el-table-column>
@@ -444,7 +444,7 @@
                 </div>
               </div>
               <div v-if="dialogAllocated.skus.length > 1" class=" total">
-                <div>total {{dialogAllocated.skus.length}} products</div>
+                <div>{{$t('total')}} {{dialogAllocated.skus.length}} {{$t('products')}}</div>
               </div>
             </div>
 
@@ -459,7 +459,7 @@
         </div>
         <div v-if="dialogAllocated.other.length" class=" row2">
           <div class="title">
-            Here are some other products seems can been allocated to the vendor too, do you want to do it now?
+            {{$t('Here are some other products seems can been allocated to the vendor too, do you want to do it now?')}}
           </div>
           <div class="select-items">
             <div class="list">
@@ -471,7 +471,7 @@
                 class="other-table"
               >
                 <el-table-column label="" align="center" width="50">
-                  <template slot="header" slot-scope="scope">
+                  <template slot="header" >
                     <el-checkbox style="margin: 0;" v-model="dialogAllocated.allChecked"
                       @change="changeAllChecked"
                     ></el-checkbox>
@@ -481,8 +481,8 @@
                   </template>
                 </el-table-column>
                 <el-table-column label="Selected products">
-                  <template slot="header" slot-scope="scope">
-                    <span>Selected products </span>
+                  <template slot="header" >
+                    <span>{{$t('Selected products')}} </span>
                     <span v-if="allocatedOtherSelectNum">({{allocatedOtherSelectNum}})</span>
                   </template>
                   <template slot-scope="scope">
@@ -513,17 +513,17 @@
               <div>
                 <el-button type="primary" size="small" @click="AllocateNow"
                   :disabled="!allocatedOtherSelectNum"
-                >Allocate NOW</el-button>
+                >{{$t('Allocate NOW')}}</el-button>
               </div>
               <div>
-                <el-button  size="small" @click="dialogAllocated.isShow = false;">No thanks</el-button>
+                <el-button  size="small" @click="dialogAllocated.isShow = false;">{{$t('No thanks')}}</el-button>
               </div>
             </div>
           </div>
         </div>
       </template>
       <span v-if="dialogAllocated.status == 1 || (dialogAllocated.status == 2 && !dialogAllocated.other.length)" slot="footer" class="dialog-footer">
-        <el-button @click="dialogAllocated.isShow = false">Close</el-button>
+        <el-button @click="dialogAllocated.isShow = false">{{$t('Close')}}</el-button>
       </span>
     </el-dialog>
     <div class="ball" :style="{top: `${ball.y}px`, left: `${ball.x}px`, opacity: ball.opacity}"></div>
@@ -602,19 +602,19 @@ export default {
       popDateFilter: false,
       popSortFilter: false,
       filterDate:[],
-      dateArr:{
-        1: 'Today',
-        2: 'Last 7 days',
-        3: 'Last 30 days',
-        4: 'Last 90 days',
-        5: 'Last 12 months',
-        6: 'Custom'
+      dateArr: {
+        1: this.$t("Today"),
+        2: this.$t("Last 7 days"),
+        3: this.$t("Last 30 days"),
+        4: this.$t("Last 90 days"),
+        5: this.$t("Last 12 months"),
+        6: this.$t("Custom"),
       },
-      sortArr:{
-        1: 'Order number (ascending)',
-        2: 'Order number (descending)',
-        3: 'Date (oldest first)',
-        4: 'Date (newest first)'
+      sortArr: {
+        1: this.$t("Order number (ascending)"),
+        2: this.$t("Order number (descending)"),
+        3: this.$t("Date (oldest first)"),
+        4: this.$t("Date (newest first)"),
       },
       dialogAllocated: {
         status: 1,
@@ -758,7 +758,7 @@ export default {
       //生成 make an offer
       if(!this.CAllChecked.num){
          this.$message({
-          message: 'Please select at least one order!',
+          message: this.$t('Please select at least one order!'),
           type: 'error'
         });
         return false;
@@ -767,7 +767,7 @@ export default {
       this.$Burying({
         object: '14001'
       })
-      this.$confirm("Create quotation request?", "", {
+      this.$confirm(this.$t("Create quotation request?"), "", {
         confirmButtonText: "OK",
         cancelButtonText: "Discard",
         type: "info",
@@ -1172,10 +1172,10 @@ export default {
       })
     },
     onCopy(e) {
-      this.$elementMessage('Has been copied to the clipboard', 'success');
+      this.$elementMessage(this.$t('Has been copied to the clipboard'), 'success');
     },
     onError(e) {
-      this.$elementMessage('Copy to clipboard failed, please copy manually', 'error');
+      this.$elementMessage(this.$t('Copy to clipboard failed, please copy manually'), 'error');
     },
   },
 };

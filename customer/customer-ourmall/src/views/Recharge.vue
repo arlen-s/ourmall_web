@@ -7,16 +7,16 @@
       <div class="left">
         <div class="title">
           <i class="fa fa-usd" aria-hidden="true"></i>
-          <h2>Package</h2>
+          <h2>{{$t('Package')}}</h2>
         </div>
       </div>
       <div class="right">
-        <el-link type="primary" @click="gotoPayRecord">Payment Record</el-link>
+        <el-link type="primary" @click="gotoPayRecord">{{$t('Payment Record')}}</el-link>
       </div>
     </div>
     <div class="pagebody mg-b-20">
       <el-card>
-        <div class="pay-title">Choose your payment method</div>
+        <div class="pay-title">{{$t('Choose your payment method')}}</div>
         <!-- 选择支付方式 -->
         <SelectPayMethod  style=" margin-bottom: 50px;" 
           :payMethodAcitve="payMethodAcitve"
@@ -25,7 +25,7 @@
         <div v-if="payMethodAcitve == 3" class=" free" @click="tawk">
         </div>
         <template v-else>
-          <div class="pay-title">Choose your recharge package</div>
+          <div class="pay-title">{{$t('Choose your recharge package')}}</div>
           <!-- 选择支付package -->
           <ChooseRechargePackage style=" margin-bottom: 35px"
             :items="packages"
@@ -35,12 +35,12 @@
           <div class="bottom-action">
             <div class="checkBox" style="margin-bottom:15px">
               <el-checkbox v-model="check1">&nbsp;</el-checkbox>
-              I agree the 
-            <el-link @click="gotoHelp('terms')">Terms of use</el-link>
+             {{$t('I agree the')}}  
+            <el-link @click="gotoHelp('terms')">{{$t('Terms of use')}}</el-link>
             and
-            <el-link @click="gotoHelp('refund')">Refund Policy</el-link>
+            <el-link @click="gotoHelp('refund')">{{$t('Refund Policy')}}</el-link>
             </div>
-            <el-button :disabled="check1 == false || check2 == false" :loading="payLoading" type="primary" @click="payNow">Pay NOW</el-button>
+            <el-button :disabled="check1 == false || check2 == false" :loading="payLoading" type="primary" @click="payNow">{{$t('Pay NOW')}}</el-button>
           </div>
         </template>
       </el-card>  

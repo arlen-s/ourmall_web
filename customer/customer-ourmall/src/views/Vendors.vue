@@ -7,14 +7,14 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-s-custom"></i>
-          <h2>My Vendors</h2>
+          <h2>{{$t('My Vendors')}}</h2>
         </div>
       </div>
       <div class="right">
         <el-button
           type="primary"
           @click="openAddVendor"
-        >Add a new vendor</el-button>
+        >{{$t('Add a new vendor')}}</el-button>
       </div>
     </div>
     <div class="pagebody mg-b-20">
@@ -66,11 +66,11 @@
                   <el-button
                     type="primary"
                     @click="filterGetItem"
-                  >Filter</el-button>
+                  >{{$t('Filter')}}</el-button>
                   <el-button
                     type="danger"
                     @click="clearFilter"
-                  >Clear</el-button>
+                  >{{$t('Clear')}}</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -89,10 +89,10 @@
               <div style="color: #909399">
                 {{$root.$children[0].pName.a}} ID:
                 <span v-if="row.vendorId" style="color:#303133"> {{ row.vendorId }}</span>
-                <span v-else style="color:#303133"> --- <span style='color: #909399'>(NOT Joined)</span></span>
+                <span v-else style="color:#303133"> --- <span style='color: #909399'>({{$t('NOT Joined')}})</span></span>
               </div>
               <div style="color: #909399">
-                Vender Name: <span style="color:#303133">{{ row.vendorName || '---'}}</span>
+                {{$t('Vender Name')}}: <span style="color:#303133">{{ row.vendorName || '---'}}</span>
                 <span v-if="row.vendorRemark" class="mg-l-5 vendorRemark">
                   <el-tooltip class="item" effect="dark" :content="row.vendorRemark" placement="top">
                     <i class="el-icon-info"></i>
@@ -100,7 +100,7 @@
                 </span>
               </div>
               <div style="color: #909399">
-                AliExpress Shop Name:
+                {{$t('AliExpress Shop Name')}}:
                 <span v-if="row.shopName" style="color:#303133">
                   <a style="color: #5c6ac4;" :href="row.shopUrl" target="_blank" :title="row.shopUrl">{{ row.shopName }}</a>
                 </span>
@@ -167,13 +167,13 @@
 
           <el-table-column label="Sales statistics" min-width="230">
             <template slot-scope="scope">
-              <div style="color: #909399">Product allocated:
+              <div style="color: #909399">{{$t('Product allocated:')}}
                 <span style="color:#303133">
                   <el-link type="primary" @click="gotoProduct(scope.row.id)">{{scope.row.allocatedNum}}</el-link>
                 </span>
               </div>
               <div style="color: #909399">
-                Purchase amount:
+                {{$t('Purchase amount')}}:
                 <span style="color:#303133">
                   <el-link @click="goPurchase(scope.row.id, scope.row.vendorName)" type="primary">US$ {{scope.row.totalAmount}}</el-link>
                 </span></div>
@@ -181,8 +181,8 @@
           </el-table-column>
           <el-table-column label="Date" min-width="200">
             <template slot-scope="scope">
-              <div style="color: #909399">Created at: <span style="color:#303133">{{scope.row.timeCreated ? moment(scope.row.timeCreated).format("ll"):'---'}}</span></div>
-              <div style="color: #909399">Latest cooperation at: <span style="color:#303133">{{scope.row.timeCooperated? moment(scope.row.timeCooperated).format("ll") :'---'}}</span></div>
+              <div style="color: #909399">{{$t('Created at:')}} <span style="color:#303133">{{scope.row.timeCreated ? moment(scope.row.timeCreated).format("ll"):'---'}}</span></div>
+              <div style="color: #909399">{{$t('Latest cooperation at:')}} <span style="color:#303133">{{scope.row.timeCooperated? moment(scope.row.timeCooperated).format("ll") :'---'}}</span></div>
             </template>
           </el-table-column>
           <el-table-column label="Action" min-width="100">
@@ -192,24 +192,24 @@
                   class=" mg-r-20"
                   type="primary"
                   @click="newEditVendor(scope.row)"
-                >Edit</el-link>
+                >{{$t('Edit')}}</el-link>
                 <el-link
                   v-if="scope.row.canDelete"
                   type="danger"
                   @click="delVendor(scope.row)"
-                >Delete</el-link>
+                >{{$t('Delete')}}</el-link>
               </div>
               <div>
                 <el-link
                   v-if="scope.row.vendorId"
                   type="primary"
                   @click="gotoInvoice(scope.row)"
-                >Sourcing Now</el-link>
+                >{{$t('Sourcing Now')}}</el-link>
                 <el-link
                   v-else
                   type="primary"
                   @click="openInviteDialog(scope.row.id)"
-                >Invite Vendor</el-link>
+                >{{$t('Invite Vendor')}}</el-link>
               </div>
             </template>
           </el-table-column>
@@ -248,27 +248,27 @@
       :before-close="handleClosenewAddVendor"
     >
       <div style="margin: 20px;">
-        <span class="mg-r-5"> How to add:</span>
+        <span class="mg-r-5"> {{$t('How to add')}}:</span>
         <el-radio-group class="add-vendor" @change="addVendoorChange" v-model="newAddVendorDialog.radio">
-          <el-radio :label="1">By Vendor Name</el-radio>
-          <el-radio :label="2">By AliExpress Url</el-radio>
+          <el-radio :label="1">{{$t('By Vendor Name')}}</el-radio>
+          <el-radio :label="2">{{$t('By AliExpress Url')}}</el-radio>
           <el-radio :label="3">By {{$root.$children[0].pName.a}} ID</el-radio>
         </el-radio-group>
       </div>
       <div style="margin: 20px;" v-show="newAddVendorDialog.radio === 1">
         <div style="display: flex; align-items: center">
-          <span style="flex: 0 0 20%">Vendor's Name: </span>
+          <span style="flex: 0 0 20%">{{$t("Vendor's Name")}}: </span>
           <el-input  size="small" style="flex: 0 0 50%" v-model="newAddVendorDialog.name" placeholder="Please enter your vendor's name"></el-input>
         </div>
       </div>
       <div style="margin: 0 20px" v-show="newAddVendorDialog.radio === 2">
-        <p class="mg-b-10" style="color: #333;">Vendor's AliExpress shop or product URL
+        <p class="mg-b-10" style="color: #333;">{{$t("Vendor's AliExpress shop or product URL")}}
           <el-tooltip
             effect="dark"
             placement="bottom"
           >
             <div slot="content" class="">
-              <div>How to get the vendor's AliExpress shop / product URL?</div>
+              <div>{{$t("How to get the vendor's AliExpress shop / product URL?")}}</div>
               <div>
                 <el-image
                   style="width: 100px; height: 100px"
@@ -300,7 +300,7 @@
           type="primary"
           :loading="newAddVendorDialog.btnNextLoading"
           @click="getShopUrl"
-        >Next</el-button>
+        >{{$t('Next')}}</el-button>
       </span>
     </el-dialog>
 
@@ -329,7 +329,7 @@
             @click="newEditDialog.isUnfold = !newEditDialog.isUnfold"
             class="mg-b-10 contact"
             style="cursor: pointer"
-          >Contact：<i :class="newEditDialog.isUnfold ? 'el-icon-caret-top' : 'el-icon-caret-bottom'"></i></div>
+          >{{$t('CONTACT')}}：<i :class="newEditDialog.isUnfold ? 'el-icon-caret-top' : 'el-icon-caret-bottom'"></i></div>
 
           <el-collapse-transition>
             <div v-show="newEditDialog.isUnfold">
@@ -349,12 +349,12 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="newEditDialog.visible = false">Close</el-button>
+        <el-button @click="newEditDialog.visible = false">{{$t('Close')}}</el-button>
         <el-button
           type="primary"
           :loading="newEditDialog.loading"
           @click="newSaveVendor"
-        >Save</el-button>
+        >{{$t('Save')}}</el-button>
       </span>
     </el-dialog>
 
@@ -379,12 +379,12 @@
               v-clipboard:copy="inviteDialog.inviteCode"
               v-clipboard:success="onCopy"
               v-clipboard:error="onError"
-            >Copy Link</el-button>
+            >{{$t('Copy Link')}}</el-button>
           </span>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="inviteDialog.visible = false">Close</el-button>
+        <el-button @click="inviteDialog.visible = false">{{$t('Close')}}</el-button>
       </span>
     </el-dialog>
   </div>

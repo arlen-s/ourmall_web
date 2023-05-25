@@ -10,7 +10,7 @@
         :closable="false"
       >
         <template>
-          <p>You can find the recent quotations and check offers.</p>
+          <p>{{$t('You can find the recent quotations and check offers.')}}</p>
         </template>
       </el-alert>
     </div>
@@ -33,27 +33,27 @@
               </el-tab-pane> -->
               <!-- tab2 -->
               <el-tab-pane
-                label="Waiting for vendors respond"
+                :label="$t('Waiting for vendors respond')"
                 name="WaitingForVendorsRespond"
               >
                 <span slot="label">
-                  Waiting for vendors respond
+                {{$t('Waiting for vendors respond')}}  
                   <span v-if="waitNum">({{ waitNum }})</span>
                 </span>
               </el-tab-pane>
               <!-- tab3第三个 -->
               <el-tab-pane
-                label="Vendors responding quotations"
+                :label="$t('Vendors responding quotations')"
                 name="VendorsRespondingOffers"
               >
                 <span slot="label">
-                  Vendors responding quotations
+                 {{$t('Vendors responding quotations')}} 
                   <span v-if="responsingNum">({{ responsingNum }})</span>
                 </span>
               </el-tab-pane>
               <!-- tab4 -->
               <el-tab-pane
-                label="Archived quotations"
+                :label="$t('Archived quotations')"
                 name="ArchivedOffers"
               ></el-tab-pane>
             </el-tabs>
@@ -106,33 +106,33 @@ export default {
       pageKey: new Date().valueOf(),
       activeName: "",
       fulfillArr: {
-        fulfilled: { text: "Fulfilled", type: "info", r: 3 },
-        unfulfilled: { text: "Unfulfilled", type: "warning", r: 1 },
-        partial: { text: "Partially Fulfilled", type: "danger", r: 2 },
-        refunded: { text: "Refunded", type: "info", r: 3 },
+        fulfilled: { text: this.$t( "Fulfilled"), type: "info", r: 3 },
+        unfulfilled: { text: this.$t("Unfulfilled"), type: "warning", r: 1 },
+        partial: { text: this.$t("Partially Fulfilled") , type: "danger", r: 2 },
+        refunded: { text: this.$t("Refunded"), type: "info", r: 3 },
       },
       dateArr: {
-        1: "Today",
-        2: "Last 7 days",
-        3: "Last 30 days",
-        4: "Last 90 days",
-        5: "Last 12 months",
-        6: "Custom",
+        1: this.$t("Today"),
+        2: this.$t("Last 7 days"),
+        3: this.$t("Last 30 days"),
+        4: this.$t("Last 90 days"),
+        5: this.$t("Last 12 months"),
+        6: this.$t("Custom"),
       },
       sortArr: {
-        1: "Order number (ascending)",
-        2: "Order number (descending)",
-        3: "Date (oldest first)",
-        4: "Date (newest first)",
+        1: this.$t("Order number (ascending)"),
+        2: this.$t("Order number (descending)"),
+        3: this.$t("Date (oldest first)"),
+        4: this.$t("Date (newest first)"),
       },
       paymentArr: {
         paid: { text: "Paid", type: "info", r: 3 },
         partially_refunded: {
-          text: "Partially refunded",
+          text: this.$t("Partially refunded"),
           type: "danger",
           r: 2,
         },
-        refunded: { text: "Refunded", type: "info", r: 3 },
+        refunded: { text: this.$t("Refunded"), type: "info", r: 3 },
       },
       storeList: [],
       readyNum: 0,

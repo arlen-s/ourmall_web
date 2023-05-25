@@ -5,12 +5,12 @@
         <div class="left">
           <div class="title">
             <i class="el-icon-s-goods"></i>
-            <h2>{{$root.$children[0].pName.a}} Products Market</h2>
+            <h2>{{$root.$children[0].pName.a}} {{$t('Products Market')}}</h2>
           </div>
         </div>
         <div class="right">
           <el-button type="primary" @click="quotation()" size="small">
-          <i class="el-icon-plus"></i> Request Quotation
+          <i class="el-icon-plus"></i> {{$t('Request Quotation')}}
       </el-button>
         </div>
       </div>
@@ -18,7 +18,7 @@
       <div class="pagetitle">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/find-products' }">
-          {{$root.$children[0].pName.a}} Products Market
+          {{$root.$children[0].pName.a}} {{$t('Products Market')}}
           </el-breadcrumb-item>
           <el-breadcrumb-item>
             <span @click="returnMore" class="moreName">
@@ -108,7 +108,7 @@
             </div>
             <el-divider></el-divider>
             <!-- import -->
-            <div style="margin-bottom:20px">Delivery:   Varies for items shipped from an international location 
+            <div style="margin-bottom:20px">{{$t('Delivery:   Varies for items shipped from an international location')}} 
               <el-tooltip
                     class="item"
                     effect="dark"
@@ -131,11 +131,11 @@
             <!-- 这里 -->
             <el-dropdown>
               <el-button type="primary">
-                Add to Import List<i class="el-icon-arrow-down el-icon--right"></i>
+                {{$t('Add to Import List')}}<i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item  class="importBut" :disabled="isAdd == 1" @click.native="import_pro(item, $event)">Add to Import List</el-dropdown-item>
-                <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
+                <el-dropdown-item  class="importBut" :disabled="isAdd == 1" @click.native="import_pro(item, $event)">{{$t('Add to Import List')}}</el-dropdown-item>
+                <el-dropdown-item @click.native="goToDetail(item)">{{$t('Add to Cart')}}</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -154,12 +154,12 @@
       <el-card v-else>
         <div class="notFound">
           <div class="back"></div>
-          <div class="text">This product has been removed from the shelves</div>
+          <div class="text">{{$t('This product has been removed from the shelves')}}</div>
           <div class="goHome">
             <el-button
                     type="primary"
                     @click="goHome"
-                    >Return
+                    >{{$t('Return')}}
             </el-button>
           </div>
         </div>
@@ -236,11 +236,11 @@
                 <!-- 这里 -->
                 <el-dropdown>
                   <el-button type="primary">
-                    Add to Import List<i class="el-icon-arrow-down el-icon--right"></i>
+                    {{$t('Add to Import List')}}<i class="el-icon-arrow-down el-icon--right"></i>
                   </el-button>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">Add to Import List</el-dropdown-item>
-                    <el-dropdown-item @click.native="goToDetail(item)">Add to Cart</el-dropdown-item>
+                    <el-dropdown-item  class="importBut" :disabled="item.hasImport == 1" @click.native="import_pro(item, $event)">{{$t('Add to Import List')}}</el-dropdown-item>
+                    <el-dropdown-item @click.native="goToDetail(item)">{{$t('Add to Cart')}}</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </div>
@@ -269,7 +269,7 @@
     <el-table-column property="name" label="Carrier"></el-table-column>
   </el-table>
   <div slot="footer" class="dialog-footer">
-    <el-button @click="shoppingDialog = false">Close</el-button>
+    <el-button @click="shoppingDialog = false">{{$t('Close')}}</el-button>
   </div>
 </el-dialog>
     <!-- 小红球 -->

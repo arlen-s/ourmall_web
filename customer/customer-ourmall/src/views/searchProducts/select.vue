@@ -3,7 +3,7 @@
 		<div class="pagetitle">
 			<div class="left">
 				<div class="title title-color">
-					<h2>Search Products</h2>
+					<h2>{{$t('Search Products')}}</h2>
 				</div>
 			</div>
 			<div class="right">
@@ -17,10 +17,10 @@
 					</el-form-item>
 					<el-form-item label="State">
 						<el-select v-model="filterParams.status">
-							<el-option value="0" label="All"></el-option>
-							<el-option value="1" label="Penging"></el-option>
-							<el-option value="2" label="Completed"></el-option>
-							<el-option value="9" label="Failed"></el-option>
+							<el-option value="0" :label="$t('All')"></el-option>
+							<el-option value="1" :label="$t('Penging')"></el-option>
+							<el-option value="2" :label="$('Completed')"></el-option>
+							<el-option value="9" :label="$t('Failed')"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item label="Date">
@@ -36,8 +36,8 @@
 						</el-date-picker>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" @click="getItems">Query</el-button>
-						<el-button type="warning" @click="ResetClick">Reset</el-button>
+						<el-button type="primary" @click="getItems">{{$t('Query')}}</el-button>
+						<el-button type="warning" @click="ResetClick">{{$t('Reset')}}</el-button>
 					</el-form-item>
 				</el-form>
 			</el-row>
@@ -45,26 +45,26 @@
 			<el-row>
 				<el-table
 					:data="items">
-					<el-table-column label="Product title" prop="name"></el-table-column>
-					<el-table-column label="Picture">
+					<el-table-column :label="$t('Product title')" prop="name"></el-table-column>
+					<el-table-column :label="$t('Picture')">
 						<template slot-scope="scope">
 							<el-image class="image-size" 
 								:src="scope.row.imgUrlJson[0]" fit="contain"
 								:preview-src-list="[scope.row.imgUrlJson[0]]"></el-image>
 						</template>
 					</el-table-column>
-					<el-table-column label="Expected price">
+					<el-table-column :label="$t('Expected price')">
 						<template slot-scope="scope">
 							{{$store.state.country.symbol}} {{ $exchangeRate(scope.row.minPrice) }} - {{ $exchangeRate(scope.row.maxPrice) }}
 						</template></el-table-column>
-					<el-table-column label="Reply price">
+					<el-table-column :label="$t('Reply price')">
 						<template slot-scope="scope">
 							<span v-if="scope.row.price">
 								{{$store.state.country.symbol}} {{ $exchangeRate(scope.row.price)}}
 							</span>
 							<span v-else>--</span>
 						</template></el-table-column>
-					<el-table-column label="Reply link">
+					<el-table-column :label="$t('Reply link')">
 						<template slot-scope="scope">
 							<span v-if="scope.row.vendorProduct">
 								<span v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 14365&& vendorId != 74">
@@ -78,12 +78,12 @@
 							<span v-else>--</span>
 						</template>
 					</el-table-column>
-					<el-table-column label="Creation date">
+					<el-table-column :label="$t('Creation date')">
 						<template slot-scope="scope">
 						{{moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}
 						</template>
 					</el-table-column>
-					<el-table-column label="Reply date">
+					<el-table-column :label="$t('Reply date')">
 						<template slot-scope="scope">
 							<div v-if="scope.row.timeUpdate == '0'">
 								--
@@ -95,9 +95,9 @@
 					</el-table-column>
 					<el-table-column label="State">
 						<template slot-scope="scope">
-							<div v-if="scope.row.status == '1'">Pending</div>
-							<div v-if="scope.row.status == '2'">Completed</div>
-							<div v-if="scope.row.status == '9'">Failed</div>
+							<div v-if="scope.row.status == '1'">{{$t('Pending')}}</div>
+							<div v-if="scope.row.status == '2'">{{$t('Completed')}}</div>
+							<div v-if="scope.row.status == '9'">{{$t('Failed')}}</div>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -122,7 +122,7 @@ export default {
 	data() {
 		let validatePrice = (rule, value, callback) => {
 			if (!value) {
-				return callback(new Error('Please enter price'))
+				return callback(new Error(this.$t('Please enter price')))
 			} else {
 				callback()
 			}

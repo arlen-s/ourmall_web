@@ -61,19 +61,19 @@
                   @change="filterItems('type')"
                   style="max-height: 200px"
                 >
-                  <el-radio :label="1">Orders</el-radio>
-                  <el-radio :label="2">Products</el-radio>
+                  <el-radio :label="1">{{$t('Orders')}}</el-radio>
+                  <el-radio :label="2">{{$t('Products')}}</el-radio>
                 </el-radio-group>
                 <div class="d-flex justify-content-end">
                   <el-link
                     type="danger"
                     :disabled="!filterParams.type"
                     @click="clearFilter('type')"
-                    >Clear</el-link
+                    >{{$t('Clear')}}</el-link
                   >
                 </div>
                 <el-button size="mini" slot="reference"
-                  >Type<i class="el-icon-caret-bottom el-icon--right"></i
+                  >{{$t('Type')}}<i class="el-icon-caret-bottom el-icon--right"></i
                 ></el-button>
               </el-popover>
               <!-- 筛选店铺 -->
@@ -150,11 +150,11 @@
                     type="danger"
                     :disabled="!filterParams.timeFilter"
                     @click="clearFilter('date')"
-                    >Clear</el-link
+                    >{{$t('Clear')}}</el-link
                   >
                 </div>
                 <el-button size="mini" slot="reference"
-                  >Date Ranges<i class="el-icon-caret-bottom el-icon--right"></i
+                  >{{$t('Date Ranges')}}<i class="el-icon-caret-bottom el-icon--right"></i
                 ></el-button>
               </el-popover>
               <!-- 状态 -->
@@ -183,11 +183,11 @@
                     type="danger"
                     :disabled="!filterParams.status"
                     @click="clearFilter('status')"
-                    >Clear</el-link
+                    >{{$t('Clear')}}</el-link
                   >
                 </div>
                 <el-button size="mini" slot="reference"
-                  >Status<i class="el-icon-caret-bottom el-icon--right"></i
+                  >{{$t('Status')}}<i class="el-icon-caret-bottom el-icon--right"></i
                 ></el-button>
               </el-popover>
               <!-- 排序 -->
@@ -212,20 +212,20 @@
                     type="danger"
                     :disabled="!filterParams.sortBy"
                     @click="clearFilter('sort')"
-                    >Clear</el-link
+                    >{{$t('Clear')}}</el-link
                   >
                 </div>
                 <el-button size="mini" slot="reference"
-                  >SortBy<i class="el-icon-caret-bottom el-icon--right"></i
+                  >{{$t('SortBy')}}<i class="el-icon-caret-bottom el-icon--right"></i
                 ></el-button>
               </el-popover>
             </el-button-group>
             <div style="min-width: 130px">
               <el-button type="primary" size="mini" @click="filterItems()"
-                >Filter
+                >{{$t('Filter')}}
               </el-button>
               <el-button type="danger" size="mini" @click="clearFilter()"
-                >Clear</el-button
+                >{{$t('Clear')}}</el-button
               >
             </div>
           </div>
@@ -335,8 +335,8 @@
           <!-- 类型 -->
           <el-table-column label="Type">
              <template slot-scope="scope">
-                 <span v-if="scope.row.type == 1">Orders</span>
-                 <span v-else>Products</span>
+                 <span v-if="scope.row.type == 1">{{$t('Orders')}}</span>
+                 <span v-else>{{$t('Products')}}</span>
              </template>
           </el-table-column>
 
@@ -347,14 +347,14 @@
               <div v-for="store in scope.row.accounts" :key="store.shopName" >
                 <div><shopCate :items="store" />{{ store.shopName }}</div>
               </div>
-                <div v-if="scope.row.type == 1">Total {{ scope.row.orderCnt }} orders</div>
-                <div v-else>Total {{ scope.row.orderCnt }} products</div>
+                <div v-if="scope.row.type == 1">{{$t('Total')}} {{ scope.row.orderCnt }} {{$t('orders')}}</div>
+                <div v-else>{{$t('Total')}} {{ scope.row.orderCnt }} {{$t('products')}}</div>
               <div
                 v-if="
                   scope.row.status != 3 && Number(scope.row.invalidOrderCnt)
                 "
                 style="color: #909399">
-                ({{ scope.row.invalidOrderCnt }} invalid
+                ({{ scope.row.invalidOrderCnt }} {{$t('invalid')}}
                 <el-tooltip
                   class="item"
                   effect="dark"
@@ -395,11 +395,11 @@
 
           <el-table-column label="Income">
             <template slot="header">
-              Income
+              {{$t('Income')}}
               <el-tooltip
                 class="item"
                 effect="dark"
-                content="Income will only visible to you"
+                :content="$t('Income will only visible to you')"
                 placement="top"
               >
                 <i class="el-icon-question"></i>
@@ -429,11 +429,11 @@
               <span v-if="$route.name == 'WaitingForVendorsRespond'">---</span>
               <div v-if="$route.name == 'VendorsRespondingOffers'">
                 <div>
-                  <span style="color: #909399">Vendors:</span>
-                  <span>{{ scope.row.vendorResponseCnt }} responded</span>
+                  <span style="color: #909399">{{$t('Vendors')}}:</span>
+                  <span>{{ scope.row.vendorResponseCnt }}{{$t('responded')}} </span>
                 </div>
                 <div>
-                  <span style="color: #909399">Offers:</span>
+                  <span style="color: #909399">{{$t('Offers')}}:</span>
                   <span
                     v-if="
                       Number(scope.row.offerPriceMin) ||
@@ -457,14 +457,14 @@
                       <i class="el-icon-question"></i>
                     </el-tooltip>
                   </span>
-                  <span v-else>waiting for responding</span>
+                  <span v-else>{{$t('waiting for responding')}}</span>
                 </div>
               </div>
             </template>
           </el-table-column>
           <el-table-column
             v-if="$route.name == 'ArchivedOffers'"
-            label="Purchase Order"
+            :label="$t('Purchase Order')"
           >
             <template slot-scope="scope">
               <div></div>
@@ -486,15 +486,15 @@
           </el-table-column>
           <el-table-column
             v-if="$route.name == 'ArchivedOffers'"
-            label="Status"
+            :label="$t('Status')"
           >
             <template slot-scope="scope">
               <div></div>
               <div v-if="scope.row.status == 9" style="color: #f56c6c">
-                Cancelled
+               {{$t('Cancelled')}} 
               </div>
               <div v-if="scope.row.status == 3" style="color: #67c23a">
-                Confirmed
+               {{$t('Confirmed')}} 
               </div>
             </template>
           </el-table-column>
@@ -504,14 +504,14 @@
               <template v-if="$route.name == 'WaitingForVendorsRespond'">
                 <div>
                   <el-link type="primary" @click="openViewOrders(scope.row)"
-                    >View offers</el-link
+                    >{{$t('View offers')}}</el-link
                   >
                 </div>
                 <div>
                   <el-link
                     type="danger"
                     @click="cancelOffer(scope.row, scope.$index)"
-                    >Cancel offers</el-link
+                    >{{$t('Cancel offers')}}</el-link
                   >
                 </div>
               </template>
@@ -519,21 +519,21 @@
               <template v-if="$route.name == 'VendorsRespondingOffers'">
                 <div>
                   <el-link type="primary" @click="openViewOrders(scope.row)"
-                    >Check offers</el-link
+                    >{{$t('Check offers')}}</el-link
                   >
                 </div>
                 <div>
                   <el-link
                     type="danger"
                     @click="cancelOffer(scope.row, scope.$index)"
-                    >Cancel offers</el-link
+                    >{{$t('Cancel offers')}}</el-link
                   >
                 </div>
               </template>
               <template v-if="$route.name == 'ArchivedOffers'">
                 <div>
                   <el-link type="primary" @click="openViewOrders(scope.row, 1)"
-                    >View offer detail</el-link
+                    >{{$t('View offer detail')}}</el-link
                   >
                 </div>
               </template>
@@ -572,10 +572,10 @@
           ># {{ DialogViewOrders.item.code }}</span
         >
         <span style="color: #909399; font-size: 14px" v-if="isProduct == false"
-          >(Total Order: {{ DialogViewOrders.item.orderCnt }})</span
+          >({{$t('Total orders')}}: {{ DialogViewOrders.item.orderCnt }})</span
         >
         <span style="color: #909399; font-size: 14px" v-else
-          >(Total Product: {{ productDuotationList.length }})</span
+          >({{$t('Total Product')}}: {{ productDuotationList.length }})</span
         >
       </div>
       <el-divider></el-divider>
@@ -588,12 +588,12 @@
             ref="gridTable"
             height="200"
           >
-            <el-table-column label="Order" prop="codeName" width="100" fixed>
+            <el-table-column :label="$t('Order')" prop="codeName" width="100" fixed>
               <template slot-scope="scope">
                 <span>{{ scope.row.codeName }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="My Store" prop="codeName" width="200">
+            <el-table-column :label="$t('My Store')" prop="codeName" width="200">
               <template slot-scope="scope">
                 
                   <div
@@ -608,12 +608,12 @@
                   </div>
               </template>
             </el-table-column>
-            <el-table-column label="Date" width="190">
+            <el-table-column :label="$t('Date')" width="190">
               <template slot-scope="scope">
                 {{ moment(scope.row.timeCreated).format("ll [at] LTS") }}
               </template>
             </el-table-column>
-            <el-table-column label="Customer" width="200">
+            <el-table-column :label="$t('Customer')" width="200">
               <template slot-scope="scope">
                 <popShippingJson
                   :item="scope.row"
@@ -622,7 +622,7 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column label="Total" align="right">
+            <el-table-column :label="$t('Total')" align="right">
               <template slot-scope="scope">
                 <span>{{
                   ce[scope.row.currency]
@@ -632,7 +632,7 @@
                 {{ scope.row.totalPrice }}
               </template>
             </el-table-column>
-            <el-table-column label="Payment" width="170">
+            <el-table-column :label="$t('Payment')" width="170">
               <template slot-scope="scope">
                 <el-tag
                   v-if="
@@ -650,7 +650,7 @@
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="Fulfillment" width="150">
+            <el-table-column :label="$t('Fulfillment')" width="150">
               <template slot-scope="scope">
                 <fulfillMentStatusTag
                   :fulfillmentStatus="scope.row.fulfillmentStatus"
@@ -676,18 +676,18 @@
             ref="gridTable"
             height="200"
           >
-            <el-table-column label="Product images" prop="img">
+            <el-table-column :label="$t('Product images')" prop="img">
               <template slot-scope="scope">
                 <img :src="scope.row.imgUrl" class="imgItem"
             />
               </template>
             </el-table-column>
-            <el-table-column label="Details" prop="Details">
+            <el-table-column :label="$t('Details')" prop="Details">
               <template slot-scope="scope">
                 <span>{{scope.row.detail}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="Expected price (US$)">
+            <el-table-column :label="$t('Expected price (US$)')">
               <template slot-scope="scope">
                <span v-if="scope.row.expectPrice">US$ {{ scope.row.expectPrice }}</span>
                <span v-else>---</span> 
@@ -714,10 +714,10 @@
                 font-size: 16px;
               "
             >
-              Vendors respond
+               {{$t('Vendors respond')}}
             </h3>
             <div style="font-size: 16px">
-              <span style="color: #909399">total:</span>
+              <span style="color: #909399">{{$t('total')}}:</span>
               {{ DialogViewOrders.respond.length }}
             </div>
           </div>
@@ -780,7 +780,7 @@
               <template slot-scope="scope">
                 <div v-if="scope.row.status == 3 || scope.row.status == 4">
                   <el-link type="primary" @click="openItemsDetail(scope.row)"
-                    >View offer detail</el-link
+                    >{{$t('View offer detail')}}</el-link
                   >
                 </div>
               </template>
@@ -789,13 +789,13 @@
         </div>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="DialogViewOrders.isShow = false">Discard</el-button>
+        <el-button @click="DialogViewOrders.isShow = false">{{$t('Discard')}}</el-button>
         <el-button
           v-if="$route.name != 'ArchivedOffers'"
           type="primary"
           :disabled="!DialogViewOrders.radio"
           @click="confirmOffer"
-          >Confirm this Offer</el-button
+          >{{$t('Confirm this Offer')}}</el-button
         >
       </div>
     </el-dialog>
@@ -811,13 +811,13 @@
           ># {{ DialogViewOrders.item.code }}</span
         >
         <span style="color: #909399; font-size: 14px">
-          (Vendor:
+          ({{$t('Vendor')}}:
           <span style="margin-right: 25px; color: #606266">
             {{ DialogItemsDetail.item.vendor.vendorName }} #
             {{ DialogItemsDetail.item.vendor.id }}
           </span>
-          <span v-if="isProduct == false">Offered Orders:</span> 
-          <span v-else>Offered Products:</span> 
+          <span v-if="isProduct == false">{{$t('Offered Orders')}}:</span> 
+          <span v-else>{{$t('Offered Products')}}:</span> 
           <span style="color: #606266">{{
             DialogItemsDetail.item.priceCnt
           }}</span>
@@ -835,9 +835,9 @@
               v-model="DialogItemsDetail.activeName"
               @tab-click="handleClick"
             >
-              <el-tab-pane :label="isProduct == false ? 'All Orders' : 'All Products'" name="AllOrders"></el-tab-pane>
+              <el-tab-pane :label="isProduct == false ? $t('All Orders')  : $t('All Products')" name="AllOrders"></el-tab-pane>
               <el-tab-pane
-                :label="isProduct == false ? 'Offered Orders' : 'Offered Products'"
+                :label="isProduct == false ? $t('Offered Orders') : $t('Offered Products') "
                 name="OfferedOrders"
               ></el-tab-pane>
               <el-tab-pane v-if="isProduct == false"
@@ -862,7 +862,7 @@
             ref="gridTable-items"
             height="250"
           >
-            <el-table-column label="Orders">
+            <el-table-column :label="$t('Orders')">
               <template slot-scope="scope">
                 <div class="table-shopify-wrapper" style="text-align: center">
                   <div class="code tx-600">
@@ -884,7 +884,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Items" width="250">
+            <el-table-column :label="$t('Items')" width="250">
               <template v-slot="{ row }">
                 <div class="table-items-wrapper">
                   <div class="items-image">
@@ -910,7 +910,8 @@
                       <div
                         style="display: inline-block"
                         class="mg-r-5"
-                        v-for="item in row.customerProperties"
+                        v-for="(item,index) in row.customerProperties"
+                        :key="index"
                       >
                         {{ item.name }}:
                         <span style="color: #909399">{{ item.value }}</span>
@@ -928,7 +929,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Quantity" align="center">
+            <el-table-column :label="$t('Quantity')" align="center">
               <template slot-scope="scope">
                 {{ scope.row.quantity }}
               </template>
@@ -938,7 +939,7 @@
                 US$ {{ scope.row.incomePrice }}
               </template>
             </el-table-column>
-            <el-table-column label="Offer Price (US$)"> 
+            <el-table-column :label="`${$t('Offer Price')}(US$)`"> 
               <template slot-scope="scope">
                 <span v-if="scope.row.offerPrice" class="tx-danger">
                   {{ scope.row.offerPrice }}
@@ -971,7 +972,7 @@
             height="150"
             v-else
           >
-            <el-table-column label="Product" prop="codeName" width="200" fixed>
+            <el-table-column :label="$t('Product')" prop="codeName" width="200" fixed>
               <template slot-scope="scope">
                 <img :src="scope.row.imgUrl" class="imgItem"/>
               </template>
@@ -1016,13 +1017,13 @@
     </el-popover>
               </template>
             </el-table-column>
-           <el-table-column label="Quantity" align="center">
+           <el-table-column :label="$t('Quantity')" align="center">
               ---
             </el-table-column>
-            <el-table-column label="Income">
+            <el-table-column :label="$t('Income')">
               ---
             </el-table-column>
-            <el-table-column label="Offer Price (US$)"> 
+            <el-table-column :label="`${$t('Offer Price')} (US$)`"> 
               <template slot-scope="scope">
                 US$ <span v-if="scope.row.minPrice" class="tx-danger">
                   {{ scope.row.minPrice }}
@@ -1037,17 +1038,17 @@
       <div slot="footer" class="dialog-footer">
         <div class="d-flex" style="text-align: left">
           <div style="flex: 1">
-            <span style="color: #909399">Vendor:</span>
+            <span style="color: #909399">{{$t('Vendor')}}:</span>
             <span v-if="isProduct == false">{{ DialogItemsDetail.item.vendor.vendorName }}</span>
             <span v-else>Shop</span> #
             {{ DialogItemsDetail.item.vendor.id }}
           </div>
           <div style="flex: 1">
             <span style="margin-right: 5px; color: #909399" v-if="isProduct == false"
-              >Offered Orders:</span
+              >{{$t('Offered Orders')}}:</span
             >
             <span style="margin-right: 5px; color: #909399" v-else
-              >Offered Products:</span
+              >{{$t('Offered Products')}}:</span
             >
             <template v-if="DialogItemsDetail.item.status == 1">---</template>
             <template v-else>
@@ -1058,7 +1059,7 @@
             </template>
           </div>
           <div style="flex: 1">
-            <span style="margin-right: 5px; color: #909399">Offer Price:</span>
+            <span style="margin-right: 5px; color: #909399">{{$t('Offer Price')}}:</span>
             US$ <span style="color: #f56c6c" v-if="isProduct == true">{{ offerPrices }}</span>
            <span style="color: #f56c6c" v-if="isProduct == false">{{ DialogItemsDetail.item.totalPrice }}</span>
           </div>
@@ -1079,7 +1080,7 @@
           </div> -->
           <div style="flex: 1; text-align: right">
             <el-button @click="DialogItemsDetail.isShow = false"
-              >Discard</el-button
+              >{{$t('Discard')}}</el-button
             >
           </div>
         </div>
@@ -1357,7 +1358,7 @@ export default {
     },
     cancelOffer(item, i) {
       //Cancel offer
-      this.$confirm("Yes, I want to CANCEL this offer", "", {
+      this.$confirm( this.$t("Yes, I want to CANCEL this offer"), "", {
         confirmButtonText: "Cancel",
         cancelButtonText: "Discard",
         confirmButtonClass: " el-button--danger",
@@ -1370,7 +1371,7 @@ export default {
           (r) => {
             this.loading = false;
             if (r.ErrorCode == "9999") {
-              this.$elementMessage("Cancel the success", "success");
+              this.$elementMessage(this.$t("Cancel the success"), "success");
               this.tableData.splice(i, 1);
               this.$emit("getNum");
               this.totalCount--;
@@ -1536,11 +1537,11 @@ export default {
       this.getItems();
     },
     onCopy(e) {
-      this.$elementMessage("Has been copied to the clipboard", "success");
+      this.$elementMessage(this.$t("Has been copied to the clipboard"), "success");
     },
     onError(e) {
       this.$elementMessage(
-        "Copy to clipboard failed, please copy manually",
+        this.$t("Copy to clipboard failed, please copy manually"),
         "error"
       );
     },

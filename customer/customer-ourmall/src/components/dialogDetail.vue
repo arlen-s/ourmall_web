@@ -8,15 +8,15 @@
     <div class="d-body">
       <div class="t-table"> 
         <div class="t-header">  
-          <div class="c c1">Your shop order num</div>
-          <div class="c c2">Order Number</div>
-          <div class="c c3">Total Payment({{$store.state.country.symbol}})</div>
-          <div class="c c4">Freight({{$store.state.country.symbol}})</div>
-          <div class="c c5">Total Merchandise({{$store.state.country.symbol}})</div>
-          <div class="c c6">SKU Details</div>
-          <div class="c c7">Commodity Price({{$store.state.country.symbol}})</div>
-          <div class="c c8">Quantity</div>
-          <div class="c c9">weight(g)</div>
+          <div class="c c1">{{$t('Your shop order num')}}</div>
+          <div class="c c2">{{$t('Order Number')}}</div>
+          <div class="c c3">{{$t('Total Payment')}}({{$store.state.country.symbol}})</div>
+          <div class="c c4">{{$t('Freight')}}({{$store.state.country.symbol}})</div>
+          <div class="c c5">{{$t('Total Merchandise')}}({{$store.state.country.symbol}})</div>
+          <div class="c c6">{{$t('SKU Details')}}</div>
+          <div class="c c7">{{$t('Commodity Price')}}({{$store.state.country.symbol}})</div>
+          <div class="c c8">{{$t('Quantity')}}</div>
+          <div class="c c9">{{$t('weight')}}(g)</div>
         </div>
         <div class="t-body">
           <div v-for="item in data.items" :key="item.id" class="t-row" >
@@ -39,9 +39,9 @@
     </div>
     <el-divider></el-divider>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="data.isShow = false">Cancel</el-button>
+      <el-button @click="data.isShow = false">{{$t('Cancel')}}</el-button>
       <el-button type="primary" @click="exportDetailFn" :loading="data.loading">
-        Export
+        {{$t('Export')}}
       </el-button>
     </div>  
   </el-dialog>

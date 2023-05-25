@@ -7,7 +7,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-s-custom"></i>
-          <h2>Vendors</h2>
+          <h2>{{$t('Vendors')}}</h2>
         </div>
       </div>
       <div class="right">
@@ -20,7 +20,7 @@
             icon="el-icon-plus"
             @click="openAddVendorsDialog"
           >
-            Add a new vendor
+           {{$t('Add a new vendor')}}
           </el-button>
         </template>
       </div>
@@ -41,7 +41,7 @@
                 name="MyVendors"
               >
                 <span slot="label">
-                  My Vendors <span
+                  {{$t('My Vendors')}} <span
                   v-if="vendorsCnt"
                   class="tx-success"
                 >({{vendorsCnt}})</span>

@@ -134,7 +134,7 @@ export default {
     },
     login() {
       if (!this.shopUrl) {
-        this.$elementMessage("Please enter Shopify store name", "error");
+        this.$elementMessage(this.$t("Please enter Shopify store name"), "error");
         return false;
       }
       this.win = window.open((process.env.VUE_APP_BASEURL == '/' ? '':  process.env.VUE_APP_BASEURL) + "/blank.html", "Shopify");
