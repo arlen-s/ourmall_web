@@ -70,7 +70,7 @@
                             <el-form-item>
                               <el-select
                                 v-model="search_select"
-                                placeholder="Please select"
+                                :placeholder="$t('Please select')"
                                 @change="search"
                               >
                                 <el-option

@@ -60,6 +60,7 @@ export default {
   " Selected stores": "Ausgewählte Geschäfte",
   "Please select the Shopify stores": "Bitte wählen Sie die Shopify-Shops aus",
   "Shopify": "Shopify",
+  "Please select": "bitte auswählen",
   "Woocommerce": "WooCommerce",
   "Lazada": "Lasada",
   "Shopee": "Einkaufen",

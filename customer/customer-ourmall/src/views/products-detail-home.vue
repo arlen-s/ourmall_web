@@ -115,7 +115,7 @@
                       size="small"
                       v-model="shippingContry"
                       filterable
-                      placeholder="Please select"
+                      :placeholder="$t('Please select')"
                       no-match-text="No data"
                       no-data-text="No data"
                       class="mg-l-20"
@@ -134,7 +134,7 @@
                     <el-select
                       size="small"
                       v-model="shippingFee"
-                      placeholder="Please select"
+                      :placeholder="$t('Please select')"
                       class="mg-l-20"
                       no-data-text="No data"
                       style="width: 400px;"

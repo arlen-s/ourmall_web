@@ -424,6 +424,7 @@ export default {
   "Abnormal":"Abnormal",
   "All orders":"All orders",
   "Pending": "Pending",
+  "Please select": "Please select",
   "Quote for Orders": "Quote for Orders",
   "Quote for Product": "Quote for Product",
   "Recent Quotations": "Recent Quotations",

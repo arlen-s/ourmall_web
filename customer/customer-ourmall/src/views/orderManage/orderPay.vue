@@ -224,7 +224,7 @@
 		</div>
 		<el-dialog
 		:close-on-press-escape="false" :close-on-click-modal="false"
-  title="Please select payment method"
+  :title="$t('Please select payment method')"
   :visible.sync="dialogVisibleKTPay"
   width="800px"
   :before-close="handleClosePay">

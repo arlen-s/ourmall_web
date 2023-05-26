@@ -31,7 +31,7 @@
     <div class="more" v-if="categories && categories.length > 9">
       <a href="javascript:;" @click="moreChange">
         <i class="fa " :class="showMore ? 'fa-minus-square-o':'fa-plus-square-o'" aria-hidden="true"></i>
-        <span>{{showMore ? 'Collapse':'More'}}</span>
+        <span>{{showMore ? 'Collapse': $t('More')}}</span>
       </a>
     </div>
 
