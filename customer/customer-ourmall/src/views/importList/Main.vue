@@ -490,9 +490,16 @@ export default {
     getPageStores() {
       this.$apiCall("api.Invoice.findStores", { authStatus: 1 }, (r) => {
         if (r.ErrorCode == 9999) {
+          if (localStorage.getItem('countryType') == 'DE') {
+           this.currency = r.Data.Results[0].currency
+            ? r.Data.Results[0].currency
+            : "EUR";           
+          }else{
           this.currency = r.Data.Results[0].currency
             ? r.Data.Results[0].currency
             : "USD";
+          }
+
           this.stores = [];
           this.shopOptArr = [];
           let dict = {
