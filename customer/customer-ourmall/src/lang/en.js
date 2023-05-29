@@ -1100,6 +1100,7 @@ export default {
   "GENERAL INFORMATION": "GENERAL INFORMATION",
   "CONTACT": "CONTACT",
   "SOCIAL": "SOCIAL",
+  "More": "More",
   "Store Name": "Store Name",
   "Notification Settings": "Notification Settings",
   "I want to receive notfications by": "I want to receive notfications by",

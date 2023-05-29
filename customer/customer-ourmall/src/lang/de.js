@@ -469,6 +469,7 @@ export default {
   "Invite vendor to process": "Lieferanten zur Bearbeitung einladen",
   "Cancel this order": "Diese Bestellung stornieren",
   "More Action": "Mehr Aktionen",
+  "More": "Mehr",
   "Selected saved! Now you can Check the purchase orders": "Auswahl gespeichert Jetzt können Sie die Bestellungen prüfen",
   "Send to vendor": "an den Anbieter senden",
   "After your confirmation for the payment, we will notify the vendor by email. You can also proactively notify the vendor to speed the delivery up": "Nachdem Sie die Zahlung bestätigt haben, benachrichtigen wir den Verkäufer per E-Mail. Sie können den Verkäufer auch proaktiv benachrichtigen, um die Lieferung zu beschleunigen",

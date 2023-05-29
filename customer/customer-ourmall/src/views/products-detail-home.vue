@@ -187,7 +187,7 @@
                 </div>
               </div>
               <el-button
-              v-if="appUserId != '121215'"
+              
                 style="margin-top: 10px; width: 240px; height: 54px; font-size: 20px;"
                 type="primary"
                 @click="import_pro($event)"
