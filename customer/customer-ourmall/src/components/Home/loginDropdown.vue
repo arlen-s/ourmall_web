@@ -21,7 +21,7 @@
       <template v-if="activePlatform == 'shopify'">
         <input
           type="text"
-          placeholder="Store name"
+          :placeholder="$t('Store name')"
           v-model="shopUrlTxt"
           @keyup.enter="gotoLogin"
         >

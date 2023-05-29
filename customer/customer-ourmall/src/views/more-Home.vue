@@ -943,7 +943,7 @@ this.getItems()
   padding-left: 10px;
 }
     .right {
-      width: 140px;
+      width: 145px;
       padding: 0 20px;
       height: 32px;
       color: #505363;

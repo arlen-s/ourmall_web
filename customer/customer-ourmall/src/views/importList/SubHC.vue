@@ -191,7 +191,7 @@
             </div>
           </template>
         </el-table-column>  
-        <el-table-column v-if="tab.id != '1'" label="Store Name">
+        <el-table-column v-if="tab.id != '1'" :label="$t('Store Name')">
           <template slot-scope="scope" v-if="scope.row.shop">
             {{ scope.row.shop.shopName }}
           </template>

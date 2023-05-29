@@ -19,8 +19,6 @@ import axiosWrap from './plugins/axiosWrap'
 import ApiCall from './plugins/apiCall'
 // import { wxshare } from './plugins/wxshare'
 import VueTour from 'vue-tour'
-import lang from 'element-ui/lib/locale/lang/en'
-import locale from 'element-ui/lib/locale'
 import ce from './assets/ce.json'
 import 'xe-utils'
 // import VXETable from 'vxe-table'
@@ -31,19 +29,34 @@ import VueSimpleVerify from 'vue-simple-verify'
 import '../node_modules/vue-simple-verify/dist/vue-simple-verify.css'
 Vue.component('vue-simple-verify', VueSimpleVerify) //拖拽验证
 import VuCountryIntl from 'vue-country-intl';
-import i18n from '@/lang'
+// import i18n from '@/lang'
 // 引入css
 import '../theme/index.css'
 import 'vue-country-intl/lib/vue-country-intl.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import './assets/swiper/swiper.min.css'
 import VueAppend from 'vue-append'
+import localeDe from 'element-ui/lib/locale/lang/de'
+import localeEn from 'element-ui/lib/locale/lang/en'
+import customEN from './lang/en' // 引入本项目的英文包
+import customDE from './lang/de' // 引入本项目的德文包
 Vue.use(VueAppend)
 if(process.env.NODE_ENV !== "production"){
 	Vue.config.devtools = true;
 }
 Vue.use(Viewer)
-Vue.use(ElementUI)
+Vue.use(VueI18n);
+const messages = {
+  en: {
+    ...customEN,
+  },
+  de: {
+    ...customDE,
+  }
+}
+var syLang = localStorage.getItem('countryType') == 'DE'?localeDe : localeEn
+// i18n.locale=  localStorage.getItem('countryType') == 'DE'? 'de' : 'de'
+Vue.use(ElementUI,  {locale: syLang})
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: require('./assets/none-img.png'),
@@ -89,7 +102,6 @@ Vue.use(VueAxios, axiosWrap)
 Vue.prototype.$apiCall = ApiCall;
 VueClipboard.config.autoSetContainer = true
 Vue.use(VueClipboard)
-i18n.locale=  localStorage.getItem('countryType') == 'DE'? 'de' : 'en'
 Vue.prototype.$Burying = function (params) {
   if (!window.location.href.includes('godropshipping.com')) {
     return ;
@@ -303,6 +315,11 @@ router.afterEach((to, from) => {
   }
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 });
+const i18n = new VueI18n({
+  locale: localStorage.getItem('countryType') == 'DE'? 'de' : 'en', // 语言标识,第一次登录默认是中文
+  messages,
+  fallbackLocale: localStorage.getItem('countryType') == 'DE'? 'de' : 'en',
+})
 new Vue({
   i18n,
   store,

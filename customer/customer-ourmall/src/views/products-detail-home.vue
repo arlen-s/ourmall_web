@@ -86,6 +86,10 @@
                 </div>  
               </div>
               <div class="other-info">
+                <div class="title">  SPU :</div>
+                <span class="tx-bold"> {{sku}}</span>
+              </div>
+              <div class="other-info">
                 <div class="title">   {{checkData.sku? 'SKU' : 'SPU'}} :</div>
                 <span class="tx-bold">{{checkData.sku || sku}}</span>
               </div>
@@ -183,6 +187,7 @@
                 </div>
               </div>
               <el-button
+              v-if="appUserId == '121215'"
                 style="margin-top: 10px; width: 240px; height: 54px; font-size: 20px;"
                 type="primary"
                 @click="import_pro($event)"
@@ -547,7 +552,8 @@ export default {
       maxPrice: '',
       saleCost: '0.00',
       vatDom: true,
-      concatList: []
+      concatList: [],
+      appUserId: localStorage.getItem("c_apiShopId"),
     }
   },
   watch: {

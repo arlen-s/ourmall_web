@@ -18,7 +18,7 @@
 		<div class="pagebody mg-t-30">
 			<el-row :gutter="15" class="mg-b-20">
 				<el-col :span="24" v-for="(item,index) in paymentMethods" :key="index" class="mg-b-30 mg-t-10">
-					<el-row :gutter="15" class="mg-b-15" align="middle">
+					<el-row :gutter="15" class="mg-b-15" align="middle" v-if="vendorId == '150488'">
 						<el-col :span="6">
 							<div class="" style="font-size:18px">
 								{{ $t(`payment.payment${item.accountType}`) }}
@@ -29,7 +29,7 @@
 							</el-switch>
 						</el-col>
 					</el-row>
-					<el-card>
+					<el-card v-if="vendorId == '150488' || item.accountType == 12">
 						<el-row :gutter="15" type="flex" align="middle">
 							<el-col :span="6">
 								<img :src="item.icon" alt="" height="80">
@@ -227,50 +227,51 @@
 		data() {
 			return {
 				paymentMethods:[
-				// 	{
-				// 	accountType:"3",
-				// 	icon: require('@/assets/pay/3.png'),
-				// 	name:"paypal",
-				// 	status:"2"
-				// },{
-				// 	accountType:"4",
-				// 	icon:require('@/assets/pay/4.png'),
-				// 	name:"checkout",
-				// 	status:"2"
-				// },
+					{
+					accountType:"3",
+					icon: require('@/assets/pay/3.png'),
+					name:"paypal",
+					status:"2"
+				},{
+					accountType:"4",
+					icon:require('@/assets/pay/4.png'),
+					name:"checkout",
+					status:"2"
+				},
 				{
 					accountType:"12",
 					icon:require('@/assets/pay/12.png'),
 					name:"underline",
 					status:"2"
 				},
-				// {
-				// 	accountType:"6",
-				// 	icon:require('@/assets/pay/6.png'),
-				// 	name:"bonus",
-				// },
-				// {
-				// 	accountType:"1",
-				// 	icon:require('@/assets/pay/1.png'),
-				// 	name:"stripe",
-				// 	status:"2"
-				// },{
-				// 	accountType:"2",
-				// 	icon:require('@/assets/pay/2.png'),
-				// 	name:"ebanx",
-				// 	status:"2"
-				// },{
-				// 	accountType:"10",
-				// 	icon:require('@/assets/pay/10.png'),
-				// 	name:"dlocal",
-				// 	status:"2"
-				// },{
-				// 	accountType:"13",
-				// 	icon:require('@/assets/pay/13.png'),
-				// 	name:"Kasikornbank",
-				// 	status:"2"
-				// }
+				{
+					accountType:"6",
+					icon:require('@/assets/pay/6.png'),
+					name:"bonus",
+				},
+				{
+					accountType:"1",
+					icon:require('@/assets/pay/1.png'),
+					name:"stripe",
+					status:"2"
+				},{
+					accountType:"2",
+					icon:require('@/assets/pay/2.png'),
+					name:"ebanx",
+					status:"2"
+				},{
+					accountType:"10",
+					icon:require('@/assets/pay/10.png'),
+					name:"dlocal",
+					status:"2"
+				},{
+					accountType:"13",
+					icon:require('@/assets/pay/13.png'),
+					name:"Kasikornbank",
+					status:"2"
+				}
 				],
+				 vendorId: localStorage.getItem('vendorId'),
 				underlineItems:[],
 				dialogData: {
 					isShow: false,

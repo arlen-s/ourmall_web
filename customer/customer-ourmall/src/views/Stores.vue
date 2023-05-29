@@ -70,7 +70,7 @@
               style="width: 100%"
               ref="gridTable"
             >
-              <el-table-column label="Store Name" width="400">
+              <el-table-column :label="$t('Store Name')" width="400">
                 <template slot-scope="scope">
                   <div v-if="scope.row.shopName && scope.row.platform != '3'">
                     <shopCate :items="scope.row" />
@@ -360,7 +360,7 @@
           </el-form-item>
         </template>
         <template v-if="activePlatform == 'shopee'">
-          <el-form-item label="Store Name:">
+          <el-form-item :label="`${$t('Store Name')}:`">
             <el-row>
               <el-col :span="15">
                 <el-input

@@ -205,7 +205,7 @@
                   </div>
                   <div class="grid-content mg-t-20">
                     <el-table :data="tableData" stripe style="width: 100%">
-                      <el-table-column prop="date" label="Date" width="180">
+                      <el-table-column prop="date" :label="$t('Date')" width="180">
                       </el-table-column>
                       <el-table-column prop="orderCnt" :label="$t('Total Orders')">
                       </el-table-column>
@@ -218,7 +218,7 @@
                         </template>
                       </el-table-column>
                       <el-table-column
-                        :label="`Cost (${$store.state.country.symbol})`"
+                        :label="`${$t('Cost')} (${$store.state.country.symbol})`"
                         width="180"
                       >
                         <template slot-scope="scope">
@@ -261,7 +261,7 @@
                     </div>
                     <div class="grid-bottom">
                       <h2 class="tx-primary">
-                        {{ dashBoardData.waitPlaceOrder }} {{$t('orders')}}
+                        {{ dashBoardData.waitPlaceOrder }} {{$t('Orders')}}
                       </h2>
                       <p>{{$t('Waiting to place order')}}</p>
                     </div>
@@ -286,7 +286,7 @@
                     </div>
                     <div class="grid-bottom">
                       <h2 class="tx-primary">
-                        {{ dashBoardData.invoiceCnt }} Orders
+                        {{ dashBoardData.invoiceCnt }}  {{$t('Orders')}}
                       </h2>
                       <p>{{$t('Waiting for tracking code')}}</p>
                     </div>
@@ -307,7 +307,7 @@
                     </div>
                     <div class="grid-bottom">
                       <h2 class="tx-primary">
-                        {{ dashBoardData.shopCnt }} Stores
+                        {{ dashBoardData.shopCnt }} {{$t('Stores')}}
                       </h2>
                       <p>{{$t('Authorized')}}</p>
                     </div>

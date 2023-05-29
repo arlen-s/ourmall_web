@@ -21,7 +21,7 @@
                   <span>({{ total }})</span>
                 </span>
               </el-tab-pane>
-              <el-tab-pane label="Completed" name="3"></el-tab-pane>
+              <el-tab-pane :label="$t('Completed')" name="3"></el-tab-pane>
               <el-tab-pane label="Closed" name="4"></el-tab-pane>
             </el-tabs>
           </el-col>
