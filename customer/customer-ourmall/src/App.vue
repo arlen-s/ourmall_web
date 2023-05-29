@@ -1906,7 +1906,7 @@ export default {
 
 .box-email {
   width: 681px;
-  height: 273px;
+  min-height: 273px;
   background: #ffffff;
   border-radius: 20px;
   padding: 20px 50px;
