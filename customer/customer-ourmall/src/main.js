@@ -316,7 +316,7 @@ router.afterEach((to, from) => {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 });
 const i18n = new VueI18n({
-  locale: localStorage.getItem('countryType') == 'DE'? 'de' : 'de', // 语言标识,第一次登录默认是中文
+  locale: localStorage.getItem('countryType') == 'DE'? 'de' : 'en', // 语言标识,第一次登录默认是中文
   messages,
   fallbackLocale: localStorage.getItem('countryType') == 'DE'? 'de' : 'en',
 })
