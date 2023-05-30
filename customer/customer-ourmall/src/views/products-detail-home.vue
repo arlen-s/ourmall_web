@@ -370,20 +370,20 @@
     style="width: 100%">
     <el-table-column
       prop="price"
-      label="Excluding VAT amount"
+      :label="$t('Excluding VAT amount')"
       align="center"
       width="180">
     </el-table-column>
     <el-table-column
       prop="VAT"
       align="center"
-      label="VAT amount"
+      :label="$t('VAT amount')"
       width="180">
     </el-table-column>
     <el-table-column
       prop="Amount"
       align="center"
-      label="Amount including VAT">
+      :label="$t('Amount including VAT')">
     </el-table-column>
   </el-table>
         </div>
