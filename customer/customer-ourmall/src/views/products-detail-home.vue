@@ -377,7 +377,7 @@
     <el-table-column
       prop="VAT"
       align="center"
-      :label="$t('VAT amount')"
+      :label="$t('VAT am')"
       width="180">
     </el-table-column>
     <el-table-column

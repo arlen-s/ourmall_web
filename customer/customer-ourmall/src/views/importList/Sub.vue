@@ -311,7 +311,7 @@ export default {
         price = `${min} - ${max}`;
       }
 
-    return `${item.stocks.length ? item.stocks[0].currency : ''} ${price}`
+    return `${price}`
       
     },
     singPush(item){

@@ -494,7 +494,7 @@ export default {
            this.currency = r.Data.Results[0].currency
             ? r.Data.Results[0].currency
             : "EUR";           
-          }else{
+          }else{ 
           this.currency = r.Data.Results[0].currency
             ? r.Data.Results[0].currency
             : "USD";
