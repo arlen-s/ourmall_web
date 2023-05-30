@@ -220,7 +220,7 @@
             <div v-else>---</div>
           </template>
         </el-table-column>
-        <el-table-column v-if="tab.id != '2'" :label="$t('Action')" :width="tab.id == '1' ? 250:200">
+        <el-table-column v-if="tab.id != '2'" :label="$t('Action')" :width="tab.id == '1' ? 300:200">
           <template slot-scope="scope">
             <div v-if="tab.id == '1'">
               <el-button type="primary" size="small" :disabled="scope.row.status != '1'"  @click="singPush(scope.row)">{{$t('Push')}}</el-button>
