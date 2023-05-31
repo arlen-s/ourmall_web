@@ -1947,7 +1947,7 @@ export default {
     input {
       font-size: 16px;
       border: 0;
-      width: 89%;
+      width: 85%;
       display: inline-block;
       box-shadow: initial;
     }

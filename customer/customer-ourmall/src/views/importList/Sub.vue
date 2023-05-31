@@ -197,7 +197,7 @@
           </template>
         </el-table-column>
         <el-table-column :label="$t('Price')" align="center">
-          <el-table-column :label="$t('Supply unit price')" width="140">
+          <el-table-column :label="$t('Supply unit price')" width="160">
             <template slot-scope="scope">
               <div>
                 {{showPrice(scope.row)}}
