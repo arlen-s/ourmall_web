@@ -3487,6 +3487,7 @@ export default {
       });
     },
     gettabList() {
+
       switch (this.status) {
         case 1:
           this.tabList = [
@@ -3497,7 +3498,7 @@ export default {
             // },
             {
               id: 2,
-              name: 2,
+              name: 1,
               title: this.$t("Vendor quoted order"),
             },
           ];
@@ -3587,6 +3588,7 @@ export default {
       return text;
     },
     getItem(s) {
+      console.log(this.status, 'this.status');
       this.getStore();
       this.gettabList();
       this.getCustomerAllOrderCnt();
@@ -3622,6 +3624,9 @@ export default {
         status = "";
         params = Object.assign(params1, params2);
         params.isAll = true;
+      }else if(this.status == 1){
+          status = 2
+          this.activeName = 1
       } else {
         let item = this.tabList.filter((item) => {
           return item.name == this.activeName;
