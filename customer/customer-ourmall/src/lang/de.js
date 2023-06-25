@@ -1,5 +1,4 @@
 export default {
-  'aryd111': '  2222222',
   "Product category name": 'Name der Produktkategorie',
   "Category Name": "Kategoriename",
   "Set as default shipping address": "Als Standardlieferadresse festlegen",
@@ -1213,7 +1212,8 @@ export default {
   "Store Name": "Name des Shops",
   "No Message": "Keine Nachricht",
   "All Action": "Alle Aktionen",
-  "Send": "senden",
+  "Send": "senden.",
+  "Enter Verification Code": "Geben Sie den Verifizierungscode ein",
   "Tell us more about your request": "Erzählen Sie uns mehr über Ihr Anliegen",
   "What is your Shopify store name?": "Wie lautet der Name Ihres Shopify-Shops?",
   "Transaction": "Transaktion",

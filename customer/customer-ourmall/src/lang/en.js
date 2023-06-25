@@ -1,5 +1,4 @@
 export default {
-  'aryd111': '  22222',
   "Product category name": 'Product category name',
   "Category Name": "Category Name",
   'Please enter the first name': 'Please enter the first name',
@@ -32,7 +31,7 @@ export default {
   "Warning Tips": "Warning Tips",
   '警告提示': 'Warning Tips',
   '该分类下目前还没有商品': 'There are currently no products under this category',
-  '最大建议尺寸 200px * 200px, 图片可自适应': '最大建议尺寸 200px * 200px, 图片可自适应',
+  '最大建议尺寸 200px * 200px, 图片可自适应': 'Maximum recommended size 200px * 200px, image can be adaptive',
   '添加图片': 'add image',
   '更改': 'change',
   '删除': 'delete',
@@ -244,7 +243,6 @@ export default {
   "Submit orders": "Submit orders",
   "credit&debit card": "credit&debit card",
   "qr payment": "qr payment",
-  "请稍后重试～": "请稍后重试～",
   "Please select payment method": "Please select payment method",
   "Order Management": "Order Management",
   "Import order": "Import order",
@@ -632,9 +630,9 @@ export default {
   "Bulk Purchase": "Bulk Purchase",
   "Amount": "Amount",
   "Do you want to delete selected items?": "Do you want to delete selected items?",
-  "商品列表页": "商品列表页",
-  "底部": "底部",
-  "顶部": "顶部",
+  "商品列表页": "Product list page",
+  "底部": "Bottom",
+  "顶部": "Top",
   "Hi, welcome to": "Hi, welcome to",
   "Welcome to ()! Please sign in or register an account to": "Welcome to ()! Please sign in or register an account to",
   "start the chat.": "  start the chat.",
@@ -1277,6 +1275,7 @@ export default {
   "Please verify your email address here,": "Please verify your email address here,",
   "Withdraw Cash": " Withdraw Cash",
   "I see": "I see",
+  "Enter Verification Code": "Enter Verification Code",
   "Verify Email": "Verify Email",
   "Bill Number": "Bill Number",
   "Order Code": "Order Code",
@@ -1311,12 +1310,4 @@ export default {
   "For security reason.We need to verify your email address.": "For security reason.We need to verify your email address.",
   "Send To:": " Send To:",
   "Please click 'Send' to get the verification code in your inbox": "Please click 'Send' to get the verification code in your inbox"
-
-
-
-
-
-
-
-
 }

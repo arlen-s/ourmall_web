@@ -476,7 +476,7 @@
                   class="form-control"
                   type="text"
                   v-model="authCode"
-                  placeholder="Enter Verification Code"
+                  :placeholder="$t('Enter Verification Code')"
                 />
                 <span v-if="!hasSendCode" @click="sendCode">{{$t('Send')}}</span>
                 <span v-if="hasSendCode">{{ time }}</span>
@@ -1906,7 +1906,7 @@ export default {
 
 .box-email {
   width: 681px;
-  min-height: 273px;
+  min-height: 330px;
   background: #ffffff;
   border-radius: 20px;
   padding: 20px 50px;

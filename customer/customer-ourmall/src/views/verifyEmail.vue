@@ -7,7 +7,7 @@
 				<div class="desc">{{$t("For security reason.We need to verify your email address.Please click 'Send' to get the verification code in your inbox")}}</div>
 				<div class="email">{{$t('Send To')}}: {{$store.state.userInfo.email}}</div>
 				<div class="inputbox">
-					<input class="form-control" type="text" v-model="authCode" placeholder="Enter Verification Code">
+					<input class="form-control" type="text" v-model="authCode"  :placeholder="$t('Enter Verification Code')">
 					<span v-if="!hasSendCode" @click="sendCode">{{$t('Send')}}</span>
 					<span v-if="hasSendCode">{{time}}</span>
 				</div>
