@@ -13,7 +13,7 @@
 		</div>
 		<div class="pagebody" v-loading="loading">
 			 <el-tabs v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="normal bill" name="2">			
+    <el-tab-pane :label="$t('normal bill')" name="2">			
 			<el-row :gutter="15" class="mg-b-20">
 				<el-col :span="24">
 					<el-card>
@@ -21,7 +21,7 @@
 							<el-col :span="24">
 								<div ref="pageFilter" class="page-filter">
 									<el-form :inline="true" size="mini">
-										<el-form-item label="Create Date">
+										<el-form-item :label="$t('Create Date')">
 											<el-date-picker value-format="yyyy-MM-dd" v-model="filterParams.date"
 												@clear="clearFilter('date')" @change="dateChange" type="daterange"
 												align="right" unlink-panels start-placeholder="Start"
@@ -40,16 +40,16 @@
 											</el-radio-group>
 										</el-form-item>
 										<el-form-item>
-											<el-input placeholder="Payment code" v-model="filterParams.paymentCode"
+											<el-input :placeholder="$t('Payment code')" v-model="filterParams.paymentCode"
 												clearable @keyup.enter.native="filterItem"
 												@clear="clearFilter('paymentCode')"></el-input>
 										</el-form-item>
 										<el-form-item>
-											<el-input placeholder="Third Party Number" v-model="filterParams.code"
+											<el-input :placeholder="$t('Third Party Number')" v-model="filterParams.code"
 												clearable @keyup.enter.native="filterItem" @clear="clearFilter('code')">
 											</el-input>
 										</el-form-item>
-										<el-form-item label="Trade type: ">
+										<el-form-item :label="$t('Trade type')">
 											<el-select filterable remote placeholder="all" clearable
 												v-model="filterParams.tradeType" @change="filterItem"
 												@clear="clearFilter('tradeType')">
@@ -57,7 +57,7 @@
 													:value="opt.id"></el-option>
 											</el-select>
 										</el-form-item>
-										<el-form-item label="Trade status: ">
+										<el-form-item :label="$t('Trade status')">
 											<el-select filterable remote placeholder="all" clearable
 												v-model="filterParams.tradeStatus" @change="filterItem"
 												@clear="clearFilter('tradeStatus')">
@@ -65,7 +65,7 @@
 													:value="opt.id"></el-option>
 											</el-select>
 										</el-form-item>
-										<el-form-item label="Account payee: ">
+										<el-form-item :label="$t('Account payee') ">
 											<el-select filterable remote placeholder="all" clearable
 												v-model="filterParams.accountPayee" @change="filterItem"
 												@clear="clearFilter('accountPayee')">
@@ -74,7 +74,7 @@
 											</el-select>
 										</el-form-item>
 										<el-form-item>
-											<el-input placeholder="Order number" v-model="filterParams.shopifyOrder"
+											<el-input :placeholder="$t('Order number')" v-model="filterParams.shopifyOrder"
 												clearable @keyup.enter.native="filterItem"
 												@clear="clearFilter('shopifyOrder')"></el-input>
 										</el-form-item>
@@ -90,50 +90,50 @@
 							@selection-change="handleSelectionChange" :row-key="(row) => row.id">
 							<!-- <el-table-column type="selection" width="55" :reserve-selection="true">
 							</el-table-column> -->
-							<el-table-column label="Create Date" width="200">
+							<el-table-column :label="$t('Create Date')" width="200">
 								<template slot-scope="scope">
 									<span>{{moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Payment code" width="200">
+							<el-table-column :label="$t('Payment code')" width="200">
 								<template slot-scope="scope">
 									<span>{{scope.row.sysCode || '---'}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Third Party Number" min-width="350">
+							<el-table-column :label="$t('Third Party Number')" min-width="350">
 								<template slot-scope="scope">
 									<span v-if="scope.row.code=='96'||scope.row.code=='97'||scope.row.code=='98'||scope.row.code=='99'">---</span>
 									<span v-else>{{scope.row.code || '---'}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Trade type" width="150">
+							<el-table-column :label="$t('Trade type')" width="150">
 								<template slot-scope="scope">
 									<span>{{filterText('tradeType',scope.row.type)}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column :label="`Trade amount(${$store.state.country.symbol})`" width="150">
+							<el-table-column :label="`${$t('Trade amount')}(${$store.state.country.symbol})`" width="150">
 								<template slot-scope="scope">
 									<span v-if="scope.row.status == 3" class="tx-danger">-
 										{{scope.row.totalAmount}}</span>
 									<span v-else>{{scope.row.totalAmount}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Trade status" width="150">
+							<el-table-column :label="$t('Trade status')" width="150">
 								<template slot-scope="scope">
 									<span>{{filterText('tradeStatus',scope.row.status)}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Payment type" width="150">
+							<el-table-column :label="$t('Payment type')" width="150">
 								<template slot-scope="scope">
 									<span>{{filterText('platformType',scope.row.platformType)}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Remark">
+							<el-table-column :label="$t('Remark')">
 								<template slot-scope="scope">
 									<span>{{scope.row.remark || '---'}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Operate" width="120" fixed="right">
+							<el-table-column :label="$t('Operate')" width="120" fixed="right">
 								<template slot-scope="scope">
 									<div>
 										<!-- <el-link class="mg-r-20" type="primary" @click="viewDetailFn('row',scope.row)">
@@ -162,7 +162,7 @@
 				</el-col>
 			</el-row>
 			</el-tab-pane>
-    <el-tab-pane label="abnormal bill" name="1">
+    <el-tab-pane :label="$t('abnormal bill')" name="1">
 			<el-row :gutter="15" class="mg-b-20">
 				<el-col :span="24">
 					<el-card>
@@ -170,7 +170,7 @@
 							<el-col :span="24">
 								<div ref="pageFilter" class="page-filter">
 									<el-form :inline="true" size="mini">
-										<el-form-item label="Create Date">
+										<el-form-item :label="$t('Create Date')">
 											<el-date-picker value-format="yyyy-MM-dd" v-model="filterParams.date"
 												@clear="clearFilter('date')" @change="dateChange" type="daterange"
 												align="right" unlink-panels start-placeholder="Start"
@@ -189,16 +189,16 @@
 											</el-radio-group>
 										</el-form-item>
 										<el-form-item>
-											<el-input placeholder="Payment code" v-model="filterParams.paymentCode"
+											<el-input :placeholder="$t('Payment code')" v-model="filterParams.paymentCode"
 												clearable @keyup.enter.native="filterItem"
 												@clear="clearFilter('paymentCode')"></el-input>
 										</el-form-item>
 										<el-form-item>
-											<el-input placeholder="Third Party Number" v-model="filterParams.code"
+											<el-input :placeholder="$t('Third Party Number')" v-model="filterParams.code"
 												clearable @keyup.enter.native="filterItem" @clear="clearFilter('code')">
 											</el-input>
 										</el-form-item>
-										<el-form-item label="Trade type: ">
+										<el-form-item :label="$t('Trade type') ">
 											<el-select filterable remote placeholder="all" clearable
 												v-model="filterParams.tradeType" @change="filterItem"
 												@clear="clearFilter('tradeType')">
@@ -206,7 +206,7 @@
 													:value="opt.id"></el-option>
 											</el-select>
 										</el-form-item>
-										<el-form-item label="Trade status: ">
+										<el-form-item :label="$t('Trade status') ">
 											<el-select filterable remote placeholder="all" clearable
 												v-model="filterParams.tradeStatus" @change="filterItem"
 												@clear="clearFilter('tradeStatus')">
@@ -214,7 +214,7 @@
 													:value="opt.id"></el-option>
 											</el-select>
 										</el-form-item>
-										<el-form-item label="Account payee: ">
+										<el-form-item :label="$t('Account payee') ">
 											<el-select filterable remote placeholder="all" clearable
 												v-model="filterParams.accountPayee" @change="filterItem"
 												@clear="clearFilter('accountPayee')">
@@ -223,7 +223,7 @@
 											</el-select>
 										</el-form-item>
 										<el-form-item>
-											<el-input placeholder="Order number" v-model="filterParams.shopifyOrder"
+											<el-input :placeholder="$t('Order number')" v-model="filterParams.shopifyOrder"
 												clearable @keyup.enter.native="filterItem"
 												@clear="clearFilter('shopifyOrder')"></el-input>
 										</el-form-item>
@@ -239,50 +239,50 @@
 							@selection-change="handleSelectionChange" :row-key="(row) => row.id">
 							<!-- <el-table-column type="selection" width="55" :reserve-selection="true">
 							</el-table-column> -->
-							<el-table-column label="Create Date" width="200">
+							<el-table-column :label="$t('Create Date')" width="200">
 								<template slot-scope="scope">
 									<span>{{moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Payment code" width="200">
+							<el-table-column :label="$t('Payment code')" width="200">
 								<template slot-scope="scope">
 									<span>{{scope.row.sysCode || '---'}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Third Party Number" min-width="350">
+							<el-table-column :label="$t('Third Party Number')" min-width="350">
 								<template slot-scope="scope">
 									<span v-if="scope.row.code=='96'||scope.row.code=='97'||scope.row.code=='98'||scope.row.code=='99'">---</span>
 									<span v-else>{{scope.row.code || '---'}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Trade type" width="150">
+							<el-table-column :label="$t('Trade type')" width="150">
 								<template slot-scope="scope">
 									<span>{{filterText('tradeType',scope.row.type)}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label=" Amount paid/Credit payment" width="150">
+							<el-table-column :label="$t('Amount paid/Credit payment') " width="150">
 								<template slot-scope="scope">
 									<span class="tx-danger">
 										{{ Number(scope.row.bonusAmount).toFixed(2) }}</span> <br/>
 									<span >{{ Number(scope.row.creditAmount).toFixed(2)}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Trade status" width="150">
+							<el-table-column :label="$t('Trade status')" width="150">
 								<template slot-scope="scope">
 									<span>{{filterText('tradeStatus',scope.row.status)}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Payment type" width="150">
+							<el-table-column :label="$t('Payment type')" width="150">
 								<template slot-scope="scope">
 									<span>{{filterText('platformType',scope.row.platformType)}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Remark">
+							<el-table-column :label="$t('Remark')">
 								<template slot-scope="scope">
 									<span>{{scope.row.remark || '---'}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column label="Operate" width="120" fixed="right">
+							<el-table-column :label="$t('Operate')" width="120" fixed="right">
 								<template slot-scope="scope">
 									<div>
 										<!-- <el-link class="mg-r-20" type="primary" @click="viewDetailFn('row',scope.row)">
@@ -413,29 +413,29 @@
 				},
 				tradeTypeArr: [{
 					id: 1,
-					name: "Payment order"
+					name: this.$t("Payment order")
 				}, {
 					id: 6,
-					name: "Refund order"
+					name: this.$t("Refund order")
 				}, {
 					id: 7,
-					name: "Wallet card"
+					name: this.$t("Wallet card")
 				}, {
 					id: 8,
-					name: "Manual deduction"
+					name: this.$t("Manual deduction")
 				}],
 				tradeStatusArr: [{
 					id: 1,
-					name: "Paying"
+					name: this.$t("Paying")
 				}, {
 					id: 2,
-					name: "Account paid"
+					name: this.$t("Account paid")
 				}, {
 					id: 3,
-					name: "Refunded"
+					name: this.$t("Refunded")
 				}, {
 					id: 9,
-					name: "Cancel"
+					name: this.$t("Cancel")
 				}],
 				accountPayeeArr: [{
 					id: 1,
