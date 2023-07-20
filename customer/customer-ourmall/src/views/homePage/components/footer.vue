@@ -149,7 +149,7 @@
       </div>
     </div>
 
-    <div class="bottom-row-copyright" v-if="setting.ourmall">
+    <div class="bottom-row-copyright">
 			<span class="ban"><a href="https://beian.miit.gov.cn" target="_blank">{{
              $store.state.referenceNumber || ''
           }}</a></span> 
