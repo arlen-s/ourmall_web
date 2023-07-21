@@ -55,7 +55,7 @@ export default {
   flex-flow: row-reverse  
 }
 .right-box{
-    width: 1420px;
+    width: 100%;
     margin: 80px auto;
     padding: 0 20px;
     display: flex;

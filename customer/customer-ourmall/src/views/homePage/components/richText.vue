@@ -31,7 +31,7 @@ export default {
   padding: 50px 0;
   .rich-text-content{
     margin: 0 auto;
-    width: 1420px;
+    width: 100%;
     h2{
       margin-bottom: 20px;
       line-height: 32px;
@@ -68,8 +68,8 @@ export default {
       font-size: 12px;
     }
   }
-  .rich-text-content.s{
-    width: 1420px;
-  }
+  // .rich-text-content.s{
+  //   width: 1420px;
+  // }
 }
 </style>

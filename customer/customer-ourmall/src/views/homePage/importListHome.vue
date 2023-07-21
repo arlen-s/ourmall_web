@@ -507,7 +507,7 @@ export default {
 }
 .import-home{
 	margin: 0 auto 0;
-	width: 1420px;
+	width: 100%;
 	padding: 15px 0;
 }
 .ball {

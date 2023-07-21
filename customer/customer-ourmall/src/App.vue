@@ -1898,6 +1898,7 @@ export default {
   color: #2c3e50;
   padding-top: 0;
   height: 100%;
+  min-width: 768px;
 }
 
 .verify-1 {

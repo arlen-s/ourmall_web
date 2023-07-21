@@ -1001,7 +1001,7 @@ this.getItems()
 <style scoped lang="scss">
 .contentpanel.box {
   margin: 0px auto 0;
-  width: 1440px;
+  max-width: 1440px;
   padding: 15px 0;
   .pagetitle {
     justify-content: flex-start;

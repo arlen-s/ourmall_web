@@ -32,8 +32,7 @@
 			v-if="setting.contentConfig.companyUsed
 			|| setting.contentConfig.socalUsed
 			|| setting.contentConfig.aboutUsed">
-      <div class="content"
-				:style="{ width: setting.footerWidth? setting.footerWidth: '1420px' }">
+      <div class="content">
 				<template v-for="(item, index) in setting.content">
 					<div v-if="item.type == 'scribe' && setting.contentConfig.scribeUsed && index != 0" :key="index" class="c-3">
 						<div class="text">
@@ -1042,7 +1041,8 @@ export default {
 		display: flex;
 		justify-content: space-between;
 		margin: 0 auto;
-		width: 1420px;
+		width: 100%;
+		max-width: 1420px;
 		padding-top: 62px;
 		.company {
 			margin-top: -20px;
@@ -1167,7 +1167,7 @@ export default {
 	.content {
 		margin: 0 auto;
 		padding: 20px 25px;
-		width: 1420px;
+		width: 100%;
 		border-top: 1px #575757 solid;
 		ul {
 			display: flex;
@@ -1198,7 +1198,7 @@ export default {
 	background-color: #fff;
 	.content {
 		margin: 0 auto;
-		width: 1420px;
+		width: 100%;
 		height: 65px;
 		display: flex;
 		align-items: center;

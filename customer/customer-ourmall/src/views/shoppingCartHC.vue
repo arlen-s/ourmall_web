@@ -1701,7 +1701,8 @@ export default {
   }
 }
 .pay-submit {
-  min-width: 1300px;
+  max-width: 1300px;
+  width: 100%;
   position: fixed;
   bottom: 0;
   padding: 20px;
@@ -1824,19 +1825,19 @@ export default {
 .swiperBox {
   position: relative;
   height: 200px;
-  max-width: 1100px;
   margin: 0 auto;
+  padding: 0 80px;
 }
 .swiper-button-next {
   position: absolute;
   top: 50%;
-  right: -80px;
+  right: 0px;
   transform: translate(0, -50%);
 }
 .swiper-button-prev {
   position: absolute;
   top: 50%;
-  left: -80px;
+  left: 0px;
   transform: translate(0, -50%);
 }
 

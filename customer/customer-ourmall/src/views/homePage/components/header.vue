@@ -696,7 +696,8 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   justify-content: space-between;
   margin: 0 auto;
   padding: 0;
-  width: 1440px;
+  width: 100%;
+  max-width: 1440px;
   height: 90px;
   h1 {
     width: 60px;
@@ -707,7 +708,8 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
     background-size: contain;
   }
   .right {
-    width: 20%;
+    min-width: 20%;
+    flex-shrink: 0;
   }
   .right {
     > ul {
@@ -911,7 +913,7 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   width: 234px;
 }
 .banner-box {
-  padding: 0;
+  padding: 0 10px;
   flex-wrap: wrap;
   max-width: 1440px;
   margin: 0 auto;
@@ -937,7 +939,7 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   }
 }
 .input-with-select {
-  min-width: 550px;
+  min-width: calc(100% - 100px);
   flex: 1;
   border: 1px solid #5a6cc4;
   border-radius: 4px 0px 0px 4px;

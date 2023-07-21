@@ -34,3 +34,9 @@ export default {
 }
 
 </script>
+<style scoped>
+#demoBody {
+  max-width: 1420px; 
+  margin: 0 auto;
+}
+</style>

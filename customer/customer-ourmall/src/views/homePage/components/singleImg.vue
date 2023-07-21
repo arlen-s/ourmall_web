@@ -59,7 +59,7 @@ export default {
     align-items: center;
     justify-content: flex-end;
     margin: 0 auto;
-    width: 1420px;
+    width: 100%;
     .left{
       padding-right: 25px;
       width: 605px;
@@ -78,11 +78,13 @@ export default {
       }
     }
     .right{
+      width: 50%;
+      margin-right: 10px;
       .img-wrap{
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-        width: 595px;
+        width: 100%;
         height: 446px;
       }
     }
