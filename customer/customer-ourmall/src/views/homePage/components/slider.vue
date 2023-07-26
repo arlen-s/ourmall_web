@@ -8,7 +8,7 @@
 			</el-carousel-item>
 		</el-carousel>
 		<div v-else style="padding: 0px 0; text-align: center; max-width: 1920px;display: flex;justify-content: center;">
-			<img src="@/assets/images/store-design/slider.jpg" />
+			<img src="@/assets/images/store-design/slider.jpg"  style="width:100%"/>
 		</div>
 	</div>
 </template>

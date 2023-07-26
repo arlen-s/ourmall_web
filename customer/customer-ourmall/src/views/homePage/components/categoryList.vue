@@ -101,7 +101,7 @@
 
 <style lang="scss" scoped>
 	.content {
-		width: 1420px;
+		width: 100%;
 		margin: 0 auto;
 
 		.title {

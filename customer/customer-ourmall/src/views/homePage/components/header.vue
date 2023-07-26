@@ -598,9 +598,8 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
         width: 150px;
         border-radius: 3px;
         top: 0px;
-        left: 150px;
-        background: #fff;
-        box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+        left: 150px;background: #fff;
+box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
         li {
           padding: 5px 10px;
           overflow: hidden;
@@ -696,7 +695,8 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   justify-content: space-between;
   margin: 0 auto;
   padding: 0;
-  width: 1440px;
+  width: 100%;
+  max-width: 1440px;
   height: 90px;
   h1 {
     width: 60px;
@@ -707,7 +707,8 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
     background-size: contain;
   }
   .right {
-    width: 20%;
+    min-width: 20%;
+    flex-shrink: 0;
   }
   .right {
     > ul {
@@ -740,15 +741,6 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
           i {
             font-size: 26px;
           }
-        }
-      }
-
-      .user-box {
-        // display: flex;
-        // align-items: center;
-
-        span {
-          // margin: 0 10px;
         }
       }
     }
@@ -911,7 +903,7 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   width: 234px;
 }
 .banner-box {
-  padding: 0;
+  padding: 0 10px;
   flex-wrap: wrap;
   max-width: 1440px;
   margin: 0 auto;
@@ -937,7 +929,7 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   }
 }
 .input-with-select {
-  min-width: 550px;
+  min-width: calc(100% - 100px);
   flex: 1;
   border: 1px solid #5a6cc4;
   border-radius: 4px 0px 0px 4px;
@@ -948,5 +940,13 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
     line-height: 38px;
     border-radius: 4px 0px 0px 4px;
   }
+}
+
+</style>
+
+<style lang="scss" scoped>
+@media (max-width: 992px) and (min-width: 768px){
+  // 平板
+  
 }
 </style>

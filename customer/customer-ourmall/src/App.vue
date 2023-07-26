@@ -506,6 +506,17 @@
       @resetSEC="resetSEC"
       @saveNewPSD="saveNewPSD"
     />
+    		<el-dialog
+  title="续费预警"
+  :visible.sync="dialogVisibleError"
+  width="40%"
+  :close-on-click-modal="false"
+ >
+ <div style="padding:0 20px 20px 20px">
+    <p style="padding:20px 0">尊敬的马帮用户：</p>
+    <p>您好，贵司产品开通时间为2022年01月05日，服务时间一年，到期截止日期为2023年05月06日，为了不影响贵司的业务推进，请及时联系专属商务同事进行续费，祝贵司事业长虹！</p>
+ </div>
+</el-dialog> 
   </div>
 </template>
 
@@ -528,6 +539,7 @@ export default {
       faviconLogo: '',
       authCode: "",
       headerMenu: [],
+      dialogVisibleError:false,
       changeEmailStatus: false,
       highlight: false,
       hasSendCode: false,
@@ -1223,6 +1235,7 @@ export default {
 							name: '',
 							shopCurrency:r.Data.Results.vendorShop.currency|| 'usd'
 						})
+
             // sessionStorage.setItem('filingNumber', r.Data.Results.vendorShop.referenceNumber == null? '' : r.Data.Results.vendorShop.referenceNumber)
             this.getVendorCurrency();
           } else {
@@ -1768,12 +1781,17 @@ export default {
             : 1,
         },
         (r) => {
+            if (localStorage.getItem('vendorId') == '150488') {
+                this.dialogVisibleError = true								
+            }else{
+                this.dialogVisibleError = false	
+            } 
           if (r.ErrorCode == "9999") {
             if (!localStorage.getItem("c_ourMallFirstLogin")) {
               localStorage.setItem("c_ourMallFirstLogin", 1);
             } else {
               localStorage.setItem("c_ourMallFirstLogin", 2);
-            }
+            }           
             localStorage.setItem("c_apiUserId", r.Data.Results.id);
             localStorage.setItem("c_apiUserToken", r.Data.Results.apiUserToken);
 						this.$store.commit("setCountry", {
@@ -1898,6 +1916,7 @@ export default {
   color: #2c3e50;
   padding-top: 0;
   height: 100%;
+  min-width: 768px;
 }
 
 .verify-1 {
@@ -1906,7 +1925,7 @@ export default {
 
 .box-email {
   width: 681px;
-  min-height: 330px;
+  height: 273px;
   background: #ffffff;
   border-radius: 20px;
   padding: 20px 50px;

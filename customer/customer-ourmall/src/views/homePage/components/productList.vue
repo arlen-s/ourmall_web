@@ -98,7 +98,7 @@ export default {
 
 <style scoped lang="scss">
 .list-view{
-    width: 1420px;
+    width: 100%;
     margin: 80px auto;
     position: relative;
     display: flex;

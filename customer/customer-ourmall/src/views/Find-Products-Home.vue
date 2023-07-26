@@ -1082,8 +1082,8 @@ export default {
 
 .find-product{
   margin: 70px auto 0;
-  width: 1200px;
-  padding: 15px 0;
+  max-width: 1200px;
+  padding: 15px 10px;
 }
 .ball {
   position: fixed;
@@ -1142,11 +1142,11 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   // justify-content: space-between;
-  min-width: 1065px;
+  // min-width: 1065px;
   .type-item {
-    margin-left: 10.5px;
-    flex: 0 0 19.3%;
+    margin: 0 5px; 
     margin-top: 5px;
+    width: calc(20% - 10px);
     height: 60px;
     display: flex;
     align-items: center;
@@ -1206,21 +1206,19 @@ h1 {
   }
 }
 .pro_box {
-  width: 228px;
   position: relative;
   background: #FFFFFF;
   box-shadow: 0px 2px 9px 0px rgba(180, 180, 180, 0.5);
   border-radius: 2px;
 }
-.pro_list {
-  width: 1200px;
+.pro_list { 
   padding: 0;
   display: flex;
   // justify-content: space-between;
   font-weight: 500;
   li {
-    width: 228px;
-    margin-right: 15px;
+    width: calc(20% - 14px);
+    margin: 0 7px;
     .pro_img {
       width: 100%;
       position: relative;
