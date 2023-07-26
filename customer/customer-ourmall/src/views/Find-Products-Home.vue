@@ -1177,9 +1177,6 @@ h1 {
       }
     }
   }
-  .type-item:nth-child(6),.type-item:first-child{
-    margin-left: 0;
-  }
   .type-icon {
     margin-right: 10px;
     .iconfont {
