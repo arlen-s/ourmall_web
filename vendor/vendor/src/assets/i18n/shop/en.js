@@ -21,6 +21,7 @@ export const lang = {
     '保存成功':'save successfully',
     '若供应商自有域名，或之后申请了新的域名，需要更换域名的，需联系客服':'as for the vendor who owns a domain, or applies for a new domain name later, contact customer service if you need to change the domain.',
     '角色管理':'role management',
+    '报价成功': 'Quote Success',
     '请完善回复信息': 'Please complete the reply message',
     '添加角色':'add roles',
     '员工角色':'staff roles	',

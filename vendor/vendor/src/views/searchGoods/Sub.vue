@@ -262,7 +262,7 @@ export default {
   },
   methods: {
     quotation(i){
-      this.$router.push({name:'quotationGoods',query:{id:i.id,waitDistribute:this.waitDistribute}})
+      this.$router.push({name:'quotationGoods',query:{id:i.id,waitDistribute:this.waitDistribute,variableId: i.variableId}})
     },
     changeAllCheckbox(val){ //全选全不选
       if(val){

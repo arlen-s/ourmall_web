@@ -47,7 +47,7 @@
           </div>
         </div>
         <el-divider></el-divider>
-        <el-table v-if="data.item && data.item.length" :data="data.item" stripe height="300px" ref="productTable"> 
+        <el-table v-if="(data.item && data.item.length)&& data.variableId == null" :data="data.item" stripe height="300px" ref="productTable"> 
         <el-table-column :label="''" width="60"> 
           <template slot-scope="scope">
             <el-radio
@@ -88,6 +88,47 @@
           </template> 
         </el-table-column>  
       </el-table>
+      <div v-else-if="(data.item && data.item.length)&& data.variableId">
+			<el-table class="no-hover" stripe :data="data.item" style="width: 100%" height="300px">
+				<el-table-column  type="expand">
+			　　　　<template slot-scope="scope">
+			　　　　　　<el-table stripe :show-header="false" :data="scope.row.stocks" style="width: 100%">
+						<el-table-column :label="$t('orders.select')" width="55">
+					　　　　<template slot-scope="child">
+					　　　　　　<el-radio v-model="tableRadio" :label="child.row.sku" @change="changeHandler(child.row.sku,scope.row)"><i></i></el-radio>
+					　　　　</template>
+					　　</el-table-column>
+						<el-table-column :label="$t('orders.productinfo')">
+							<template slot-scope="child">
+								<div class="d-flex">
+                    <el-image
+                    style="width: 60px; height: 60px"
+                    :src="child.row.propertyImage"
+                    fit="cover"></el-image>
+									<!-- <img :src="child.row.propertyImage" width="60" height="60" /> -->
+									<div class="mg-l-20">
+										<p>{{child.row.name}}</p>
+										<p>SKU: {{child.row.sku}}</p>
+									</div>
+								</div>
+							</template>
+						</el-table-column>
+					</el-table>
+			　　　　</template>
+			　　</el-table-column>
+				<el-table-column :label="$t('orders.productinfo')">
+					<template slot-scope="scope">
+						<div class="d-flex">
+							<img :src="scope.row.imgUrl" width="60" height="60" />
+							<div class="mg-l-20">
+								<p>{{scope.row.name}}</p>
+								<p>SPU: {{scope.row.sku}}</p>
+							</div>
+						</div>
+					</template>
+				</el-table-column>
+			</el-table>
+      </div>
       <div class="no-data" v-else>
            <img src="../../../public/images/noData.png">
            <div>{{$t('storeSetting.暂无数据')}}，<span @click="goToGoods">{{$t('storeSetting.去添加商品')}}</span></div>
@@ -116,7 +157,7 @@
 		<el-divider></el-divider>
 		<div slot="footer" class="dialog-footer">
       <el-button @click="closeDialog">{{$t('storeSetting.取消')}}</el-button>
-			<el-button type="primary" @click="AddGoods" :disabled="!productData">{{$t('storeSetting.添加')}}</el-button>
+			<el-button type="primary" @click="AddGoods" :disabled=" data.variableId ?!tableRadio : !productData">{{$t('storeSetting.添加')}}</el-button>
 		</div>
 	</el-dialog>
 </div>
@@ -134,6 +175,7 @@ export default {
               name:'',
               status:''
           },
+          tableRadio: '',
           defaultFilterData: '{}',
           pageSize: [10, 20, 50, 100],
           page: this.$route.query.page ? Number(this.$route.query.page) : 1,
@@ -172,6 +214,7 @@ export default {
                 name: this.filterData.name,
                 status: this.filterData.status,
             }, r => {
+              this.tableRadio = "";
                 this.loading = false;
                 if (r.ErrorCode == 9999) {
                 this.data.item = r.Data.Results.products.map(e => {
@@ -189,6 +232,11 @@ export default {
                 this.$message({ message: r.Message, type: "error" });
                 }
             })
+        },
+        changeHandler(value, item){
+          this.productItem = item
+            console.log(this.tableRadio, 'vcvsdf');
+            console.log(item);
         },
        filterGetItem(){
          this.page = 1;
@@ -208,9 +256,10 @@ export default {
         this.toPage(1);
       },
       AddGoods(){
-        if(!this.productItem){
-          this.$message({ message: '请选择一件商品', type: "error" });
-        }else{
+         if(!this.productItem) {
+            this.$message({ message: '请选择一件商品', type: "error" });
+            return
+        } else{
           this.data.item.forEach(e => {
           if(e.id == this.productData){
             this.productItem = e
@@ -222,6 +271,7 @@ export default {
             this.$parent.form.id = this.productItem.id;
             this.$parent.form.imgUrl = this.productItem.imgUrl;
             this.$parent.form.cost = this.productItem.cost;
+            this.$parent.form.vendorSku = this.tableRadio;
             this.$parent.form = {...this.$parent.form}
           }else{
           // this.$parent.setting.product = this.productItem;
@@ -265,13 +315,14 @@ export default {
     closeDialog(){
       this.page = 1;
       if(this.$route.name=='quotationGoods'){
-        this.$router.push({query: {id:this.$route.query.id}});
+        this.$router.push({query: {id:this.$route.query.id,variableId: this.data.variableId}});
       }else{
-        this.$router.push({query: {cid:this.$route.query.cid}});
+        this.$router.push({query: {cid:this.$route.query.cid,variableId: this.data.variableId}});
       }
       this.data.item = {};
       this.productData = '';
       this.productItem = {};
+      this.tableRadio = '';
       this.filterData = JSON.parse(this.defaultFilterData);
       this.data.isShow = false;
     }

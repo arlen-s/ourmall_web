@@ -84,9 +84,8 @@
                     ></el-image>
                   </div>
                 </el-form-item>
-                <el-form-item :label="$t('quotation.回复价格')" label-width="150px" required>
-                  <el-input-number
-                    
+                <el-form-item :label="$t('quotation.回复价格')" label-width="150px" required v-show="!$route.query.variableId">                  
+                  <el-input-number                   
                     :min="0"
                     :controls="false"
                     :precision="2"
@@ -162,6 +161,8 @@ export default {
     dialogProductList:{
         isShow: false,
         item: null,
+        items: [],
+        variableId: this.$route.query.variableId,
       },
       loading: false,
       item: {},
@@ -171,6 +172,7 @@ export default {
         imgUrl: "",
         price: "",
         remark: "",
+        vendorSku: '',
       },
     };
   },
@@ -194,11 +196,21 @@ export default {
             rowsPerPage: 10,
         }, r => {
             if (r.ErrorCode == 9999) {
-              this.dialogProductList.item = r.Data.Results.products.map(e => {
+              let tempArr = r.Data.Results.products.map(e => {
               e.imgUrlArr = JSON.parse(e.imgUrlJson);
               e.statusIpt = e.status == '1';
               return e
             });
+           tempArr.forEach(item1 => {
+            if (item1.stocks && item1.stocks.length) {
+              item1.stocks.forEach(obj => {
+                this.$set(obj, "name", item1.name)
+                this.dialogProductList.items.push(obj)
+              })
+            }
+            this.dialogProductList.item.push(item1)
+          })           
+            console.log( this.dialogProductList.item, ' this.dialogProductList.item =');
             }else{
               this.$message({ message: r.Message, type: "error" });
             }
@@ -286,6 +298,7 @@ export default {
            status:this.form.radio == '3'? '9':'2',
            productId:this.form.id,
            remark:this.form.remark,
+           vendorSku: this.form.vendorSku,
            price: this.form.price
         },r=>{
             this.loading = false;
