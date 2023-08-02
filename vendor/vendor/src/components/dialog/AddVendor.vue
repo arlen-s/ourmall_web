@@ -183,7 +183,37 @@
                 </el-form-item>
               </el-col>
             </el-row>
+           <el-row :gutter="10">
+              <el-col :span="12">
+                 <el-form-item
+                  :label="$t('mycustomer.客户等级')"
+                  :label-width="addVendorDialog.labelW"
+                >
+                <el-select v-model="addVendorDialog.clientGrade" placeholder="请选择">
+                    <el-option
+                      v-for="item in optionsLevel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>               
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                   :label="$t('mycustomer.手机号')"
+                  :label-width="addVendorDialog.labelW"
+                >
+                  <el-input
+                    :placeholder="$t('mycustomer.CustomersWhatsApp')"
+                    v-model="addVendorDialog.customerPhone"
+                    auto-complete="off"
+                  ></el-input>
+                </el-form-item>                
+              </el-col>
+           </el-row>             
           </template>
+             
           <el-form-item
             :label="$t('mycustomer.客户备注')"
             :label-width="addVendorDialog.labelW"
@@ -256,6 +286,19 @@ export default {
       flag: true,
       activeName: 'first',
       apiUserId: JSON.parse(localStorage.getItem('userInfo')).id,
+      optionsLevel: [
+        {
+          value: '1',
+          label: this.$t('mycustomer.一级') 
+        }, {
+          value: '2',
+          label: this.$t('mycustomer.二级') 
+        }, {
+          value: '3',
+          label: this.$t('mycustomer.三级') 
+        }
+      ],
+
     };
   },
   methods: {
@@ -298,6 +341,7 @@ export default {
       }
       if (!this.addVendorDialog.creditAmount) {
         this.$message({ message: this.$t('importdata.errorLimit'), type: "error" });
+        return
       }
       this.addVendorDialog.loading = true;
       let url = "api.Relationship.addByVendor";
@@ -308,6 +352,8 @@ export default {
         weChat: this.addVendorDialog.weChat,
         skype: this.addVendorDialog.skype,
         line: this.addVendorDialog.line,
+        clientGrade:  this.addVendorDialog.clientGrade,
+        customerPhone:  this.addVendorDialog.customerPhone,
         QQ: this.addVendorDialog.QQ,
         creditAmount: this.addVendorDialog.creditAmount,
         creditStatus: this.addVendorDialog.creditStatus == true ? 1 : 2,
@@ -333,7 +379,7 @@ export default {
             // this.visibleMask = true;
             this.newName = this.addVendorDialog.name;
             this.newRid = r.Data.Results;
-            this.$message({ message: '添加成功', type: "success" });
+            this.$message({ message: 'success', type: "success" });
             this.addVendorDialog.isShow = false;
           } else {
             this.addVendorDialog.isShow = false;

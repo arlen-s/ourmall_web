@@ -70,11 +70,36 @@
                     </el-form-item>
                     <el-form-item>
                       <el-input
-                        v-model="filterParams.customerLike"
+                        v-model="filterParams.customerPhone"
                         :placeholder="$t('mycustomer.customersContact')"
                         @keyup.enter.native="filterGetItem"
                       ></el-input>
+                    </el-form-item>                    
+                    <el-form-item>
+                      <el-input
+                        v-model="filterParams.accountName"
+                        :placeholder="$t('mycustomer.店铺名称')"
+                        @keyup.enter.native="filterGetItem"
+                      ></el-input>
                     </el-form-item>
+                    <el-form-item>
+                      <el-input
+                        v-model="filterParams.email"
+                        :placeholder="$t('mycustomer.电子邮箱')"
+                        @keyup.enter.native="filterGetItem"
+                      ></el-input>
+                    </el-form-item>     
+                    <el-form-item>
+                          <el-date-picker
+                            v-model="filterParams.timeCreated"
+                            type="daterange"
+                            :range-separator="$t('mycustomer.至')"
+                            :start-placeholder="$t('mycustomer.开始日期')"
+                            :end-placeholder="$t('mycustomer.结束日期')"
+                            @change="getTime"
+                            >
+                          </el-date-picker>
+                    </el-form-item>                                        
                     <el-form-item>
                       <el-input
                         v-model="filterParams.vendorSku"
@@ -743,6 +768,9 @@ export default {
         wangwang: "",
         whatsapp: "",
         customCode: "",
+        customerPhone: '',
+        clientGrade: '',
+        
       },
       filterParams: {
         customCode: "",
@@ -754,6 +782,12 @@ export default {
         customerLike: "",
         relationshipId: "",
         inviterUserId: '',
+        shopName: '',
+        clientGrade: '',
+        customerPhone: '',
+        timeCreated: '',
+        createTimeFrom: '',
+        createTimeTo: '',
       },
       filterParamsDefault: "{}",
       dialogInvite: {
@@ -1042,6 +1076,9 @@ export default {
         }
       })
     },
+    getTime(v){
+console.log(v,'1212');
+    },
     openInvitation (item) {
       //打开邀请链接弹层
       this.dialogInvite = JSON.parse(this.dialogInviteDefault)
@@ -1115,6 +1152,8 @@ export default {
       this.addVendorDialog.remark = item.customerRemark
       this.addVendorDialog.id = item.id
       this.addVendorDialog.weChat = item.customerWeChat
+      this.addVendorDialog.customerPhone = item.customerPhone
+      this.addVendorDialog.clientGrade = item.clientGrade
       this.addVendorDialog.skype = item.customerSkype
       this.addVendorDialog.line = item.customerLine
       this.addVendorDialog.QQ = item.customerQQ
@@ -1147,12 +1186,15 @@ export default {
           name: this.filterParams.name,
           customerId: this.filterParams.customerId,
           customCode: this.filterParams.customCode,
+          customerPhone: this.filterParams.customerPhone,
           vendorSku: this.filterParams.vendorSku,
           email: this.filterParams.email,
           isAuth: this.filterParams.isAuth,
-          customerLike: this.filterParams.customerLike,
+          customerLike: '',
           relationshipId: this.filterParams.relationshipId,
           inviterUserId: this.filterParams.inviterUserId,
+          createTimeFrom: this.filterParams.timeCreated? this.filterParams.timeCreated[0] : '',
+          createTimeTo: this.filterParams.timeCreated? this.filterParams.timeCreated[1] : '',
           status: 1,
         },
         (r) => {
@@ -1218,7 +1260,7 @@ export default {
       this.getItem()
     },
     gotoPage () {
-      this.page = this.$route.query.page ? this.$route.query.page : 1
+      this.page = this.$route.query.page ? Number(this.$route.query.page) : 1
       this.getItem()
     },
     /**
