@@ -242,11 +242,11 @@
       <div>
         <span style="padding-left:35px">是否允许分销商使用信用额度</span>
         <el-switch
-      style="margin-left:30px"
-  v-model="addVendorDialog.creditStatus"
-  active-color="#7d88d0"
-  >
-</el-switch>
+            style="margin-left:30px"
+        v-model="addVendorDialog.creditStatus"
+        active-color="#7d88d0"
+        >
+      </el-switch>
       </div> 
 <el-form status-icon  ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item :label="`${$t('mycustomer.信用额度')}${$store.state.country.symbol}`">
@@ -254,6 +254,7 @@
   </el-form-item>
 </el-form>
     </el-tab-pane>
+    
   </el-tabs>
 
       </el-row>

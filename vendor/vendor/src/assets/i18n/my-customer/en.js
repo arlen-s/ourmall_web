@@ -87,6 +87,8 @@ export const lang = {
 	'一级': 'Level1',
 	'二级': 'Level2',
 	'三级': 'Level3',
+  '请选择客户等级':'Please select customer level',
+  '是否允许分销商使用信用额度': 'Whether distributors are allowed to use the credit line',
 	'客户备注': 'Remarks',
 	'(选填)  您可以对您的客户进行信息备注': '(Optional) Please fill in the customer remarks',
 	'商品管理':'Products',

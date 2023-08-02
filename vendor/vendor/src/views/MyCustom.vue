@@ -129,6 +129,19 @@
                         <el-option :label="$t('mycustomer.no')" value="false"></el-option>
                       </el-select>
                     </el-form-item>
+                    <el-form-item :label="$t('mycustomer.客户等级')">
+                       <el-select
+                        v-model="filterParams.clientGrade"                        
+                        :placeholder="$t('mycustomer.请选择客户等级')"
+                         style="width: 90px"
+                        @change="filterGetItem"
+                      >
+                        <el-option :label="$t('mycustomer.all')" value=''></el-option>  
+                        <el-option :label="$t('mycustomer.一级')" value='1'></el-option>
+                        <el-option :label="$t('mycustomer.二级')" value="2"></el-option>
+                        <el-option :label="$t('mycustomer.三级')" value="3"></el-option>
+                      </el-select>                     
+                    </el-form-item>
                     <el-form-item>
                       <el-button type="primary" @click="filterGetItem">
                         {{
@@ -788,6 +801,8 @@ export default {
         timeCreated: '',
         createTimeFrom: '',
         createTimeTo: '',
+        accountName: '',
+        clientGrade: '',
       },
       filterParamsDefault: "{}",
       dialogInvite: {
@@ -1184,6 +1199,7 @@ console.log(v,'1212');
           page: this.page,
           rowsPerPage: this.rowsPerPage,
           name: this.filterParams.name,
+          accountName: this.filterParams.accountName,
           customerId: this.filterParams.customerId,
           customCode: this.filterParams.customCode,
           customerPhone: this.filterParams.customerPhone,
@@ -1191,6 +1207,7 @@ console.log(v,'1212');
           email: this.filterParams.email,
           isAuth: this.filterParams.isAuth,
           customerLike: '',
+          clientGrade: this.filterParams.clientGrade,
           relationshipId: this.filterParams.relationshipId,
           inviterUserId: this.filterParams.inviterUserId,
           createTimeFrom: this.filterParams.timeCreated? this.filterParams.timeCreated[0] : '',
