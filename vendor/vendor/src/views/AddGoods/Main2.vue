@@ -176,7 +176,7 @@
 								</div>
 								<el-image v-else
 									style=" width: 100px; height: 100px; border: 1px solid #ddd; background-color: #fff;"
-									:src="img.url" :fit="'contain'" lazy>
+									:src="img.url" :fit="'contain'">
 									<div slot="error" class="image-slot">
 										<i class="el-icon-picture-outline"></i>
 									</div>
@@ -305,7 +305,7 @@
                           <i class="el-icon-picture-outline" />
                         </div>
                       </el-image>
-                      <el-image slot="reference" class="thumbnail" :src="scope.row.propertyImage" lazy>
+                      <el-image slot="reference" class="thumbnail" :src="scope.row.propertyImage">
                         <div slot="error" class="image-slot fsize32 text-muted">
                           <i class="el-icon-picture-outline" />
                         </div>
