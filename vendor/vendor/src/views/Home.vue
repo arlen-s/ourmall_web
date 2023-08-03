@@ -1170,7 +1170,6 @@ export default {
           username: this.loginForm.userName,
           password: this.loginForm.password,
           type: 2,
-          version:1,
         },
         (r) => {  
           if (r.ErrorCode == 9999) {
@@ -1233,7 +1232,6 @@ export default {
           username: this.loginForm.userName,
           // password: this.loginForm.password,
           token: this.loginForm.token, //验证码
-          version:1,
         },
         (r) => {
           if (r.ErrorCode == 9999) {
