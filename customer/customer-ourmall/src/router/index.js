@@ -397,6 +397,11 @@ const routes = [
     redirect: '/home',
   },
   {
+    path: '/register',
+    name: 'register',
+    component: () => import(/* webpackChunkName:'invite' */ './../views/register.vue')
+  },   
+  {
     path: '/invite',
     name: 'invite',
     meta: {

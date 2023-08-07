@@ -1,6 +1,5 @@
 <template>
   <div class="contentpanel dashboard-page">
-    35235
     <div class="pagetitle">
       <div class="left">
         <div class="title">
@@ -32,8 +31,8 @@
         <el-row :gutter="20"
         class="mg-b-30 user-status-list"
       >
-              <el-col :span="8">
-                <el-card :body-style="{ height:'290px' }">
+              <el-col :span="7">
+                <el-card :body-style="{ height:'340px' }">
                   <div class="grid-content d-flex grid-dashboard">
                     <div class="grid-top">
                       <img class="walletIcon" src="../../public/images/qianbao.png" alt="">
@@ -45,8 +44,8 @@
                   </div>
                 </el-card>
               </el-col>
-              <el-col :span="8" class="d-box">
-                <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px',height:'232px' }">
+              <el-col :span="7" class="d-box">
+                <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px',height:'280px' }">
                 <div slot="header" class="clearfix">
                       <span>{{$t('system notification')}}</span>
                     </div>
@@ -57,6 +56,54 @@
                         </p>
                     </div>
               </el-card>
+              </el-col>
+              <el-col :span="10">
+                  <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px', height:'340px' }">
+                      <div class="header-mil">
+                          <i></i>
+                          <span class="font-handing">Affiliates</span>
+                      </div>
+                      <div class="header-mat">
+                        <i class="el-icon-right"></i>
+                        <span class="pn1">InvitationLink:</span>
+                         <span class="text-sp" v-show="shopLevel==1">https://app.gotofulfill.com/register?dcode={{invitedCode}}</span>
+                     
+                      </div>
+                      <el-table
+                        :data="tableDataTour"
+                        height="200"
+                        style="width: 100%">
+                        <el-table-column
+                          prop="name"
+                          label="Name"
+                          align="center"
+                          width="100"
+                          :show-overflow-tooltip="true"
+                          >
+                    </el-table-column>
+                    <el-table-column
+                      prop="num"
+                      label="Order Quantity"
+                      align="center">
+                    </el-table-column>
+                    <el-table-column
+                      prop="brokerage"
+                      label="Commission"
+                      align="center">
+                    </el-table-column>
+                    <el-table-column
+                      prop="total"
+                      label="Total commission"
+                      align="center">
+                    </el-table-column>                    
+                  </el-table>
+                  <div class="in-box">
+                      <span class="span-t-one">Total</span>
+                      <span class="span-t-other">{{totalObj.orderNum}}</span>
+                      <span class="span-t-other">{{totalObj.commNum}}</span>
+                      <span class="span-t-other">{{totalObj.allTol}}</span>
+                  </div>
+                  </el-card>                
               </el-col>
       </el-row>
             <el-row :gutter="20">
@@ -1008,10 +1055,16 @@ export default {
       tips: false,
       autoplay: true,
       activeIndex: 0,
-      dialogVisibleError: false,
       vendorsList: [],
       dialogVisibleLog: false,
+      invitedCode: sessionStorage.getItem('c_iCode'),
+      shopLevel: sessionStorage.getItem('c_isMaxLevel'),
       advLook: {},
+      totalObj: {
+        orderNum: '',
+        commNum: '',
+        allTol: ''
+      },
       aliexpressVendorsStatus: !localStorage.getItem(
         "c_aliexpressVendorsStatus"
       ),
@@ -1107,7 +1160,6 @@ export default {
     } else {
       this.tips = false;
     }
-  // this.dialogVisibleError = true
   },
   mounted() {
     if (
@@ -1175,6 +1227,7 @@ export default {
     this.getVendorShop();
     this.getBalance()
     this.getAdvList()
+    this.invitedList()
   },
   components: {},
   computed: {
@@ -1218,6 +1271,23 @@ export default {
           this.$message.error(r.Message)
       }
       })
+    },
+    invitedList(){
+          this.$apiCall("api.ShopifyOrder.getInviteOrderNum", { }, r => {
+            if (r.ErrorCode == 9999) {
+                console.log(r.Data, 'dfsdfsd')
+                this.tableDataTour = r.Data.Results.inviteInfo
+              for (let i = 0; i <  r.Data.Results.inviteInfo.length; i += 1) 
+              {
+                this.totalObj.orderNum +=  r.Data.Results.inviteInfo[i].num;
+                this.totalObj.commNum +=  r.Data.Results.inviteInfo[i].brokerage;
+                this.totalObj.allTol +=  Number(r.Data.Results.inviteInfo[i].total) ;
+              }  
+
+            } else {
+              this.$message.error(r.Message)
+            }
+          }) 
     },
     getBalance(){
 				this.$apiCall("api.Relationship.getUserBonus", {
@@ -2038,6 +2108,18 @@ export default {
     cursor: pointer;
   }
 }
+.header-mil{
+  padding: 5px 5px 2px 20px;
+  display: flex;
+   i{
+    display: block;
+    width: 24px;
+    height: 24px;
+    // background: url('../assets/wallet_cl.png') no-repeat;
+    background-size: 24px 24px;
+   margin-right: 10px;
+   }
+}
 .carousel-index-wrapper {
   span {
     border: 1px solid #5c6ac4;
@@ -2260,6 +2342,54 @@ export default {
     font-size: 18px;
     font-weight: 500;
   }
+}
+.in-box{
+  display: flex;
+  line-height:34px;
+  span{
+    display: block;
+  }
+   .span-t-one{
+    width: 100px;
+    height: 34px;
+    text-align: center;
+   }
+   .span-t-other{
+    width: 175px;
+    height: 34px;
+    text-align: center;
+   }
+}
+.header-mat{
+  display: flex;
+  // flex-wrap: wrap;
+  margin: 5px 2px 5px 20px;
+  border-bottom: 2px solid #e1e1e1;
+    i{
+      width: 36px;
+      height: 24px;
+      display: flex;
+      line-height: 24px;
+      font-size: 20px;
+      
+      // background: url('../assets/arrow-r.png') no-repeat;
+      // background-size: 100% 100%;
+    }
+    // p{
+    //   display: flex;
+ .pn1{
+      font-size: 16px;
+      color: #636c55;
+      width: 120px;
+      flex-wrap: 500;
+    }
+ .text-sp{
+    font-size: 14px;
+    color: #636c55;
+    word-break: break-all;
+ }
+   
+  
 }
 .quick-summary {
   cursor: pointer;

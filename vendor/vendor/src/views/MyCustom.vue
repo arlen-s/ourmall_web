@@ -96,7 +96,7 @@
                             :range-separator="$t('mycustomer.至')"
                             :start-placeholder="$t('mycustomer.开始日期')"
                             :end-placeholder="$t('mycustomer.结束日期')"
-                            @change="getTime"
+                          
                             >
                           </el-date-picker>
                     </el-form-item>                                        
@@ -216,6 +216,37 @@
               <el-table-column :label="$t('员工名称')">
                 <template slot-scope="scope">{{scope.row.inviterName || '--'}}</template>
               </el-table-column>
+              <el-table-column :label="$t('是否开启二级分销商')">
+                <template slot-scope="scope">
+                  <el-switch
+                  v-model="scope.row.distributionSwitch"
+                  active-value="1"
+                  inactive-value="2"
+                  active-color="#13ce66"
+                  @change="changeSwitch($event,scope.row.id,scope.row.customerName)"
+                  inactive-color="#ff4949">
+                </el-switch>
+                </template>
+              </el-table-column>    
+              <el-table-column label="分销商佣金">
+                    <template slot-scope="scope">
+                      <span>
+                        {{scope.row.commissionBalance || '--'}}
+                      </span>
+                      <!-- <el-popover
+                        placement="right"
+                        width="400"
+                        trigger="click">
+                        <el-table :data="gridData">
+                          <el-table-column width="150" property="date" label="日期"></el-table-column>
+                          <el-table-column width="100" property="name" label="姓名"></el-table-column>
+                          <el-table-column width="300" property="price" label="金额"></el-table-column>
+                        </el-table>
+                        <el-link  slot="reference" type="primary">30</el-link>
+                      </el-popover> -->
+                      <!-- <el-link  type="primary">30</el-link> -->
+                    </template>
+              </el-table-column>             
               <el-table-column :label="$t('mycustomer.customersContact')">
                 <template slot-scope="scope">
                   <div class="customer-info-box">
@@ -338,59 +369,6 @@
                   </div>
                 </template>
               </el-table-column>
-              <!-- <el-table-column
-                :label="$t('mycustomer.已合作信息统计')"
-                style="width: 200px"
-              >
-                <template slot-scope="scope">
-                  <div>
-                    {{ $t("mycustomer.ordersValid") }}
-                    <el-link
-                      v-if="scope.row.invoiceCnt"
-                      type="primary"
-                      style="font-size: 13px; padding-bottom: 5px"
-                      @click="goTo('allOrders', scope.row)"
-                    >
-                      {{ scope.row.invoiceCnt }}</el-link
-                    >
-                  </div>
-                  <div>
-                    {{ $t("mycustomer.amountValid") }}
-                    <el-link
-                      type="primary"
-                      style="font-size: 13px; padding-bottom: 5px"
-                      @click="goTo('allOrders', scope.row)"
-                    >
-                      US$
-                      {{
-                        Number(scope.row.totalAmount)
-                          ? $numberToCurrency(scope.row.totalAmount)
-                          : "0.00"
-                      }}
-                    </el-link>
-                  </div>
-                  <div class="tx-ellipsis2">
-                    {{ $t("mycustomer.已合作商品") }}:
-                    <span style="font-size: 13px; padding-bottom: 5px">
-                      {{ scope.row.skuCnt }}
-                    </span>
-                  </div>
-                  <div class="tx-ellipsis2">
-                    {{ $t("mycustomer.尚未合作商品") }}:
-                    <el-link
-                      type="primary"
-                      style="font-size: 13px; padding-bottom: 5px"
-                      @click="goTo('products', scope.row)"
-                      v-if="scope.row.offerSkuCnt != 0"
-                    >
-                      {{ scope.row.offerSkuCnt }} ({{
-                        $t("mycustomer.去报价")
-                      }})</el-link
-                    >
-                    <b v-else>0</b>
-                  </div>
-                </template>
-              </el-table-column>-->
               <!-- 已授权店铺 -->
               <el-table-column :label="$t('mycustomer.已授权店铺')">
                 <template slot-scope="scope">
@@ -461,6 +439,9 @@
                       type="primary"
                       @click="openSetIOSS(scope.row)"
                     >IOSS 设置</el-link>
+                  </div>
+                  <div>
+                    <el-link type="primary" @click="openTX(scope.row)">提现</el-link>
                   </div>
                 </template>
               </el-table-column>
@@ -722,6 +703,10 @@
         <span class="txt">是否允许推送shopifly邮件</span>
         <el-switch v-model="sendEmailFlag" @change="switchEmail"></el-switch>
       </div>
+      <div class="email-box">
+        <span class="txt">佣金批量设置</span>
+        <el-input-number type="number"   :precision="4" @change="rageTick"  :controls="false"  v-model="BathBrokerage" autocomplete="off" style="width:150px"></el-input-number>
+      </div>        
     </el-dialog>
     <el-backtop
       class="goto-top"
@@ -731,6 +716,67 @@
     ></el-backtop>
     <DialogSettingIOSS :data="dialogSettingIossData" />
     <dialogDeduction :data="dialogDeductionData" @saveDeduction="saveDeduction" />
+        <el-dialog
+      :title="$t('mycustomer.分销商佣金提现')"
+      :before-close="cleanClose"
+      :visible.sync="visibleTX"
+      width="550px"
+      :close-on-click-modal="false">
+      <el-form
+        ref="dynamicValidateForm"
+        :model="dynamicValidateForm"
+        label-width="100px"
+        class="demo-dynamic">
+        <el-form-item
+          prop="itemTotal"
+          :label="$t('mycustomer.提现金额')"
+          :rules="[{required: true, message: $t('mycustomer.请输入佣金提现金额'), trigger: 'blur'}]">
+          <el-input
+            v-model="dynamicValidateForm.itemTotal"
+            style="width: 250px"
+            oninput="value=value.replace(/[^\d.]/g,'')">
+            <el-button slot="append">￥</el-button>
+          </el-input>
+        </el-form-item>
+
+        <!-- <el-form-item
+          prop="remark"
+          :label="$t('mycustomer.备注')"
+          :rules="[{required: true, message: $t('mycustomer.请输入'), trigger: 'blur'}]">
+          <el-input
+            v-model="dynamicValidateForm.remark"
+            type="textarea"
+            :rows="2"
+            style="width: 250px">
+          </el-input>
+        </el-form-item> -->
+        <!-- <el-form-item :label="$t('mycustomer.凭证')" required>
+          <div v-loading="uploading" class="up-avatar">
+            <el-upload
+              ref="elupload"
+              class="avatar-uploader"
+              action="#"
+              :http-request="httpRequest"
+              :show-file-list="false"
+              :before-upload="beforeAvatarUpload">
+              <img
+                v-if="dynamicValidateForm.certificate_urls"
+                :src="dynamicValidateForm.certificate_urls"
+                class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </div>
+        </el-form-item> -->
+        <el-form-item>
+          <el-button size="small" type="primary" @click="submitForm('dynamicValidateForm')">{{
+            $t('mycustomer.confirm')
+          }}</el-button>
+          <el-button size="small" @click="resetForm('dynamicValidateForm')">{{
+            $t('mycustomer.cancel')
+          }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -748,10 +794,18 @@ export default {
       OtherName: "",
       shopId: "",
       shopIndex: "",
+      uploading: false,
+      visibleTX:false,
       loading: false,
       sendEmailFlag: true,
       ShopifyNameEdit: false,
       EditInput: false,
+      BathBrokerage: '',
+      dynamicValidateForm: {
+          itemTotal: '',
+          remark: '',
+          certificate_urls: '',
+      },
       tableHeight: 400,
       reSizeTime: 0,
       pageSizes: [10, 20, 50, 100],
@@ -783,8 +837,26 @@ export default {
         customCode: "",
         customerPhone: '',
         clientGrade: '',
+        brokerage:'',
         
       },
+       gridData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          price: '14.5'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          price: '14.5'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          price: '14.5'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          price: '14.5'
+        }],
       filterParams: {
         customCode: "",
         customerId: "",
@@ -804,6 +876,7 @@ export default {
         accountName: '',
         clientGrade: '',
       },
+      customerId: '',
       filterParamsDefault: "{}",
       dialogInvite: {
         isShow: false,
@@ -858,7 +931,7 @@ export default {
       // let userInfo = this.$store.state.userInfo;
       let configJson = JSON.parse(localStorage.getItem('userInfo')).configJson
       let shopifyEmailType = JSON.parse(configJson).deliverNotifyCustomer
-
+      this.BathBrokerage = JSON.parse(configJson).brokerage
       if (shopifyEmailType) {
         console.log(111111, shopifyEmailType)
         this.sendEmailFlag = shopifyEmailType === "2" ? false : true
@@ -914,6 +987,42 @@ export default {
         }
       )
     },
+    cleanClose(){
+      this.visibleTX = false
+    },
+    openTX(row){
+      this.customerId= row.id
+      this.visibleTX = true
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          let params = {
+            relationshipId: this.customerId,
+            amount: this.dynamicValidateForm.itemTotal,
+            // remark: this.dynamicValidateForm.remark,
+            // certificate_urls: this.dynamicValidateForm.certificate_urls,
+          }
+        this.$apiCall("api.Relationship.commissionWithdrawal", params, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.$elementMessage(this.$t("orders.success"), "success")
+          this.visibleTX = false
+          this.getItem(true)
+        } else {
+          this.$message({ message: r.Message, type: "error" })
+        }
+      })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },   
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+      this.visibleTX = false
+      
+    },     
     openDeduction (item) { //打开ioss设置
       this.dialogDeductionData = JSON.parse(this.defaultDialogDeductionData)
       this.dialogDeductionData.item = item
@@ -932,6 +1041,26 @@ export default {
         }
       })
     },
+    //是否开启二级分销商
+    changeSwitch(e, id, name){
+      let params = {
+        relationshipId : id,
+        distributionSwitch: e,
+        name: name,
+      }
+      this.$apiCall('api.Relationship.changeByVendor', params, (r) => {
+        this.addVendorDialog.loading = false;
+        if (r.ErrorCode == 9999) {
+          this.$message({
+            message: 'success',
+            type: "success",
+          });
+          this.getItem()
+        } else {
+          this.$message({ message: r.Message, type: "error" });
+        }
+      });
+    },    
     openSetIOSS (item) { //打开ioss设置
       this.dialogSettingIossData = JSON.parse(this.defaultDialogSettingIossData)
       this.dialogSettingIossData.id = item.id
@@ -960,6 +1089,69 @@ export default {
     openBatchVendor () {
       this.dialogEmailVisible = true
     },
+        beforeAvatarUpload (file) {
+      console.log(file)
+      this.imgName = file.name
+      this.nowFile = file
+    },
+    httpRequest (data) {
+      // this.imageUrl = URL.createObjectURL(data.file)
+      //这是限制上传文件类型 
+      const isPFX = data.file.type === 'image/jpeg' || data.file.type === 'image/jpg' || data.file.type === 'image/png'
+      const isLt2M = data.file.size / 1024 / 1024 < 2
+      if (!isPFX) {
+        this.$message.error("上传头像图片只能是 JPG、PNG、JPEG 格式!")
+      } else if (!isLt2M) {
+        this.$message.error("上传文件大小不能超过 2MB!")
+      } else {
+        this.getBase64(data.file).then(resBase64 => {
+          this.fileBase64 = resBase64.split(',')[1]　　//直接拿到base64信息
+          let ext = resBase64.match(/data:image\/(.*);base64,.*/)[1]
+          console.log(this.tempUrl, 'this.tempUrl')
+          this.getUploadImgUrl(this.fileBase64, ext)
+        })
+      }
+    },
+    handleRemove (file, fileList) {
+
+    },
+    getUploadImgUrl (imgUrlBase64, ext) {
+      //图片上传接口
+      this.$apiCall('api.Comment.uploadImg', {
+        imgUrlBase64,
+        ext
+      }, r => {
+        // obj.loading = false
+        if (r.ErrorCode == 9999) {
+          this.dynamicValidateForm.certificate_urls = r.Data.Results.imgUrl
+        } else {
+          // this.form.imgUrlsList.splice(this.form.imgUrlsList.length - 1, 1)
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })
+    },    
+    getBase64 (file) {
+      return new Promise((resolve, reject) => {
+        let reader = new FileReader()
+        let fileResult = ""
+        reader.readAsDataURL(file)
+        //开始转
+        reader.onload = function () {
+          fileResult = reader.result
+        }
+        //转 失败
+        reader.onerror = function (error) {
+          reject(error)
+        }
+        //转 结束  咱就 resolve 出去
+        reader.onloadend = function () {
+          resolve(fileResult)
+        }
+      })
+    },    
     switchEmail (v) {
       let type = v == true ? 1 : 2
       this.$apiCall("api.User.changeByUser", { deliverNotifyCustomer: type }, (r) => {
@@ -1006,6 +1198,17 @@ export default {
       this.filterParams.relationshipId = ''
       this.getItem()
     },
+    rageTick(){
+      this.$apiCall("api.User.changeByUser", { brokerage: this.BathBrokerage }, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.$message({ message: r.Message, type: "success" })
+          this.dialogEmailVisible = false
+          this.getItem()
+        } else {
+          this.$message({ message: r.Message, type: "error" })
+        }
+      })          
+    },    
     goTo (n, row) {
       this.$router.push({
         name: n,
@@ -1090,9 +1293,6 @@ export default {
           return true
         }
       })
-    },
-    getTime(v){
-console.log(v,'1212');
     },
     openInvitation (item) {
       //打开邀请链接弹层
@@ -1179,6 +1379,7 @@ console.log(v,'1212');
       this.addVendorDialog.isShow = true
       this.addVendorDialog.isEdit = item.customerEmail ? true : false
       this.addVendorDialog.customCode = item.customCode || ''
+      this.addVendorDialog.brokerage = item.brokerage || ''
     },
     openAddVendor () {
       this.addVendorDialog = JSON.parse(this.addVendorDialogDefault)
@@ -1390,7 +1591,27 @@ console.log(v,'1212');
   font-size: 18px;
   margin-left: 7px;
 }
-
+.up-avatar ::v-deep .avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 78px;
+  height: 78px;
+  position: relative;
+  overflow: hidden;
+  img {
+    // width: 100%;
+    height: 78px;
+  }
+}
+.up-avatar ::v-deep .avatar-uploader .avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 78px;
+  height: 78px;
+  line-height: 78px;
+  text-align: center;
+}
 .dialog-open-custom {
   .dialog-body {
     padding: 15px 20px;

@@ -18,6 +18,9 @@
         <el-form-item label="Password confirm" prop="rePassword">
           <el-input v-model="data.form.rePassword" show-password placeholder="Please confirm your password"  :readonly="readonly"></el-input>
         </el-form-item>
+        <el-form-item label="Invitation Code" >
+          <el-input v-model="data.form.inv"  placeholder="Please confirm your code"  :readonly="readonly"></el-input>
+        </el-form-item>           
       </el-form>
     </div>
     <div slot="footer" class="dialog-footer">
@@ -74,6 +77,11 @@ export default {
         ]
       }
     }
+  },
+    created () {
+    // this.opened()
+        this.readonly = false
+        this.data.form.inv = decodeURIComponent((new RegExp('[?|&]dcode='+'([^&;]+?)(&|#|;|$)').exec(location.href)||[,""])[1].replace(/\+/g,'%20'))||null
   },
   methods: {
     switchTo(type){

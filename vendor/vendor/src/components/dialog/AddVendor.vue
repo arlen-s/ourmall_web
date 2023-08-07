@@ -239,22 +239,31 @@
     </el-tab-pane>
     <div></div>
     <el-tab-pane :label="$t('mycustomer.信用额度')" name="second">
-      <div>
-        <span style="padding-left:35px">是否允许分销商使用信用额度</span>
-        <el-switch
-            style="margin-left:30px"
-        v-model="addVendorDialog.creditStatus"
-        active-color="#7d88d0"
-        >
-      </el-switch>
-      </div> 
-<el-form status-icon  ref="ruleForm" label-width="100px" class="demo-ruleForm">
-  <el-form-item :label="`${$t('mycustomer.信用额度')}${$store.state.country.symbol}`">
-    <el-input type="number" v-model="addVendorDialog.creditAmount" autocomplete="off"></el-input>
-  </el-form-item>
-</el-form>
+    <div>
+      <span style="padding-left:35px">{{$t('mycustomer.是否允许分销商使用信用额度')}}</span>
+      <el-switch
+          style="margin-left:30px"
+      v-model="addVendorDialog.creditStatus"
+      active-color="#7d88d0"
+      >
+    </el-switch>
+    </div> 
+    <el-form status-icon  ref="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form-item :label="`${$t('mycustomer.信用额度')}${$store.state.country.symbol}`">
+        <el-input type="number" v-model="addVendorDialog.creditAmount" autocomplete="off"></el-input>
+      </el-form-item>
+    </el-form>
     </el-tab-pane>
-    
+    <el-tab-pane :label="$t('mycustomer.佣金设置') " name="Third">
+      <div style="padding-left:20px">
+          {{$t('mycustomer.佣金返回设置')}} 
+      </div> 
+      <el-form status-icon  ref="ruleFormTD" label-width="100px" class="demo-ruleForm">
+        <el-form-item :label=" $t('mycustomer.佣金费用')">
+          <el-input-number type="number"   :precision="4"  :controls="false"  v-model="addVendorDialog.brokerage" autocomplete="off" style="width:150px"></el-input-number>
+        </el-form-item>
+      </el-form>
+    </el-tab-pane>      
   </el-tabs>
 
       </el-row>
