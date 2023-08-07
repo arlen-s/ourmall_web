@@ -28,84 +28,93 @@
       <div class="pagebody">
         <template>
           <div>				            
-        <el-row :gutter="20"
-        class="mg-b-30 user-status-list"
-      >
-              <el-col :span="7">
-                <el-card :body-style="{ height:'340px' }">
-                  <div class="grid-content d-flex grid-dashboard">
-                    <div class="grid-top">
-                      <img class="walletIcon" src="../../public/images/qianbao.png" alt="">
-                    </div>
-                    <div class="grid-bottom">
-                      <h2 class="tx-primary">{{$t('balance')}}({{$store.state.country.symbol}}): {{balance || '0.00'}}</h2>
-                      <p>{{$t('wallet')}}</p>
-                    </div>
-                  </div>
-                </el-card>
-              </el-col>
-              <el-col :span="7" class="d-box">
-                <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px',height:'280px' }">
-                <div slot="header" class="clearfix">
-                      <span>{{$t('system notification')}}</span>
-                    </div>
-                    <div v-for="o in advData.slice(0,5)" :key="o.id" class="text item fit-box">
-                      <p class="text-style" @click="lookLog(o.id)">
-                         <el-link type="primary"> <i class="round"></i> {{o.title}}</el-link>
-                         <span>{{o.createdAt}}</span>
-                        </p>
-                    </div>
-              </el-card>
-              </el-col>
-              <el-col :span="10">
-                  <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px', height:'340px' }">
-                      <div class="header-mil">
-                          <i></i>
-                          <span class="font-handing">Affiliates</span>
-                      </div>
-                      <div class="header-mat">
-                        <i class="el-icon-right"></i>
-                        <span class="pn1">InvitationLink:</span>
-                         <span class="text-sp" v-show="shopLevel==1">https://app.gotofulfill.com/register?dcode={{invitedCode}}</span>
-                     
-                      </div>
-                      <el-table
-                        :data="tableDataTour"
-                        height="200"
-                        style="width: 100%">
-                        <el-table-column
-                          prop="name"
-                          label="Name"
-                          align="center"
-                          width="100"
-                          :show-overflow-tooltip="true"
-                          >
-                    </el-table-column>
-                    <el-table-column
-                      prop="num"
-                      label="Order Quantity"
-                      align="center">
-                    </el-table-column>
-                    <el-table-column
-                      prop="brokerage"
-                      label="Commission"
-                      align="center">
-                    </el-table-column>
-                    <el-table-column
-                      prop="total"
-                      label="Total commission"
-                      align="center">
-                    </el-table-column>                    
-                  </el-table>
-                  <div class="in-box">
-                      <span class="span-t-one">Total</span>
-                      <span class="span-t-other">{{totalObj.orderNum}}</span>
-                      <span class="span-t-other">{{totalObj.commNum}}</span>
-                      <span class="span-t-other">{{totalObj.allTol}}</span>
-                  </div>
-                  </el-card>                
-              </el-col>
-      </el-row>
+              <el-row :gutter="20"
+              class="mg-b-30 user-status-list"
+            >
+                    <el-col :span="7">
+                      <el-card :body-style="{ height:'340px' }">
+                        <div class="grid-content d-flex grid-dashboard">
+                          <div class="grid-top">
+                            <img class="walletIcon" src="../../public/images/qianbao.png" alt="">
+                          </div>
+                          <div class="grid-bottom">
+                            <h2 class="tx-primary">{{$t('balance')}}({{$store.state.country.symbol}}): {{balance || '0.00'}}</h2>
+                            <p>{{$t('wallet')}}</p>
+                          </div>
+                        </div>
+                        <div class="grid-content d-flex grid-dashboard">
+                          <div class="grid-top">
+                            <!-- <img class="walletIcon" src="../../public/images/qianbao.png" alt=""> -->
+                          </div>
+                          <div class="grid-bottom">
+                            <h2 class="tx-primary">{{$t('balance')}}({{$store.state.country.symbol}}): {{balance || '0.00'}}</h2>
+                             <el-button type="primary">佣金提现</el-button>
+                          </div>
+                        </div>
+                      </el-card>
+                    </el-col>
+                    <el-col :span="7" class="d-box">
+                      <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px',height:'280px' }">
+                      <div slot="header" class="clearfix">
+                            <span>{{$t('system notification')}}</span> 
+                          </div>
+                          <div v-for="o in advData.slice(0,5)" :key="o.id" class="text item fit-box">
+                            <p class="text-style" @click="lookLog(o.id)">
+                              <el-link type="primary"> <i class="round"></i> {{o.title}}</el-link>
+                              <span>{{o.createdAt}}</span>
+                              </p>
+                          </div>
+                    </el-card>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px', height:'340px' }">
+                            <div class="header-mil">
+                                <i></i>
+                                <span class="font-handing">Affiliates</span>
+                            </div>
+                            <div class="header-mat">
+                              <i class="el-icon-right"></i>
+                              <span class="pn1">InvitationLink:</span>
+                              <span class="text-sp" v-show="shopLevel==1">{{location.origin}}?dcode={{invitedCode}}</span>
+                          
+                            </div>
+                            <el-table
+                              :data="tableDataTour"
+                              height="200"
+                              style="width: 100%">
+                              <el-table-column
+                                prop="name"
+                                label="Name"
+                                align="center"
+                                width="100"
+                                :show-overflow-tooltip="true"
+                                >
+                          </el-table-column>
+                          <el-table-column
+                            prop="num"
+                            label="Order Quantity"
+                            align="center">
+                          </el-table-column>
+                          <el-table-column
+                            prop="brokerage"
+                            label="Commission"
+                            align="center">
+                          </el-table-column>
+                          <el-table-column
+                            prop="total"
+                            label="Total commission"
+                            align="center">
+                          </el-table-column>                    
+                        </el-table>
+                        <div class="in-box">
+                            <span class="span-t-one">Total</span>
+                            <span class="span-t-other">{{totalObj.orderNum}}</span>
+                            <span class="span-t-other">{{totalObj.commNum}}</span>
+                            <span class="span-t-other">{{totalObj.allTol}}</span>
+                        </div>
+                        </el-card>                
+                    </el-col>
+            </el-row>
             <el-row :gutter="20">
               <el-col :span="8">
                 <el-card>
