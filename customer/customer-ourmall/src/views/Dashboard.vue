@@ -42,79 +42,79 @@
                             <p>{{$t('wallet')}}</p>
                           </div>
                         </div>
-                        <div class="grid-content d-flex grid-dashboard">
-                          <div class="grid-top">
+                        <div class="grid-content d-flex grid-dashboard" style="margin-top:40px">
+                          <div class="grid-o">
                             <!-- <img class="walletIcon" src="../../public/images/qianbao.png" alt=""> -->
                           </div>
                           <div class="grid-bottom">
-                            <h2 class="tx-primary">{{$t('balance')}}({{$store.state.country.symbol}}): {{balance || '0.00'}}</h2>
-                             <el-button type="primary">佣金提现</el-button>
+                            <h2 class="tx-primary">{{$t('brokerage')}}({{$store.state.country.symbol}}): {{brokerage || '0.00'}}</h2>
+                             <el-button type="primary" @click="handWithdraw()">{{$t('withdraw')}}</el-button>
                           </div>
-                        </div>
-                      </el-card>
-                    </el-col>
-                    <el-col :span="7" class="d-box">
-                      <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px',height:'280px' }">
-                      <div slot="header" class="clearfix">
-                            <span>{{$t('system notification')}}</span> 
-                          </div>
-                          <div v-for="o in advData.slice(0,5)" :key="o.id" class="text item fit-box">
-                            <p class="text-style" @click="lookLog(o.id)">
-                              <el-link type="primary"> <i class="round"></i> {{o.title}}</el-link>
-                              <span>{{o.createdAt}}</span>
-                              </p>
-                          </div>
-                    </el-card>
-                    </el-col>
-                    <el-col :span="10">
-                        <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px', height:'340px' }">
-                            <div class="header-mil">
-                                <i></i>
-                                <span class="font-handing">Affiliates</span>
-                            </div>
-                            <div class="header-mat">
-                              <i class="el-icon-right"></i>
-                              <span class="pn1">InvitationLink:</span>
-                              <span class="text-sp" v-show="shopLevel==1">{{location.origin}}?dcode={{invitedCode}}</span>
-                          
-                            </div>
-                            <el-table
-                              :data="tableDataTour"
-                              height="200"
-                              style="width: 100%">
-                              <el-table-column
-                                prop="name"
-                                label="Name"
-                                align="center"
-                                width="100"
-                                :show-overflow-tooltip="true"
-                                >
-                          </el-table-column>
-                          <el-table-column
-                            prop="num"
-                            label="Order Quantity"
-                            align="center">
-                          </el-table-column>
-                          <el-table-column
-                            prop="brokerage"
-                            label="Commission"
-                            align="center">
-                          </el-table-column>
-                          <el-table-column
-                            prop="total"
-                            label="Total commission"
-                            align="center">
-                          </el-table-column>                    
-                        </el-table>
-                        <div class="in-box">
-                            <span class="span-t-one">Total</span>
-                            <span class="span-t-other">{{totalObj.orderNum}}</span>
-                            <span class="span-t-other">{{totalObj.commNum}}</span>
-                            <span class="span-t-other">{{totalObj.allTol}}</span>
-                        </div>
-                        </el-card>                
-                    </el-col>
-            </el-row>
+                        </div>                  
+                </el-card>
+              </el-col>
+              <el-col :span="7" class="d-box">
+                <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px',height:'280px' }">
+                <div slot="header" class="clearfix">
+                      <span>{{$t('system notification')}}</span>
+                    </div>
+                    <div v-for="o in advData.slice(0,5)" :key="o.id" class="text item fit-box">
+                      <p class="text-style" @click="lookLog(o.id)">
+                         <el-link type="primary"> <i class="round"></i> {{o.title}}</el-link>
+                         <span>{{o.createdAt}}</span>
+                        </p>
+                    </div>
+              </el-card>
+              </el-col>
+              <el-col :span="10">
+                  <el-card class="box-card" :body-style="{ padding: '0px 0px 20px 0px', height:'340px' }">
+                      <div class="header-mil">
+                          <i></i>
+                          <span class="font-handing">Affiliates</span>
+                      </div>
+                      <div class="header-mat">
+                        <i class="el-icon-right"></i>
+                        <span class="pn1">InvitationLink:</span>
+                         <span class="text-sp" v-show="shopLevel==1">{{link}}/register?dcode={{invitedCode}}</span>
+                     
+                      </div>
+                      <el-table
+                        :data="tableDataTour"
+                        height="200"
+                        style="width: 100%">
+                        <el-table-column
+                          prop="name"
+                          label="Name"
+                          align="center"
+                          width="100"
+                          :show-overflow-tooltip="true"
+                          >
+                    </el-table-column>
+                    <el-table-column
+                      prop="num"
+                      label="Order Quantity"
+                      align="center">
+                    </el-table-column>
+                    <el-table-column
+                      prop="brokerage"
+                      label="Commission"
+                      align="center">
+                    </el-table-column>
+                    <el-table-column
+                      prop="total"
+                      label="Total commission"
+                      align="center">
+                    </el-table-column>                    
+                  </el-table>
+                  <div class="in-box">
+                      <span class="span-t-one">Total</span>
+                      <span class="span-t-other">{{totalObj.orderNum}}</span>
+                      <span class="span-t-other">{{totalObj.commNum}}</span>
+                      <span class="span-t-other">{{totalObj.allTol}}</span>
+                  </div>
+                  </el-card>                
+              </el-col>
+      </el-row>
             <el-row :gutter="20">
               <el-col :span="8">
                 <el-card>
@@ -1052,6 +1052,60 @@
    <el-button type="primary" @click="dialogVisibleLog = false">{{$t('enter')}}</el-button>
   </span>
 </el-dialog>
+  <el-dialog
+      :title="$t('Distributor commission withdrawal')"
+      :before-close="cleanClose"
+      :visible.sync="visibleTX"
+      width="600px"
+      :close-on-click-modal="false">
+      <el-form
+        ref="dynamicValidateForm"
+        :model="dynamicValidateForm"
+        label-width="160px"
+        class="demo-dynamic">
+        <el-form-item :label="$t('Withdrawal method')" required>
+          <el-select v-model="dynamicValidateForm.drawType" placeholder="请选择">
+              <el-option
+                v-for="item in walOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item
+          prop="amount"
+          :label="$t('Withdrawal Amount')"
+          :rules="[{required: true, message: $t('Please enter the commission withdrawal amount'), trigger: 'blur'}]">
+          <el-input
+            v-model="dynamicValidateForm.amount"
+            style="width: 250px"
+            oninput="value=value.replace(/[^\d.]/g,'')">
+            <el-button slot="append">￥</el-button>
+          </el-input>
+        </el-form-item>
+
+         <el-form-item
+          prop="remark"
+          :label="$t('Remark')"
+          :rules="[{required: true, message: $t('Please enter content'), trigger: 'blur'}]">
+          <el-input
+            v-model="dynamicValidateForm.remark"
+            type="textarea"
+            :rows="2"
+            style="width: 250px">
+          </el-input>
+        </el-form-item> 
+        <el-form-item>
+          <el-button size="small" type="primary" @click="submitForm('dynamicValidateForm')">{{
+            $t('Save')
+          }}</el-button>
+          <el-button size="small" @click="resetForm('dynamicValidateForm')">{{
+            $t('Close')
+          }}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -1062,10 +1116,24 @@ export default {
     return {
       tipsNum: 1,
       tips: false,
-      autoplay: true,
+      autoplay: true,      
+      walOptions: [{
+          value: '1',
+          label: this.$t('余额')
+        }, {
+          value: '2',
+          label: this.$t('线下')
+        }],
+      dynamicValidateForm:{
+          drawType: '1',
+          amount: '',
+          remark: '',
+      },
+      visibleTX: false,
       activeIndex: 0,
       vendorsList: [],
       dialogVisibleLog: false,
+      link: location.origin,
       invitedCode: sessionStorage.getItem('c_iCode'),
       shopLevel: sessionStorage.getItem('c_isMaxLevel'),
       advLook: {},
@@ -1089,6 +1157,7 @@ export default {
       vendorItems: [],
       items: [],
       totalCount: 0,
+      brokerage: JSON.parse(localStorage.getItem('c_ourMallUserInfo')).commissionBalance || '0.0000',
       items2: [],
       iList: [],
       invoiceInfo: "",
@@ -1256,6 +1325,36 @@ export default {
 
         //  e==false
       }
+    },
+    submitForm(formName){
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          let params = {
+            drawType: this.dynamicValidateForm.drawType,
+            amount: this.dynamicValidateForm.amount,
+            remark: this.dynamicValidateForm.remark,
+          }
+        this.$apiCall("api.CustomerWithdrawal.add", params, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.$elementMessage(this.$t("success"), "success")
+          this.$refs[formName].resetFields()
+          this.visibleTX = false
+        } else {
+          this.$message({ message: r.Message, type: "error" })
+        }
+      })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm(formName){
+      this.$refs[formName].resetFields()
+      this.visibleTX = false
+    },
+    handWithdraw(){
+      this.visibleTX = true
     },
     getAdvList(){ //获取
       this.$apiCall("api.Notice.finds", {rType:2}, r => {
