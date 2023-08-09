@@ -68,6 +68,18 @@ export default {
   "Close": "Close",
   "余额":"balance",
   "线下":"offline",
+  '提现列表': "Withdrawal list",
+	"accountPayee": "accountPayee",
+	"提现方式":"Withdrawal method",
+	"状态": 'Approval Status',
+	"tradeAmount":"Withdrawal Amount",
+	"reject":"reject",
+  'pleaseCusName':'Customer Name',
+	"agree":"agree",
+  "CreateDate":"application time",
+  "startDate":"start",
+  "endDate":"end",
+  "to":"to",
   "Selected stores": " Selected stores",
   "Please select the Shopify stores": "Please select the Shopify stores",
   "Shopify": "Shopify",
@@ -272,6 +284,10 @@ export default {
   "Products Off shelf": "Products Off shelf",
   "Supply unit price": "Supply unit price",
   "Shop price：": "Shop price：",
+  "customersName":"customer Name",
+  '待审核': 'Not reviewed',
+  '通过': 'pass',
+  '拒绝': 'reject',
   "Please make an offer": "Please make an offer",
   "Removed": "Removed",
   "Delete": "Delete",
@@ -867,6 +883,8 @@ export default {
   "need your reconfirm,": "need your reconfirm,",
   "here": "here",
   "Operate": "Operate",
+  "待审批":"Pending",
+  "已审批":"Approved",
   "to leam more": " to leam more",
   "Import Produc": "Import Produc",
   "Current Import Task": "Current Import Task",
@@ -1327,4 +1345,12 @@ export default {
   "For security reason.We need to verify your email address.": "For security reason.We need to verify your email address.",
   "Send To:": " Send To:",
   "Please click 'Send' to get the verification code in your inbox": "Please click 'Send' to get the verification code in your inbox"
+
+
+
+
+
+
+
+
 }

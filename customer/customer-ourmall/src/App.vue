@@ -916,6 +916,14 @@ export default {
           path: "/transaction",
           enabled: true,
         },
+        {
+          id: 89,
+          text: "Withdrawal list",
+          icon: "el-icon-document",
+          path: "/WithdrawalList",
+          image: "/images/sidebar/order.png",
+          enabled: true,
+        },        
       ];
       this.navMenu.some((e, i) => {
         if (e.id == 10) {
