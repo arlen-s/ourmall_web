@@ -308,6 +308,7 @@ export default {
       isHome: true,
       vendorId: localStorage.getItem('vendorId'),   //150488慧仓
       // isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
+      roleHeadList:['dashboard', 'WaitingImport', 'products', 'ordersManagement', 'SearchProductsReply', 'SearchProductsComplete', 'SearchProductsSelect', 'stores', 'transactionDetail', 'WithdrawalList']
     };
   },
   computed: {
@@ -337,7 +338,8 @@ export default {
   watch: {
     $route: {
       handler: function (val, oldVal) {
-        if (val.name == 'dashboard') {
+        console.log(val,'roter');
+        if (this.roleHeadList.indexOf(val.name) > -1) {
           this.isHome = false
         }
       },
@@ -347,7 +349,8 @@ export default {
   },
   mounted () {
     let name = this.$route.name
-    if (name == 'dashboard') {
+    console.log(name, 'name');
+    if (this.roleHeadList.indexOf(name) > -1) {
       this.isHome = false
     }
   },
