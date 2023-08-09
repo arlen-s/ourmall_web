@@ -1802,6 +1802,7 @@ export default {
             }           
             localStorage.setItem("c_apiUserId", r.Data.Results.id);
             localStorage.setItem("c_apiUserToken", r.Data.Results.apiUserToken);
+            sessionStorage.setItem('c_isMaxLevel',  r.Data.Results.distributionSwitch)
 						this.$store.commit("setCountry", {
 							symbol: r.Data.Results.shopCurrencySymbol || '$',
 							name: r.Data.Results.shopCountry|| '',
