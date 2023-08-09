@@ -6,7 +6,7 @@
 		<iframe id="iframePostMsg2" :src="iframeUrl" ref="iframePostMsg2"
 			style="opacity: 0; height: 0; position: absolute"></iframe> -->
 		<template
-			v-if="/^(signin|signup|Invoice|privacy|terms|invite|DropD|Dropshipping|chat|Home|jump)$/.test($route.name) || $route.meta.frameless">
+			v-if="/^(signin|signup|Invoice|privacy|terms|invite|DropD|Dropshipping|chat|Home|jump|DownPdf)$/.test($route.name) || $route.meta.frameless">
 			<router-view ref="mainRouter"></router-view>
 		</template>
 		<template v-else-if="$route.name">
@@ -993,7 +993,12 @@
 								path: "/transaction",
 								role: "payRecordView",
 								enabled: true,
-							}
+							},
+							{
+								name: "app.提现列表",
+								path: "/WithdrawalList",
+								enabled: true,
+							}							
 						]
 					},
 					{

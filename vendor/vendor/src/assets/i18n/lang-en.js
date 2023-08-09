@@ -50,6 +50,7 @@ export const lang = {
     '财务管理':'Finance',
 		'收款方式':'Payment',
 		'交易明细':'Transaction',
+    '提现列表':'Withdrawal list',
 		'套餐':'Package',
 		'我的服务': 'My Services',
 		'获取授权码':'Get authorization code',
@@ -197,4 +198,5 @@ export const lang = {
 	discount: require('./discount/en').lang,
 	menuSetting: require('./menuSetting/en').lang,
 	storehouse: require('./storehouse/en').lang,
+	withdraw: require('./withdraw/en').lang,
 }

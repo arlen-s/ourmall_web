@@ -1251,14 +1251,6 @@ export default {
       //第一次登陆,不论有没有订单，都进入之前的dashboard演示流程页面
       this.noneData = 1;
     }
-    //没有用户就进入guidance页面
-    //			let userInfo = localStorage.getItem('c_ourMallUserInfo') ? JSON.parse(localStorage.getItem('c_ourMallUserInfo')) : "";
-    //			if(userInfo && userInfo.vendorCnt == 0 && !sessionStorage.getItem('c_haveShownGuide')){
-    //				this.$router.push({name:"guidance"});
-    //				return;
-    //			}
-    //			this.getDashboardVendors();
-    //			this.getLastInvoice();
     this.$apiCall("api.Invoice.findStores", {}, (r) => {
       if (r.ErrorCode == 9999) {
         let stores = r.Data.Results;
@@ -1338,6 +1330,35 @@ export default {
         if (r.ErrorCode == 9999) {
           this.$elementMessage(this.$t("success"), "success")
           this.$refs[formName].resetFields()
+                this.$apiCall(
+        "api.User.checkLoginStatus",
+        {
+          type: localStorage.getItem("c_ourMallUserInfo")
+            ? JSON.parse(localStorage.getItem("c_ourMallUserInfo")).type
+            : 1,
+        },
+        (r) => {
+            if (localStorage.getItem('vendorId') == '150488') {
+                this.dialogVisibleError = true								
+            }else{
+                this.dialogVisibleError = false	
+            } 
+          if (r.ErrorCode == "9999") {         
+            if (r.Data.Results) {
+              if (r.Data.Results.configJson)
+                r.Data.Results.config = JSON.parse(r.Data.Results.configJson);
+              localStorage.setItem(
+                "c_ourMallUserInfo",
+                JSON.stringify(r.Data.Results)
+              );
+              this.brokerage= r.Data.Results.commissionBalance
+            }
+
+          } else {
+            this.$Logout(this.$route.meta.urlActive);
+          }
+        }
+      );
           this.visibleTX = false
         } else {
           this.$message({ message: r.Message, type: "error" })
@@ -1352,6 +1373,7 @@ export default {
     resetForm(formName){
       this.$refs[formName].resetFields()
       this.visibleTX = false
+
     },
     handWithdraw(){
       this.visibleTX = true
@@ -2429,6 +2451,10 @@ export default {
     color: #5c6ac4;
     font-size: 22px;
   }
+     .grid-o{
+    width: 50px;
+    height: 50px;
+   }
   .grid-bottom {
     margin-left: 20px;
     h2 {

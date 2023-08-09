@@ -699,6 +699,18 @@ const routes = [
     component: () => import(/* webpackChunkName: 'transactionDetail' */ '@/views/transaction.vue')
   },
   {
+    path: '/WithdrawalList',
+    name: 'WithdrawalList',
+    meta: {
+      title: '提现列表',
+      urlActive: '/WithdrawalList',
+      role:"payRecordView",
+      roleWrite:"payRecordEdit",
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'transactionDetail' */ '@/views/WithdrawalList.vue')
+  },  
+  {
       path: '/ordersManage/:status/:active',
       name: 'ordersManagement',
       meta: {

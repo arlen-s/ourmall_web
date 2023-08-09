@@ -51,6 +51,7 @@ export const lang = {
 		'收款方式':'收款方式',
     '票类设置':'票类设置',
 		'交易明细':'交易明细',
+		'提现列表':'提现列表',
 		'套餐':'套餐',
 		'我的服务': '我的服务',
 		'获取授权码':'获取授权码',
@@ -198,4 +199,5 @@ export const lang = {
 	discount: require('./discount/zh').lang,
 	menuSetting: require('./menuSetting/zh').lang,
 	storehouse: require('./storehouse/zh').lang,
+	withdraw: require('./withdraw/zh').lang,
 }
