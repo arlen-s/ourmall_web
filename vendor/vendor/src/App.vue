@@ -551,7 +551,7 @@
 			</div>
 			Show
 		</div>
-		<el-dialog
+		<!-- <el-dialog
   title="续费预警"
   :visible.sync="dialogVisibleError"
   width="40%"
@@ -561,7 +561,7 @@
     <p style="padding:20px 0">尊敬的马帮用户：</p>
     <p>您好，贵司产品开通时间为2022年01月05日，服务时间一年，到期截止日期为2023年05月06日，为了不影响贵司的业务推进，请及时联系专属商务同事进行续费，祝贵司事业长虹！</p>
  </div>
-</el-dialog>    
+</el-dialog>     -->
 		<el-dialog :title="$t('app.modifyUserEmail')" :visible.sync="changeUserEmailShow" width="600px"
 			:close-on-click-modal="false">
 			<el-row :gutter="30">
@@ -1764,11 +1764,11 @@
 				this.$apiCall("api.User.checkLoginStatus", {}, (r) => {
 					if (r.ErrorCode == "9999") {
 						//r.Data.Results.canUseWallet = r.Data.Results.walletOpen = 1; //测试打开钱包							
-							if (localStorage.getItem('vendorId') == '150488') {
-									this.dialogVisibleError = true								
-							}else{
-									this.dialogVisibleError = false	
-							}
+							// if (localStorage.getItem('vendorId') == '150488') {
+							// 		this.dialogVisibleError = true								
+							// }else{
+							// 		this.dialogVisibleError = false	
+							// }
 						localStorage.setItem("apiUserToken", r.Data.Results.apiUserToken);
 						localStorage.setItem("apiUserId", r.Data.Results.id);
 						localStorage.setItem("vendorId", r.Data.Results.vendorId);

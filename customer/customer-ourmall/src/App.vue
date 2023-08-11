@@ -506,7 +506,7 @@
       @resetSEC="resetSEC"
       @saveNewPSD="saveNewPSD"
     />
-    		<el-dialog
+    		<!-- <el-dialog
   title="续费预警"
   :visible.sync="dialogVisibleError"
   width="40%"
@@ -516,7 +516,7 @@
     <p style="padding:20px 0">尊敬的马帮用户：</p>
     <p>您好，贵司产品开通时间为2022年01月05日，服务时间一年，到期截止日期为2023年05月06日，为了不影响贵司的业务推进，请及时联系专属商务同事进行续费，祝贵司事业长虹！</p>
  </div>
-</el-dialog> 
+</el-dialog>  -->
   </div>
 </template>
 
@@ -1789,11 +1789,11 @@ export default {
             : 1,
         },
         (r) => {
-            if (localStorage.getItem('vendorId') == '150488') {
-                this.dialogVisibleError = true								
-            }else{
-                this.dialogVisibleError = false	
-            } 
+            // if (localStorage.getItem('vendorId') == '150488') {
+            //     this.dialogVisibleError = true								
+            // }else{
+            //     this.dialogVisibleError = false	
+            // } 
           if (r.ErrorCode == "9999") {
             if (!localStorage.getItem("c_ourMallFirstLogin")) {
               localStorage.setItem("c_ourMallFirstLogin", 1);
