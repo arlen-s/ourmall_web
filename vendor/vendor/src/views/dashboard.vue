@@ -504,6 +504,7 @@
 			// if (!Number(this.$store.state.cnt.customerCnt)) {
 			//   this.$root.$children[0].getCnt(this.firstCustomer); //添加第一个客户
 			// }
+			this.open2()
 		},
 		methods: {
 			getVendorAllOrderCnt() {
@@ -528,6 +529,14 @@
 				}
 				return text;
 			},
+			      open2() {
+        this.$notify({
+          title: '警告',
+          message: 'ourmall预计将于2023年8月15日晚上8点进行停机维护工作，预计维护时长4小时，如果在预订时间内无法完成维护内容，开机时间也将继续顺延。请各位用户相互转告，并提前留意工作时间，以免造成不必要的损失。维护期间给您带来的不便，敬请谅解，感谢所有用户的支持与配合。',
+          type: 'warning',
+					 duration: 0
+        });
+      },
     getAdvList(){ //获取
       this.$apiCall("api.Notice.finds", {rType:1}, r => {
         if (r.ErrorCode == 9999) {

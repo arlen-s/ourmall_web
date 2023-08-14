@@ -9,7 +9,7 @@
 					</el-table-column>
 					<el-table-column prop="orderId" :label="$t('orders.orderID')" width="150">
 					</el-table-column>
-					<el-table-column :label="$t('orders.verdorName')" width="150">
+					<el-table-column :label="$t('orders.vendorName')" width="150">
 						<template slot-scope="scope">
 							<div>{{ scope.row.customer ? scope.row.customer.name : '---' }}</div>
 						</template>

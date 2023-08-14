@@ -146,7 +146,7 @@
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
 							</el-table-column>	                        
-                        <el-form-item :label="$t('orders.verdorName') + ':' ">
+                        <el-form-item :label="$t('orders.vendorName') + ':' ">
                           <el-select
                             filterable
                             remote
@@ -335,6 +335,15 @@
                         :cell-style="rowStyle"
                        :cell-class-name="cellClassName"
                       >
+                        <el-table-column
+                          :label="$t('orders.orderID')"
+                          width='140'
+                          align="left"
+                        >
+                        <template slot-scope="child">
+                          <span>{{child.row.orderId}}</span>                                  
+                        </template>
+                        </el-table-column>                      
                         <el-table-column prop="" :label="$t('orders.产品图片')" 
                           width='200'
                           align="center">
@@ -416,7 +425,6 @@
                                 </span>
                           </template>                    
                         </el-table-column>                                         
-
                         <el-table-column
                           prop="phone"
                           :label="$t('orders.客户售价')"
@@ -428,25 +436,15 @@
                                   
                         </template>
                         </el-table-column>
-                        <!-- <el-table-column
-                          prop="phone"
-                          width='200'
-                          align="left"
-                        >
-                        <template slot-scope="child">
-                          <el-link
-                            type="primary"
-                            v-if="child.row.isManage != 2 && !child.row.vendorPrice"
-                            :disabled="!$isRole($route.meta.roleWrite)"
-                            @click="unable(child.row)"
-                          >{{$t('orders.tabBar5')}}</el-link>
-                                  
-                        </template>
-                        </el-table-column>                         -->
                         <el-table-column label=""></el-table-column>
                       </el-table>
                         </template>                    
-                 </el-table-column>                  
+                 </el-table-column>  
+                  <el-table-column :label="$t('orders.storeName')" width="150">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.store || '---'}}</span>
+                    </template>
+                  </el-table-column>                                 
                   <el-table-column :label="$t('orders.third')" width="120">
                     <template slot-scope="scope">
                       <!-- <el-popover
@@ -705,15 +703,10 @@
 										<div>{{ scope.row.isSplit == 1 ? $t('orders.yes') : $t('orders.no') }}</div>
 									</template>
 								</el-table-column>
-                  </template>-->
-                  <el-table-column :label="$t('orders.verdorName')" width="150">
+                  </template>-->              
+                  <el-table-column :label="$t('orders.vendorName')" width="150">
                     <template slot-scope="scope">
                       <div>{{ scope.row.customer ? scope.row.customer.name : '---' }}</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column :label="$t('orders.storeName')" width="150">
-                    <template slot-scope="scope">
-                      <span>{{scope.row.store || '---'}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column :label="$t('orders.CreateDate')" width="200">
@@ -919,6 +912,15 @@
                         :cell-style="rowStyle"
                        :cell-class-name="cellClassName"
                       >
+                        <el-table-column
+                          :label="$t('orders.orderID')"
+                          width='140'
+                          align="left"
+                        >
+                        <template slot-scope="child">
+                          <span>{{child.row.orderId}}</span>                                  
+                        </template>
+                        </el-table-column>                       
                         <el-table-column prop="" :label="$t('orders.产品图片')" 
                           width='200'
                           align="center">
@@ -1136,6 +1138,15 @@
                         :cell-style="rowStyle"
                        :cell-class-name="cellClassName"
                       >
+                        <el-table-column
+                          :label="$t('orders.orderID')"
+                          width='140'
+                          align="left"
+                        >
+                        <template slot-scope="child">
+                          <span>{{child.row.orderId}}</span>                                  
+                        </template>
+                        </el-table-column>                       
                         <el-table-column prop="" :label="$t('orders.产品图片')" 
                           width='200'
                           align="center">
@@ -1247,7 +1258,12 @@
                         <el-table-column label=""></el-table-column>
                       </el-table>
                         </template>                    
-                 </el-table-column>                    
+                 </el-table-column>     
+                  <el-table-column :label="$t('orders.storeName')" width="150">
+                    <template slot-scope="scope">
+                      <span>{{scope.row.store || '---'}}</span>
+                    </template>
+                  </el-table-column>                                
                   <el-table-column :label="$t('orders.third')" width="120">
                     <template slot-scope="scope">
                       <!-- <el-popover
@@ -1507,14 +1523,9 @@
 									</template>
 								</el-table-column>
                   </template>-->
-                  <el-table-column :label="$t('orders.verdorName')" width="150">
+                  <el-table-column :label="$t('orders.vendorName')" width="150">
                     <template slot-scope="scope">
                       <div>{{ scope.row.customer ? scope.row.customer.name : '---'}}</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column :label="$t('orders.storeName')" width="150">
-                    <template slot-scope="scope">
-                      <span>{{scope.row.store || '---'}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column :label="$t('orders.CreateDate')" width="200">

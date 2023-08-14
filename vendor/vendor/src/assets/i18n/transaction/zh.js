@@ -15,7 +15,7 @@ export const lang = {
   paymentCode: '支付单号',
   third: '第三方交易编号',
   paymentType: '支付方式',
-  verdorName: '站长名称',
+  vendorName: '站长名称',
   tradeType:'交易类型',
   tradeStatus:'交易状态',
   tradeAmount:'交易金额',

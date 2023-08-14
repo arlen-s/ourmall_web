@@ -15,7 +15,7 @@ export const lang = {
 	paymentCode: 'Payment code',
 	third: 'Third Party Number',
 	paymentType: 'Payment type',
-	verdorName: 'Verdor name',
+	vendorName: 'Vendor name',
 	tradeType:'Trade type',
 	tradeStatus:'Trade status',
 	tradeAmount:'Trade amount',

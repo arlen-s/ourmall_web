@@ -52,9 +52,9 @@
 											</el-input>
 										</el-form-item>
 										<el-form-item>
-											<el-input :placeholder="$t('transaction.verdorName')"
-												v-model="filterParams.verdorName" clearable
-												@keyup.enter.native="filterItem" @clear="clearFilter('verdorName')">
+											<el-input :placeholder="$t('transaction.vendorName')"
+												v-model="filterParams.vendorName" clearable
+												@keyup.enter.native="filterItem" @clear="clearFilter('vendorName')">
 											</el-input>
 										</el-form-item>
 										<el-form-item :label="$t('transaction.tradeType')">
@@ -87,6 +87,24 @@
 												@keyup.enter.native="filterItem" @clear="clearFilter('shopifyOrder')">
 											</el-input>
 										</el-form-item>
+                    <el-form-item :label="$t('orders.storeName') + ':' ">
+                          <el-select
+                            filterable
+                            remote
+                            placeholder="all"
+                            clearable
+                            v-model="filterParams.accountIds"
+                            @change="filterItem"
+                            @clear="clearFilter('accountIds')"
+                          >
+                            <el-option
+                              v-for="opt in storeList"
+                              :key="opt.id"
+                              :label="opt.shopName"
+                              :value="opt.id"
+                            ></el-option>
+                          </el-select>
+                        </el-form-item>									
 										<el-form-item>
 											<el-button type="primary" @click="filterItem">{{$t("transaction.filter")}}
 											</el-button>
@@ -118,7 +136,7 @@
 									<span v-else>{{scope.row.code || '---'}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column :label="$t('transaction.verdorName')">
+							<el-table-column :label="$t('transaction.vendorName')">
 								<template slot-scope="scope">
 									<span>{{scope.row.customerName || '---'}}</span>
 								</template>
@@ -223,9 +241,9 @@
 											</el-input>
 										</el-form-item>
 										<el-form-item>
-											<el-input :placeholder="$t('transaction.verdorName')"
-												v-model="filterParams.verdorName" clearable
-												@keyup.enter.native="filterItem" @clear="clearFilter('verdorName')">
+											<el-input :placeholder="$t('transaction.vendorName')"
+												v-model="filterParams.vendorName" clearable
+												@keyup.enter.native="filterItem" @clear="clearFilter('vendorName')">
 											</el-input>
 										</el-form-item>
 										<el-form-item :label="$t('transaction.tradeType')">
@@ -289,7 +307,7 @@
 									<span v-else>{{scope.row.code || '---'}}</span>
 								</template>
 							</el-table-column>
-							<el-table-column :label="$t('transaction.verdorName')">
+							<el-table-column :label="$t('transaction.vendorName')">
 								<template slot-scope="scope">
 									<span>{{scope.row.customerName || '---'}}</span>
 								</template>
@@ -384,7 +402,7 @@
 						</div>
 					</el-col>
 				</el-row>
-				<div class="item-wrap" v-for="item in viewDetail.items">
+				<div class="item-wrap" v-for="(item, i) in viewDetail.items" :key="i">
 					<el-row>
 						<el-col :span="12">
 							<div class="grid-content">
@@ -446,7 +464,8 @@
 				activeName: '2',
 				totalPage: 0,
 				filterParams: {
-					verdorName: "",
+					vendorName: "",
+					accountIds: '',
 					paymentCode: "",
 					code: "",
 					accountPayee: "",
@@ -523,6 +542,7 @@
 					name: this.$t('transaction.payment12')
 				}],
 				checkItems:[],
+      	storeList: [],
 				dialogDetailData: {
 					isShow: false,
 					loading: false,
@@ -543,6 +563,7 @@
 			this.defaultDialogDetailData = JSON.stringify(this.dialogDetailData)
 			this.filterParamsDefault = JSON.stringify(this.filterParams);
 			this.getItem();
+      this.getShopName()
 		},
 		methods: {
 			openExportDetail(item){
@@ -563,9 +584,8 @@
 			},
 			//切换tabs
 			handleClick(tab, event){
-						console.log(this.activeName, 'this.activeName'); 
 				this.filterParams= {
-					verdorName: "",
+					vendorName: "",
 					paymentCode: "",
 					code: "",
 					accountPayee: "",
@@ -723,12 +743,15 @@
 					case "code":
 						this.filterParams.code = "";
 						break;
-					case "verdorName":
-						this.filterParams.verdorName = "";
+					case "vendorName":
+						this.filterParams.vendorName = "";
 						break;
 					case "shopifyOrder":
 						this.filterParams.shopifyOrder = "";
 						break;
+        	case "accountIds":
+						this.filterParams.accountIds = ""
+						break						
 					case "tradeType":
 						this.filterParams.tradeType = "";
 						break;
@@ -750,6 +773,21 @@
 				}
 				this.filterItem();
 			},
+    getShopName () {
+      this.storeList = []
+      this.$apiCall(
+        "api.Invoice.findStoreByVendor", {}, (r) => {
+          if (r.ErrorCode == 9999) {
+            this.storeList = r.Data.Results
+          } else {
+            this.$message({
+              message: r.Message,
+              type: "error"
+            })
+          }
+        }
+      )
+    },			
 			filterItem(type) {
 				this.$refs.gridTable.clearSelection();
 				if (this.$route.query.page == 1) {
@@ -773,7 +811,7 @@
 						timeCreatedTo: this.filterParams.timeCreatedTo,
 						sysCode: this.filterParams.paymentCode,
 						code: this.filterParams.code,
-						nameLike: this.filterParams.verdorName,
+						nameLike: this.filterParams.vendorName,
 						shopifyOrder: this.filterParams.shopifyOrder,
 						platformType: this.filterParams.accountPayee,
 						paymentType: this.filterParams.tradeType,

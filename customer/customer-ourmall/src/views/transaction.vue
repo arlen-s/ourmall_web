@@ -332,7 +332,7 @@
 						</div>
 					</el-col>
 				</el-row>
-				<div class="item-wrap" v-for="item in viewDetail.items">
+				<div class="item-wrap" v-for="(item, i) in viewDetail.items" :key="i">
 					<el-row>
 						<el-col :span="12">
 							<div class="grid-content">
@@ -392,7 +392,7 @@
 				activeName: '2',
 				totalPage: 0,
 				filterParams: {
-					verdorName: "",
+					vendorName: "",
 					paymentCode: "",
 					code: "",
 					accountPayee: "",
@@ -548,7 +548,7 @@
 			},
 			handleClick(tab, event){
 				this.filterParams= {
-					verdorName: "",
+					vendorName: "",
 					paymentCode: "",
 					code: "",
 					accountPayee: "",
@@ -666,8 +666,8 @@
 					case "code":
 						this.filterParams.code = "";
 						break;
-					case "verdorName":
-						this.filterParams.verdorName = "";
+					case "vendorName":
+						this.filterParams.vendorName = "";
 						break;
 					case "tradeType":
 						this.filterParams.tradeType = "";
