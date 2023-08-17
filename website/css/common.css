@@ -239,7 +239,7 @@ a.btn:hover,a.btn:focus{
 	margin: 20px auto;
 	width: 64px;
 	height: 64px;
-	background-image: url("../images/index/qrcode.png");
+	background-image: url("../images/index/qrCodeNew.png");
 	background-size: 100%;
 	background-position: center center;
 }
