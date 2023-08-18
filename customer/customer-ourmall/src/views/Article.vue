@@ -302,7 +302,7 @@
             <router-link to="/">
               <img src="./../../public/images/logo4.png">
             </router-link>
-            <div class="footer-copyright">&copy; 2021,{{$t('Powered by OurMall')}} </div>
+            <div class="footer-copyright">&copy; 2023,{{$t('Powered by OurMall')}} </div>
           </div>
           <div class="footer-nav">
             <nav>

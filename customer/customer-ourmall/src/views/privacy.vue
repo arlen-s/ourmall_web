@@ -36,7 +36,7 @@
     </section>
     <div class="footer">
       <div class="content">
-        <span>&copy; 2021, Powered by OurMall</span>
+        <span>&copy; 2023, Powered by OurMall</span>
       </div>
     </div>
   </div>

@@ -1167,7 +1167,7 @@ export default {
   "Already have a supplier": "Sie haben bereits einen Lieferanten",
   "I don't have a supplier": "Ich habe keinen Lieferanten",
   "Let your supplier fulfill your order more systematically, copy the link and send it to your supplier, and immediately invite your supplier to settle in,": "Lassen Sie Ihren Lieferanten Ihre Bestellung systematischer erfüllen, kopieren Sie den Link und senden Sie ihn an Ihren Lieferanten und laden Sie Ihren Lieferanten sofort ein, sich niederzulassen,",
-  "2015-2021OurMall All Rights Reserved": "2015-2021OurMall Alle Rechte vorbehalten",
+  "2015-2021OurMall All Rights Reserved": "2015-2023OurMall Alle Rechte vorbehalten",
   "Waiting for the payment result to be returned": "Warten auf die Rückgabe des Zahlungsergebnisses",
   "You may need to wait a little while": "Möglicherweise müssen Sie eine Weile warten",
   "View order": "Bestellung ansehen",

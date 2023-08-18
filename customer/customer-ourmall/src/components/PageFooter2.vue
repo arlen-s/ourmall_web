@@ -49,7 +49,7 @@
       <div class="d-flex">
         <!-- <img src="../../public/images/productShop/logo.png" class="mg-r-20"> -->
         <span style="margin-top:14px">
-          &copy; 2021, Powered by OurMall
+          &copy; 2023, Powered by OurMall
         </span>
       </div>
       

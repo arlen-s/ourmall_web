@@ -520,7 +520,7 @@
     </section>
     <div class="footer">
       <div class="content">
-        <span>&copy; 2015-2021 <span class=" b-logo tx-bold"> OurMall</span></span>
+        <span>&copy; 2015-2023 <span class=" b-logo tx-bold"> OurMall</span></span>
       </div>
     </div>
   </div>

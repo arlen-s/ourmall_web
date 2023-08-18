@@ -685,6 +685,7 @@ export default {
     } else {
       this.$root.$children[0].checkLogin()
     }
+
     this.proId = this.$route.params.id
     this.name = this.$route.params.name.replace('.html', '').replace(/-/g, ' ')
 
@@ -937,6 +938,7 @@ export default {
     },
     getDetail () {
       this.loading = true
+      // return
       this.$apiCall(
         "api.VendorShop.detail",
         {
@@ -1073,6 +1075,8 @@ export default {
             //       }  
             //   }, 500);
             // })
+          }else{
+            console.log(11111);
           }
         }
       )

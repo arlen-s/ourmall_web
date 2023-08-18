@@ -3,7 +3,7 @@
     <div class="left">
       <h2>全国领先的跨境电商一件代发SaaS服务平台</h2>
       <p>自己也能搭建Dropshipping网站</p>
-      <div class="copyright">Copyright © 2016-2021</div>
+      <div class="copyright">Copyright © 2016-2023</div>
     </div>
     <div class="right">
       <h1 class="logo"></h1>

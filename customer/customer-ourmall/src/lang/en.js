@@ -1208,7 +1208,7 @@ export default {
   "Already have a supplier": "Already have a supplier",
   "I don't have a supplier": "I don't have a supplier",
   "Let your supplier fulfill your order more systematically, copy the link and send it to your supplier, and immediately invite your supplier to settle in,": "Let your supplier fulfill your order more systematically, copy the link and send it to your supplier, and immediately invite your supplier to settle in,",
-  "2015-2021OurMall All Rights Reserved": "2015-2021OurMall All Rights Reserved",
+  "2015-2021OurMall All Rights Reserved": "2015-2023OurMall All Rights Reserved",
   "Waiting for the payment result to be returned": "Waiting for the payment result to be returned",
   "You may need to wait a little while": "You may need to wait a little while",
   "View order": "View order",

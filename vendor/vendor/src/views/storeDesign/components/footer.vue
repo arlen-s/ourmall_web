@@ -136,7 +136,7 @@
     </div>
 
     <div class="bottom-row-copyright" v-if="setting.ourmall">
-      © 2021 Supplier store name  Powered by OurMall.
+      © 2023 Supplier store name  Powered by OurMall.
     </div>
   </footer>
 </template>

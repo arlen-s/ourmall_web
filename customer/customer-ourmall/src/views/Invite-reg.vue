@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="page-footer">
-      <div>&copy; 2021, Powered by {{$root.$children[0].pName.b}} APP</div>
+      <div>&copy; 2023, Powered by {{$root.$children[0].pName.b}} APP</div>
       <!-- <div>
         <router-link :to="{name: 'terms'}" target="_blank">Terms of Service</router-link>
         <router-link :to="{name: 'privacy'}" target="_blank">Privacy Policy</router-link>

@@ -11,7 +11,7 @@
             <img src="./../../public/images/logo4.png">
           </div> -->
           <div class="copyright">
-            &copy; 2021, Powered by OurMall
+            &copy; 2023, Powered by OurMall
           </div>
 
         </div>

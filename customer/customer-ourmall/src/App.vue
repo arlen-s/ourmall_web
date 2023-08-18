@@ -1224,7 +1224,7 @@ export default {
       let url = location.host;
       if (location.host.indexOf("localhost") > -1) {
         //测试
-        url = "shop242.myourmall.com";
+        url = "www.dasuche.com";
       }
       this.$apiCall(
         "api.User.getInfoFromUrl",
