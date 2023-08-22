@@ -5,31 +5,31 @@
         <div class="d-flex">
           <img src="@/assets/pay/payStatus1.png" height="30" />
           <span class="tx-bold"
-            >Warten auf die Rücksendung des Zahlungsergebnisses.</span
+            >{{$t('Waiting for the payment result to be returned.')}}</span
           >
         </div>
-        <p>Sie müssen möglicherweise eine Weile warten</p>
-        <el-button type="primary" plain @click="goBack">Bestellung ansehen</el-button>
+        <p>{{$t('You may need to wait a little while')}}</p>
+        <el-button type="primary" plain @click="goBack">{{$t('View order')}}</el-button>
       </div>
       <div v-if="paystatus == 2">
         <div class="d-flex">
           <img src="@/assets/pay/payStatus2.png" height="30" />
-          <span class="tx-bold">Zahlung erfolgreich</span>
+          <span class="tx-bold">{{$t('Payment successful')}}</span>
         </div>
-        <p>Sie haben Ihre Bestellung erfolgreich abgeschlossen.</p>
-        <el-button type="primary" plain @click="goBack">Bestellung ansehen</el-button>
+        <p>{{$t('You have successfully completed your order.')}}</p>
+        <el-button type="primary" plain @click="goBack">{{$t('View order')}}</el-button>
       </div>
       <div v-if="paystatus == 3">
         <div class="d-flex">
           <img src="@/assets/pay/payStatus3.png" height="30" />
-          <span class="tx-bold">Zahlung fehlgeschlagen</span>
+          <span class="tx-bold">{{$t('Payment failed')}}</span>
         </div>
-        <p>Wir können die Zahlung leider nicht abschließen.</p>
+        <p>{{$t("Sorry, we can't complete the payment.")}}</p>
         <div class="d-flex">
           <!-- <el-button type="primary" @click="orderPay('repay')"
             >Pay again</el-button
           > -->
-          <el-button type="primary" plain @click="goBack">Bestellung ansehen</el-button>
+          <el-button type="primary" plain @click="goBack">{{$t('View order')}}</el-button>
         </div>
       </div>
     </div>
@@ -136,11 +136,11 @@
       </div> -->
       <div class="main" style="margin-top:40px">
         <div style="height:40px">
-          <el-radio v-model="orderType" label="1">Großhandel</el-radio>
-          <el-radio v-model="orderType" label="2">Offline oder</el-radio>
+          <el-radio v-model="orderType" label="1">{{$t('Wholesale order')}}</el-radio>
+          <el-radio v-model="orderType" label="2">{{$t('offline order')}}</el-radio>
         </div>
         <div class="address_box" v-if="orderType==1">
-          <div class="title mr-l-30">Lieferadresse</div>
+          <div class="title mr-l-30">{{$t('Shipping Address')}}</div>
           <div class="swiperBox">
             <div class="swiper-button-next">
               <el-button icon="el-icon-arrow-right" circle></el-button>
@@ -166,13 +166,13 @@
                     </div>
                     <div class="footer_card">
                       <el-button type="text" @click.native="editAddress(item)"
-                        >Änderungen</el-button
+                        >{{$t('Edit')}}</el-button
                       >
                       <el-button
                         type="text"
                         class="text-danger"
                         @click.native="deleteAddress(item, index)"
-                        >Löschen</el-button
+                        >{{$t('Delete')}}</el-button
                       >
                     </div>
                     <span v-if="item.isDefault == '1'" class="default"
@@ -187,7 +187,7 @@
                       type="text"
                       class="text-white"
                       @click.native="editAddress()"
-                      >Neue Adresse eingeben</el-button
+                      >{{$t('Add New Address')}}</el-button
                     >
                   </el-card>
                 </swiper-slide>
@@ -203,9 +203,9 @@
         <el-card shadow="never">
           <div>
             <div class="title">
-              Produkt-Details
+              {{$t('Product Details')}}
               <span class="title_tips m-l-20"
-                >(Bitte überprüfen Sie die Produkte)</span
+                >({{$t('Please check the purchase products')}})</span
               >
             </div>
             <div>
@@ -220,7 +220,7 @@
                   width="55"
                 >
                 </el-table-column>
-                <el-table-column prop="date" label="Check alle" align="center">
+                <el-table-column prop="date" :label="$t('Check All')" align="center">
                   <template slot-scope="scope">
                     <el-image
                       style="width: 70px; height: 70px"
@@ -236,7 +236,7 @@
                     </el-image>
                   </template>
                 </el-table-column>
-                <el-table-column prop="name" label="Produkt">
+                <el-table-column prop="name" :label="$t('Product')">
                   <template slot-scope="scope">
                     <div>
                       <div
@@ -259,12 +259,12 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="address" label="Preis" align="center">
+                <el-table-column prop="address" :label="$t('Price')" align="center">
                   <template slot-scope="scope">
                     <div class="title">{{$store.state.country.symbol}}{{ scope.row.stockInfo.price }}</div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Menge" align="center">
+                <el-table-column :label="$t('Quantity')" align="center">
                   <template slot-scope="scope">
                     <el-input-number
                       :disabled="scope.row.stockInfo.inventory <= 0"
@@ -278,7 +278,7 @@
                       class="text-danger"
                       v-if="scope.row.stockInfo.inventory <= 0"
                     >
-                      out of stock
+                      {{$t('out of stock')}}
                     </div>
                     <div
                       class="text-danger"
@@ -288,25 +288,25 @@
                         scope.row.stockInfo.inventory > 0
                       "
                     >
-                      Inventory: {{ scope.row.stockInfo.inventory }}
+                      {{$t('Inventory')}}: {{ scope.row.stockInfo.inventory }}
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Gewicht" align="center">
+                <el-table-column :label="$t('Weight')" align="center">
                   <template slot-scope="scope">
                     <div class="title">
                       {{ scope.row.stockInfo.weight || 0 }}g
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="Lager" align="center">
+                <el-table-column :label="$t('warehouse')" align="center">
                   <template slot-scope="scope">
                     <div class="title">
                       {{ scope.row.warehouseInfo? scope.row.warehouseInfo.name : '--' }}
                     </div>
                   </template>
                 </el-table-column>                
-                <el-table-column label="Zwischensumme(vat)" align="center">
+                <el-table-column :label="`${$t('Subtotal')}(vat)`" align="center">
                   <template slot-scope="scope">
                     <div class="title" v-if="orderType == 1">
                       {{$store.state.country.symbol}}{{
@@ -334,14 +334,14 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="verwalten" align="center">
+                <el-table-column :label="$t('Operate')" align="center">
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
                       type="danger"
                       icon="el-icon-delete"
                       @click="deleteFromCart(scope.row)"
-                      >Löschen</el-button
+                      >{{$t('Delete')}}</el-button
                     >
                   </template>
                 </el-table-column>
@@ -352,19 +352,19 @@
         <el-card style="margin-top: 20px; padding-bottom: 100px" shadow="never">
           <div class="desc" v-if="orderType==2">
             <strong>
-              <span>Delivery Address:</span>
+              <span>{{$t('Delivery Address')}}:</span>
               <span>{{pickAddress}}</span>
             </strong>
               
             </div>
           <div class="d-flex-between">
             <div v-if="orderType == 1">
-              <span>Versandart:</span>
+              <span>{{$t('Shipping Method')}} :</span>
               <el-select
                 @change="logisticChange"
                 style="margin-left: 20px"
                 v-model="logistic"
-                placeholder="Bitte wählen Sie"
+                placeholder="Please choose"
                 :disabled="isMailFree == 1"
               >
                 <el-option
@@ -385,11 +385,11 @@
             <div v-else></div>
             <div>
               <span
-                >Zwischensumme（{{$store.state.country.symbol}}）:
+                >{{$t('Subtotal')}}（{{$store.state.country.symbol}}）:
                 <span class="font_bold">{{ subtotal }}</span></span
               >
               <span style="margin-left: 20px"
-                >Versandkosten（{{$store.state.country.symbol}}）:
+                >{{$t('Freight（')}}{{$store.state.country.symbol}}）:
                 <span class="font_bold">{{ freight }}</span></span
               >
             </div>
@@ -411,14 +411,14 @@
         </div> -->
           <div class="bonus">
             <span style="margin-right: 20px"
-              >Bonus:<span class="font_bold"> ({{$store.state.country.symbol}} {{ bonus }})</span></span
+              >{{$t('Bonus')}}:<span class="font_bold"> ({{$store.state.country.symbol}} {{ bonus }})</span></span
             >
-            <el-tooltip class="item" effect="dark" content="The supplier has opened a credit limit for you. When your account balance is insufficient, you can deduct the credit limit" placement="top">
+            <el-tooltip class="item" effect="dark" :content="$t('The supplier has opened a credit limit for you. When your account balance is insufficient, you can deduct the credit limit')" placement="top">
       						<i class="el-icon-question" style="color:red;line-height:80px;margin-right:5px"></i>
     				</el-tooltip>
 								
 						<span style="margin-right: 30px;">
-									Kredit:
+									{{$t('Credits')}}:
 							<span class="tx-bold"> ({{$store.state.country.symbol}} {{credits}})</span>
 						</span>
             <el-switch
@@ -452,7 +452,7 @@
                  
           </div>
           <div class="pay_method">
-            <p>Zahlungsmethode:</p>
+            <p>{{$t('Payment method')}}:</p>
             <div class="imgRow" v-if="payTypes.length">
               <div
                 class="img"
@@ -479,11 +479,11 @@
         </el-card>
         <div class="pay-submit">
           <span class="left">
-           Fälliger Betrag (einschließlich Versandkosten)（{{$store.state.country.symbol}}）:
+            {{$t('Amount due (including freight)')}}（{{$store.state.country.symbol}}）:
             <span class="font_bold"> {{ sum }} </span>
           </span>
           <el-button type="primary" :disabled="platformType == '13'" @click="orderPay()"
-            >Bestellungen aufgeben</el-button
+            >{{$t('Submit orders')}}</el-button
           >
         </div>
 
@@ -512,26 +512,26 @@
       </div>
     </div>
    	<el-dialog
-		:close-on-press-escape="false" :close-on-click-modal="false"
-  :title="$t('Please select payment method')"
-  :visible.sync="dialogVisibleKTPay"
-  width="800px"
-  :before-close="handleClosePay">
-	<el-divider></el-divider>
- 	<div class="pd-x-20 mg-y-30 cell-flex">
-			  <el-radio-group v-model="KTType">
-    <el-radio v-for="(item, i) of KTpayList" :key="i" :label="item.name">{{item.name}}</el-radio>
-  </el-radio-group>
-	</div>
-	<el-divider></el-divider>
-	<div slot="footer" class="dialog-footer" @click="dialogVisibleKTPay = false">
-		<el-button>
-			Cancel
-		</el-button>
-		<el-button type="primary" @click="continuePay()">
-			Pay
-		</el-button>
-	</div>
+      :close-on-press-escape="false" :close-on-click-modal="false"
+      title="Please select payment method"
+      :visible.sync="dialogVisibleKTPay"
+      width="800px"
+      :before-close="handleClosePay">
+          <el-divider></el-divider>
+          <div class="pd-x-20 mg-y-30 cell-flex">
+                <el-radio-group v-model="KTType">
+            <el-radio v-for="(item, i) of KTpayList" :key="i" :label="item.name">{{item.name}}</el-radio>
+          </el-radio-group>
+          </div>
+          <el-divider></el-divider>
+          <div slot="footer" class="dialog-footer" @click="dialogVisibleKTPay = false">
+            <el-button>
+              {{$t('Cancel')}}
+            </el-button>
+            <el-button type="primary" @click="continuePay()">
+               {{$t('Pay')}}
+            </el-button>
+          </div>
     </el-dialog> 
   </div>
 </template>
@@ -1109,7 +1109,7 @@ export default {
       if (val.length> 0) {
           for (let b = 0; b < val.length; b++) {
               if (val[b].warehouseInfo.id != val[0].warehouseInfo.id) {
-                this.$message.error('Bitte kreuzen Sie die Produkte aus demselben Lager an')
+                this.$message.error('Please tick the products from the same warehouse')
                 //  this.$refs.multipleTable.clearSelection();
                  this.$refs.multipleTable.toggleRowSelection(val[b]);
                     return  false
@@ -1121,13 +1121,13 @@ export default {
                   if (this.multipleSelection[i]?.warehouseInfo && val[j]?.warehouseInfo) {
                   if(this.multipleSelection[i].warehouseInfo.id != val[j].warehouseInfo.id){
                    this.$refs.multipleTable.toggleRowSelection(val[j]);
-                    this.$message.error('Bitte kreuzen Sie die Produkte aus demselben Lager an')
+                    this.$message.error('Please tick the products from the same warehouse')
                     return  false
                        }
                   }else{
                     if(this.multipleSelection[i].stockWarehouseId != val[j].stockWarehouseId){
                       this.$refs.multipleTable.toggleRowSelection(val[j]);
-                        this.$message.error('Bitte kreuzen Sie die Produkte aus demselben Lager an')
+                        this.$message.error('Please tick the products from the same warehouse')
                         return  false
                     }
                   }
