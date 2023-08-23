@@ -156,10 +156,10 @@
                       </div>
                       <div class="font">
                         {{
-                          scope.row.stockInfo.propertyValue.replace(
+                         scope.row.stockInfo.propertyValue ?  scope.row.stockInfo.propertyValue.replace(
                             /\|\|/g,
                             ","
-                          )
+                          ) : ''
                         }}
                       </div>
                       <div class="detail_title text-muted font">
@@ -305,6 +305,27 @@
               active-color="#13ce66"
             >
             </el-switch>
+            <el-tooltip class="item" effect="dark" :content="$t('After the combination payment is enabled, the account balance will be deducted first, and the rest will be paid by other selected methods')" placement="top">
+      						<i class="el-icon-question" style="color:red;line-height:80px;margin:0 5px 0 70px"></i>
+    				</el-tooltip>
+								
+						<span style="margin-right: 30px;">
+									{{$t('Combination payment')}}
+						</span>
+            <el-switch
+              @change="changSwitchPayment"
+              v-model="switchPayment"
+              active-color="#13ce66"
+            >
+            </el-switch>  
+            <el-input v-model="bonusPayAmount" :disabled="!switchPayment" style="width:120px;margin-left:20px" :placeholder="$t('Please enter the balance to be used')"></el-input>
+              <el-popover
+                placement="top-start"
+                width="200"
+                trigger="hover"
+                :content="$t('Rules: The input amount should be less than the order amount, and only two decimal places')">
+                <i class="el-icon-info" slot="reference"></i>   
+              </el-popover>            
           </div>
           <div class="pay_method">
             <p>{{$t('Payment method')}}:</p>
@@ -409,6 +430,8 @@ export default {
       payPalId:"",
       delLoading: false,
       newWin: null,
+      switchPayment: false,
+      bonusPayAmount: '',
       paystatus: 0,
 			credits: 0,
       KTType: 'credit&debit card',
@@ -518,6 +541,7 @@ export default {
             : (this.switchBonus = true);
           this.disableSwitchBonus = false;
         }
+        this.switchPayment = false
       },
     },
   },
@@ -590,6 +614,13 @@ export default {
 			handleClosePay(){
 					this.dialogVisibleKTPay = false
 			},
+    changSwitchPayment(v){
+      this.switchBonus = !v
+      this.platformType = "";
+      if (this.bonusStatus == "2") {
+        this.switchBonus = false;
+      }
+    },      
 			continuePay(){
         // console.log(JSON.parse(r.Data.Results[0].extra).code, 'a11414585');
 				if (this.KTType == 'qr payment') {
@@ -742,6 +773,7 @@ export default {
       this.$apiCall("api.Invoice.getBonus", {}, (r) => {
         if (r.ErrorCode == "9999") {
           this.bonus = Number(r.Data.Results.bonus).toFixed(2);
+          this.bonusPayAmount = this.bonus
           this.credits = (Number(r.Data.Results.creditAmount) - Number(r.Data.Results.usedCreditAmount)).toFixed(2);
       
           this.bonusStatus = r.Data.Results.bonusStatus;
@@ -753,11 +785,12 @@ export default {
         }
       });
     },
-    changSwitchBonus() {
+    changSwitchBonus(v) {
       this.platformType = "";
       if (this.bonusStatus == "2") {
         this.switchBonus = false;
       }
+        this.switchPayment = !v
     },
     changePlatform(accountType) {
       this.platformType = accountType;
@@ -894,6 +927,16 @@ export default {
         this.$message.error("Please select payment method");
         return;
       }
+      if (this.switchPayment) {
+          if ( Number(this.bonusPayAmount) == 0) {
+            this.$message.error("Please enter a value greater than 0");
+            return;             
+          }
+          if ( Number(this.bonusPayAmount) > this.bonus) {
+                this.$message.error("Please enter a value less than the total amount of the order");
+                return;             
+          }          
+      }      
       let type = "";
       type = this.platformType;
       let paymentId = "";
@@ -984,6 +1027,8 @@ export default {
         addressId: this.addressList.find((item) => item.isDefault == "1").id,
         shippingId: this.logistic,
         platformType: type,
+        isMixedPayment: this.switchPayment ? 1 : '',
+        bonusPayAmount: this.switchPayment? this.bonusPayAmount : '0.00'
       };
       this.$apiCall("api.ShopifyOrder.generateVendorShopOrder", params, (r) => {
         if (r.ErrorCode == "9999") {
@@ -1079,6 +1124,8 @@ export default {
         accountPayment: account,
         voucherUrl: imageUrl,
         paymentId: this.dialogUnderline.paymentId,
+        isMixedPayment: this.switchPayment ? 1 : '',
+        bonusPayAmount: this.switchPayment? this.bonusPayAmount : '0.00'
       };
       this.$apiCall("api.ShopifyOrder.generateVendorShopOrder", params, (r) => {
         this.dialogUnderline.loading = false;
@@ -1128,6 +1175,8 @@ export default {
         document: params.document,
         phone: params.phone,
         email: params.email,
+        isMixedPayment: this.switchPayment ? 1 : '',
+        bonusPayAmount: this.switchPayment? this.bonusPayAmount : '0.00'
       };
       this.$apiCall(
         "api.ShopifyOrder.generateVendorShopOrder",
@@ -1168,6 +1217,8 @@ export default {
         code: this.coupon,
         platformType: 4,
         token,
+        isMixedPayment: this.switchPayment ? 1 : '',
+        bonusPayAmount: this.switchPayment? this.bonusPayAmount : '0.00'
       };
       this.$apiCall("api.ShopifyOrder.generateVendorShopOrder", params, (r) => {
         this.dialogCheckOut.loading = false;

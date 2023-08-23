@@ -127,7 +127,7 @@
 									</el-input>
 								</div>
 							</div>
-							<div class="pay-bouns" v-if="bonusStatus == 1" :class="{ dis: bonus + credits< totalAllGoodsAndFreight}" @click="changeBonusPlatform(6)">
+							<div class="pay-bouns" v-if="bonusStatus == 1" :class="{ dis: bonus + credits< totalAllGoodsAndFreight}">
 								<span style="margin-right: 30px;">
 									{{$t('Bonus')}}:
 									<span class="tx-bold"> ({{$store.state.country.symbol}} {{bonus}})</span>
@@ -140,12 +140,45 @@
 									{{$t('Credits')}}:
 									<span class="tx-bold"> ({{$store.state.country.symbol}} {{credits}})</span>
 								</span>
-								<div class="active" v-show="platformType != 6 ||  bonus + credits < totalAllGoodsAndFreight">
+								<!-- <div class="active" v-show="platformType != 6 ||  bonus + credits < totalAllGoodsAndFreight">
 									<img src="../../assets/pay/Basic.png" alt="" height="25">
 								</div>
 								<div class="active-icon" v-show="platformType == 6">
 									<img src="../../assets/pay/Active.png" alt="" height="30">
+								</div>		 -->
+								<div>
+									<el-switch
+										 :disabled="disableSwitchBonus && bonusStatus == '2'"
+										@change="changeBonusPlatform"
+										v-model="switchBonus"
+										active-color="#13ce66"
+									>
+									</el-switch>													
 								</div>
+            
+            <el-tooltip class="item" effect="dark" :content="$t('After the combination payment is enabled, the account balance will be deducted first, and the rest will be paid by other selected methods')" placement="top">
+      						<i class="el-icon-question" style="color:red;line-height:80px;margin:0 5px 0 70px"></i>
+    				</el-tooltip>								
+						<span style="margin-right: 30px;">
+									{{$t('Combination payment')}}
+						</span>
+						<div>
+						<el-switch
+              @change="changSwitchPayment"
+              v-model="switchPayment"
+              active-color="#13ce66"
+            >
+            </el-switch>  
+						</div>
+            
+            <el-input v-model="bonusPayAmount" :disabled="!switchPayment" style="width:120px;margin-left:20px" :placeholder="$t('Please enter the balance to be used')"></el-input>
+              <el-popover
+                placement="top-start"
+                width="200"
+                trigger="hover"
+                :content="$t('Rules: The input amount should be less than the order amount, and only two decimal places')">
+                <i class="el-icon-info" slot="reference"></i>   
+              </el-popover>								
 							</div>
 							<div class="other">
 								<p>{{$t('Payment method')}}:</p>
@@ -268,7 +301,10 @@ import { arrayEach } from 'xe-utils/methods';
 					data:''
 				},
 				dialogVisibleKTPay: false,
+				switchPayment: false,
+				switchBonus: true,
 				loading: false,
+				bonusPayAmount: '',
 				items:[],
 				bonus:0,
 				KTpayList: [
@@ -394,6 +430,16 @@ import { arrayEach } from 'xe-utils/methods';
 			},
 			continuePay(){
 				if (this.KTType == 'qr payment') {
+      if (this.switchPayment) {
+          if ( Number(this.bonusPayAmount) == 0 ||  Number(this.bonusPayAmount) < 0) {
+            this.$message.error("Please enter a value greater than 0");
+            return;             
+          }
+          if ( Number(this.bonusPayAmount) > this.bonus) {
+                this.$message.error("Please enter a value less than the total amount of the order");
+                return;             
+          }          
+      }						
 						this.$apiCall("api.ShopifyOrder.createPay", {
 							code: this.coupon,
 							platformType: 14,
@@ -509,6 +555,8 @@ import { arrayEach } from 'xe-utils/methods';
 					cancel_url: window.location.origin + '/orderPay?paystatus=3',
 					platformType: 4,
 					token,
+					isMixedPayment: this.switchPayment ? 1 : '',
+					bonusPayAmount: this.switchPayment? this.bonusPayAmount : '0.00'
 				};
 				let url = "api.ShopifyOrder.createPay";
 				if(this.openType == "repay"){
@@ -540,8 +588,20 @@ import { arrayEach } from 'xe-utils/methods';
 					platformType: 12,
 					accountPayment: account,
 					voucherUrl: imageUrl,
-					paymentId: this.dialogUnderline.paymentId
+					paymentId: this.dialogUnderline.paymentId,
+					isMixedPayment: this.switchPayment ? 1 : '',
+					bonusPayAmount: this.switchPayment? this.bonusPayAmount : '0.00'
 				};
+      if (this.switchPayment) {
+          if ( Number(this.bonusPayAmount) == 0 ||  Number(this.bonusPayAmount) < 0) {
+            this.$message.error("Please enter a value greater than 0");
+            return;             
+          }
+          if ( Number(this.bonusPayAmount) > this.bonus) {
+                this.$message.error("Please enter a value less than the total amount of the order");
+                return;             
+          }          
+      }					
 				let url = "api.ShopifyOrder.createPay";
 				if(this.openType == "repay"){
 					//重新支付
@@ -570,6 +630,16 @@ import { arrayEach } from 'xe-utils/methods';
 					(this.$root.$children[0].baseUrl == "/my" ? "/my" : "") + "/blank.html",
 					"pay"
 				);
+      if (this.switchPayment) {
+          if ( Number(this.bonusPayAmount) == 0 ||  Number(this.bonusPayAmount) < 0) {
+            this.$message.error("Please enter a value greater than 0");
+            return;             
+          }
+          if ( Number(this.bonusPayAmount) > this.bonus) {
+                this.$message.error("Please enter a value less than the total amount of the order");
+                return;             
+          }          
+      }					
 				let params2 = {
 					code: this.coupon,
 					methodId: params.methodId,
@@ -583,7 +653,9 @@ import { arrayEach } from 'xe-utils/methods';
 					number: params.number,
 					document: params.document,
 					phone: params.phone,
-					email: params.email
+					email: params.email,
+					isMixedPayment: this.switchPayment ? 1 : '',
+					bonusPayAmount: this.switchPayment? this.bonusPayAmount : '0.00'
 				};
 				let url = "api.ShopifyOrder.createPay";
 				if(this.openType == "repay"){
@@ -637,7 +709,16 @@ import { arrayEach } from 'xe-utils/methods';
 					this.$elementMessage(this.$t("Please select payment method"), "error");
 					return;
 				}
-				
+      if (this.switchPayment) {
+          if ( Number(this.bonusPayAmount) == 0 ||  Number(this.bonusPayAmount) < 0) {
+            this.$message.error("Please enter a value greater than 0");
+            return;             
+          }
+          if ( Number(this.bonusPayAmount) > this.bonus) {
+                this.$message.error("Please enter a value less than the total amount of the order");
+                return;             
+          }          
+      }				
 				//支付
 				this.$Burying({
 					object: "9003",
@@ -648,6 +729,8 @@ import { arrayEach } from 'xe-utils/methods';
 					platformType: this.platformType,
 					success_url: window.location.origin + '/orderPay?paystatus=2',
 					cancel_url: window.location.origin + '/orderPay?paystatus=3',
+					isMixedPayment: this.switchPayment ? 1 : '',
+					bonusPayAmount: this.switchPayment? this.bonusPayAmount : '0.00'
 				};
 				let type = "";
 				let paymentId = "";
@@ -784,17 +867,29 @@ import { arrayEach } from 'xe-utils/methods';
 			
 				
 			},
-			changeBonusPlatform() {
-				if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
-					return;
-				}else{
-					if(this.platformType == 6){
-						this.platformType = "";
-						return;
-					}
-					this.platformType = 6;
-				}
+			changeBonusPlatform(v) {
+				// if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
+				// 	return;
+				// }else{
+				// 	if(this.platformType == 6){
+				// 		this.platformType = "";
+				// 		return;
+				// 	}
+				// 	this.platformType = 6;
+				// }
+				      this.platformType = "";
+      if (this.bonusStatus == "2") {
+        this.switchBonus = false;
+      }
+        this.switchPayment = !v
 			},
+    changSwitchPayment(v){
+      this.switchBonus = !v
+      this.platformType = "";
+      if (this.bonusStatus == "2") {
+        this.switchBonus = false;
+      }
+    },			
 			changePlatform(type) {
 				if (this.bonusStatus !=1) {
 					this.platformType = type;
@@ -812,6 +907,7 @@ import { arrayEach } from 'xe-utils/methods';
 				}, (r) => {
 					if (r.ErrorCode == "9999") {
 						this.bonus = r.Data.Results.bonus ? parseFloat(Number(r.Data.Results.bonus).toFixed(2)) : 0;
+          	this.bonusPayAmount = this.bonus
 						if(this.bonus > this.totalAllGoodsAndFreight){
 							this.platformType = 6;
 						}else{

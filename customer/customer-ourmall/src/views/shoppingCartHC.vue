@@ -529,7 +529,7 @@
               {{$t('Cancel')}}
             </el-button>
             <el-button type="primary" @click="continuePay()">
-               {{$t('Pay')}}
+              Pay
             </el-button>
           </div>
     </el-dialog> 
@@ -539,9 +539,9 @@
 <script>
 import DHeader from "@/views/homePage/components/header";
 // import DFooter from "@/views/homePage/components/footer";
-import DialogAddress from "@/views/homePage/components/DialogAddressHC";
+import DialogAddress from "@/views/homePage/components/DialogAddress";
 import countryArr from "@/components/country.json";
-import Underline from "@/components/checkout/underlineHC";
+import Underline from "@/components/checkout/underline";
 import Dlocal from "@/components/checkout/dlocal";
 import Checkout from "@/components/checkout/checkout";
 // import STable from '@/components/table'
@@ -1073,8 +1073,6 @@ export default {
         this.switchBonus = false;
       }
         this.switchPayment = !v
-
-      
     },
     changSwitchPayment(v){
       this.switchBonus = !v
@@ -1295,7 +1293,7 @@ export default {
         return;
       }
       if (this.switchPayment) {
-          if ( Number(this.bonusPayAmount) == 0) {
+          if ( Number(this.bonusPayAmount) == 0||  Number(this.bonusPayAmount) < 0) {
             this.$message.error("Please enter a value greater than 0");
             return;             
           }
@@ -1363,9 +1361,7 @@ export default {
           this.dialogUnderline.params = item.params
             ? JSON.parse(item.params)
             : "";
-          // this.dialogUnderline.payAmount = 0;
-          this.dialogUnderline.payAmount = this.sum;
-
+          this.dialogUnderline.payAmount = 0;
           break;
         default:
           //bonus
@@ -1462,7 +1458,7 @@ export default {
         // let id = r.Data.Results.id;
         let success_url = window.location.origin + '/orderPay?paystatus=2&payType=13'
         let apiUserId = localStorage.getItem("c_apiUserId")?localStorage.getItem("c_apiUserId"):"";
-				let url = `https://api.myourmall.com/kaitaiCheckout.php?id=${id}&code=${this.coupon}&apiUserId=${apiUserId}&platformType=${formType}`
+				let url = `https://sandboxapi.myourmall.com/kaitaiCheckout.php?id=${id}&apiUserId=${apiUserId}&platformType=${formType}`
 				if(Object.keys(this.KasikornbankInfo).length && this.shopName !== ''){
 								let obj = {
 									sessionId:seId,
