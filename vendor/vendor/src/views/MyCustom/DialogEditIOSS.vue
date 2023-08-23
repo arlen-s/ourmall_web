@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="`${data.id ? '编辑' : '添加'} IOSS`"
+    :title="`${data.id ? 'edit' : 'add'} IOSS`"
     :visible.sync="data.isShow"
     :close-on-click-modal="false"
     width="600px"
@@ -10,18 +10,18 @@
     <el-divider></el-divider>
     <div class="d-body">
       <el-form :model="data.form" :rules="rules" ref="ruleForm" label-width="150px">
-        <el-form-item label="描述:" prop="name" >
-          <el-input v-model="data.form.name" placeholder="请输入说明"></el-input>
+        <el-form-item label="descriptive:" prop="name" >
+          <el-input v-model="data.form.name" placeholder="Please enter a description"></el-input>
         </el-form-item>
         <el-form-item label="IOSS ID:" prop="iossId">
-          <el-input v-model="data.form.iossId" placeholder="请输入 IOSS ID"></el-input>
+          <el-input v-model="data.form.iossId" placeholder="Please enter IOSS ID"></el-input>
         </el-form-item>
-        <el-form-item label="目的地国家:" prop="countrys" required>
+        <el-form-item label="Destination country:" prop="countrys" required>
           <el-select v-model="data.form.countrys"
             multiple
             filterable
             default-first-option
-            placeholder="请选择目的地国家"
+            placeholder="Please select the country of destination"
             style="width: 412px"
           >
             <!-- disabled 选过的不能选 -->
@@ -40,8 +40,8 @@
     </div>
     <el-divider></el-divider>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="data.isShow = false">取消</el-button>
-      <el-button :loading="data.loading" type="primary" @click="save('ruleForm')">保存</el-button>
+      <el-button @click="data.isShow = false">cancel</el-button>
+      <el-button :loading="data.loading" type="primary" @click="save('ruleForm')">save</el-button>
     </div>
   </el-dialog>
 </template>
@@ -53,7 +53,7 @@ export default {
     let checkCountrys = (rule, value, callback) => { //验证国家
       setTimeout(()=>{
         if(!value || !value.length){
-          callback(new Error('至少选择一个国家地区'))
+          callback(new Error('Select at least one country region'))
         }
         callback();
       },100);
@@ -61,7 +61,7 @@ export default {
     let iossIdLen = (rule, value, callback) => { //验证ioss
       setTimeout(() => {
         if(!value || value.length < 12 || !/^[0-9A-Za-z]*$/.test(value)){ 
-        callback(new Error('IOSS ID必须输入。至少12个字符的字母或数字'))
+        callback(new Error('IOSS ID must be entered. Letters or numbers of at least 12 characters'))
       }
       callback();
       },100);
@@ -69,10 +69,10 @@ export default {
     return {
       rules:{
         name: [
-          {required: true, message: '描述必须输入', trigger: 'blur'},
+          {required: true, message: 'Description must be entered', trigger: 'blur'},
         ],
         iossId: [
-          {required: true, message: 'IOSS ID必须输入。至少12个字符的字母或数字', trigger: 'blur'},
+          {required: true, message: 'IOSS ID must be entered. Letters or numbers of at least 12 characters', trigger: 'blur'},
           {validator: iossIdLen, trigger: 'blur'},
         ],
         countrys: [
@@ -96,9 +96,9 @@ export default {
           if(this.data.id){ //修改
             params.id = this.data.id;
           }
-          this.$confirm("已导入至ERP订单和已发货订单IOSS无法更改，更新IOSS会覆盖您客户订单的IOSS，请谨慎操作！", {
-            confirmButtonText: "确认",
-            cancelButtonText: "取消",
+          this.$confirm("The IOSS of orders that have been imported to ERP and shipped orders cannot be changed, updating the IOSS will overwrite the IOSS of your customer's order, so please be careful!", {
+            confirmButtonText: "ok",
+            cancelButtonText: "cancel",
             type: "info",
           },).then(()=>{
             this.setSave(params)

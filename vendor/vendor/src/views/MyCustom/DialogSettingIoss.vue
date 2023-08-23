@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      :title="`IOSS 设置`"
+      :title="`IOSS Set`"
       :visible.sync="data.isShow"
       :close-on-click-modal="false"
       width="920px"
@@ -11,7 +11,7 @@
       <el-divider></el-divider>
       <div class="d-body">
         <div class="action-row">
-          <el-button icon="el-icon-plus" type="primary" size="small" @click="openEditIOSS()">添加 IOSS</el-button>
+          <el-button icon="el-icon-plus" type="primary" size="small" @click="openEditIOSS()">Add IOSS</el-button>
         </div>
         <el-table 
           :data="data.items"
@@ -19,9 +19,9 @@
           height="300px"
           style="width: 100%; margin-bottom: 15px;"
         >
-          <el-table-column label="描述" prop="name"></el-table-column>
+          <el-table-column label="descriptive" prop="name"></el-table-column>
           <el-table-column label="IOSS ID" prop="iossId" width="200"></el-table-column>
-          <el-table-column label="关联国家" >
+          <el-table-column label="associated country" >
             <template slot-scope="scope">
               <div>
                 <el-tag v-for="c in scope.row.countrys" :key="c" style=" margin: 5px;">
@@ -30,7 +30,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="100">
+          <el-table-column label="opera" width="100">
             <template slot-scope="scope">
               <div>
                 <el-link icon="el-icon-edit" type="primary" style=" margin-right: 10px;" @click="openEditIOSS(scope.row)"></el-link>
@@ -41,16 +41,16 @@
         </el-table>
         
         <div class="options-wrap">
-          <el-radio v-model="data.isOpenIoss" :label="false" >无IOSS</el-radio>
-          <p class=" mg-b-15">当包裹到达欧盟目的国时，将申报订单金额（包括运费），海关将要求收件人缴纳增值税。</p>
-          <el-radio v-model="data.isOpenIoss" :label="true" >使用客户的IOSS</el-radio>
-          <p>请输入正确有效的IOSS ID，该ID应与相应的目的地国家相关联。如果目的地国家未与正确的 IOSS ID 关联，则不会应用 IOSS ID</p>
+          <el-radio v-model="data.isOpenIoss" :label="false" >NO IOSS</el-radio>
+          <p class=" mg-b-15">When the parcel arrives in the EU destination country, the amount of the order (including shipping costs) will be declared and customs will ask the recipient to pay VAT.</p>
+          <el-radio v-model="data.isOpenIoss" :label="true" >Using the customer's IOSS</el-radio>
+          <p>Please enter the correct and valid IOSS ID that should be associated with the corresponding destination country. If the destination country is not associated with the correct IOSS ID, the IOSS ID will not be applied</p>
         </div>
       </div>
       <el-divider></el-divider>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="data.isShow = false">取消</el-button>
-        <el-button  type="primary" @click="changeIoss">立即更新</el-button>
+        <el-button @click="data.isShow = false">cancel</el-button>
+        <el-button  type="primary" @click="changeIoss">Instant Updates</el-button>
       </div>
     </el-dialog>
     <DialogEditIOSS :relationshipId="data.id" :countryArr="countryArr" :linked="linked" :data="dialogEditIOSSData" @saveIOSSSuccess="saveIOSSSuccess"/>

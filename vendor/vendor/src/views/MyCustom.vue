@@ -387,7 +387,7 @@
               </el-table-column>
               <el-table-column
                 :label="`${$t('mycustomer.总信用额度')}/${$t('mycustomer.剩余信用额度')}`"
-                align="center"
+                align="center" 
               >
                 <template slot-scope="scope">
                   <p>{{Number(scope.row.creditAmount).toFixed(2) }}</p>
@@ -438,10 +438,10 @@
                       :disabled="!$isRole($route.meta.roleWrite)"
                       type="primary"
                       @click="openSetIOSS(scope.row)"
-                    >IOSS 设置</el-link>
+                    >IOSS setting</el-link>
                   </div>
                   <div>
-                    <el-link type="primary" @click="openTX(scope.row)">提现</el-link>
+                    <el-link type="primary" @click="openTX(scope.row)">withdrawals</el-link>
                   </div>
                 </template>
               </el-table-column>

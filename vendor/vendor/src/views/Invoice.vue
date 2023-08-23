@@ -1820,7 +1820,7 @@
                                         </div>
                                         <template v-if="scope.row.ioss">
                                           <div class="mg-y-10" style="font-weight: bold;font-size: 16px;">
-                                            IOSS信息
+                                            IOSS Text
                                           </div>
                                           <div class="d-flex">
                                             <div class="d-flex" style="width: 90%">
