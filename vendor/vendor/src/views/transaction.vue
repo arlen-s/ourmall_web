@@ -87,7 +87,7 @@
 												@keyup.enter.native="filterItem" @clear="clearFilter('shopifyOrder')">
 											</el-input>
 										</el-form-item>
-                    <el-form-item :label="$t('orders.storeName') + ':' ">
+                    <!-- <el-form-item :label="$t('orders.storeName') + ':' ">
                           <el-select
                             filterable
                             remote
@@ -104,7 +104,7 @@
                               :value="opt.id"
                             ></el-option>
                           </el-select>
-                        </el-form-item>									
+                        </el-form-item>									 -->
 										<el-form-item>
 											<el-button type="primary" @click="filterItem">{{$t("transaction.filter")}}
 											</el-button>
