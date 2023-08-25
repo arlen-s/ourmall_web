@@ -157,6 +157,12 @@
                     >
                       <span class=" tx-danger">{{$t('Delete')}}</span>
                     </el-dropdown-item>
+                    <el-dropdown-item
+                      style=" width: 80px; text-align: center;"
+                      @click.native="checkPice(item)"
+                    >
+                      <el-link type="primary">{{$t('price check')}}</el-link>
+                    </el-dropdown-item>                    
                   </el-dropdown-menu>
                 </el-dropdown>
                 <a
@@ -380,6 +386,24 @@ export default {
         this.selectLoading = false;
         if (r.ErrorCode == 9999) {
           this.selectArr = r.Data.Results;
+        } else {
+          this.$message({ message: r.Message, type: "error" });
+        }
+      });
+    },
+    checkPice(item){
+      let params = {
+        url: item.productUrl,
+        name: item.name,
+        minPrice: item.minPrice,
+        maxPrice: item.maxPrice,
+        description: item.description,
+        imgUrlJson: item.imgsJson, 
+      }
+      this.$apiCall("api.OfferProduct.addByCustomer", params, (r) => {
+        this.selectLoading = false;
+        if (r.ErrorCode == 9999) {
+          this.$message({ message: r.Message, type: "success" });
         } else {
           this.$message({ message: r.Message, type: "error" });
         }

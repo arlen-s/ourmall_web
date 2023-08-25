@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-
+var userId= localStorage.getItem('apiUserId') 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
@@ -87,6 +87,16 @@ const routes = [
     },
     component: () => import(/* webpackChunkName: 'Shop' */ '../views/ShopSet/Shop.vue')
   },
+  {
+    path: '/exchangeRates',
+    name: "exchangeRates",
+    meta: {
+      title: 'exchangeRates',
+      roleWrite:"exchangeRates",
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'Shop' */ '../views/ShopSet/exchangeRates.vue')
+  },  
   {
     path: '/publish',
     name: "publish",
@@ -710,6 +720,17 @@ const routes = [
     },
     component: () => import(/* webpackChunkName: 'transactionDetail' */ '@/views/WithdrawalList.vue')
   },  
+  {
+    path: '/shopOrderList',
+    name: 'shopOrderList',
+    meta: {
+      title: '店铺销售列表',
+      urlActive: '/shopOrderList',
+      roleWrite:"payRecordEdit",
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'transactionDetail' */ '@/views/shopOrderList.vue')
+  },    
   {
       path: '/ordersManage/:status/:active',
       name: 'ordersManagement',
