@@ -124,9 +124,23 @@
                   <el-radio label="1">{{$t('不扣减')}}</el-radio>
                   <el-radio label="2">{{$t('出库之后')}}</el-radio>
                 </el-radio-group>
-              </el-form-item>
-            
-            </el-col>            
+              </el-form-item>            
+            </el-col>        
+            <el-col :span="24">
+              <el-form-item :label="$t('goods.设定SPU价格')" style="width: 100%;">
+                <template>
+                  <el-radio v-model="visiblePrice" :label="1">{{$t('goods.全部客户')}}</el-radio>
+                  <el-radio v-model="visiblePrice" :label="2">{{$t('goods.指定客户售价')}}</el-radio>
+                </template>
+                <template v-if="visiblePrice == 2">
+                  <el-link
+                    type="primary"
+                    style="line-height: 22px"
+                    @click="visibleCustomerTor = true"
+                  >{{$t('goods.添加')}}</el-link>
+                </template>
+              </el-form-item>            
+            </el-col>                        
             <el-col :span="12">
               <el-form-item :label="$t('goodsEdit.预计交付周期')" style="width: 100%;">
                 <el-input  v-model.number="form.min" style="width:70px;margin-right:5px"></el-input>
@@ -151,6 +165,18 @@
                 >{{opt.customerName}}</el-tag>
               </el-form-item>
             </el-col>
+            <el-col :span="24" v-show="visiblePrice == 2">
+              <el-form-item :label="$t('goods.指定客户价格')">
+                <el-tag
+                  v-for="(opt,i) in visibleCustomerPriceList"
+                  :key="i"
+                  type="info"
+                  closable
+                  @close="handleClosePrice(opt)"
+                  class="mg-r-15"
+                >{{opt.name}} price:{{opt.price}}</el-tag>
+              </el-form-item>
+            </el-col>            
           </el-row>
           <el-form-item :label="$t('goodsEdit.图片')" required>
             <div class="img-upload">
@@ -779,6 +805,39 @@
         <el-button type="primary" @click="addCustomer">{{$t('goodsEdit.确定')}}</el-button>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="visibleCustomerTor" :width="'400px'" @close="closeDialogPrice">
+      <div class="tx-center dialog-content" style="padding:20px">
+        <template v-if="visibleCustomerTor">
+          <el-select
+            class="mg-r-15"
+            filterable
+            remote
+            :placeholder="$t('goodsEdit.请输入客户邮箱')"
+            v-model="customerId"
+            :no-match-text="$t('goods.未找到对应的')"
+          >
+            <el-option
+              v-for="(opt,i) in customerList"
+              :key="i"
+              :label="opt.customerEmail"
+              :value="opt.customerId"
+            ></el-option>
+          </el-select>
+          <div>
+              <el-input-number v-model="setPrice" placeholder="请输入当前客户售价" :min="0"
+  :precision="2" style="width:220px;margin-top:30px;margin-left: -10px;"></el-input-number>
+          </div>
+          
+          <!-- <el-link type="primary" style="line-height: 22px" @click="visibleCustomer = false">
+						{{$t('goodsEdit.取消')}}
+          </el-link>-->
+        </template>
+      </div>
+      <div slot="footer">
+        <el-button @click="closeDialogPrice">{{$t('goodsEdit.取消')}}</el-button>
+        <el-button type="primary" @click="addPrice">{{$t('goodsEdit.确定')}}</el-button>
+      </div>
+    </el-dialog>    
     <el-dialog :visible.sync="dialogVolumeSet.show" :width="'400px'">
       <div class="tx-center dialog-content" style="padding:20px">
         <p style="text-align: left;margin: -30px 0 30px;">
@@ -823,7 +882,7 @@
       </span>
     </el-dialog>
 
-<el-dialog :visible.sync="dialogVisiblevideo">
+<el-dialog :visible.sync="dialogVisibleVideo">
   <video controls="controls" style="width: 100%;">
      <source :src="movie" type="video/mp4" />
   </video>
@@ -860,12 +919,16 @@ export default {
         show: false,
 
       },
-      dialogVisiblevideo: false,
+      visibleCustomerPriceList: [],
+      visiblePrice: 1,
+      dialogVisibleVideo: false,
+      setPrice: '',
       movie: '',
       num: 0,
       SkuId: '',
       houseNum: 0,
       childNum: 0,
+      visibleCustomerTor: false,
       checkStoreList: [],
       storehouse: [
       ],
@@ -1256,7 +1319,7 @@ videoHandleChange(file, fileList) {
 						"@file": file.raw,
 					}, res => {
      //拿到返回的路径
-     console.log(11111, res.Data.Results.url);
+     console.log(11111, res);
     this.$message.success("上传成功");
     //回显接口
     // getEventpath(path).then(res => {
@@ -1270,7 +1333,7 @@ videoHandleChange(file, fileList) {
 
 Visiblemovie(val) {
    this.movie = val;
-   this.dialogVisiblevideo = !this.dialogVisiblevideo;
+   this.dialogVisibleVideo = !this.dialogVisibleVideo;
 },
     handleHouseList () { //仓库选择
       this.dialogStorehouse.show = false
@@ -1372,15 +1435,27 @@ Visiblemovie(val) {
       this.getCustomer(this.customerId)
       this.closeSelectAssign()
     },
+    addPrice(){
+      this.setPriceIn(this.customerId, this.setPrice)
+      this.closeDialogPrice()
+    },
     closeSelectAssign () {
       this.clearCustomer()
       this.visibleCustomer = false
+    },
+    closeDialogPrice(){
+       this.customerId = ""
+       this.setPrice = ''
+       this.visibleCustomerTor = false
     },
     clearCustomer () {
       this.customerId = ""
     },
     handleClose (tag) {
       this.visibleRangeCustomer.splice(this.visibleRangeCustomer.indexOf(tag), 1)
+    },
+    handleClosePrice(tag){
+      this.visibleCustomerPriceList.splice(this.visibleCustomerPriceList.indexOf(tag), 1)
     },
     checkVisibleCustomers (step, items) {
       this.dialogVisibleCustomers.isShow = false
@@ -1421,6 +1496,28 @@ Visiblemovie(val) {
       let hash = {}
       this.visibleRangeCustomer = this.visibleRangeCustomer.reduce((item, next) => {
         hash[next.customerId] ? "" : (hash[next.customerId] = true && item.push(next))
+        return item
+      }, [])
+    },
+    setPriceIn(val,price){
+      if (!val) return
+      let item = this.customerList.filter((item) => {
+        return val == item.customerId
+      })
+      if (!item.length) return
+      if (this.visibleCustomerPriceList.length) {
+        let item2 = this.visibleCustomerPriceList.filter((obj) => {
+          return val == obj.customerId
+        })
+        if (item2.length) return
+        this.visibleCustomerPriceList.push({name:item[0].customerName,price:price,id:item[0].customerId})
+      } else {
+        this.visibleCustomerPriceList.push({name:item[0].customerName,price:price,id:item[0].customerId})
+      }
+      //去重
+      let hash = {}
+      this.visibleCustomerPriceList = this.visibleCustomerPriceList.reduce((item, next) => {
+        hash[next.id] ? "" : (hash[next.id] = true && item.push(next))
         return item
       }, [])
     },
@@ -1475,7 +1572,16 @@ Visiblemovie(val) {
               this.$set(item, "email", item.customer && item.customer.email || '')
             })
           }
-
+          this.visibleCustomerPriceList = data.specificCustomerPrices && data.specificCustomerPrices.length ? data
+            .specificCustomerPrices : []
+          this.visiblePrice = this.visibleCustomerPriceList.length ? 2 : 1
+          if (this.visibleCustomerPriceList.length) {
+            this.visibleCustomerPriceList.forEach(item => {
+              this.$set(item, "name", item.customerName || '')
+              this.$set(item, "price", item.price)
+              this.$set(item, "id", item.id)
+            })
+          }
           for (let a = 0; a < data.skuWarehouse.length; a++) {
             for (let i = 0; i < data.skuWarehouse[a].childArr.length; i++) {
               for (let j = 0; j < this.storehouse.length; j++) {
@@ -1894,16 +2000,24 @@ Visiblemovie(val) {
         width: this.form.width,
         height: this.form.height,
         vwCoefficient: this.form.vwCoefficient,
-        skuWarehouseInfo: sail
-      }
+        skuWarehouseInfo: sail,
+      }//visibleCustomerPriceList
       //指定用户乐见
       let visibleCustomerIds = []
+      let priceIds = []
       this.visibleRangeCustomer.forEach((item) => {
         visibleCustomerIds.push(item.customerId)
       })
       if (this.visibleRange == 2) { //指定可见
         params.visibleCustomerIds = visibleCustomerIds
       }
+      console.log( this.visibleCustomerPriceList,' this.visibleCustomerPriceList');
+      this.visibleCustomerPriceList.forEach((item) => {
+        priceIds.push({customerId: item.id,price: item.price})
+      })
+      if (this.visiblePrice == 2) { //指定可见
+        params.specificCustomerPrices = priceIds
+      }      
       //存的时候 kg 转 g
       params.stocks.forEach(e => {
         if (!isNaN(e.weight)) {

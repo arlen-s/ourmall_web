@@ -998,7 +998,12 @@
 								name: "app.提现列表",
 								path: "/WithdrawalList",
 								enabled: true,
-							}							
+							}
+							// ,{
+							// 	name: "app.店铺销量列表",
+							// 	path: "/shopOrderList",
+							// 	enabled: true,
+							// }							
 						]
 					},
 					{
@@ -1039,6 +1044,11 @@
 								role: 'privilegeView',
 								enabled: true,
 							},
+							{
+								name: "app.汇率管理",
+								path: "/exchangeRates",
+								enabled: true,
+							},							
 							// {
 							// 	name: "shop.交易币种",
 							// 	path: "/Currency",
