@@ -1221,6 +1221,7 @@ export default {
   "Bonus": "Bonus",
   "Quality": "Quality",
   "Credits": "Credits",
+  "Unable to be sourced":"Unable to be sourced",
   "Combination payment":"Combination payment",
   "Please enter the balance to be used": "Please enter the balance to be used",
   "Rules: The input amount should be less than the order amount, and only two decimal places": "Rules: The input amount should be less than the order amount, and only two decimal places",

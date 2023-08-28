@@ -170,7 +170,7 @@
 								</el-table-column>
 								<el-table-column label="Details">
 									<template slot-scope="scope">
-										<el-button style="font-size: 12px;" type="text" @click="openDetails(scope.$index)">Details</el-button>
+										<el-button style="font-size: 12px;" type="text" @click="openDetails(scope.$index)">{{$t('Details')}}</el-button>
 									</template>
 								</el-table-column>
 							</el-table>

@@ -313,6 +313,7 @@ export default {
   "Request Fullfill": "Fullfill anfordern",
   "Shipping Method": "Versandart",
   "Shipping cost": "Versandkosten",
+  "Unable to be sourced":"Kann nicht beschafft werden",
   "pay total": "insgesamt bezahlen",
   "Select Payment Method": "Wählen Sie die Zahlungsmethode",
   "All transactions are secure and encrypted": "Alle Transaktionen sind sicher und verschlüsselt",

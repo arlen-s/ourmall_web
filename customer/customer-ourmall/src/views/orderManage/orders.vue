@@ -242,6 +242,120 @@
                   :reserve-selection="true"
                 >
                 </el-table-column>
+                   <el-table-column type="expand" width="25" :reserve-selection="true">
+                     <template #header>
+                      <el-button type="text" size="mini" v-if="isExpansion" @click="toggleRowExpansion">  <i class="el-icon-minus"></i></el-button>
+                       <el-button type="text" size="mini" v-if="!isExpansion" @click="toggleRowExpansion">  <i class="el-icon-plus"></i> </el-button>
+                      </template>
+                    <template slot-scope="props">
+                        <el-table
+                        ref="multipleTable"
+                        :data="props.row.items"
+                        style="width: 100%; margin-left: 0"
+                        max-height="360"
+                        :row-style="rowStyle"
+                        :header-cell-style="rowStyle"
+                        :cell-style="rowStyle"
+                       :cell-class-name="cellClassName"
+                      >
+                        <el-table-column prop="" label="Product Images" 
+                          width='200'
+                          align="center">
+                          <template slot-scope="child">
+                              <!-- <img :src="child.row.imgUrl" width="80" height="80" /> -->
+                               <el-image
+                                style="width: 80px; height: 80px"
+                                :src="child.row.imgUrl"
+                                fit="cover"></el-image>
+                          </template>                       
+                        </el-table-column>
+                        <el-table-column prop="vendorProductName" label="SKU number/quantity/name" 
+                          width='200'
+                          align="left">  
+                             <template slot-scope="child">
+                                  <!-- <span>{{child.row.name}}</span> -->
+                          <el-link
+                            type="primary"
+                            v-if="child.row.isManage != 2 && !child.row.vendorPrice"
+                           
+                            @click="unable(child.row)"
+                          >{{$t('Unable to be sourced')}}</el-link>                                  
+                            <p class="">
+                                <template v-if="child.row.isManage == 2">
+                                  <span style="display: inline-block;color: #F56C6C;">
+                                    {{child.row.vendorSku + 'Unable to purchase'}}
+                                    <span> <b class="text-danger" style="font-size:16px">×</b><el-badge class="mark" :value="child.row.quantity" /></span>
+                                  </span>
+                                </template>
+                                <template v-else>
+                                  <template v-if="child.row.status != 1">
+                                    <span
+                                      style="display: inline-block;color: #F56C6C;"
+                                    >
+                                      {{child.row.vendorSku ? `${child.row.vendorSku} Products Off shelf` : $t('null     Please make an offer')}}
+                                     <span> <b class="text-danger" style="font-size:16px">×</b><el-badge class="mark" :value="child.row.quantity" /></span>
+                                    </span>
+                                  </template>
+                                  <template v-else>
+                                    <span style="display: inline-block;">
+                                      {{child.row.vendorSku || $t('null     Please make an offer')}}
+                                       <span> <b class="text-danger" style="font-size:16px">×</b><el-badge class="mark" :value="child.row.quantity" /></span>
+                                    </span>
+                                  </template>
+                                </template>
+                              </p>
+                               <span>{{child.row.name}}</span>
+                              </template>                   
+                        </el-table-column>  
+                        <el-table-column
+                          prop=""
+                          label="Attribute Value"
+                          width='180'
+                          align="left"
+                        >
+                          <template slot-scope="child">
+                            <span>{{child.row.propertyValue}}</span>                           
+                          </template>
+                        </el-table-column>                        
+                        <el-table-column prop="vendorSku" label="Supplier Prices" 
+                          width='200'
+                          align="left">  
+                          <template slot-scope="child">
+                                <span style="display: inline-block;">
+                                  <span v-if="child.row.vendorSku">
+                                    <template
+                                      v-if="(props.row.discountType == 1 || props.row.discountType == 2) && child.row.isManage != 2"
+                                    >
+                                      <span>{{$store.state.country.symbol}} {{Number((child.row.amount - child.row.amount / props.row.productAmount * props.row.couponAmount) / child.row.quantity).toFixed(2)}}&nbsp;</span>
+                                      <span style="color: red; text-decoration:line-through;">
+                                        <span
+                                          style="color: #606266;"
+                                        >{{$store.state.country.symbol}} {{Number(child.row.vendorPrice).toFixed(2)}}</span>
+                                      </span>
+                                    </template>
+                                    <template v-else>{{$store.state.country.symbol}} {{Number(child.row.vendorPrice).toFixed(2)}}</template>
+                                  </span>
+                                  <span style="color: #F56C6C;" v-else>{{$t('Please make an offer')}}</span>
+                                </span>
+                          </template>                    
+                        </el-table-column>                                         
+
+                        <el-table-column
+                          prop="phone"
+                          label="Customer selling price"
+                          width='200'
+                          align="left"
+                        >
+                        <template slot-scope="child">
+                          <span>{{props.row.currency}} {{Number(child.row.price).toFixed(2)}}</span>
+                                  
+                        </template>
+                        </el-table-column>
+                        <el-table-column label=""></el-table-column>
+                    <!-- <span>{{ scope.row.codeName }}</span> -->
+                        </el-table>
+                  </template>
+                </el-table-column>                  
                 <el-table-column label="order type" v-if="status == 3">
                     <template slot-scope="scope">
                         <p>{{scope.row.shippingType== 1? $t('Wholesale order') : $t('offline order')}}</p>
@@ -249,7 +363,7 @@
                 </el-table-column>                
                 <el-table-column :label="$t('Your shop order num')" width="100">
                   <template slot-scope="scope">
-                    <el-popover
+                    <!-- <el-popover
                       width="1000"
                       trigger="hover"
                       placement="top-start"
@@ -424,7 +538,6 @@
                               >
                             </p>
                           </div>
-                          <!-- 删除 -->
                           <div
                             class="d-flex"
                             style="flex: 1;justify-content: flex-end;margin-right:5px"
@@ -441,12 +554,13 @@
                       <div slot="reference" class="name-wrapper">
                         <span>{{ scope.row.codeName }}</span>
                       </div>
-                    </el-popover>
+                    </el-popover> -->
+                    <span>{{ scope.row.codeName }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column :label="$t('Order Number')" width="200">
                   <template slot-scope="scope">
-                    <el-popover
+                    <!-- <el-popover
                       width="1000"
                       trigger="hover"
                       placement="top-start"
@@ -621,7 +735,6 @@
                               >
                             </p>
                           </div>
-                          <!-- 删除 -->
                           <div
                             class="d-flex"
                             style="flex: 1;justify-content: flex-end;margin-right:5px"
@@ -637,16 +750,14 @@
                       </div>
                       <div slot="reference" class="name-wrapper">
                         <span>{{ scope.row.orderId || "---" }}</span>
-                        <!-- <span style="display: inline-block;height: 26px;width: 26px;line-height: 26px;text-align: center;background: #5c6ac4;color: #fff;margin-left: 10px;font-size: 10px!important;" v-if="status != 1 && scope.row.isSplit == 1">
-													Split
-												</span> -->
                         <img
                           v-if="status != 1 && scope.row.isSplit == 1"
                           style="margin-left: 10px;"
                           src="../../../public/images/split2.png"
                         />
                       </div>
-                    </el-popover>
+                    </el-popover> -->
+                        <span>{{ scope.row.orderId || "---" }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column label="Shop" width="200">
@@ -912,6 +1023,120 @@
                   :reserve-selection="true"
                 >
                 </el-table-column>
+                  <el-table-column type="expand" width="25" :reserve-selection="true">
+                     <template #header>
+                      <el-button type="text" size="mini" v-if="isExpansion" @click="toggleRowExpansion">  <i class="el-icon-minus"></i></el-button>
+                       <el-button type="text" size="mini" v-if="!isExpansion" @click="toggleRowExpansion">  <i class="el-icon-plus"></i> </el-button>
+                      </template>
+                    <template slot-scope="props">
+                        <el-table
+                        ref="multipleTable"
+                        :data="props.row.items"
+                        style="width: 100%; margin-left: 0"
+                        max-height="360"
+                        :row-style="rowStyle"
+                        :header-cell-style="rowStyle"
+                        :cell-style="rowStyle"
+                       :cell-class-name="cellClassName"
+                      >
+                        <el-table-column prop="" label="Product Images" 
+                          width='200'
+                          align="center">
+                          <template slot-scope="child">
+                              <!-- <img :src="child.row.imgUrl" width="80" height="80" /> -->
+                               <el-image
+                                style="width: 80px; height: 80px"
+                                :src="child.row.imgUrl"
+                                fit="cover"></el-image>
+                          </template>                       
+                        </el-table-column>
+                        <el-table-column prop="vendorProductName" label="SKU number/quantity/name" 
+                          width='200'
+                          align="left">  
+                             <template slot-scope="child">
+                                  <!-- <span>{{child.row.name}}</span> -->
+                          <el-link
+                            type="primary"
+                            v-if="child.row.isManage != 2 && !child.row.vendorPrice"
+                           
+                            @click="unable(child.row)"
+                          >{{$t('Unable to be sourced')}}</el-link>                                  
+                            <p class="">
+                                <template v-if="child.row.isManage == 2">
+                                  <span style="display: inline-block;color: #F56C6C;">
+                                    {{child.row.vendorSku + 'Unable to purchase'}}
+                                    <span> <b class="text-danger" style="font-size:16px">×</b><el-badge class="mark" :value="child.row.quantity" /></span>
+                                  </span>
+                                </template>
+                                <template v-else>
+                                  <template v-if="child.row.status != 1">
+                                    <span
+                                      style="display: inline-block;color: #F56C6C;"
+                                    >
+                                      {{child.row.vendorSku ? `${child.row.vendorSku} Products Off shelf` : $t('null Please make an offer') }}
+                                     <span> <b class="text-danger" style="font-size:16px">×</b><el-badge class="mark" :value="child.row.quantity" /></span>
+                                    </span>
+                                  </template>
+                                  <template v-else>
+                                    <span style="display: inline-block;">
+                                      {{child.row.vendorSku || 'null Please make an offer'}}
+                                       <span> <b class="text-danger" style="font-size:16px">×</b><el-badge class="mark" :value="child.row.quantity" /></span>
+                                    </span>
+                                  </template>
+                                </template>
+                              </p>
+                               <span>{{child.row.name}}</span>
+                              </template>                   
+                        </el-table-column>  
+                        <el-table-column
+                          prop=""
+                          label="Attribute Value"
+                          width='180'
+                          align="left"
+                        >
+                          <template slot-scope="child">
+                            <span>{{child.row.propertyValue}}</span>                           
+                          </template>
+                        </el-table-column>                        
+                        <el-table-column prop="vendorSku" label="Supplier Prices" 
+                          width='200'
+                          align="left">  
+                          <template slot-scope="child">
+                                <span style="display: inline-block;">
+                                  <span v-if="child.row.vendorSku">
+                                    <template
+                                      v-if="(props.row.discountType == 1 || props.row.discountType == 2) && child.row.isManage != 2"
+                                    >
+                                      <span>{{$store.state.country.symbol}} {{Number((child.row.amount - child.row.amount / props.row.productAmount * props.row.couponAmount) / child.row.quantity).toFixed(2)}}&nbsp;</span>
+                                      <span style="color: red; text-decoration:line-through;">
+                                        <span
+                                          style="color: #606266;"
+                                        >{{$store.state.country.symbol}} {{Number(child.row.vendorPrice).toFixed(2)}}</span>
+                                      </span>
+                                    </template>
+                                    <template v-else>{{$store.state.country.symbol}} {{Number(child.row.vendorPrice).toFixed(2)}}</template>
+                                  </span>
+                                  <span style="color: #F56C6C;" v-else>{{$t('Please make an offer')}}</span>
+                                </span>
+                          </template>                    
+                        </el-table-column>                                         
+
+                        <el-table-column
+                          prop="phone"
+                          label="Customer selling price"
+                          width='200'
+                          align="left"
+                        >
+                        <template slot-scope="child">
+                          <span>{{props.row.currency}} {{Number(child.row.price).toFixed(2)}}</span>
+                                  
+                        </template>
+                        </el-table-column>
+                        <el-table-column label=""></el-table-column>
+                    <!-- <span>{{ scope.row.codeName }}</span> -->
+                        </el-table>
+                  </template>
+                </el-table-column>                
                 <!-- <el-table-column label="Order" width="150">
 									<template slot-scope="scope">
 										<span>{{scope.row.code}}</span>
@@ -1059,7 +1284,121 @@
                   :reserve-selection="true"
                 >
                 </el-table-column>
-                <el-table-column :label="$t('order type')" v-if="status == 3">
+                   <el-table-column type="expand" width="25" :reserve-selection="true">
+                     <template #header>
+                      <el-button type="text" size="mini" v-if="isExpansion" @click="toggleRowExpansion">  <i class="el-icon-minus"></i></el-button>
+                       <el-button type="text" size="mini" v-if="!isExpansion" @click="toggleRowExpansion">  <i class="el-icon-plus"></i> </el-button>
+                      </template>
+                    <template slot-scope="props">
+                        <el-table
+                        ref="multipleTable"
+                        :data="props.row.items"
+                        style="width: 100%; margin-left: 0"
+                        max-height="360"
+                        :row-style="rowStyle"
+                        :header-cell-style="rowStyle"
+                        :cell-style="rowStyle"
+                       :cell-class-name="cellClassName"
+                      >
+                        <el-table-column prop="" label="Product Images" 
+                          width='200'
+                          align="center">
+                          <template slot-scope="child">
+                              <!-- <img :src="child.row.imgUrl" width="80" height="80" /> -->
+                               <el-image
+                                style="width: 80px; height: 80px"
+                                :src="child.row.imgUrl"
+                                fit="cover"></el-image>
+                          </template>                       
+                        </el-table-column>
+                        <el-table-column prop="vendorProductName" label="SKU number/quantity/name" 
+                          width='200'
+                          align="left">  
+                             <template slot-scope="child">
+                                  <!-- <span>{{child.row.name}}</span> -->
+                          <el-link
+                            type="primary"
+                            v-if="child.row.isManage != 2 && !child.row.vendorPrice"
+                           
+                            @click="unable(child.row)"
+                          >{{$t('Unable to be sourced')}}</el-link>                                  
+                            <p class="">
+                                <template v-if="child.row.isManage == 2">
+                                  <span style="display: inline-block;color: #F56C6C;">
+                                    {{child.row.vendorSku + 'Unable to purchase'}}
+                                    <span> <b class="text-danger" style="font-size:16px">×</b><el-badge class="mark" :value="child.row.quantity" /></span>
+                                  </span>
+                                </template>
+                                <template v-else>
+                                  <template v-if="child.row.status != 1">
+                                    <span
+                                      style="display: inline-block;color: #F56C6C;"
+                                    >
+                                      {{child.row.vendorSku ? `${child.row.vendorSku} Products Off shelf` : 'null Please make an offer'}}
+                                     <span> <b class="text-danger" style="font-size:16px">×</b><el-badge class="mark" :value="child.row.quantity" /></span>
+                                    </span>
+                                  </template>
+                                  <template v-else>
+                                    <span style="display: inline-block;">
+                                      {{child.row.vendorSku || 'null Please make an offer'}}
+                                       <span> <b class="text-danger" style="font-size:16px">×</b><el-badge class="mark" :value="child.row.quantity" /></span>
+                                    </span>
+                                  </template>
+                                </template>
+                              </p>
+                               <span>{{child.row.name}}</span>
+                              </template>                   
+                        </el-table-column>  
+                        <el-table-column
+                          prop=""
+                          label="Attribute Value"
+                          width='180'
+                          align="left"
+                        >
+                          <template slot-scope="child">
+                            <span>{{child.row.propertyValue}}</span>                           
+                          </template>
+                        </el-table-column>                        
+                        <el-table-column prop="vendorSku" label="Supplier Prices" 
+                          width='200'
+                          align="left">  
+                          <template slot-scope="child">
+                                <span style="display: inline-block;">
+                                  <span v-if="child.row.vendorSku">
+                                    <template
+                                      v-if="(props.row.discountType == 1 || props.row.discountType == 2) && child.row.isManage != 2"
+                                    >
+                                      <span>{{$store.state.country.symbol}} {{Number((child.row.amount - child.row.amount / props.row.productAmount * props.row.couponAmount) / child.row.quantity).toFixed(2)}}&nbsp;</span>
+                                      <span style="color: red; text-decoration:line-through;">
+                                        <span
+                                          style="color: #606266;"
+                                        >{{$store.state.country.symbol}} {{Number(child.row.vendorPrice).toFixed(2)}}</span>
+                                      </span>
+                                    </template>
+                                    <template v-else>{{$store.state.country.symbol}} {{Number(child.row.vendorPrice).toFixed(2)}}</template>
+                                  </span>
+                                  <span style="color: #F56C6C;" v-else>{{$t('Please make an offer')}}</span>
+                                </span>
+                          </template>                    
+                        </el-table-column>                                         
+
+                        <el-table-column
+                          prop="phone"
+                          label="Customer selling price"
+                          width='200'
+                          align="left"
+                        >
+                        <template slot-scope="child">
+                          <span>{{props.row.currency}} {{Number(child.row.price).toFixed(2)}}</span>
+                                  
+                        </template>
+                        </el-table-column>
+                        <el-table-column label=""></el-table-column>
+                    <!-- <span>{{ scope.row.codeName }}</span> -->
+                        </el-table>
+                  </template>
+                </el-table-column>               
+                <el-table-column label="order type" v-if="status == 3">
                     <template slot-scope="scope">
                         <p>{{scope.row.shippingType== 1? $t('Wholesale order') : $t('offline order')}}</p>
                     </template>
@@ -1113,7 +1452,7 @@
                                     {{
                                       item.vendorSku
                                         ? `${item.vendorSku} Products Off shelf`
-                                        : "null     Please make an offer"
+                                        : $t('null     Please make an offer')
                                     }}</span
                                   >
                                 </template>
@@ -1123,7 +1462,7 @@
                                     >SKU:
                                     {{
                                       item.vendorSku ||
-                                        "null     Please make an offer"
+                                        $t('null     Please make an offer')
                                     }}</span
                                   >
                                 </template>
@@ -1286,7 +1625,7 @@
                                     {{
                                       item.vendorSku
                                         ? `${item.vendorSku} Products Off shelf`
-                                        : "null     Please make an offer"
+                                        : $t('null     Please make an offer')
                                     }}</span
                                   >
                                 </template>
@@ -1296,7 +1635,7 @@
                                     >SKU:
                                     {{
                                       item.vendorSku ||
-                                        "null     Please make an offer"
+                                        $t('null     Please make an offer')
                                     }}</span
                                   >
                                 </template>
@@ -1920,32 +2259,6 @@
         >
       </div>
     </el-dialog>
-    <!-- <el-dialog
-      title="select warehouse"
-      :visible.sync="dialogVisibleHouse"
-      width="30%"
-      @open="openStorehouse()"
-      :before-close="handleClose">
-    <el-row>
-        <el-col>
-            <el-form ref="form" :model="formHouse" label-width="100px">
-  <el-form-item label="warehouse：">
-        <el-checkbox-group v-model="formHouse.type">
-      <el-checkbox v-for="item in storehouseList" :key="item.id" :label="item.id" name="type">{{item.countryName}}</el-checkbox>
-    </el-checkbox-group>
-  </el-form-item>
-
-
-
-
-</el-form>
-        </el-col>
-    </el-row>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisibleHouse = false">cancel</el-button>
-    <el-button type="primary" @click="buildOrder">sure</el-button>
-  </span>
-</el-dialog> -->
     <add-tracking-dialog
       :dialog="addTrackingDialog"
       v-if="addTrackingDialog.visible"
@@ -1977,6 +2290,7 @@ export default {
           type: []
       },
       dialogVisibleHouse: false,
+      isExpansion: false,
        vendorId: localStorage.getItem('vendorId'),
       // v1.6.0 异常订单新增参数 Start
       details: {},
@@ -2650,6 +2964,44 @@ export default {
         }
       );
     },
+        /** 表格展开与关闭 */
+    toggleRowExpansion(){
+      if(this.items.length){
+        this.isExpansion = !this.isExpansion;
+        this.toggleRowExpansionAll(this.items, this.isExpansion);
+      }
+    },
+    toggleRowExpansionAll(data, isExpansion) {
+      console.log(data, 'datas');
+      data.forEach((item) => {
+        this.$refs.gridTable.toggleRowExpansion(item, isExpansion);
+        if (item.items !== undefined && item.items !== null) {
+          this.toggleRowExpansionAll(item.items, isExpansion);
+        }
+      });
+    },
+  // 判断是否所有行都展开或者关闭
+  handleExpandChange(row,rows){
+    if(this.items.length == rows.length){
+         this.isExpansion = true
+   }else{
+        this.isExpansion = false
+     }
+},    
+    rowStyle({ row, rowIndex }) {
+    let bgcolor = {
+      background: "#DDDFEF",
+      borderBottom: "1px solid #d9d9d9",
+      fontWeight:'500',
+    };
+    return bgcolor;
+  },
+ cellClassName({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0) {
+        return 'sub-table-cell';
+      }
+      return '';
+    }, 
     filterShippingMethod(e, item) {
       item.shippingMethodArr.forEach((obj) => {
         if (obj.id == e) {
@@ -3624,9 +3976,6 @@ export default {
         status = "";
         params = Object.assign(params1, params2);
         params.isAll = true;
-      }else if(this.status == 1){
-          status = 2
-          this.activeName = 1
       } else {
         let item = this.tabList.filter((item) => {
           return item.name == this.activeName;
@@ -3924,6 +4273,16 @@ export default {
     padding: 20px;
     text-align: center;
   }
+}
+.sub-table-row {
+  line-height: 30px; /* 设置子表格行高度 */
+  	padding: 0;
+}
+.sub-table-cell {
+  padding: 10px; /* 设置子表格单元格的内边距 */
+}
+::v-deep .el-table__expanded-cell{
+  padding: 0;
 }
 </style>
 <style>
