@@ -9,7 +9,7 @@
 			</div>
 			<div class="right">
 				<template v-if="!!(updateTime && (updateTime > now))">
-					<el-tooltip class="item" effect="dark" content="The update process has started, it will take a while to finish." placement="left">
+					<el-tooltip class="item" effect="dark" :content="$t('The update process has started, it will take a while to finish.')" placement="left">
 				      <el-button type="primary" size="medium" style="color: #FFFFFF;
     background-color: #aeb5e2;
     border-color: #aeb5e2;">
@@ -18,7 +18,7 @@
 				    </el-tooltip>
 				</template>
 				<template v-else>
-					<el-tooltip class="item" effect="dark" content="Use this button to update your Order List if missing orders.The process may take a while to finish." placement="left">
+					<el-tooltip class="item" effect="dark" :content="$t('Use this button to update your Order List if missing orders.The process may take a while to finish.')" placement="left">
 				     <el-button :disabled="!!(updateTime && (updateTime > now))" type="primary" size="medium" :loading="updateOrderLoading" @click="updateOrder">
 						{{$t('Update Order')}}
 					</el-button>

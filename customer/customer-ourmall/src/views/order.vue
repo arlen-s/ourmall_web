@@ -14,37 +14,6 @@
 			</div>
 		</div>
 		<div class="pagebody">
-				<!--<el-autocomplete
-					 prefix-icon="el-icon-search"
-			      class="inline-input customer-input"
-			      v-model="vendorName"
-			      :fetch-suggestions="querySearch"
-			      placeholder="请输入客户名称"
-			      @select="handleSelect"
-			    >
-				  <template slot-scope="{ item }">
-				    <div class="name">{{ item.value }}</div>
-				  </template>
-			    </el-autocomplete>-->
-				<!--<el-popover @show="showPopover" ref="popoverCustomer" popper-class="with-shadow" trigger="click" width="300" placement="bottom">
-					<el-link slot="reference" style="margin-left: 10px;" type="primary">(Need to change a vender?)</el-link>
-					<div class="tx-center change-customer">
-					    <el-input placeholder="请输入客户名称" prefix-icon="el-icon-search" v-model="vendorName" ref="customerAutocomplete"></el-input>
-						<div class="mg-t-10">
-							<div v-for="(relation,index) in vendorData" v-show="index < 5" :key="index+relation.id+relation.customerName" class="text customer-item" :class="{active: relation.active}" @click="selectCustomer(relation)">
-								{{relation.vendorName}}
-							</div>
-						</div>
-					    <div class="divheight"></div>
-						<el-divider></el-divider>
-						<template v-if="vendorName == ''">
-							<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>创建新客户</el-button>
-						</template>
-						<template v-else>
-							<el-button type="primary" plain @click="openAddVendor"><i class="fa fa-user-plus mg-r-10"></i>创建 "{{vendorName}}"</el-button>
-						</template>
-					</div>
-				</el-popover>-->
 			<el-card style="margin-bottom: 10px;">
 				<div ref="pageSteps" class="d-flex align-item-center page-steps" style="background: #ecf8ff;font-size: 16px;padding: 10px 30px;border-radius: 4px;">
 					<div :class="pageStep >= 1 ? 'active' : ''">
@@ -159,16 +128,16 @@
 										<p>{{ scope.row.sku }}</p>
 									</template>
 								</el-table-column>
-								<el-table-column label="Total Quantity">
+								<el-table-column :label="$t('Total Quantity')">
 									<template slot-scope="scope">{{ scope.row.quantity }}</template>
 								</el-table-column>
-								<el-table-column label="Current Unit Cost">
+								<el-table-column :label="$t('Current Unit Cost')">
 									<template slot-scope="scope">US$ {{ scope.row.costPrice ? scope.row.costPrice :'---' }}</template>
 								</el-table-column>
-								<el-table-column label="Subtotal">
+								<el-table-column :label="$t('Subtotal')">
 									<template slot-scope="scope">US$ {{ scope.row.subTotal ? scope.row.subTotal : '---'}}</template>
 								</el-table-column>
-								<el-table-column label="Details">
+								<el-table-column :label="$t('Details')">
 									<template slot-scope="scope">
 										<el-button style="font-size: 12px;" type="text" @click="openDetails(scope.$index)">{{$t('Details')}}</el-button>
 									</template>
@@ -184,13 +153,13 @@
 										<p>SKU: {{ scope.row.sku }}</p>
 									</template>
 								</el-table-column>
-								<el-table-column label="Total Quantity">
+								<el-table-column :label="$t('Total Quantity')">
 									<template slot-scope="scope">{{ scope.row.quantity }}</template>
 								</el-table-column>
-								<el-table-column label="Current Unit Cost">
+								<el-table-column :label="$t('Current Unit Cost')">
 									<template slot-scope="scope">US$ {{ scope.row.costPrice }}</template>
 								</el-table-column>
-								<el-table-column label="Subtotal">
+								<el-table-column :label="$t('Subtotal')">
 									<template slot-scope="scope">US$ {{ scope.row.subTotal }}</template>
 								</el-table-column>
 								<el-table-column :label="$t('Details')">
@@ -239,22 +208,22 @@
 					<div class="mg-t-20">
 						<div>
 							<el-table border :stripe="true" :data="multipleSelectData" tooltip-effect="dark" style="width: 100%">
-								<el-table-column label="Product name">
+								<el-table-column :label="$t('Product name')">
 									<template slot-scope="scope">
 										<p>{{ scope.row.name }}</p>
 										<p>SKU: {{ scope.row.sku }}</p>
 									</template>
 								</el-table-column>
-								<el-table-column label="Total Quantity">
+								<el-table-column :label="$t('Total Quantity')">
 									<template slot-scope="scope">{{ scope.row.quantity }}</template>
 								</el-table-column>
-								<el-table-column label="Current Unit Cost">
+								<el-table-column :label="$t('Current Unit Cost')">
 									<template slot-scope="scope">US$ {{ scope.row.costPrice }}</template>
 								</el-table-column>
-								<el-table-column label="Subtotal">
+								<el-table-column :label="$t('Subtotal')">
 									<template slot-scope="scope">US$ {{ scope.row.subTotal }}</template>
 								</el-table-column>
-								<el-table-column label="Details">
+								<el-table-column :label="$t('Details')">
 									<template slot-scope="scope">
 										<el-button style="font-size: 12px;" type="text" @click="openDetails(scope.$index)">{{$t('Details')}}</el-button>
 									</template>
@@ -315,16 +284,16 @@
 					</el-form>-->
 				<div style="padding: 0 20px 20px;">
 					<el-table :stripe="true" :data="detailsData" tooltip-effect="dark" style="width: 100%">
-						<el-table-column label="Shopify store">
+						<el-table-column :label="$t('Shopify store')">
 							<template slot-scope="scope">{{ scope.row.shopName ? scope.row.shopName : '---'}}</template>
 						</el-table-column>
-						<el-table-column label="Order number">
+						<el-table-column :label="$t('Order number')">
 							<template slot-scope="scope">
 								<div>{{scope.row.order && scope.row.order.codeName ? scope.row.order.codeName : '---'}}</div>
 								<div>{{scope.row.order && scope.row.order.timeCreated ? scope.row.order.timeCreated : '---'}}</div>
 							</template>
 						</el-table-column>
-						<el-table-column label="Customer">
+						<el-table-column :label="$t('Customer')">
 							<template slot-scope="scope">
 								<el-popover placement="bottom" :title="`Shopify Order ${scope.row.order.codeName}`" width="600" trigger="hover">
 									<span slot="reference" style="cursor: pointer;">
@@ -374,10 +343,10 @@
 								</el-popover>
 							</template>
 						</el-table-column>
-						<el-table-column label="Price">
+						<el-table-column :label="$t('Price')">
 							<template slot-scope="scope">US$ {{ scope.row.price }}</template>
 						</el-table-column>
-						<el-table-column label="Quantity">
+						<el-table-column :label="$t('Quantity')">
 							<template slot-scope="scope">{{ scope.row.quantity }}</template>
 						</el-table-column>
 					</el-table>

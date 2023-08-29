@@ -30,14 +30,14 @@
                   margin: 0;
                   line-height: 60px;
                 ">
-								You have authorized a Shopify store，you could
+								{{$t('You have authorized a Shopify store，you could')}}
 								<a href="javascript:;" @click="openConnectStore" style="
                     margin-right: 5px;
                     color: #67c23a;
                     text-decoration: underline;
                     font-size: 14px;
-                  ">authorize to login</a>
-								to view details。
+                  ">{{$t('authorize to login')}}</a>
+								{{$t('to view details。')}}
 							</p>
 						</div>
 					</div>
@@ -67,9 +67,7 @@
                   box-shadow: rgba(33, 33, 33, 0.4) 0px 1px 4px 0px;
                 ">
 								<p style="color: #606266; font-weight: 600">
-									If it is necessary to process your shopify order or to achieve
-									an automatically update for the shipping information to
-									shopify, you could
+									{{$t('If it is necessary to process your shopify order or to achieve an automatically update for the shipping information toshopify, you could')}}
 								</p>
 								<p style="color: #606266; font-weight: 600" class="d-flex justify-content-start">
 									<el-button size="mini" style="
@@ -77,8 +75,8 @@
                       color: #e6a23c;
                       text-decoration: underline;
                       font-size: 14px;
-                    " @click="openConnectStore" type="text">connect your Shopify store</el-button>
-									and let us help you.
+                    " @click="openConnectStore" type="text">{{$t('connect your Shopify store')}}</el-button>
+									{{$t('and let us help you.')}}
 								</p>
 							</div>
 						</div>
@@ -112,24 +110,21 @@
                   box-shadow: rgba(33, 33, 33, 0.4) 0px 1px 4px 0px;
                 ">
 								<p style="color: #606266; font-weight: 600; margin: 0">
-									If you have authorized a Shopify store, after the vendor
-									delivers the items, the shipping information will been
-									synchronized to your Shopify store which you had authorized.
-									(If there are some Shopify stores in the order list below that
-									have not been authorized, you can
+									{{$t('If you have authorized a Shopify store, after the vendor delivers the items, the shipping information will been synchronized to your Shopify store which you had authorized.')}}
+									{{$t('(If there are some Shopify stores in the order list below that  have not been authorized, you can')}}
 									<a href="javascript:;" @click="openConnectStore" style="
                       margin-right: 5px;
                       color: #67c23a;
                       text-decoration: underline;
                       font-size: 14px;
-                    ">authorize a new one</a>). If you need to view your recent orders, please click
+                    ">{{$t('authorize a new one')}}</a>). {{$t('If you need to view your recent orders, please click')}}
 									<router-link :to="{ path: '/dashboard' }" target="_blank" style="
                       margin-right: 5px;
                       color: #67c23a;
                       text-decoration: underline;
                       font-size: 14px;
                     ">My {{ $root.$children[0].pName.a }}</router-link>
-									to view details.
+									{{$t('to view details.')}}
 								</p>
 							</div>
 						</div>
@@ -141,16 +136,16 @@
 				<el-main>
 					<el-card shadow="always" class="m-card">
 						<div v-if="invoiceInfo.status == '9'" class="cancel-label">
-							Cancelled
+							{{$t('Cancelled')}}
 						</div>
 						<el-row type="flex" style="margin-top: 25px; align-items: flex-start">
 							<el-col>
 								<div class="invoice-header-wrapper">
-									<div class="header-purchase">Purchase Order</div>
+									<div class="header-purchase">{{$t('Purchase Order')}}</div>
 									<div class="header-po">
 										<div class="po">PO # {{ invoiceInfo.code || "---" }}</div>
 										<div class="date">
-											Date:
+											{{$t('Date')}}:
 											{{
                         invoiceInfo.timeCreated
                           ? moment(invoiceInfo.timeCreated).format("ll")

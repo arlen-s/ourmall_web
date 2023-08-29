@@ -416,6 +416,8 @@ export default {
   "to view details.": "Details anzuzeigen.",
   "Clear selection": "Auswahl löschen",
   "Total Quantity selected": "Ausgewählte Gesamtmenge",
+  "Total Quantity": "Gesamtmenge",
+  "Current Unit Cost": "Aktuelle Stückkosten",
   "Vendor shipped": "Anbieter verschickt",
   "unfulfilled / partially fulfilled)": "nicht erfüllt / teilweise erfüllt)",
   "But": "Aber",

@@ -21,10 +21,10 @@
                 <el-select
                   v-model="categoryId"
                   slot="append"
-                  placeholder="IN ALL CATEGORIES"
+                  :placeholder="$t('IN ALL CATEGORIES')"
                   @change="search"
                 >
-                  <el-option label="IN ALL CATEGORIES" value=""></el-option>
+                  <el-option :label="$t('IN ALL CATEGORIES')" value=""></el-option>
                   <el-option
                     v-for="item in commodityTypeMoreList"
                     :key="item.id"

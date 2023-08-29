@@ -36,19 +36,19 @@
                   <div>{{ (payTypeDict[scope.row.type] || {}).name }}</div>
                 </template>
               </el-table-column>
-              <el-table-column label="Payment Amount" prop="amount">
+              <el-table-column :label="$t('Payment Amount')" prop="amount">
                 <template slot-scope="scope">
                   {{$store.state.country.shopCurrency}}{{$store.state.country.symbol}} {{ scope.row.amount }}
                 </template>
               </el-table-column>
-              <el-table-column label="Payment Status" prop="status">
+              <el-table-column :label="$t('Payment Status')" prop="status">
                 <template slot-scope="scope">
                   <div :class="payStatusDict[scope.row.status].style">
                     {{ (payStatusDict[scope.row.status] || {}).name }}
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column label="Payment Num">
+              <el-table-column :label="$t('Payment Number')">
                 <template slot-scope="scope">
                   <div>
                     <span style="color: #909399">code：</span>
@@ -60,7 +60,7 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column label="Payment Date">
+              <el-table-column :label="$t('Payment Date')">
                 <template slot-scope="scope">
                   <div>
                     {{
