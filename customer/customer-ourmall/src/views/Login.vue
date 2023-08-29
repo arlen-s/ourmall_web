@@ -6,7 +6,7 @@
         <h1 :class="{go: $root.$children[0].baseUrl == '/my' }"></h1>
       </a>
       <div class="box mg-b-5">
-        <p>Please enter your store name to connect the dashboard page:</p>
+        <p>{{$t('Please enter your store name to connect the dashboard page:')}}</p>
         <div class=" d-flex mg-b-30" style="justify-content: center;">
           <el-dropdown class="select-p" @command="selectPlatform">
             <div class="el-dropdown-link d-flex">
@@ -29,7 +29,7 @@
             <span style="color: #909399; font-size: 16px;">https://</span>
             <input
               type="text"
-              placeholder="Shopify store name"
+              :placeholder="$t('Shopify store name')"
               @input="storeInput($event.target.value)"
               v-model="shopUrl"
               @keyup.enter="login"

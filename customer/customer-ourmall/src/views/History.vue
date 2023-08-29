@@ -28,7 +28,7 @@
                         type="primary"
                         class="search_btn"
                         @click.stop="searchInput"
-                        >Search</el-button
+                        >{{$t('Search')}}</el-button
                       >
                     </el-form-item>
                     <el-form-item label="Date：">
@@ -57,12 +57,12 @@
               style="width: 100%"
               ref="gridTable"
             >
-              <el-table-column label="Order Code">
+              <el-table-column :label="$t('Order Code')">
                 <template slot-scope="scope">
                   {{ scope.row.invoice || "---" }}
                 </template>
               </el-table-column>
-              <el-table-column label="Date"
+              <el-table-column :label="$t('Date')"
                 ><template slot-scope="scope">
                   {{
                     moment(scope.row.timeCreated * 1000).format(
@@ -71,7 +71,7 @@
                   }}
                 </template>
               </el-table-column>
-              <el-table-column label="Payment Method">
+              <el-table-column :label="$t('Payment Methods')">
                 <template slot-scope="scope">
                   {{ ($dict.PayType[scope.row.platformType] || {}).text }}
                 </template>
@@ -81,12 +81,12 @@
                   {{ scope.row.vendor || "---" }}
                 </template>
               </el-table-column>
-              <el-table-column label="Amount">
+              <el-table-column label="$t('Amount')">
                 <template slot-scope="scope">
                   {{ scope.row.totalAmount || "---" }}
                 </template>
               </el-table-column>
-              <el-table-column label="Status">
+              <el-table-column label="$t('Status')">
                 <template slot-scope="scope">
                   <span>
                     {{ ($dict.PayStatus[scope.row.status] || {}).text }}

@@ -12,10 +12,10 @@
 		<el-card>
 			<el-row>
 				<el-form :mode="filterParams" :inline="true" size="mini">
-					<el-form-item label="Trade Name">
+					<el-form-item :label="$t('Trade Name')">
 						<el-input v-model="filterParams.name" placeholder="Please enter"></el-input>
 					</el-form-item>
-					<el-form-item label="State">
+					<el-form-item :label="$t('State')">
 						<el-select v-model="filterParams.status">
 							<el-option value="0" :label="$t('All')"></el-option>
 							<el-option value="1" :label="$t('Penging')"></el-option>
@@ -23,7 +23,7 @@
 							<el-option value="9" :label="$t('Failed')"></el-option>
 						</el-select>
 					</el-form-item>
-					<el-form-item label="Date">
+					<el-form-item :label="$t('Date')">
 						<el-date-picker
 							v-model="dateArr"
 							type="daterange"
@@ -93,7 +93,7 @@
 							</div>
 						</template>
 					</el-table-column>
-					<el-table-column label="State">
+					<el-table-column :label="$t('State')">
 						<template slot-scope="scope">
 							<div v-if="scope.row.status == '1'">{{$t('Pending')}}</div>
 							<div v-if="scope.row.status == '2'">{{$t('Completed')}}</div>

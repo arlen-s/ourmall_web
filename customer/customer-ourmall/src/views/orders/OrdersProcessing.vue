@@ -63,39 +63,18 @@
                       size="mini"
                       :key="cascaderKey"
                       v-model="filterParams.accountId"
-                      placeholder="All my stores"
+                      :placeholder="$t('All my stores')"
                       :options="options"
                       :props="{ expandTrigger: 'hover' }"
                       @change="handleStoreCheckbox"
                     >
                     </el-cascader>
-                    <!-- <el-popover
-                      placement="bottom"
-                      trigger="click"
-                      width=""
-                    >
-                      <div class="shopify-stroe-checkbox">
-                        <el-checkbox-group @change="handleStoreCheckbox" v-model="storeCheckbox.selected">
-                          <el-checkbox
-                            v-for="item in storeCheckbox.checkList"
-                            :key="item.shopifyAccountId"
-                            :label="item.shopifyAccountId">{{item.store}}</el-checkbox>
-                        </el-checkbox-group>
-                        <div class="clear">
-                          <el-link @click="handleCleatStore" type="danger">Clear</el-link>
-                        </div>
-                      </div>
-                      <el-button slot="reference">
-                        All my store
-                        <i class="el-icon-caret-bottom el-icon--right"></i>
-                      </el-button>
-                    </el-popover> -->
                   </el-form-item>
                   <el-form-item class="mg-r-5">
                     <el-input
                       style="width: 130px"
                       v-model="filterParams.code"
-                      placeholder="Invoice Number"
+                      :placeholder="$t('Invoice Number')"
                       @keyup.enter.native="filterGetItem"
                     ></el-input>
                   </el-form-item>
@@ -104,7 +83,7 @@
                       class="mg-r-5"
                       style="width: 150px"
                       v-model="filterParams.timeFilter"
-                      placeholder="Date type"
+                      :placeholder="$t('Date type')"
                     >
                       <el-option
                         v-for="opt in filterParams.timeOption"
@@ -131,10 +110,10 @@
                     <el-select
                       style="width: 130px"
                       v-model="filterParams.status"
-                      placeholder="All status"
+                      :placeholder="$t('All status')"
                       @change="filterGetItem"
                     >
-                      <el-option label="All status" value=""></el-option>
+                      <el-option :label="$t('All status')" value=""></el-option>
                       <el-option
                         v-for="opt in $dict.invoiceStatusTwo"
                         v-if="opt.val != 9"
@@ -148,78 +127,10 @@
                     <el-input
                       style="width: 120px"
                       v-model="filterParams.trackNumber"
-                      placeholder="Track Number"
+                      :placeholder="$t('Track Number')"
                       @keyup.enter.native="filterGetItem"
                     ></el-input>
                   </el-form-item>
-
-                  <!-- <el-form-item>
-                    <el-select
-                      style="width: 220px;"
-                      v-model='filterParams.payStatus'
-                      placeholder="Vendor confirmation"
-                      @change="filterGetItem"
-                    >
-                      <el-option
-                        label="Vendor confirmation status"
-                        value=""
-                      ></el-option>
-                      <el-option
-                        label="Confirmed"
-                        value="1"
-                      ></el-option>
-                      <el-option
-                        label="Not yet confirmed"
-                        value="2"
-                      ></el-option>
-                    </el-select>
-                  </el-form-item> -->
-                  <!--                  <el-form-item class=" mg-r-5">-->
-                  <!--                    <el-select filterable remote :remote-method="remoteMethodVendor" :loading="selectLoading" placeholder="Enter vendor name" v-model="filterParams.relationshipId" @change="filterGetItem">-->
-                  <!--                      <el-option v-for="opt in selectArr" :key="opt.id" :label="opt.vendorName" :value="opt.id">-->
-                  <!--                      </el-option>-->
-                  <!--                    </el-select>-->
-                  <!--                  </el-form-item>-->
-                  <!-- <el-form-item>
-                    <el-popover
-                      ref="popoverCustomer"
-                      popper-class="with-shadow with-shadow2"
-                      trigger="focus"
-                      width="300"
-                      placement="bottom"
-                    >
-                      <el-input
-                        class="input-new-tag"
-                        slot="reference"
-                        v-model="filterParams.vendorName"
-                        ref="saveTagInput"
-                        placeholder="Vendor name"
-                      >
-                      </el-input>
-
-                      <div class="tx-center change-customer">
-                        <div
-                          class="mg-t-10"
-                          style="max-height: 280px;overflow-y: scroll;"
-                          v-if="vendorData.length"
-                        >
-                          <div
-                            v-for="(relation,index) in vendorData"
-                            :key="index+relation.id+relation.customerName"
-                            class="text customer-item"
-                            :class="{active: relation.active}"
-                            @click="selectCustomer(relation)"
-                          >
-                            {{relation.vendorName?relation.vendorName:'---'}} <span v-if="relation.vendorRemark">({{relation.vendorRemark}})</span>
-                          </div>
-                        </div>
-                        <div
-                          v-else
-                          class="tx-center"
-                        >No data</div>
-                      </div>
-                    </el-popover>
-                  </el-form-item> -->
                   <el-form-item>
                     <el-select
                       @change="handleVendorsSelect"
@@ -256,8 +167,9 @@
             style="width: 100%"
             ref="gridTable"
             :row-class-name="tableRowClassName"
+
           >
-            <el-table-column label="Purchase Order" width="250">
+            <el-table-column :label="$t('Purchase Order')" width="250">
               <template v-slot="{ row }">
                 <span>#{{ row.code }}</span>
                 <el-popover placement="bottom" trigger="hover">
@@ -294,7 +206,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Order Includes" width="200">
+            <el-table-column :label="$t('Order Includes')" width="200">
               <template v-slot="{ row }">
                 <div style="white-space: nowrap">
                   <span class="tx-gray-600">{{$t('Orders')}}: </span>
@@ -314,21 +226,7 @@
                 </div>
               </template>
             </el-table-column>
-            <!--<el-table-column
-              label="Shopify Orders"
-              prop="orderCnt"
-              align="center"
-              width="150"
-            >
-            </el-table-column>-->
-            <!--<el-table-column
-              label="Items Quantity"
-              prop="totalCnt"
-              align="center"
-              width="120"
-            >
-            </el-table-column>-->
-            <el-table-column label="Amount" prop="realAmount" width="235">
+            <el-table-column :label="$t('Amount')" prop="realAmount" width="235">
               <template slot-scope="{ row }">
                 <div style="white-space: nowrap">
                   <span class="tx-gray-600">{{$t('Income')}}: </span>
@@ -378,7 +276,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Statistics" width="220">
+            <el-table-column :label="$t('Statistics')" width="220">
               <template slot-scope="scope">
                 <div style="white-space: nowrap">
                   <span class="tx-gray-600">Vendor shipped: </span>
@@ -488,7 +386,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="Status" width="220">
+            <el-table-column :label="$t('Status')" width="220">
               <template slot-scope="scope">
                 <el-tooltip
                   v-if="scope.row.status == '9' && scope.row.stopReason"
@@ -515,21 +413,6 @@
             </el-table-column>
             <el-table-column fixed="right" label="Action" width="200">
               <template slot-scope="scope">
-                <!-- <div v-if="scope.row.status == 7">
-                  <el-popconfirm
-                    confirmButtonText='Confirm'
-                    cancelButtonText='Cancel'
-                    icon="el-icon-info"
-                    iconColor="#5c6ac4"
-                    title="Do You want to confirm?"
-                    @onConfirm="confirmInvoice(scope.row)"
-                  >
-                    <el-link  slot="reference" :disabled="scope.row.confirmLoading" type="primary">Confirm</el-link>
-                  </el-popconfirm>
-                </div> -->
-                <!--                <div v-if="scope.row.status == 7">-->
-                <!--                  <el-link type="primary" @click="openReconfirm(scope.row)">Reconfirm</el-link>-->
-                <!--                </div>-->
                 <el-dropdown
                   v-if="scope.row.status != 2"
                   @command="handleCommand"
@@ -666,7 +549,7 @@
               >
             </template>
           </el-table-column>
-          <el-table-column label="Amount Due" prop="realAmount">
+          <el-table-column :label="$t('Amount Due')" prop="realAmount">
             <template slot-scope="scope">
               <span v-if="scope.row.realAmount > 0" class="tx-danger"
                 >US$ <span>{{ scope.row.realAmount }}</span></span
@@ -674,7 +557,7 @@
               <span class="tx-danger" v-else>{{$t('Not set up')}}</span>
             </template>
           </el-table-column>
-          <el-table-column fixed="right" label="Action" width="150">
+          <el-table-column fixed="right" :label="$t('Action')" width="150">
             <template slot-scope="scope">
               <div>
                 <el-link
@@ -879,7 +762,7 @@
       </div>
     </el-dialog>
     <el-dialog
-      title="Purchase Order Reconfirm"
+      :title="$t('Purchase Order Reconfirm')"
       :visible.sync="DialogReconfirm.isShow"
       width="450px"
     >
@@ -918,7 +801,7 @@
     </el-dialog>
     <el-dialog
       :visible="cancelOrderDialog.visible"
-      title="Cancel purchase order"
+      :title="$t('Cancel purchase order')"
       width="600px"
       :before-close="cancelOrderDialogClose"
     >
@@ -930,7 +813,7 @@
 
         </p>
         <el-form ref="form" label-width="80px">
-          <el-form-item label="Reason">
+          <el-form-item :label="$t('Reason')">
             <el-input
               type="textarea"
               v-model="cancelOrderDialog.stopReason"
@@ -957,15 +840,15 @@
     >
       <div>
         <el-form label-position="right">
-          <el-form-item label="Current vendor:">
+          <el-form-item :label="$t('Current vendor:')">
             <p>{{ changeAnotherVendorDialog.currentVendor }}</p>
           </el-form-item>
-          <el-form-item label="Change to new vendor:">
+          <el-form-item :label="`${$t('Change to new vendor')}:`">
             <el-select
               @visible-change="getVendors"
               v-model="changeAnotherVendorDialog.relationshipId"
               clearable
-              placeholder="All my vendors"
+             :placeholder="$t('All my vendors')"
             >
               <el-option
                 v-for="item in vendorsSelect.selectList"

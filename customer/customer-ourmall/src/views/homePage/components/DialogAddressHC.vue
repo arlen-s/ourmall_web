@@ -14,34 +14,34 @@
           label-width="100px"
           class="demo-ruleForm"
         >
-          <el-form-item label="Vorname" prop="firstName">
+          <el-form-item :label="$t('First Name')" prop="firstName">
             <el-input
               v-model="addressForm.firstName"
-              placeholder="Bitte geben Sie den Vornamen ein"
+              :placeholder="$t('Please enter the first name')"
             ></el-input>
           </el-form-item>
-          <el-form-item label="Nachname" prop="lastName">
+          <el-form-item :label="$t('Last Name')" prop="lastName">
             <el-input
               v-model="addressForm.lastName"
-              placeholder="Bitte geben Sie den Nachnamen ein"
+              :placeholder="$t('Please enter the last name')"
             ></el-input>
           </el-form-item>
           <el-form-item label="Adresse1" prop="address1">
             <el-input
               v-model="addressForm.address1"
-              placeholder="Bitte geben Sie die Adresse ein"
+              :placeholder="$t('Please enter the address')"
             ></el-input>
           </el-form-item>
           <el-form-item label="Address2">
             <el-input
               v-model="addressForm.address2"
-              placeholder="Bitte geben Sie die Adresse ein2"
+               :placeholder="$t('Please enter the address')"
             ></el-input>
           </el-form-item>
-          <el-form-item label="Land" prop="country" style="width: 100%">
+          <el-form-item :label="$t('Country')" prop="country" style="width: 100%">
             <el-select
               v-model="addressForm.country"
-              placeholder="Bitte geben Sie das Land ein"
+              :placeholder="$t('Please enter the country')"
             >
               <el-option
                 v-for="item in countryList"
@@ -52,43 +52,43 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Provinz" prop="province">
+          <el-form-item :label="$t('Province')" prop="province">
             <el-input
               v-model="addressForm.province"
-              placeholder="Bitte geben Sie die Provinz ein"
+              :placeholder="$t('Please enter the province')"
             ></el-input>
           </el-form-item>
-          <el-form-item label="Stadt" prop="city">
+          <el-form-item :label="$t('city')" prop="city">
             <el-input
               v-model="addressForm.city"
-              placeholder="Bitte geben Sie die Provinz ein"
+              :placeholder="$t('Please enter the city')"
             ></el-input>
           </el-form-item>
-          <el-form-item label="Telefon" prop="phone">
+          <el-form-item :label="$t('Phone')" prop="phone">
             <el-input
               v-model="addressForm.phone"
-              placeholder="Bitte geben Sie das Telefon ein"
+              :placeholder="$t('Please enter the phone')"
             ></el-input>
           </el-form-item>
-          <el-form-item label="Postleitzahl" prop="postcode">
+          <el-form-item :label="$t('postcode')" prop="postcode">
             <el-input
               v-model="addressForm.postcode"
-              placeholder="Bitte geben Sie die Postleitzahl ein"
+               :placeholder="$t('Please enter the postcode')"
             ></el-input>
           </el-form-item>
         </el-form>
         <div class="flex-end">
           <el-switch v-model="isDefault" active-color="#eb8c1f"> </el-switch>
-          <span style="margin-left: 10px">Als Standardversandadresse festlegen</span>
+          <span style="margin-left: 10px">{{$t('Set as default shipping address')}}</span>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="resetForm('addressForm')">Zurücksetzen</el-button>
+        <el-button @click="resetForm('addressForm')">{{$t('Reset')}}</el-button>
         <el-button
           :loading="confirmLoading"
           type="primary"
           @click="confirm('addressForm')"
-          >bestätigen</el-button
+          >{{$t('Confirm')}}</el-button
         >
       </span>
     </el-dialog>
@@ -118,52 +118,52 @@ export default {
         firstName: [
           {
             required: true,
-            message: "Bitte geben Sie den Vornamen ein",
+            message:  this.$t('Please enter the first name'),
             trigger: "blur",
           },
         ],
         lastName: [
           {
             required: true,
-            message: "Bitte geben Sie den Nachnamen ein",
+            message: this.$t('Please enter the last name'),
             trigger: "blur",
           },
         ],
         address1: [
           {
             required: true,
-            message: "Bitte geben Sie die Adresse ein",
+            message:  this.$t('Please enter the address'),
             trigger: "blur",
           },
         ],
         province: [
           {
             required: true,
-            message: "Bitte geben Sie die Provinz ein",
+            message: this.$t('Please enter the province'),
             trigger: "blur",
           },
         ],
         city: [
-          { required: true, message: "Bitte geben Sie die Stadt ein", trigger: "blur" },
+          { required: true, message: this.$t('Please enter the city'), trigger: "blur" },
         ],
         phone: [
           {
             required: true,
-            message: "Bitte geben Sie das Telefon ein",
+            message: this.$t('Please enter the phone'),
             trigger: "blur",
           },
         ],
         postcode: [
           {
             required: true,
-            message: "Bitte geben Sie die Postleitzahl ein",
+            message: this.$t('Please enter the postcode'),
             trigger: "blur",
           },
         ],
         country: [
           {
             required: true,
-            message: "Bitte geben Sie das Land ein",
+            message:  this.$t('Please enter the country'),
             trigger: "change",
           },
         ],

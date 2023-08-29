@@ -16,55 +16,6 @@
         <li>
           <router-link :to="{path: '/'}">{{$t('Home')}}</router-link>
         </li>
-        <!-- <li>
-          <router-link :to="{path: '/products-market'}">Products Market</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/Waiting-for-allocated'}">Request for Quote</router-link>
-        </li>
-        <li v-if="$store.state.userInfo">
-          <el-dropdown @command="handleCommand">
-            <span class="el-dropdown-link">
-              My {{$root.$children[0].pName.a}}
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item
-                class=" align-items-endd-flex"
-                style="width: 150px"
-                command="dashboard"
-              >
-                <i
-                  class="fa fa-tachometer"
-                  aria-hidden="true"
-                ></i> Dashboard
-              </el-dropdown-item>
-              <el-dropdown-item
-                class=" align-items-endd-flex"
-                style="width: 150px"
-                command="profile"
-              >
-                <i
-                  class="mg-r-15 fa fa-user-o"
-                  aria-hidden="true"
-                ></i> My Profile
-              </el-dropdown-item>
-              <el-dropdown-item
-                class="d-flex"
-                style="width: 150px"
-                command="exit"
-              >
-                <i
-                  class=" mg-r-15 fa fa-sign-out"
-                  aria-hidden="true"
-                ></i> Logout
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </li>
-        <li v-else>
-          <a href="javascript:;" @click="login">LOGIN</a>
-        </li> -->
       </ul>
     </div>
     <div
@@ -212,7 +163,7 @@
                   <div class="text">
                     <div>
                       <el-form ref="CommentForm">
-                        <el-form-item label="Tell us more about your request">
+                        <el-form-item :label="$t('Tell us more about your request')">
                           <el-input
                             type="textarea"
                             :rows="3"
@@ -245,10 +196,10 @@
 
                           </el-upload>
                         </el-row>
-                        <el-form-item label="What is your store name?">
+                        <el-form-item :label="$t('What is your store name?')">
                           <el-input v-model="DialogEditComment.shopName"></el-input>
                         </el-form-item>
-                        <el-form-item label="What is your Email?">
+                        <el-form-item :label="$t('What is your Email?')">
                           <el-input v-model="DialogEditComment.email"></el-input>
                         </el-form-item>
                       </el-form>

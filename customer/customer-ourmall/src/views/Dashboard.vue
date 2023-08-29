@@ -92,17 +92,17 @@
                     </el-table-column>
                     <el-table-column
                       prop="num"
-                      label="Order Quantity"
+                      :label="$t('Order Quantity')"
                       align="center">
                     </el-table-column>
                     <el-table-column
                       prop="brokerage"
-                      label="Commission"
+                      :label="$t('Commission')"
                       align="center">
                     </el-table-column>
                     <el-table-column
                       prop="total"
-                      label="Total commission"
+                      :label="$t('Total commission')"
                       align="center">
                     </el-table-column>                    
                   </el-table>

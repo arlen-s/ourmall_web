@@ -10,18 +10,18 @@
     <el-divider></el-divider>
     <div class="d-body">
       <el-form :model="data.form" :rules="rules" ref="ruleForm" label-width="150px">
-        <el-form-item label="Description:" prop="name" >
+        <el-form-item :label="$t('Description')" prop="name" >
           <el-input v-model="data.form.name" placeholder="Please enter description"></el-input>
         </el-form-item>
         <el-form-item label="IOSS ID:" prop="iossId">
           <el-input v-model="data.form.iossId" placeholder="Please enter IOSS ID"></el-input>
         </el-form-item>
-        <el-form-item label="Destination Country:" prop="countrys" required>
+        <el-form-item :label="$t('Destination Country')" prop="countrys" required>
           <el-select v-model="data.form.countrys"
             multiple
             filterable
             default-first-option
-            placeholder="Please select destination country"
+            :placeholder="$t('Please select destination country')"
             style="width: 412px"
           >
             <!-- disabled 选过的不能选 -->

@@ -95,7 +95,7 @@
               v-model="popFulfillFilter"
             >
               <el-checkbox-group v-model="filterParams.fulfillStatus" @change="filterItems('fulfill')">
-                <el-checkbox label="unfulfilled">{{$t('Unfulfilled')}}</el-checkbox>
+                <el-checkbox :label="$t('unfulfilled')">{{$t('Unfulfilled')}}</el-checkbox>
                 <el-checkbox label="partial">{{$t('Partially fulfilled')}}</el-checkbox>
               </el-checkbox-group>
               <div class=" d-flex justify-content-end">

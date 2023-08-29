@@ -54,7 +54,7 @@
                  <el-cascader
                  :key="cascaderKey"
                   v-model="cascaderValue"
-                  placeholder="All my stores"
+                  :placeholder="$t('All my stores')"
                   :options="options"
                   :props="{ expandTrigger: 'hover' }"
                   @change="filterGetItem"
@@ -62,15 +62,15 @@
                   </el-cascader>
               </el-form-item>
               <el-form-item>
-                <el-input v-model="productName" placeholder="Product name"
+                <el-input v-model="productName" :placeholder="$t('Product name')"
                   @keyup.native.enter="filterGetItem"
                 ></el-input>
               </el-form-item>
               <el-form-item>
-                <el-select v-model="filterParams.relationshipId"  filterable placeholder="All my vendors"
+                <el-select v-model="filterParams.relationshipId"  filterable :placeholder="$t('All my vendors')"
                   @change="filterGetItem"
                 >
-                  <el-option label="All my vendors" value=""></el-option>
+                  <el-option :label="$t('All my vendors')" value=""></el-option>
                   <el-option
                     v-for="vendor in vendors"
                     :key="vendor.id"
@@ -194,34 +194,6 @@
               </el-card>
             </el-col>
           </el-row>
-        <!-- 
-          <el-col
-            v-for="item in items"
-            :key="item.id"
-            :sm="12"
-            :md="8"
-            :lg="6"
-            :xl="4"
-            style=" margin-bottom: 20px;"
-          >
-            <div class="product-box">
-              <div style="position: relative; padding-bottom: 100%; margin-bottom: 15px;">
-                <el-image
-                  lazy
-                  style="position: absolute; width: 100%; height: 100%;"
-                  :fit="'contain'"
-                  :src="item.propertyImage"
-                  :preview-src-list="[item.propertyImage]"
-                >
-                </el-image>
-              </div>
-              <div class="info">
-                <div class="p-name tx-ellipsis2">{{item.name}}</div>
-                <div></div>
-
-              </div>
-            </div>
-          </el-col> -->
         </el-row>
       </el-card>  
     </div>

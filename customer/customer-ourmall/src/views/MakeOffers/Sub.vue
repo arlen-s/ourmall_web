@@ -38,7 +38,7 @@
               size="mini"
               :key="cascaderKey"
               v-model="filterParams.shopifyStore"
-              placeholder="All my stores"
+              :placeholder="$t('All my stores')"
               :options="options"
               :props="{ expandTrigger: 'hover' }"
               @change="filterItems('store')"
@@ -358,7 +358,7 @@
                 <el-tooltip
                   class="item"
                   effect="dark"
-                  content="Some orders had been fulfilled or refunded"
+                  :content="$t('Some orders had been fulfilled or refunded')"
                   placement="top"
                 >
                   <i class="el-icon-question"></i>
@@ -693,7 +693,7 @@
                <span v-else>---</span> 
               </template>
             </el-table-column>
-            <el-table-column label="Remark">
+            <el-table-column :label="$t('Remark')">
               <template slot-scope="scope">
                 <span v-if="scope.row.remarks">{{ scope.row.remarks }}</span>
                 <span v-else>---</span>
@@ -727,7 +727,7 @@
             ref="gridTable"
             height="200"
           >
-            <el-table-column label="Status">
+            <el-table-column :label="$t('Status')">
               <template slot-scope="scope">
                 <el-radio
                   :disabled="
@@ -743,7 +743,7 @@
                 </el-radio>
               </template>
             </el-table-column>
-            <el-table-column label="Vendor name">
+            <el-table-column :label="$t('Vendor name')">
               <template slot-scope="scope">
                 <span v-if="scope.row.vendor.vendorName"
                   >Shop# {{ scope.row.vendor.id }}</span
@@ -751,14 +751,14 @@
                 <span v-else>---</span>
               </template>
             </el-table-column>
-            <el-table-column label="Date" sortable prop="timeCreated">
+            <el-table-column :label="$t('Date')" sortable prop="timeCreated">
               <template slot-scope="scope">
                 {{
                   moment(scope.row.timeCreated * 1000).format("ll [at] LTS")
                 }}
               </template>
             </el-table-column>
-            <el-table-column :label="isProduct == false ? 'Offered Orders' : 'Offered Products'">
+            <el-table-column :label="isProduct == false ? $t('Offered Orders') : $t('Offered Products')">
               <template slot-scope="scope">
                 <template v-if="scope.row.status == 1"> --- </template>
                 <template v-else>
@@ -767,7 +767,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column label="Offer price">
+            <el-table-column :label="$t('Offer price')">
               <template slot-scope="scope">
                 <template v-if="scope.row.status != 3"> --- </template>
                 <template v-else>
@@ -776,7 +776,7 @@
                 </template>
               </template>
             </el-table-column>
-            <el-table-column label="Action">
+            <el-table-column :label="$t('Action')">
               <template slot-scope="scope">
                 <div v-if="scope.row.status == 3 || scope.row.status == 4">
                   <el-link type="primary" @click="openItemsDetail(scope.row)"

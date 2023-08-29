@@ -9,7 +9,7 @@
     <div class="setting-range">
       <div class="setting-opt">
         <el-button size="mini" @click="addRangeItem"
-          >+ Add Cost Range</el-button
+          >+ {{$t('Add Cost Range')}}</el-button
         >
       </div>
       <el-form
@@ -24,10 +24,10 @@
           style="width: 100%"
           height="300"
         >
-          <el-table-column label="Product Cost" width="250" fixed>
+          <el-table-column :label="$t('Product Cost')" width="250" fixed>
             <template slot-scope="scope">
               <el-tag v-if="scope.row.default" type="info"
-                >Rest of the price ranges</el-tag
+                >{{$t('Rest of the price ranges')}}</el-tag
               >
               <template v-else>
                 <el-input-number
@@ -53,7 +53,7 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column label="Shipping Cost" width="150">
+          <el-table-column :label="$t('Shipping Cost')" width="150">
             <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.shippingCost"
@@ -66,7 +66,7 @@
               </el-input-number>
             </template>
           </el-table-column>
-          <el-table-column label="Price" width="250">
+          <el-table-column :label="$t('Price')" width="250">
             <template slot="header">
               <span class=" mg-r-20">{{$t('Price')}}</span>
             </template>
@@ -91,7 +91,7 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="Compare Price" width="250">
+          <el-table-column :label="$t('Compare Price')" width="250">
             <template slot="header">
               <el-checkbox style=" margin-right: 20px;" v-model="dialogPushSetting.isComparePrice">
               {{$t('Compare Price')}}  
@@ -121,7 +121,7 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="Action" width="100" align="center">
+          <el-table-column :label="$t('Action')" width="100" align="center">
             <template v-if="!scope.row.default" slot-scope="scope">
               <a
                 class="tx-danger"

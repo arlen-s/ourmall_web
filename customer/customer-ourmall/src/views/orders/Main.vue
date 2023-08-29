@@ -18,14 +18,14 @@
             {{$t('Export')}} 
            </el-button>
            <template v-if="!!(updateTime && (updateTime > now))">
-             <el-tooltip class="item" effect="dark" content="The update process has started, it will take a while to finish." placement="bottom">
+             <el-tooltip class="item" effect="dark" :content="$t('The update process has started, it will take a while to finish.')" placement="bottom">
                <el-button type="primary" size="medium" icon="el-icon-refresh" style="color: #FFFFFF;background-color: #aeb5e2;border-color: #aeb5e2;">
                 {{$t('Update Order')}} 
                </el-button>
              </el-tooltip>
            </template>
            <template v-else>
-             <el-tooltip class="item" effect="dark" content="Use this button to update your Order List if missing orders.The process may take a while to finish." placement="bottom">
+             <el-tooltip class="item" effect="dark" :content="$t('Use this button to update your Order List if missing orders.The process may take a while to finish.')" placement="bottom">
                <el-button icon="el-icon-refresh" :disabled="!!(updateTime && (updateTime > now))" type="primary" size="medium" :loading="updateOrderLoading" @click="updateOrder">
                 {{$t('Update Order')}}
                </el-button>
@@ -76,7 +76,7 @@
                 </span>
               </el-tab-pane>
               <el-tab-pane
-                label="Waiting for sourcing"
+                :label="$t('Waiting for sourcing')"
                 name="WaitingForSourcing"
               >
                 <span slot="label">
@@ -87,7 +87,7 @@
                 </span>
               </el-tab-pane>
               <el-tab-pane
-                label="Orders processing"
+                :label="$t('Orders processing')"
                 name="OrderProcessing"
               >
                 <span slot="label">
@@ -102,7 +102,7 @@
                 name="Delivered"
               ></el-tab-pane>
               <el-tab-pane
-                label="Abnormal order"
+                :label="$t('Abnormal order')"
                 name="AbnormalOrder"
               >
                 <span slot="label">
@@ -119,7 +119,7 @@
           <div class="btn-hide-group">
             <el-button type="primary quoteOrder" v-if="$route.name == 'WaitingForAllocated'" 
             size="small"  @click="makeAnOffer">
-            <el-tooltip class="item" effect="dark" content="Please select at least one order and quote for your order" placement="top">
+            <el-tooltip class="item" effect="dark" :content="$t('Please select at least one order and quote for your order')" placement="top">
               <i class="el-icon-info"></i>
             </el-tooltip>
                {{$t('Quote for Orders')}} 
@@ -135,7 +135,7 @@
           </div> 
           <div class="btn-hide-dropdown recent">
             <el-dropdown v-if="$route.name == 'WaitingForAllocated'"  split-button type="primary" size="medium" @click="makeAnOffer" @command="handleCommand">
-              <el-tooltip class="item" effect="dark" content="Please select at least one order and quote for your order" placement="top">
+              <el-tooltip class="item" effect="dark" :content="$t('Please select at least one order and quote for your order')" placement="top">
                 <i class="el-icon-info"></i>
               </el-tooltip>
              {{$t('Quote for Orders')}} 
@@ -182,7 +182,7 @@
 			</div>
     </el-dialog>
     <el-dialog 
-      title="How to process your orders?" 
+      :title="$t('How to process your orders?')" 
       :visible.sync="dialogHowToShopify.isShow" 
       :width="'800px'"
       :close-on-click-modal="false"
@@ -190,22 +190,22 @@
       <el-divider></el-divider>
       <div style=" padding: 20px">
         <p style="margin-bottom: 15px;" class="table-wrap">
-          You have 
+          {{$t('You have')}} 
           <span class=" mg-r-15 tx-danger">{{allocateCnt}}</span> 
-          <span class="el-tag el-tag--info el-tag--small el-tag--light"><span class="-EFlq bg3"></span> Paid </span>
+          <span class="el-tag el-tag--info el-tag--small el-tag--light"><span class="-EFlq bg3"></span> {{$t('Paid')}} </span>
           + 
-          <span><span class="el-tag el-tag--warning el-tag--small el-tag--light"><span class="-EFlq bg1"></span> Unfulfilled </span></span> 
+          <span><span class="el-tag el-tag--warning el-tag--small el-tag--light"><span class="-EFlq bg1"></span> {{$t('Unfulfilled')}} </span></span> 
           / 
-          <span><span class="shopfiy-status el-tag el-tag--danger el-tag--small el-tag--light"><span class="-EFlq bg2"></span> Partially Fulfilled </span></span>
-          orders can be process, what do you want to do now?
+          <span><span class="shopfiy-status el-tag el-tag--danger el-tag--small el-tag--light"><span class="-EFlq bg2"></span> {{$t('Partially Fulfilled')}} </span></span>
+          {{$t('orders can be process, what do you want to do now?')}}
         </p>
         <div class="how-to-process-btn-wrap">
           <!-- 1 -->
           <div @click="goto('ReadyForMakeOffer')">
             <i class="icon iconfont icon-offer"></i>
             <div>
-              Need new quotation for my orders
-              <el-tooltip class="item" effect="dark" content="Over 30000+ vendors waiting for offer you price" placement="top">
+              {{$t('Need new quotation for my orders')}}
+              <el-tooltip class="item" effect="dark" :content="$t('Over 30000+ vendors waiting for offer you price')" placement="top">
                 <i class="el-icon-question"></i>
               </el-tooltip>
             </div>
@@ -214,8 +214,8 @@
           <div @click="goto('WaitingForAllocated')">
             <i class="icon iconfont icon-shunt"></i>
             <div>
-              Allocate my exist vendors
-              <el-tooltip class="item" effect="dark" content="If you already have cooperative vendors, you can allocate orders to them" placement="top">
+              {{$t('Allocate my exist vendors')}}
+              <el-tooltip class="item" effect="dark" :content="$t('If you already have cooperative vendors, you can allocate orders to them')" placement="top">
                 <i class="el-icon-question"></i>
               </el-tooltip>
             </div>
@@ -224,7 +224,7 @@
           <div @click="goto('WaitingForAllocated')">
             <i class="icon iconfont icon-check"></i>
             <div>
-              Just check my orders
+              {{$t('Just check my orders')}}
             </div>
           </div>
         </div>
@@ -232,7 +232,7 @@
     </el-dialog>  
     <el-dialog
       :close-on-click-modal="false"
-      title="In order to keep you informed of the update of the order, we suggest you verify the email"
+      :title="$t('In order to keep you informed of the update of the order, we suggest you verify the email')"
       :visible.sync="verifyEmail" :show-close="false"
       width="760px">
         <ul class="verify">
@@ -257,7 +257,7 @@
            <li v-if="failTx" class="tx-danger">{{failTx}}</li>
            <li>
              <vue-simple-verify ref="verify" @success="successVerify" :width="380"
-             tips="Hold down the slider and drag to the right" successTips="Validation passed"/>
+             :tips="$t('Hold down the slider and drag to the right')" successTips="Validation passed"/>
            </li>
            <li style="display:flex">
              <el-input placeholder="Captcha" v-model="authcode"
@@ -313,12 +313,12 @@ export default {
         refunded: { text: "Refunded", type: "info", r: 3 },
       },
       dateArr:{
-        1: 'Today',
-        2: 'Last 7 days',
-        3: 'Last 30 days',
-        4: 'Last 90 days',
-        5: 'Last 12 months',
-        6: 'Custom',
+        1: this.$t('Today'),
+        2: this.$t('Last 7 days'),
+        3: this.$t('Last 30 days'),
+        4: this.$t('Last 90 days'),
+        5: this.$t('Last 12 months'),
+        6: this.$t('Custom'),
       },
       updateOrderLoading: false,
       cnow: 0,

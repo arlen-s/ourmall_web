@@ -285,7 +285,7 @@
           <div style="flex: 2">
             <el-alert type="warning" :closable="false">
               <div slot="title" class="table-wrap">
-                * Only orders in
+                * {{$t('Only orders in')}}
                 <span
                   style="margin-right: 5px"
                   class="el-tag el-tag--info el-tag--small el-tag--light"

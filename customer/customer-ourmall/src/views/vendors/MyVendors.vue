@@ -16,7 +16,7 @@
                 <el-input
                   style="width: 300px"
                   v-model="filterParams.vendorLike"
-                  placeholder="Vendor name / contact / shop name etc."
+                  :placeholder="$t('Vendor name / contact / shop name etc.')"
                   @keyup.enter.native="filterGetItem"
                 ></el-input>
               </el-form-item>
@@ -25,7 +25,7 @@
                   style="width: 300px"
                   v-model="filterParams.productName"
                   :fetch-suggestions="getProductSelectList"
-                  placeholder="My sourcing products"
+                  :placeholder="$t('My sourcing products')"
                   :trigger-on-focus="false"
                   @select="selectClick"
                 >
@@ -59,7 +59,7 @@
         style="width: 100%"
         ref="gridTable"
       >
-        <el-table-column label="Vendor information" min-width="260">
+        <el-table-column :label="$t('Vendor information')" min-width="260">
           <template v-slot="{ row }">
             <div style="color: #909399">
               OM ID:
@@ -99,7 +99,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Vendor Contact" min-width="200">
+        <el-table-column :label="$t('Vendor Contact')" min-width="200">
           <template slot-scope="scope">
             <div class="customer-info-box">
               <div v-if="scope.row.vendorEmail">
@@ -169,7 +169,7 @@
             </div>
           </template>
         </el-table-column>
-         <el-table-column label="Bonus Balance（$）" min-width="230">
+         <el-table-column :label="$t('Bonus Balance（$）')" min-width="230">
             <template slot-scope="scope">
               <div v-if="scope.row.bonusStatus!=2">
                 <div>{{scope.row.bonus}}</div>
@@ -182,7 +182,7 @@
               <span v-else style="color: #909399">---</span>
             </template>
          </el-table-column> 
-        <el-table-column label="Sales statistics" min-width="230">
+        <el-table-column :label="$t('Sales statistics')" min-width="230">
           <template slot-scope="scope">
             <div style="color: #909399">
               {{$t('Product allocated')}}:
@@ -208,7 +208,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Date" min-width="200">
+        <el-table-column :label="$t('Date')" min-width="200">
           <template slot-scope="scope">
             <div style="color: #909399">
               {{$t('Created at')}}:
@@ -228,7 +228,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Action" width="130">
+        <el-table-column :label="$t('Action')" width="130">
           <template slot-scope="scope">
             <div>
               <el-link
@@ -278,7 +278,7 @@
     </el-row>
 
     <el-dialog
-      title="Add Vendor"
+      :title="$t('Add Vendor')"
       :visible="newAddVendorDialog.visible"
       width="600px"
       :before-close="handleClosenewAddVendor"
@@ -302,7 +302,7 @@
             size="small"
             style="flex: 0 0 50%"
             v-model="newAddVendorDialog.name"
-            placeholder="Please enter your vendor's name"
+            :placeholder="$t('Please enter your vendors name')"
           ></el-input>
         </div>
       </div>
@@ -357,7 +357,7 @@
     </el-dialog>
 
     <el-dialog
-      title="Edit Vendor"
+      :title="$t('Edit Vendor')"
       :visible="newEditDialog.visible"
       width="600px"
       :before-close="handleCloseNewEditDialog"
@@ -371,14 +371,14 @@
           <el-form-item :label="`${$root.$children[0].pName.a} ID：`">
             <div>{{ this.newEditDialog.vendorId || "--- (NOT Joined)" }}</div>
           </el-form-item>
-          <el-form-item label="Vendor name：">
+          <el-form-item :label="$t('Vendor name')">
             <el-input
-              placeholder="Vendor name"
+              placeholder="name"
               size="mini"
               v-model="newEditDialog.name"
             ></el-input>
           </el-form-item>
-          <el-form-item label="AilExpress shop：">
+          <el-form-item :label="$t('AilExpress shop：')">
             <div class="newEditurl">
               <el-input
                 placeholder="Vendor's AliExpress shop / product URL"
@@ -480,13 +480,13 @@
     </el-dialog>
 
     <el-dialog
-      title="Invite Vendor"
+      :title="$t('Invite Vendor')"
       :visible="inviteDialog.visible"
       width="600px"
       :before-close="closeInviteDialog"
     >
       <el-form style="margin-bottom: 0" label-position="left">
-        <el-form-item style="margin-bottom: 0" label="Invite Link: ">
+        <el-form-item style="margin-bottom: 0" :label="$t('Invite Link:')">
           <span>
             <a
               style="color: #409eff"
@@ -510,7 +510,7 @@
       </span>
     </el-dialog>
     <el-dialog
-      title="Bonus Detail"
+      :title="$t('Bonus Detail')"
       :visible="BonusVisible" 
       :before-close="closeBonusVisible"
       width="60%">
@@ -528,9 +528,9 @@
                  <span>{{scope.row.symbol==1 ? "Recharge" :"Expenditure"}}</span>
                </template>
             </el-table-column>
-            <el-table-column label="Transaction Flow Line" prop="code">
+            <el-table-column :label="$t('Transaction Flow Line')" prop="code">
             </el-table-column>
-            <el-table-column label="Recharge Time">
+            <el-table-column :label="$t('Recharge Time')">
                <template slot-scope="scope">
                   <span>{{moment
                     .unix(scope.row.timeCreated)
@@ -538,7 +538,7 @@
                   </span>
                </template>
             </el-table-column>
-            <el-table-column label="Amount（$）" prop="amount">
+            <el-table-column :label="$t('Amount($)')" prop="amount">
             </el-table-column>
             <el-table-column label="Remarks">
                <template slot-scope="scope">

@@ -340,7 +340,7 @@
     </el-row>
     <el-dialog
       v-loading="dialogEditProduct.loading"
-      title="Edit Product"
+      :title="$t('Edit Product')"
       :visible.sync="dialogEditProduct.isShow"
       class="dialog-edit"
       :style="{ overflow: dialogEditProduct.loading ? 'hidden' : 'auto' }"
@@ -353,7 +353,7 @@
           style="overflow: hidden"
           @tab-click="tabClick"
         >
-          <el-tab-pane label="Product">
+          <el-tab-pane :label="$t('Product')">
             <div class="tab-product">
               <div class="left">
                 <div class="img-wrap">
@@ -383,45 +383,8 @@
                       v-model="dialogEditProduct.name"
                     ></el-input>
                   </el-form-item>
-                  <!-- <el-form-item
-                    label="collection"
-                    style="margin-bottom: 10px;"
-                  >
-                    <el-select
-                      class=" mg-r-10"
-                      v-model="dialogEditProduct.collectionStoreId"
-                      filterable
-                      remote
-                      placeholder="Select Store"
-                      size="mini"
-                      :remote-method="storesRemoteMethod"
-                      :loading="dialogEditProduct.readyStoresLoading"
-                      @change="getCollections"
-                    >
-                      <el-option
-                        v-for="opt in dialogEditProduct.storesItems"
-                        :key="opt.id"
-                        :label="opt.shopName"
-                        :value="opt.id"
-                      ></el-option>
-                    </el-select>
-                    <el-select
-                      v-model="dialogEditProduct.collectionId"
-                      :loading="dialogEditProduct.getCollectionsLoading"
-                      placeholder="Select collection"
-                      size="mini"
-                    >
-                      <el-option
-                        v-for="opt in dialogEditProduct.collectionItems"
-                        :key="opt.id"
-                        :label="opt.name"
-                        :value="opt.id"
-                      >
-                      </el-option>
-                    </el-select>
-                  </el-form-item> -->
                   <el-form-item
-                    label="Shopify vendor"
+                    :label="$t('Shopify vendor')"
                     style="margin-bottom: 10px"
                   >
                     <el-input

@@ -9,10 +9,10 @@
 				<div style="margin-top: 8px;">
 					<!--<el-checkbox v-model="cancelStatus" @change="filterGetItem">Show the cancelled status</el-checkbox>-->
 					<template v-if="!waitStatus">
-						<el-link v-if="cancelStatus == 1" type="primary" @click="filterGetItem2(2)">Show cancelled orders</el-link>
-						<el-link v-if="cancelStatus == 2" type="primary" @click="filterGetItem2(1)">Show all valid orders</el-link>
+						<el-link v-if="cancelStatus == 1" type="primary" @click="filterGetItem2(2)">{{$t('Show cancelled orders')}}</el-link>
+						<el-link v-if="cancelStatus == 2" type="primary" @click="filterGetItem2(1)">{{$t('Show all valid orders')}}</el-link>
 					</template>
-					<el-link v-if="waitStatus" type="primary" @click="filterGetItem2(3)">Show all valid orders</el-link>
+					<el-link v-if="waitStatus" type="primary" @click="filterGetItem2(3)">{{$t('Show all valid orders')}}</el-link>
 				</div>
 			</div>
 			<div class="right">
@@ -46,13 +46,13 @@
 								<div ref="pageFilter" class="page-filter">
 									<el-form :inline="true" size="mini">
 										<el-form-item class=" mg-r-5" label="#">
-											<el-input style="width: 150px;" v-model="filterParams.code" placeholder="Invoice Number" @keyup.enter.native="filterGetItem"></el-input>
+											<el-input style="width: 150px;" v-model="filterParams.code" :placeholder="$t('Invoice Number')" @keyup.enter.native="filterGetItem"></el-input>
 										</el-form-item>
 										<el-form-item class=" mg-r-5">
-											<el-input style="width: 120px;" v-model="filterParams.trackNumber" placeholder="Track Number" @keyup.enter.native="filterGetItem"></el-input>
+											<el-input style="width: 120px;" v-model="filterParams.trackNumber" :placeholder="$t('Track Number')" @keyup.enter.native="filterGetItem"></el-input>
 										</el-form-item>
 										<el-form-item class=" mg-r-5">
-											<el-input style="width: 150px;" v-model="filterParams.codeName" placeholder="Shopify order number" @keyup.enter.native="filterGetItem"></el-input>
+											<el-input style="width: 150px;" v-model="filterParams.codeName" :placeholder="$t('Shopify order number')" @keyup.enter.native="filterGetItem"></el-input>
 										</el-form-item>
                     <el-form-item class=" mg-r-5">
                       <el-select
@@ -60,7 +60,7 @@
                         remote
                         :remote-method="getShopName"
                         :loading="getShopNameInput.loading"
-                        placeholder="Shopify store Name"
+                        :placeholder="$t('Shopify store Name')"
                         v-model="filterParams.accountId"
                         @change="filterGetItem"
                       >
@@ -73,7 +73,7 @@
                       </el-select>
                     </el-form-item>
 										<el-form-item class=" mg-r-20">
-											<el-select class=" mg-r-5" style="width: 150px" v-model="filterParams.timeFilter" placeholder="Date type">
+											<el-select class=" mg-r-5" style="width: 150px" v-model="filterParams.timeFilter" :placeholder="$t('Date type')">
 												<el-option v-for="opt in filterParams.timeOption" :key="opt.value" :label="opt.label" :value="opt.value"></el-option>
 											</el-select>
 											<el-date-picker v-if="filterParams.timeFilter" value-format="yyyy-MM-dd" v-model="filterParams.date" @change="dateChange" type="daterange" align="right" unlink-panels range-separator="-" start-placeholder="Start" end-placeholder="End">
@@ -85,74 +85,12 @@
 												<el-option v-for="opt in $dict.invoiceStatus" v-if="opt.val != 9" :label="opt.text" :value="opt.val" :key="opt.val"></el-option>
 											</el-select>
 										</el-form-item>
-
-										<!-- <el-form-item>
-                      <el-select
-                        style="width: 220px;"
-                        v-model='filterParams.payStatus'
-                        placeholder="Vendor confirmation"
-                        @change="filterGetItem"
-                      >
-                        <el-option
-                          label="Vendor confirmation status"
-                          value=""
-                        ></el-option>
-                        <el-option
-                          label="Confirmed"
-                          value="1"
-                        ></el-option>
-                        <el-option
-                          label="Not yet confirmed"
-                          value="2"
-                        ></el-option>
-                      </el-select>
-                    </el-form-item> -->
 										<el-form-item class=" mg-r-5">
 											<el-select filterable remote :remote-method="remoteMethodVendor" :loading="selectLoading" placeholder="Enter vendor name" v-model="filterParams.relationshipId" @change="filterGetItem">
 												<el-option v-for="opt in selectArr" :key="opt.id" :label="opt.vendorName" :value="opt.id">
 												</el-option>
 											</el-select>
 										</el-form-item>
-										<!-- <el-form-item>
-                      <el-popover
-                        ref="popoverCustomer"
-                        popper-class="with-shadow with-shadow2"
-                        trigger="focus"
-                        width="300"
-                        placement="bottom"
-                      >
-                        <el-input
-                          class="input-new-tag"
-                          slot="reference"
-                          v-model="filterParams.vendorName"
-                          ref="saveTagInput"
-                          placeholder="Vendor name"
-                        >
-                        </el-input>
-
-                        <div class="tx-center change-customer">
-                          <div
-                            class="mg-t-10"
-                            style="max-height: 280px;overflow-y: scroll;"
-                            v-if="vendorData.length"
-                          >
-                            <div
-                              v-for="(relation,index) in vendorData"
-                              :key="index+relation.id+relation.customerName"
-                              class="text customer-item"
-                              :class="{active: relation.active}"
-                              @click="selectCustomer(relation)"
-                            >
-                              {{relation.vendorName?relation.vendorName:'---'}} <span v-if="relation.vendorRemark">({{relation.vendorRemark}})</span>
-                            </div>
-                          </div>
-                          <div
-                            v-else
-                            class="tx-center"
-                          >No data</div>
-                        </div>
-                      </el-popover>
-                    </el-form-item> -->
 										<el-form-item>
 											<el-button type="primary" @click="filterGetItem">Filter</el-button>
 											<el-button type="danger" @click="clearFilter">Clear</el-button>
@@ -174,20 +112,6 @@
 							</el-table-column>
 							<el-table-column label="Vendor" prop="vendorName" width="180">
 							</el-table-column>
-							<!--<el-table-column
-                label="Shopify Orders"
-                prop="orderCnt"
-                align="center"
-                width="150"
-              >
-              </el-table-column>-->
-							<!--<el-table-column
-                label="Items Quantity"
-                prop="totalCnt"
-                align="center"
-                width="120"
-              >
-              </el-table-column>-->
 							<el-table-column label="Amount Due" prop="realAmount" width="180" align="right" class=" pd-r-15">
 								<template slot-scope="scope">
 									<span v-if="scope.row.realAmount>0" class=" tx-danger">US$ <span>{{scope.row.realAmount}}</span></span>
@@ -236,7 +160,7 @@
 													<a href="javascript:;">{{scope.row.orderStatusCnt ? scope.row.orderStatusCnt.deliveredOrderCnt : '---'}}</a>
 													<span v-if="scope.row.orderStatusCnt && Number(scope.row.orderStatusCnt.deliveredOrderCnt)- Number(scope.row.orderStatusCnt.syncOrderCnt) > 0" class="mg-l-10">(But <a href="javascript:;">{{scope.row.orderStatusCnt ? Number(scope.row.orderStatusCnt.deliveredOrderCnt)- Number(scope.row.orderStatusCnt.syncOrderCnt) : '---'}}</a> unfulfilled / partially fulfilled)</span>
 												</div>
-												<el-alert class="icon-color" :closable="false" title="You may download these tracking information and fulfilled these orders in your Shopify store manualy." type="info" show-icon>
+												<el-alert class="icon-color" :closable="false" :title="$t('You may download these tracking information and fulfilled these orders in your Shopify store manualy.')" type="info" show-icon>
 												</el-alert>
 												<div class="mg-t-15 d-flex justify-content-center">
 													<el-button type="primary" size="small" @click="exportDeliver(scope.row.id,1)">Download ALL tracking information</el-button>
@@ -247,8 +171,8 @@
 												unfulfilled / partially fulfilled)
 										</span>
 										<el-tooltip class="item" effect="dark" placement="bottom">
-											<div slot="content">The Shopify orders still unfulfilled / partially fulfilled even if the vendor had upload tracking information.
-												<br/>( You may download these tracking information and fulfilled these order in your Shopify store manually. )
+											<div slot="content">{{$t('The Shopify orders still unfulfilled / partially fulfilled even if the vendor had upload tracking information.')}}
+												<br/>( {{$t('You may download these tracking information and fulfilled these order in your Shopify store manually.')}} )
 											</div>
 											<i class="fa fa-question-circle-o mg-l-5"></i>
 										</el-tooltip>
@@ -276,34 +200,10 @@
 					<span class=" tx-gray-600">Order confirmed:</span>
 					<span>{{scope.row.timeCreateOrder ? moment.unix(scope.row.timeCreateOrder).format("ll [at] LTS") : '--'}}</span>
 				</div>
-				<!--<div class="d-flex "><span
-                      class=" tx-gray-600 mg-r-10"
-                      style="width: 110px; text-align: right;"
-                    >Order created: </span> <span>{{scope.row.timeCreated ? moment.unix(scope.row.timeCreated).format("ll [at] LTS") : '--'}}</span></div>
-                  <div class="d-flex "><span
-                      class=" tx-gray-600 mg-r-10"
-                      style="width: 110px; text-align: right;"
-                    >Order paid: </span> <span>{{scope.row.timeRead ? moment.unix(scope.row.timeRead).format("ll [at] LTS") : '--'}}</span></div>
-                  <div class="d-flex "><span
-                      class=" tx-gray-600 mg-r-10"
-                      style="width: 110px; text-align: right;"
-                    >Order confirmed: </span> <span>{{scope.row.timeCreateOrder ? moment.unix(scope.row.timeCreateOrder).format("ll [at] LTS") : '--'}}</span></div>-->
 			</template>
 		</el-table-column>
 		<el-table-column fixed="right" label="Action" width="150">
 			<template slot-scope="scope">
-				<!-- <div v-if="scope.row.status == 7">
-					<el-popconfirm
-						confirmButtonText='Confirm'
-						cancelButtonText='Cancel'
-						icon="el-icon-info"
-						iconColor="#5c6ac4"
-						title="Do You want to confirm?"
-						@onConfirm="confirmInvoice(scope.row)"
-					>
-						<el-link  slot="reference" :disabled="scope.row.confirmLoading" type="primary">Confirm</el-link>
-					</el-popconfirm>
-				</div> -->
 				<div v-if="scope.row.status == 7">
 					<el-link type="primary" @click="openReconfirm(scope.row)">Reconfirm</el-link>
 				</div>
@@ -338,7 +238,7 @@
 	<el-dialog :visible.sync="selectedSaveDialog.isShow" :width="'620px'" :close-on-click-modal="false" class="selected-save-dialog">
 		<div style="padding: 0 20px 20px;text-align: center;">
 			<i style="color: #67C23A;font-size: 50px;" class="el-message__icon el-icon-success"></i>
-			<p style="color: #67C23A;font-weight: bold;font-size: 18px;margin: 10px 0px 20px;">Selected saved! Now you can Check the purchase orders</p>
+			<p style="color: #67C23A;font-weight: bold;font-size: 18px;margin: 10px 0px 20px;">{{$t('Selected saved! Now you can Check the purchase orders')}}</p>
 			<el-table :data="selectedSaveDialog.info" border style="width: 100%">
 				<el-table-column label="#Invoice Number" prop="code">
 					<template slot-scope="scope">
@@ -347,26 +247,26 @@
 				</el-table-column>
 				<el-table-column label="Vendor" prop="vendorName">
 				</el-table-column>
-				<el-table-column label="Amount Due" prop="realAmount">
+				<el-table-column :label="$t('Amount Due')" prop="realAmount">
 					<template slot-scope="scope">
 						<span v-if="scope.row.realAmount>0" class=" tx-danger">US$ <span>{{scope.row.realAmount}}</span></span>
-						<span class=" tx-danger" v-else>Not set up</span>
+						<span class=" tx-danger" v-else>{{$t('Not set up')}}</span>
 					</template>
 				</el-table-column>
 				<el-table-column fixed="right" label="Action">
 					<template slot-scope="scope">
 						<div>
-							<el-link style="font-size: 12px;font-weight: normal;" type="primary" @click="gotoInvoice(scope.row)">View Details</el-link>
+							<el-link style="font-size: 12px;font-weight: normal;" type="primary" @click="gotoInvoice(scope.row)">{{$t('View Details')}}</el-link>
 						</div>
 						<div>
-							<el-link style="font-size: 12px;font-weight: normal;" type="primary" @click="sendtoVendor(scope.row)">Send to vendor</el-link>
+							<el-link style="font-size: 12px;font-weight: normal;" type="primary" @click="sendtoVendor(scope.row)">{{$t('Send to vendor')}}</el-link>
 						</div>
 					</template>
 				</el-table-column>
 			</el-table>
 		</div>
 	</el-dialog>
-	<el-dialog @open="openSend" @close="closeSend" custom-class="sendInvoice" title="Send to vendor" :visible.sync="sendInvoiceOpen" width="50%">
+	<el-dialog @open="openSend" @close="closeSend" custom-class="sendInvoice" :title="$t('Send to vendor')" :visible.sync="sendInvoiceOpen" width="50%">
 		<!--<el-divider></el-divider>-->
 		<template>
 
@@ -385,7 +285,7 @@
 						<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;"></div>
 						<div>
 							<div>
-								<el-button size="mini" type="success" v-clipboard:copy="invoiceInfo.url" v-clipboard:success="onCopy" v-clipboard:error="onError">Copy Link</el-button>
+								<el-button size="mini" type="success" v-clipboard:copy="invoiceInfo.url" v-clipboard:success="onCopy" v-clipboard:error="onError">{{$t('Copy Link')}}</el-button>
 							</div>
 						</div>
 					</div>
@@ -394,13 +294,13 @@
 					<span slot="label"><i class="iconfont icon-shejiao"></i> Share by APP</span>
 					<div>
 						<div class="d-flex mg-y-20">
-							<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Title:</div>
+							<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Title')}}:</div>
 							<div style="width: 70%;">
 								<el-input @change="saveRemark('2')" type="text" size="small" v-model="shareTitle"></el-input>
 							</div>
 						</div>
 						<div class="d-flex mg-y-20 align-items-center">
-							<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Desc:</div>
+							<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Desc')}}:</div>
 							<div style="width: 70%;">
 								<el-input @change="saveRemark('2')" type="textarea" resize="none" :autosize="{ minRows: 3, maxRows: 6}" size="small" v-model="shareDesc"></el-input>
 								<!--<div class="mg-t-20 tx-right">
@@ -410,18 +310,18 @@
 							</div>
 						</div>
 						<div class="d-flex mg-y-20">
-							<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">Share:</div>
+							<div style="color: #999;width: 150px;text-align: right;margin-right: 10px;white-space: nowrap;">{{$t('Share')}}:</div>
 							<div style="width: 70%;" class="d-flex">
 								<div class="skype-share" style="margin-right: 30px;" :data-href="shareTitle + shareDesc" data-lang="en-US" :data-text="invoiceInfo.url" data-style="large"></div>
 								<div>
 									<el-tooltip placement="bottom">
 										<div slot="content">
-											<p class="tx-center mg-b-10">Scan share to WeChat</p>
+											<p class="tx-center mg-b-10">{{$t('Scan share to WeChat')}}</p>
 											<img :src="invoiceInfo.qrcode" width="130" />
 											<img src="images/weixin.png" width="30px" style="position: absolute;left: 50%;top: 50%;margin-left: -15px;margin-top: -4px;" />
 										</div>
 										<a class="share-weixin" href="javascript:;">
-											<i class="fa fa-weixin"></i> Share
+											<i class="fa fa-weixin"></i> {{$t('Share')}}
 										</a>
 									</el-tooltip>
 								</div>
@@ -434,10 +334,10 @@
 		<el-divider></el-divider>
 		<div slot="footer" class="dialog-footer d-flex justify-content-between">
 			<div>
-				<el-button v-show="activeShareName == 'shareWeixin'" size="small" type="primary" plain @click="saveRemark('1')">Clear</el-button>
+				<el-button v-show="activeShareName == 'shareWeixin'" size="small" type="primary" plain @click="saveRemark('1')">{{$t('Clear')}}</el-button>
 			</div>
 			<div>
-				<el-button size="small" @click="sendInvoiceOpen = false">Close</el-button>
+				<el-button size="small" @click="sendInvoiceOpen = false">{{$t('Close')}}</el-button>
 			</div>
 		</div>
 	</el-dialog>
@@ -456,9 +356,9 @@
 			</div>
 			<div slot="footer" class="dialog-footer d-flex">
 				<el-button v-if="DialogReconfirm.item.status == 7"  size="small" type="primary"  @click="runReconfirm(1)">
-					Allow vendor to process these orders
+					{{$t('Allow vendor to process these orders')}}
 				</el-button>
-				<el-button size="small" @click="runReconfirm(2)">View details</el-button>
+				<el-button size="small" @click="runReconfirm(2)">{{$t('View details')}}</el-button>
 			</div>
 		</template>
 	</el-dialog>

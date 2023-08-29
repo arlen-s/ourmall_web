@@ -14,7 +14,7 @@
         style="overflow: hidden"
         @tab-click="tabClick"
       >
-        <el-tab-pane label="Product">
+        <el-tab-pane :label="$t('Product')">
           <div class="tab-product">
             <div class="left">
               <div class="img-wrap">

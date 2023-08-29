@@ -15,7 +15,7 @@
         <el-row>
           <el-col :span="24">
             <el-tabs v-model="activeName" @tab-click="search">
-              <el-tab-pane label="Awaiting Response" name="1">
+              <el-tab-pane :label="$t('Awaiting Response')" name="1">
                 <span slot="label">
                   {{$t('Awaiting Response')}}
                   <span>({{ total }})</span>
@@ -43,8 +43,8 @@
                                 align="right"
                                 unlink-panels
                                 range-separator="-"
-                                start-placeholder="Start date"
-                                end-placeholder="End date"
+                                :start-placeholder="$t('Start date')"
+                                :end-placeholder="$t('End date')"
                                 :picker-options="pickerOptions"
                                 @change="search"
                               >
@@ -53,7 +53,7 @@
                             <!-- 搜索框 -->
                             <el-form-item class="do_search">
                               <el-input
-                                placeholder="Enter order number"
+                                :placeholder="$t('Enter order number')"
                                 v-model="search_txt"
                                 class="search_txt"
                                 @keyup.enter.native="search"
@@ -92,17 +92,17 @@
                       style="width: 100%"
                     >
                       <el-table-column type="selection"></el-table-column>
-                      <el-table-column label="Order Number">
+                      <el-table-column :label="$t('Order Number')">
                         <template slot-scope="scope">
                           {{ scope.row.code }}
                         </template>
                       </el-table-column>
-                      <el-table-column label="Tracking Number">
+                      <el-table-column :label="$t('Tracking Number')">
                         <template slot-scope="scope">
                           {{ scope.row.reissueCode }}
                         </template>
                       </el-table-column>
-                      <el-table-column label="Dispute Type">
+                      <el-table-column :label="$t('Dispute Type')">
                         <template slot-scope="scope">
                           {{
                             (
@@ -113,7 +113,7 @@
                           }}
                         </template>
                       </el-table-column>
-                      <el-table-column label="Expected Solution">
+                      <el-table-column :label="$t('Expected Solution')">
                         <template slot-scope="scope">
                           {{
                             (
@@ -124,7 +124,7 @@
                           }}
                         </template>
                       </el-table-column>
-                      <el-table-column label="Create Date">
+                      <el-table-column :label="$t('Create Date')">
                         <template slot-scope="scope">
                           {{
                             moment(scope.row.timeAbnormal * 1000).format(
@@ -133,7 +133,7 @@
                           }}
                         </template>
                       </el-table-column>
-                      <el-table-column label="Status">
+                      <el-table-column :label="$t('Status')">
                         <template slot-scope="scope">
                           {{
                             (

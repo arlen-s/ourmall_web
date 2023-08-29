@@ -289,7 +289,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="Order"
+          :label="$t('Order')"
           prop="codeName"
           width="150"
           fixed
@@ -304,7 +304,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="My Store"
+          :label="$t('My Store')"
           prop="store"
           width="200"
         >
@@ -316,7 +316,7 @@
         </template>
         </el-table-column>
         <el-table-column
-          label="Date"
+          :label="$t('Date')"
           prop="timeCreated"
           width="220"
         >
@@ -324,7 +324,7 @@
             {{moment(scope.row.timeCreated).format("ll [at] LTS")}}
           </template>
         </el-table-column>
-        <el-table-column label="Customer" width="250">
+        <el-table-column :label="$t('Customer')" width="250">
           <template slot-scope="scope">
             <popShippingJson :item="scope.row" @onCopy="onCopy" @onError="onError"/>
           </template>
@@ -343,7 +343,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="Payment"
+          :label="$t('Payment')"
           width="170"
         >
           <template slot-scope="scope">
@@ -358,20 +358,20 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="Fulfillment"
+          :label="$t('Fulfillment')"
           width="150"
         >
           <template slot-scope="scope">
             <fulfillMentStatusTag :fulfillmentStatus="scope.row.fulfillmentStatus"/>
           </template>
         </el-table-column>
-        <el-table-column label="Items">
+        <el-table-column :label="$t('Items')">
           <template slot-scope="scope">
             <popItems v-if="scope.row.items" :items="scope.row.items" :fulfillmentStatus="scope.row.fulfillmentStatus" />
           </template>
         </el-table-column>
         <el-table-column v-if="routerName == 'AbnormalOrder'"
-          label="Abnormal reason"
+          :label="$t('Abnormal reason')"
           width="180"
         >
           <template slot-scope="scope">
@@ -411,7 +411,7 @@
         </el-col>
       </el-row>
     </div>
-    <el-dialog title="Export"  :width="'620px'" :close-on-click-modal="false"
+    <el-dialog :title="$t('Export')"  :width="'620px'" :close-on-click-modal="false"
       :visible.sync="exportDialog.isShow"
     >
       <el-divider></el-divider>

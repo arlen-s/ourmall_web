@@ -51,7 +51,7 @@
 				</el-table>
 			</el-row>
 			<el-row class="tx-center">
-				<el-button class="mt-15" type="primary" @click="closeHandle">I Know</el-button>
+				<el-button class="mt-15" type="primary" @click="closeHandle">{{$t('I Know')}}</el-button>
 			</el-row>
 		</el-row>
 	</el-dialog>

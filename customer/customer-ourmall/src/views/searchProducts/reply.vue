@@ -13,10 +13,10 @@
 		<el-card>
 			<el-row>
 				<el-form :mode="filterParams" :inline="true" size="mini">
-					<el-form-item label="Trade name">
-						<el-input v-model="filterParams.name" placeholder="Please enter"></el-input>
+					<el-form-item :label="$t('Trade name')">
+						<el-input v-model="filterParams.name" :placeholder="$t('Please enter')"></el-input>
 					</el-form-item>
-					<el-form-item label="Date">
+					<el-form-item :label="$t('Date')">
 						<el-date-picker
 							v-model="dateArr"
 							type="daterange"
@@ -24,8 +24,8 @@
 							:default-time="['00:00:00', '23:59:59']"
 							range-separator="-"
 							@change="dateChange"
-							start-placeholder="Start date"
-							end-placeholder="End date">
+							:start-placeholder="$t('Start date')"
+							:end-placeholder="$t('End date')">
 						</el-date-picker>
 					</el-form-item>
 					<el-form-item>
@@ -39,27 +39,27 @@
 				<el-table
 					:data="items"
 					v-loading="tableLoading">
-					<el-table-column label="Product title" prop="name"></el-table-column>
-					<el-table-column label="Picture">
+					<el-table-column :label="$t('Product title')" prop="name"></el-table-column>
+					<el-table-column :label="$t('Picture')">
 						<template slot-scope="scope">
 							<el-image class="image-size" 
 								:src="scope.row.imgUrlJson[0]" fit="contain"
 								:preview-src-list="[scope.row.imgUrlJson[0]]"></el-image>
 						</template>
 					</el-table-column>
-					<el-table-column label="Expected Price">
+					<el-table-column :label="$t('Expected Price')">
 						<template slot-scope="scope">
 							{{$store.state.country.symbol}} {{ $exchangeRate(scope.row.minPrice) }} - {{ $exchangeRate(scope.row.maxPrice) }}
 						</template>
 					</el-table-column>
-					<el-table-column label="Product link" prop="url"></el-table-column>
-					<el-table-column label="Description" prop="description"></el-table-column>
-					<el-table-column label="Creation date">
+					<el-table-column :label="$t('Product link')" prop="url"></el-table-column>
+					<el-table-column :label="$t('Description')" prop="description"></el-table-column>
+					<el-table-column :label="$t('Creation date')">
 						<template slot-scope="scope">
 							{{moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}
 						</template>
 					</el-table-column>
-					<el-table-column label="Operation">
+					<el-table-column :label="$t('Operation')">
 						<template slot-scope="scope">
 							<el-link type="primary"  @click="detailClick(scope.row)">{{$t('Details')}}</el-link>
 						</template>
@@ -102,12 +102,12 @@
 						</el-upload>
 						<div>{{$t('You can only upload 5 pictures')}}</div>
 					</el-form-item>
-					<el-form-item label="Product Title:" prop="title">
+					<el-form-item :label="$t('Product Title')" prop="title">
 						<el-input size="small" v-model="publishForm.title"></el-input>
 					</el-form-item>
 					<el-row>
 						<el-col :span="6">
-							<el-form-item label="Price Range:" prop="priceFrom">
+							<el-form-item :label="$t('Price Range')" prop="priceFrom">
 								<el-input v-model="publishForm.priceFrom" type="number" style="width: 100px" size="small"></el-input>
 							</el-form-item>
 						</el-col>
@@ -120,10 +120,10 @@
 							</el-form-item>
 						</el-col>
 					</el-row>
-					<el-form-item label="Product Links:">
+					<el-form-item :label="$t('Product Links')">
 						<el-input size="small" v-model="publishForm.link"></el-input>
 					</el-form-item>
-					<el-form-item label="Product Description:">
+					<el-form-item :label="$t('Product Description')">
 						<el-input type="textarea" size="small" :rows="4" v-model="publishForm.description"></el-input>
 					</el-form-item>
 				</el-form>

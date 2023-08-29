@@ -96,7 +96,7 @@
                     </el-form-item>
                     <el-alert
                       v-else
-                      title="There is no Shipping method to reach the current address"
+                      :title="$t('There is no Shipping method to reach the current address')"
                       type="warning"
                       show-icon
                       :closable="false"
@@ -108,7 +108,7 @@
               <el-row v-else>
                 <el-col :span="8">
                   <el-alert
-                    title="Please select address"
+                    :title="$t('Please select address')"
                     type="warning"
                     show-icon
                     :closable="false"
@@ -128,7 +128,7 @@
             <el-card class=" mg-b-15">
               <el-table :data="skuList" style="margin-bottom: 15px;">
                 <el-table-column
-                  label="Product information"
+                  :label="$t('Product information')"
                 >
                   <template slot-scope="scope">
                     <div class="product-info">
@@ -166,7 +166,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="Price"
+                  :label="$t('Price')"
                   width="140"  
                 >
                   <template slot-scope="scope">
@@ -174,7 +174,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="Quantity"
+                  :label="$t('Quantity')"
                   width="120"
                   align="center"
                 >
@@ -183,7 +183,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="Subtotal"
+                  :label="$t('Subtotal')"
                   width="150" 
                 >
                   <template slot-scope="scope">

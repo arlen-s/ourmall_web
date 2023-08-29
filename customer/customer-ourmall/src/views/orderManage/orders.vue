@@ -258,7 +258,7 @@
                         :cell-style="rowStyle"
                        :cell-class-name="cellClassName"
                       >
-                        <el-table-column prop="" label="Product Images" 
+                        <el-table-column prop="" :label="$t('Product Images')" 
                           width='200'
                           align="center">
                           <template slot-scope="child">
@@ -309,7 +309,7 @@
                         </el-table-column>  
                         <el-table-column
                           prop=""
-                          label="Attribute Value"
+                          :label="$t('Attribute Value')"
                           width='180'
                           align="left"
                         >

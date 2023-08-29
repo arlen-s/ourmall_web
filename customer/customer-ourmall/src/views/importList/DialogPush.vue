@@ -13,7 +13,7 @@
       <div class="dialog-push-body">
           <el-row :gutter="30">
             <el-col :span="14">
-              <h3>Selected products ({{ dialogPush.items.length }})</h3>
+              <h3>{{$t('Selected products')}} ({{ dialogPush.items.length }})</h3>
               <el-table :data="dialogPush.items" height="400" style="width: 100%">
                 <el-table-column prop="mainImg" width="110">
                   <template slot-scope="scope">
@@ -67,9 +67,9 @@
             <el-col :span="10">
               <h3 style="margin-bottom: 15px">
                 <template v-if="SelectedPushStoresNum">
-                  Selected stores ({{ SelectedPushStoresNum }})
+                 {{$t(' Selected stores')}} ({{ SelectedPushStoresNum }})
                 </template>
-                <template v-else> Please select the Shopify stores </template>
+                <template v-else> {{$t('Please select the Shopify stores')}} </template>
               </h3>
               <ul class="push-select-stores" v-for="shops in dialogPush.shopList" :key="shops.platform">
                 <div class="block" v-if="shops.platform == 1"><shopCate  :items="shops" />Shopify</div>

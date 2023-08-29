@@ -50,7 +50,7 @@
               </el-table-column>
               <!-- 商品信息 -->
               <el-table-column
-                label="Product"
+                :label="$t('Product')"
                 width="300"
               >
                 <template slot-scope="scope">
@@ -68,7 +68,7 @@
               </el-table-column>
               <!-- 单价 -->
               <el-table-column
-                label="Price"
+                :label="$t('Price')"
                 width="120"
               >
                 <template slot-scope="scope">
@@ -79,7 +79,7 @@
               </el-table-column>
               <!-- 数量 -->
               <el-table-column
-                label="Quantity"
+                :label="$t('Quantity')"
                 align="center"
               >
                 <template slot-scope="scope">
@@ -90,7 +90,7 @@
               </el-table-column>
               <!-- 小计 -->
               <el-table-column
-                label="Subtotal"
+                :label="$t('Subtotal')"
                 width="120"
               >
                 <template slot-scope="scope">
@@ -101,7 +101,7 @@
               </el-table-column>
               <!-- 操作 -->
               <el-table-column
-                label="Operate"
+                :label="$t('Operate')"
               >
                 <template slot-scope="scope">
                   <el-button type="danger" size="mini" icon="el-icon-delete"
