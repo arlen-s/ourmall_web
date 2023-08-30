@@ -16,10 +16,17 @@
           <el-card>
             <el-row :gutter="20">
               <el-col :span="24">
+                 <el-alert
+    :title="$t('shop.商品价格=填写价格×商品系数÷汇率，结果保留2位小数')"
+    type="warning"
+     :closable="false"
+    >
+  </el-alert>
+  <p style="margin-bottom:10px"></p>
                   <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item >
-                      {{$t('shop.汇率值')}} <el-radio v-model="radio" label="1"><el-input-number v-model="form.Rate" :placeholder="$t('shop.请输入有效数值')" :min="0" :precision="2" style="width:200px"></el-input-number></el-radio>
-                      {{$t('shop.利率')}} <el-radio v-model="radio" label="2"><el-input-number v-model="form.ratio" :placeholder="$t('shop.请输入有效数值')" :min="0" :precision="2" style="width:200px"></el-input-number></el-radio>
+                      {{$t('shop.汇率')}} <el-input-number v-model="form.Rate" :placeholder="$t('shop.请输入有效数值')" :min="0" :precision="2" style="width:200px"></el-input-number>
+                      {{$t('shop.系数')}} <el-input-number v-model="form.ratio" :placeholder="$t('shop.请输入有效数值')" :min="0" :precision="2" style="width:200px"></el-input-number>
                       
                     </el-form-item>
                     <el-form-item>
@@ -43,26 +50,37 @@ export default {
           Rate: '',
           ratio: '',
         },
-        radio: '1',
     };
   },
   mounted() {
-
+      this.getRea()
   },
   methods: {
     onSubmit() {
         this.$apiCall("api.User.setExchangeRate", {
-          exchangeRate: this.radio== 1 ?this.form.Rate : '',
-          productCoefficient: this.radio== 2? this.form.ratio : '',
+          exchangeRate:this.form.Rate ,
+          productCoefficient: this.form.ratio,
         }, (r) => {
           if (r.ErrorCode == "9999") {
              this.$elementMessage(r.Message, "success");
-             this.form.Rate = ''
-             this.form.ratio = ''
+            //  this.form.Rate = ''
+            //  this.form.ratio = ''
           } else {
             this.$elementMessage(r.Message, "error");
           }
         })
+    },
+    getRea(){
+        this.$apiCall("api.User.getUserConfig", {
+        }, (r) => {
+          if (r.ErrorCode == "9999") {
+            //  this.$elementMessage(r.Message, "success");
+             this.form.Rate = r.Data.Results.exchangeRate
+             this.form.ratio = r.Data.Results.productCoefficient
+          } else {
+            this.$elementMessage(r.Message, "error");
+          }
+        })      
     }
   },
   components: {},
