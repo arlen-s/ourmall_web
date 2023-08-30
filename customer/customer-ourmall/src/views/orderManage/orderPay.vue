@@ -206,7 +206,7 @@
 									<span class="left">
 										{{$t('Total amount of goods')}}（{{$store.state.country.symbol}}）:
 									</span>
-									<span class="tx-bold"> {{totalAllGoodsAmount ? mathTofixed(totalAllGoodsAmount) : '---'}}</span>
+									<span class="tx-bold"> {{totalAllGoodsAmount ? totalAllGoodsAmount : '---'}}</span>
 								</div>
 								<div :class="couponInfo.type == 1 ? 'line-through' : ''">
 									<span class="left">
@@ -239,7 +239,7 @@
 									<span class="left">
 										{{$t('Amount due (including freight)')}}（{{$store.state.country.symbol}}）:
 									</span>
-									<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
+									<span class="tx-bold"> {{totalAllGoodsAndFreight ? totalAllGoodsAndFreight : '---'}}</span>
 								</div>
 							</template>
 						</div>
@@ -249,7 +249,7 @@
 			<div v-if="!paystatus>0" class="pay-submit" :style="{width: width}">
 				<span class="left">
 					{{$t('Amount due (including freight)')}}（{{$store.state.country.symbol}}）:
-					<span class="tx-bold"> {{totalAllGoodsAndFreight ? mathTofixed(totalAllGoodsAndFreight) : '---'}}</span>
+					<span class="tx-bold"> {{totalAllGoodsAndFreight ? totalAllGoodsAndFreight : '---'}}</span>
 				</span>
 				 <el-button  type="primary" :disabled="platformType == '13'" @click="orderPay(openType)">{{$t('Submit orders')}}</el-button>
 				 
