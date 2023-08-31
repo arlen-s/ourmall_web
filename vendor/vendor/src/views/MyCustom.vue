@@ -142,6 +142,18 @@
                         <el-option :label="$t('mycustomer.三级')" value="3"></el-option>
                       </el-select>                     
                     </el-form-item>
+                    <el-form-item :label="$t('mycustomer.客户活跃度')">
+                      <el-select
+                        v-model="filterParams.dynamic"
+                        style="width: 90px"
+                        :placeholder="$t('mycustomer.all')"
+                        @change="filterGetItem"
+                      >
+                        <el-option :label="$t('mycustomer.all')" value></el-option>
+                        <el-option :label="$t('mycustomer.活跃')" value="1"></el-option>
+                        <el-option :label="$t('mycustomer.非活跃')" value="2"></el-option>
+                      </el-select>
+                    </el-form-item>                    
                     <el-form-item>
                       <el-button type="primary" @click="filterGetItem">
                         {{
@@ -387,7 +399,7 @@
               </el-table-column>
               <el-table-column
                 :label="`${$t('mycustomer.总信用额度')}/${$t('mycustomer.剩余信用额度')}`"
-                align="center" 
+                align="center"
               >
                 <template slot-scope="scope">
                   <p>{{Number(scope.row.creditAmount).toFixed(2) }}</p>
@@ -864,6 +876,7 @@ export default {
         name: "",
         email: "",
         isAuth: "",
+        dynamic:'',
         customerLike: "",
         relationshipId: "",
         inviterUserId: '',
@@ -1407,6 +1420,7 @@ export default {
           vendorSku: this.filterParams.vendorSku,
           email: this.filterParams.email,
           isAuth: this.filterParams.isAuth,
+          actDegree: this.filterParams.dynamic,
           customerLike: '',
           clientGrade: this.filterParams.clientGrade,
           relationshipId: this.filterParams.relationshipId,
