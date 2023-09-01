@@ -26,7 +26,7 @@
 							:value="type.val">{{ $t(type.text) }}</el-checkbox>
 					</el-checkbox-group>
 				</el-form-item>
-				<el-form-item label="$t('logistics.运费方案')" required>
+				<el-form-item :label="$t('logistics.运费方案')" required>
 					<div>
 						  <el-select v-model="data.form.calType" :placeholder="$t('logistics.请选择')">
 							<el-option
