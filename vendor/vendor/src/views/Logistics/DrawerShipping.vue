@@ -520,7 +520,7 @@
 	}
 	.t-box-int{
 		display: flex;
-		height: 36px;
+		min-height: 36px;
 		line-height: 36px;
 		.text{
 			padding-right: 10px;
