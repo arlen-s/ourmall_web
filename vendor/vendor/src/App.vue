@@ -551,17 +551,6 @@
 			</div>
 			Show
 		</div>
-		<!-- <el-dialog
-  title="续费预警"
-  :visible.sync="dialogVisibleError"
-  width="40%"
-  :close-on-click-modal="false"
- >
- <div style="padding:0 20px 20px 20px">
-    <p style="padding:20px 0">尊敬的马帮用户：</p>
-    <p>您好，贵司产品开通时间为2022年01月05日，服务时间一年，到期截止日期为2023年05月06日，为了不影响贵司的业务推进，请及时联系专属商务同事进行续费，祝贵司事业长虹！</p>
- </div>
-</el-dialog>     -->
 		<el-dialog :title="$t('app.modifyUserEmail')" :visible.sync="changeUserEmailShow" width="600px"
 			:close-on-click-modal="false">
 			<el-row :gutter="30">
@@ -891,10 +880,18 @@
 						role: "customerView",
 						enabled: true,
 					},
+					// {
+					// 	id: 67,
+					// 	text: "app.售后工单",
+					// 	icon: "el-icon-s-promotion",
+					// 	path: "/serviceTicket",
+					// 	role: "customerView",
+					// 	enabled: true,
+					// },					
 					{
 						id: 45,
 						text: "router.storehouse",
-						icon: "el-icon-s-custom",
+						icon: "el-icon-takeaway-box",
 						path: "/storehouse",
 						role: "customerView",
 						enabled: true,
@@ -998,12 +995,11 @@
 								name: "app.提现列表",
 								path: "/WithdrawalList",
 								enabled: true,
-							}
-							// ,{
-							// 	name: "app.店铺销量列表",
-							// 	path: "/shopOrderList",
-							// 	enabled: true,
-							// }							
+							},{
+								name: "app.店铺销量列表",
+								path: "/shopOrderList",
+								enabled: true,
+							}							
 						]
 					},
 					{
@@ -1145,7 +1141,6 @@
 				DialogEditCommentDefault: "{}",
 				reCount: 0,
 				verChangeTime: 10,
-      dialogVisibleError: false,
 				changeUserEmailShow: false,
 				authcode: "",
 				userEmail: "",
@@ -1580,6 +1575,7 @@
 				this.$apiCall('api.VendorShop.getByVendor', {}, r => {
 					if (r.ErrorCode == 9999) {
 						this.VondersData = r.Data.Results || {};
+									// this.changeFavicon()
 						this.$store.commit('setLogo', this.VondersData.logo)
 						if (!this.VondersData || !this.VondersData.name) {
 							this.dialogSetShopNameData.isShow = true;
@@ -1773,12 +1769,8 @@
 			routerCheckLogin() {
 				this.$apiCall("api.User.checkLoginStatus", {}, (r) => {
 					if (r.ErrorCode == "9999") {
-						//r.Data.Results.canUseWallet = r.Data.Results.walletOpen = 1; //测试打开钱包							
-							// if (localStorage.getItem('vendorId') == '150488') {
-							// 		this.dialogVisibleError = true								
-							// }else{
-							// 		this.dialogVisibleError = false	
-							// }
+						//r.Data.Results.canUseWallet = r.Data.Results.walletOpen = 1; //测试打开钱包
+
 						localStorage.setItem("apiUserToken", r.Data.Results.apiUserToken);
 						localStorage.setItem("apiUserId", r.Data.Results.id);
 						localStorage.setItem("vendorId", r.Data.Results.vendorId);

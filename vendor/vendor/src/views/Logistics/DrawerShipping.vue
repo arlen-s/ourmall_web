@@ -26,9 +26,9 @@
 							:value="type.val">{{ $t(type.text) }}</el-checkbox>
 					</el-checkbox-group>
 				</el-form-item>
-				<el-form-item label="运费方案" required>
+				<el-form-item label="$t('logistics.运费方案')" required>
 					<div>
-						  <el-select v-model="data.form.calType" placeholder="请选择">
+						  <el-select v-model="data.form.calType" :placeholder="$t('logistics.请选择')">
 							<el-option
 								v-for="item in logicList"
 								:key="item.value"
@@ -38,9 +38,9 @@
 						</el-select>
 					</div>
 					<div class="t-box-int">
-						<span class="text">添加运费方案:</span>
-						<span class="textM" v-if="data.form.calType== '1'">ourmall运费计算逻辑：首重价格+（重量-首重）/续重*续重费用+挂号费+附加费</span>
-						<span class="textM" v-else>云途运费计算逻辑：商品重量不超过首重的部分*首重价格/1000+商品重量超过首重的部分*续重价格/1000+挂号费+附加费+利润</span>
+						<span class="text">{{$t('logistics.添加运费方案')}}:</span>
+						<span class="textM" v-if="data.form.calType== '1'">{{$t('logistics.ourmall运费计算逻辑：首重价格+(商品重量-首重)÷续重×续重价格+挂号费+附加费')}}</span>
+						<span class="textM" v-else>{{$t('logistics.云途运费计算逻辑：商品重量不超过首重的部分×首重价格÷1000+商品重量超过首重的部分×续重价格÷1000+挂号费+附加费+利润')}}</span>
 					</div>	
 				</el-form-item>				
 				<el-form-item :label="$t('logistics.运费设置')">
