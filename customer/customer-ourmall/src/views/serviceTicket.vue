@@ -104,7 +104,7 @@
               <el-table-column :label="$t('创建时间')">
                 <template slot-scope="scope">{{scope.row.timeCreated || '--'}}</template>
               </el-table-column>
-              <el-table-column :label="$t('备注')">
+              <el-table-column :label="$t('Remark')">
                 <template slot-scope="scope">{{scope.row.remark || '--'}}</template>
               </el-table-column>              
               <el-table-column :label="$t('状态')">
