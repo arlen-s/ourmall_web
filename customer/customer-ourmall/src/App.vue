@@ -901,6 +901,14 @@ export default {
           path: "/stores",
           enabled: true,
         },
+        {
+          id: 65,
+          text: "serviceTicket",
+          icon: "el-icon-s-promotion",
+          image: "/images/sidebar/order.png",
+          path: "/serviceTicket",          
+          enabled: true,
+        },        
         // {
         //   id: 2,
         //   icon: "el-icon-s-finance",

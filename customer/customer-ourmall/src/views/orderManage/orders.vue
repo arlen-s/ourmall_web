@@ -989,9 +989,17 @@
                         class="mg-r-20"
                         type="primary"
                         @click="syncFn('row', scope.row)"
-                      >
-                        {{$t('Manually synced')}}
+                      >{{$t('Manually synced')}}
+                        
                       </el-link>
+                      <el-link
+                        v-if="status == 4"
+                        class="mg-r-20"
+                        type="primary"
+                        @click="afterFn('row', scope.row)"
+                      >                        
+                       {{$t('after sales')}}
+                      </el-link>                      
                     </div>
                   </template>
                 </el-table-column>
@@ -1948,6 +1956,7 @@
                       }}</span>
                     </template>
                   </el-table-column>
+
                 </template>
                 <template v-if="status == 6">
                   <el-table-column :label="$t('status')" width="100">
@@ -1972,7 +1981,20 @@
                       <el-link>
                         Download documentation
                       </el-link>
-                  </el-table-column> -->
+                  </el-table-column> -->                  
+                </template>
+                <template v-if="status == 3 || status == 5 ">
+                                    <el-table-column label="Action" width="150">
+                    <template slot-scope="scope">
+                      <el-link
+                        class="mg-r-20"
+                        type="primary"
+                        @click="afterFn('row', scope.row)"
+                      >                        
+                       {{$t('after sales')}}
+                      </el-link>   
+                    </template>
+                  </el-table-column>
                 </template>
               </el-table>
             </template>
@@ -2263,6 +2285,8 @@
       :dialog="addTrackingDialog"
       v-if="addTrackingDialog.visible"
     ></add-tracking-dialog>
+    
+    <dialogSales :salesData="afterData" @callBackSale="changeTr"></dialogSales>
   </div>
 </template>
 
@@ -2274,6 +2298,7 @@ import dlocal from "@/components/checkout/dlocal";
 import checkStock from "@/components/checkout/dialogCheckStock";
 import orderCnt from "./dialogOrderCnt.vue";
 import AddTrackingDialog from "./addTrackingDialog.vue";
+import dialogSales from './afterSales.vue'
 export default {
   data() {
     return {
@@ -2289,6 +2314,11 @@ export default {
       formHouse: {
           type: []
       },
+      afterData:{
+        dialogVisible:false,  
+        shopifyAccountId: "",
+        orderId: ''
+      },      
       dialogVisibleHouse: false,
       isExpansion: false,
        vendorId: localStorage.getItem('vendorId'),
@@ -2508,6 +2538,7 @@ export default {
     checkStock,
     orderCnt,
     AddTrackingDialog,
+    dialogSales,
   },
   watch: {
     $route(to, from) {
@@ -3486,6 +3517,25 @@ export default {
         }
       }
     },
+
+
+
+    afterFn(type, item){
+      if (type == "row") {
+        this.afterData.dialogVisible = true
+        this.afterData.orderId = item.orderId
+        this.afterData.shopifyAccountId = item.shopifyAccountId
+      } else {
+        if (!this.checkIds.length) {
+          this.$elementMessage("Please select an order first", "error");
+        } else {
+          this.sync();
+        }
+      }
+    },
+    changeTr(v){
+      this.afterData.dialogVisible = false
+    },    
     sync(type, item) {
       let ids = [];
       if (type == "row") {
@@ -3839,7 +3889,6 @@ export default {
       });
     },
     gettabList() {
-
       switch (this.status) {
         case 1:
           this.tabList = [
@@ -3940,7 +3989,6 @@ export default {
       return text;
     },
     getItem(s) {
-      console.log(this.status, 'this.status');
       this.getStore();
       this.gettabList();
       this.getCustomerAllOrderCnt();

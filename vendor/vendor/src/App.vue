@@ -880,14 +880,14 @@
 						role: "customerView",
 						enabled: true,
 					},
-					// {
-					// 	id: 67,
-					// 	text: "app.售后工单",
-					// 	icon: "el-icon-s-promotion",
-					// 	path: "/serviceTicket",
-					// 	role: "customerView",
-					// 	enabled: true,
-					// },					
+					{
+						id: 67,
+						text: "app.售后工单",
+						icon: "el-icon-s-promotion",
+						path: "/serviceTicket",
+						role: "customerView",
+						enabled: true,
+					},					
 					{
 						id: 45,
 						text: "router.storehouse",

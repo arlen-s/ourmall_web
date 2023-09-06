@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-s-el-icon-s-goods"></i>
-          <h2>{{ $t("mycustomer.售后工单") }}</h2>
+          <h2>{{ $t("售后工单") }}</h2>
         </div>
       </div>
       <div class="right"></div>
@@ -17,43 +17,45 @@
               <el-col :span="24">
                 <div ref="pageFilter" class="page-filter">
                   <el-form :inline="true" size="mini">
-                    <el-form-item :label="$t('transaction.工单类型')">
+                    <el-form-item :label="$t('工单类型')">
                       <el-select
                         v-model="filterParams.type"
                         style="width: 90px"
-                        :placeholder="$t('mycustomer.all')"
+                        :placeholder="$t('all')"
+                        @change="filterGetItem"
                       >
-                        <el-option :label="$t('mycustomer.all')" value></el-option>
-                        <el-option :label="$t('transaction.退款')" value="1"></el-option>
-                        <el-option :label="$t('transaction.更换')" value="2"></el-option>
+                        <el-option :label="$t('all')" value></el-option>
+                        <el-option :label="$t('退款')" value="1"></el-option>
+                        <el-option :label="$t('更换')" value="2"></el-option>
                       </el-select>
                     </el-form-item>
-                    <el-form-item :label="$t('transaction.状态')">
+                    <el-form-item :label="$t('status')">
                       <el-select
                         v-model="filterParams.status"
                         style="width: 90px"
-                        :placeholder="$t('mycustomer.all')"
+                        :placeholder="$t('all')"
+                        @change="filterGetItem"
                       >
-                        <el-option :label="$t('mycustomer.all')" value></el-option>
-                        <el-option :label="$t('transaction.待审核')" value="1"></el-option>
-                        <el-option :label="$t('transaction.同意')" value="2"></el-option>
-                        <el-option :label="$t('transaction.拒绝')" value="3"></el-option>
+                        <el-option :label="$t('all')" value></el-option>
+                        <el-option :label="$t('待审核')" value="1"></el-option>
+                        <el-option :label="$t('同意')" value="2"></el-option>
+                        <el-option :label="$t('拒绝')" value="3"></el-option>
                       </el-select>
                     </el-form-item>
-                    <el-form-item :label="$t('transaction.工单号')">
+                    <el-form-item :label="$t('工单号')">
                       <el-input
-                        :placeholder="$t('transaction.请输入')"
+                        :placeholder="$t('请输入')"
                         v-model="filterParams.orderNumber"
                         clearable
                       ></el-input>
                     </el-form-item>
-                    <el-form-item :label="$t('transaction.订单编号')">
+                    <el-form-item :label="$t('订单编号')">
                       <el-input
-                        :placeholder="$t('transaction.请输入')"
+                        :placeholder="$t('请输入')"
                         v-model="filterParams.orderId"
                         clearable
                       ></el-input>
-                    </el-form-item>                     
+                    </el-form-item>                    
                     <el-form-item>
                       <el-button type="primary" @click="filterItem">Filter</el-button>
                       <el-button type="danger" @click="clearFilter">Clear</el-button>
@@ -70,57 +72,48 @@
               height="650"
               ref="gridTable"
             >
-              <el-table-column prop="customerName" :label="$t('transaction.工单号')">
+              <el-table-column prop="customerName" :label="$t('工单号')">
                 <template slot-scope="scope">
                   <div>
                     <b>{{ scope.row.orderNumber }}</b>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="customerName" :label="$t('transaction.订单编号')">
+              <el-table-column prop="customerName" :label="$t('订单编号')">
                 <template slot-scope="scope">
                   <div>
                     <b>{{ scope.row.orderId }}</b>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('transaction.交易类型')">
-                <template
-                  slot-scope="scope"
-                >{{scope.row.type == 1? $t('transaction.退款'): $t('transaction.更换')}}</template>
+              <!-- <el-table-column :label="$t('客户名称')">
+                <template slot-scope="scope">{{scope.row.customCode || '--'}}</template>
               </el-table-column>
-              <el-table-column :label="$t('transaction.问题类型')">
+              <el-table-column :label="$t('店铺')">
+                <template slot-scope="scope"></template>
+              </el-table-column>-->
+              <el-table-column :label="$t('交易类型')">
+                <template slot-scope="scope">{{scope.row.type == 1? $t('退款'): $t('更换')}}</template>
+              </el-table-column>
+              <el-table-column :label="$t('问题类型')">
                 <template slot-scope="scope">{{getType(scope.row)}}</template>
               </el-table-column>
-              <el-table-column :label="$t('transaction.问题描述')">
+              <el-table-column :label="$t('问题描述')">
                 <template slot-scope="scope">{{scope.row.description || '--'}}</template>
               </el-table-column>
-              <el-table-column :label="$t('transaction.创建时间')">
+              <el-table-column :label="$t('创建时间')">
                 <template slot-scope="scope">{{scope.row.timeCreated || '--'}}</template>
               </el-table-column>
-              <el-table-column :label="$t('transaction.备注')">
+              <el-table-column :label="$t('备注')">
                 <template slot-scope="scope">{{scope.row.remark || '--'}}</template>
-              </el-table-column>                 
-              <el-table-column :label="$t('transaction.状态')">
+              </el-table-column>              
+              <el-table-column :label="$t('状态')">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.status == 1">{{$t('transaction.待审核')}}</span>
-                  <span v-else-if="scope.row.status == 2">{{$t('transaction.同意')}}</span>
-                  <span v-else>{{$t('transaction.拒绝')}}</span>
+                  <span v-if="scope.row.status == 1">{{$t('待审核')}}</span>
+                  <span v-else-if="scope.row.status == 2">{{$t('同意')}}</span>
+                  <span v-else>{{$t('拒绝')}}</span>
                 </template>
-              </el-table-column>
-              <el-table-column :label="$t('mycustomer.operate')" width="230">
-                <template slot-scope="scope">
-                  <div v-show="scope.row.status ==1">
-                    <el-link type="primary" @click="operaTg(scope.row,'2')">{{$t('transaction.通过')}}</el-link>
-
-                    <el-link
-                      type="danger"
-                      style="margin-left:5px"
-                      @click="operaTg(scope.row,'3')"
-                    >{{$t('transaction.拒绝')}}</el-link>
-                  </div>
-                </template>
-              </el-table-column>
+              </el-table-column>              
             </el-table>
           </el-card>
         </el-col>
@@ -142,25 +135,6 @@
         </el-col>
       </el-row>
     </div>
-    <el-dialog
-      :title="$t('transaction.审核操作')"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose"
-    >
-      <el-form ref="form" :model="formMay" label-width="80px">
-        <el-form-item :label="$t('transaction.退款金额')" v-if="OStatus == 2">
-          <el-input v-model="formMay.ORefundAmount" type="number"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('transaction.备注')">
-          <el-input v-model="formMay.ORemark"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="handleClose()">{{$t('transaction.取消')}}</el-button>
-        <el-button type="primary" @click="tall()">{{$t('transaction.保存')}}</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -183,16 +157,6 @@ export default {
         type: '',
         orderId: '',
       },
-      formMay: {
-        ORefundAmount: '',
-        ORemark: '',
-      },
-      dialogVisible: false,
-      orderId: '',
-      OStatus: '',
-      OType: '',
-      ORefundAmount: '',
-      ORemark: '',
       questionList: [
         { label: this.$t('修改客户相关信息'), id: 1 },
         { label: this.$t('取消订单'), id: 2 },
@@ -217,15 +181,14 @@ export default {
   },
 
   methods: {
-    getItem (s) {
+    getItem () {
       this.loading = true
-
       this.$apiCall(
         "api.OrderRefund.getList",
         {
           page: this.page,
           rowsPerPage: this.rowsPerPage,
-          type: this.filterParams.type,
+          type: this.filterParams.name,
           orderNumber: this.filterParams.orderNumber,
           status: this.filterParams.status,
           orderId: this.filterParams.orderId
@@ -243,29 +206,27 @@ export default {
       )
     },
     toPage (val) {
-      console.log(3556)
       if (val != this.$route.query.page)
         this.$router.push({ query: { page: val } })
+    },
+    getType (row) {
+      let fim = this.questionList.filter(item => {
+        return item.id == row.type
+      })
+      return fim[0].label
     },
     changePageSize (val) {
       this.rowsPerPage = val
       localStorage.setItem("myCustomRowsPerPage", val)
-      console.log(3525)
       this.getItem()
     },
     gotoPage () {
       this.page = this.$route.query.page ? Number(this.$route.query.page) : 1
-      console.log(3525)
       this.getItem()
     },
     filterItem () {
       this.page = 1
       this.getItem()
-    },
-    handleClose () {
-      this.dialogVisible = false
-      this.formMay.ORefundAmount = ''
-      this.formMay.ORemark = ''
     },
     clearFilter () {
       this.filterParams = {
@@ -276,45 +237,6 @@ export default {
       this.page = 1
       this.getItem()
     },
-    getType (row) {
-      let fim = this.questionList.filter(item => {
-        return item.id == row.type
-      })
-      return fim[0].label
-    },
-    tall () {
-      this.$apiCall(
-        "api.OrderRefund.changeStatus",
-        {
-          id: this.orderId,
-          status: this.OStatus,
-          refundAmount: this.formMay.ORefundAmount,
-          remark: this.formMay.ORemark,
-        },
-        (r) => {
-          // this.loading = false
-          this.dialogVisible = false
-          if (r.ErrorCode == 9999) {
-            this.$message({ message: r.Message, type: "success" })
-            this.filterParams = {
-              orderNumber: "",
-              status: '',
-              type: '',
-            }
-            this.page = 1
-            this.getItem()
-          } else {
-            this.$message({ message: r.Message, type: "error" })
-          }
-        }
-      )
-    },
-    operaTg (row, num) {
-      this.dialogVisible = true
-      this.OStatus = num
-      this.orderId = row.id
-
-    }
   },
 };
 </script>

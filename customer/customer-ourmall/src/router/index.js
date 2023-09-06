@@ -817,6 +817,16 @@ const routes = [
     component: () => import(/* webpackChunkName: 'transactionDetail' */ '@/views/transaction.vue')
   },
   {
+    path: '/serviceTicket',
+    name: 'serviceTicket',
+    meta: {
+      title: 'serviceTicket',
+      urlActive: '/serviceTicket',
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'myCustom' */ './../views/serviceTicket.vue')
+  },  
+  {
     path: '/WithdrawalList',
     name: 'WithdrawalList',
     meta: {
