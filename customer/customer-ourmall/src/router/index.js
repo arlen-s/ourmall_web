@@ -124,6 +124,14 @@ const routes = [
     component: () => import(/* webpackChunkName: 'shopify' */ './../views/shopify.vue'),
   },
   {
+    path: '/bill',
+    name: 'bill',
+    meta: {
+      title: 'bill',
+    },
+    component: () => import(/*webpackchunkName: 'purchaseList' */ './../views/bill.vue')
+  },
+  {
     path: '/i',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

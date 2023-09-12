@@ -750,7 +750,8 @@ export default {
         },
       ],
       multipleSelection: [],
-       vatValue: 0,     
+      vatValue: 0, 
+      perList:[],
     };
   },
   watch: {
@@ -767,11 +768,17 @@ export default {
         this.$refs.multipleTable.clearSelection();
         if (val == 2) {
           this.country = ''
-        if (this.country != 'DE') {
-          this.vatValue = 0
-        }else{
-          this.vatValue = this.defVat
-        }           
+        // if (this.country != 'DE') {
+        //   this.vatValue = 0
+        // }else{
+        //   this.vatValue = this.defVat
+        // }  
+             let filterVat = this.perList.filter(item=>{
+        if(item.code == this.country){
+          return item
+        } 
+       })
+       this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)          
             this.sum =0
             this.freight = 0
             
@@ -779,11 +786,17 @@ export default {
           this.country = this.addressList.find(
             (item) => item.isDefault == "1"
           ).country;
-        if (this.country != 'DE') {
-          this.vatValue = 0
-        }else{
-          this.vatValue = this.defVat
-        }                     
+        // if (this.country != 'DE') {
+        //   this.vatValue = 0
+        // }else{
+        //   this.vatValue = this.defVat
+        // } 
+        let filterVat = this.perList.filter(item=>{
+        if(item.code == this.country){
+          return item
+        } 
+       })
+       this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)                     
 
         }
     },
@@ -880,13 +893,21 @@ export default {
       this.$apiCall(
         "api.Product.getVatConfig", {}, (r) => {
           if (r.ErrorCode == 9999) {
-            this.defVat = Number(r.Data.Results.vatList.DE.value)
-            this.vatValue =  Number(r.Data.Results.vatList.DE.value)
-            if (this.country != 'DE') {
-              this.vatValue = 0
-            } }
-        }
-      )
+             let newArr =  r.Data.Results.vatList.filter(item=>{
+                  if(item.code == this.country){
+                    return item
+                  } 
+              })
+            this.defVat = newArr.length == 0 ? 0 : Number(newArr[0].value)
+            this.vatValue = newArr.length == 0 ? 0 : Number(newArr[0].value)              
+              console.log(newArr, 'newArr33');
+            this.perList = r.Data.Results.vatList
+            // if (this.country != 'DE') {
+            //   this.vatValue = 0
+            // }
+             
+          }
+        })
     },
     			//开泰弹层关闭
 			handleClosePay(){
@@ -979,11 +1000,17 @@ export default {
           this.country = this.addressList.find(
             (item) => item.isDefault == "1"
           ).country;
-      if (this.country != 'DE') {
-        this.vatValue = 0
-      }else{
-        this.vatValue = this.defVat
-      }    
+      // if (this.country != 'DE') {
+      //   this.vatValue = 0
+      // }else{
+      //   this.vatValue = this.defVat
+      // }  
+           let filterVat = this.perList.filter(item=>{
+        if(item.code == this.country){
+          return item
+        } 
+       })
+       this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)   
         this.switchHandleChange()             
         } else {
           this.$message.error(r.Message);
@@ -995,11 +1022,17 @@ export default {
       this.addressList.forEach((item) => {
         item.isDefault = "2";
       });
-      if (item.country != 'DE') {
-        this.vatValue = 0
-      }else{
-        this.vatValue = this.defVat
-      }
+     let filterVat = this.perList.filter(item=>{
+        if(item.code == item.country){
+          return item
+        } 
+       })
+       this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value) 
+      // if (item.country != 'DE') {
+      //   this.vatValue = 0
+      // }else{
+      //   this.vatValue = this.defVat
+      // }
       item.isDefault = "1";
       this.$apiCall("api.MallAddress.change", { ...item }, (r) => {
         if (r.ErrorCode == "9999") {
@@ -1068,11 +1101,20 @@ export default {
       });
     },
     changSwitchBonus(v) {
-      this.platformType = "";
+      // this.platformType = "";
       if (this.bonusStatus == "2") {
         this.switchBonus = false;
       }
         this.switchPayment = !v
+							if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
+					return;
+				}else{
+					if(this.platformType == 6){
+						this.platformType = "";
+						return;
+					}
+					this.platformType = 6;
+				}        
     },
     changSwitchPayment(v){
       this.switchBonus = !v
@@ -1080,6 +1122,15 @@ export default {
       if (this.bonusStatus == "2") {
         this.switchBonus = false;
       }
+    if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
+        return;
+      }else{
+        if(this.platformType == 6){
+          this.platformType = "";
+          return;
+        }
+        this.platformType = 6;
+      }      
     },
     changePlatform(accountType) {
       this.platformType = accountType;
@@ -1136,11 +1187,17 @@ export default {
       this.multipleSelection = val;
       if (this.orderType == 2) {
         this.country = this.multipleSelection[0].warehouseInfo.countryCode
-        if (this.country != 'DE') {
-          this.vatValue = 0
-        }else{
-          this.vatValue = this.defVat
-        }         
+        // if (this.country != 'DE') {
+        //   this.vatValue = 0
+        // }else{
+        //   this.vatValue = this.defVat
+        // }
+       let filterVat = this.perList.filter(item=>{
+        if(item.code == this.country){
+          return item
+        } 
+       })
+       this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)          
       }      
 
       if (val.length) {

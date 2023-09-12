@@ -118,28 +118,55 @@
   active-color="#13ce66"
   inactive-color="rgb(237 237 237)">
 </el-switch></span>
-  <div style="padding:10px" v-if="vatFlag ">
+<el-button type="primary" @click="addCountry()" size="mini">{{$t('添加国家')}}</el-button>
+<p class="error-tips"> <i class="el-icon-info"></i> {{$t('注：国家/国家二字码/vat税必填')}}</p>
+  <div style="padding:10px" v-if="vatFlag">
+    <el-form :model="formData" :rules="formData.rules" ref="formRef">
         <el-table
-      :data="vatData"
+      :data="formData.vatData"
       border
+      class="catTable"
       style="width: 70%;margin-left:15%">
       <el-table-column
         prop="name"
         :label="$t('goods.国家')"
         align="center">
+        <template slot-scope="scope">
+          <el-form-item :prop="'vatData.' + scope.$index + '.name'" :rules="formData.rules.name">
+              <el-input  v-model="scope.row.name" ></el-input>
+          </el-form-item>          
+        </template>        
       </el-table-column>
+      <el-table-column
+        prop="code"
+        :label="$t('goods.国家二字码')"
+        align="center">
+        <template slot-scope="scope">
+          <el-form-item :prop="'vatData.' + scope.$index + '.name'" :rules="formData.rules.code">
+              <el-input v-model="scope.row.code" ></el-input>
+          </el-form-item>          
+        </template>        
+      </el-table-column>      
       <el-table-column
         prop="vat"
         :label="`${$t('goods.vat税')}(%)`"
         align="center">
         <template slot-scope="scope">
-          <el-input type="number" v-model="scope.row.value" ></el-input>
+          <el-form-item :prop="'vatData.' + scope.$index + '.name'" :rules="formData.rules.value">
+              <el-input type="number" v-model="scope.row.value" ></el-input>
+          </el-form-item>
         </template>
       </el-table-column>
+      <el-table-column :label="$t('操作')">
+        <template slot-scope="scope">
+            <el-link type="danger" @click="deleteVat(scope.$index, vatData)">{{$t('删除')}}</el-link>
+        </template>        
+      </el-table-column>
     </el-table>
+    </el-form>
   </div>
   <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="saveVat">{{$t('goods.确定')}}</el-button>
+    <el-button type="primary" @click="saveVat('formRef')">{{$t('goods.确定')}}</el-button>
   </span>
 </el-dialog>
     <DialogExport
@@ -191,6 +218,26 @@ export default {
       },
       onSale: 0,
       offSale: 0,
+      formData: {
+        rules: {
+            name: {
+              required: true,
+              message: this.$t('goods.请输入国家'),
+              tirgger: ['blur', 'change']
+            },
+            code: {
+              required: true,
+              message: this.$t('goods.请输入国家code'),
+              tirgger: ['blur', 'change']
+            },
+            value: {
+              required: true,
+              message: this.$t('goods.请输入vat税'),
+              tirgger: ['blur', 'change']
+            },            
+          },
+          vatData:[]
+      },
       showVatDialog: false,
       vatFlag: false,
       vendorId: localStorage.getItem('vendorId'),
@@ -342,7 +389,7 @@ export default {
         if (r.ErrorCode == 9999) {     
           console.log(r, 'r.Data.Results');   
           let  vatList = r.Data.Results.vatList           
-          this.vatData = Object.keys(vatList).map(item => vatList[item])
+          this.formData.vatData = Object.keys(vatList).map(item => vatList[item])
           this.vatFlag = r.Data.Results.vatState == 1 ? true : false
         } else {
           this.$message({
@@ -352,23 +399,40 @@ export default {
         }
       })
     },
-    saveVat(){
+    addCountry(){
+        
+      this.formData.vatData.push({
+            name: "", code: "", value: ""
+      })
+    },
+    saveVat(formName){
       let params = {
         vatState: this.vatFlag == true ? '1' : '2' ,
-        exchange: this.vatData[0].value
+        vatList:this.formData.vatData
       }
-        this.$apiCall('api.Product.setVatConfig', params, r => {
-        if (r.ErrorCode == 9999) {
-          this.$message.success(r.Message)
-          this.vatData[0].value = ''
-          this.showVatDialog = false
-        } else {
-          this.$message({
-            message: r.Message,
-            type: "error"
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$apiCall('api.Product.setVatConfig', params, r => {
+              if (r.ErrorCode == 9999) {
+                this.$message.success(r.Message)
+                this.formData.vatData = []
+                this.showVatDialog = false
+              } else {
+                this.$message({
+                  message: r.Message,
+                  type: "error"
+                })
+              }
           })
+        }else{
+          this.$message.error( this.$t('goods.请检查是否填完信息'))
+          return false;
         }
-      })
+      });       
+
+    },
+    deleteVat(index, rows){
+        rows.splice(index, 1);
     },
     collectSuccess () {
       this.collectGoodsData.isShow = false
@@ -694,6 +758,17 @@ export default {
   i{
     padding-right: 10px;
   }
+}
+.error-tips{
+  color: rgb(238, 9, 9);
+  padding: 10px 0 10px 22px;
+}
+
+</style>
+
+<style>
+.catTable .el-form-item{
+  margin-bottom: 0 !important;
 }
 </style>
 

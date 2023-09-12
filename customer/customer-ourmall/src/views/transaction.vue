@@ -142,6 +142,9 @@
 										<el-link :disabled="scope.row.type != '1'" class="mg-r-20" type="primary" @click="openExportDetail(scope.row)">
 											{{$t('View detail')}}
 										</el-link>
+										<el-link @click="exportPdf(scope.row)" type="primary">
+											{{$t('download PDF')}}
+										</el-link>
 									</div>
 								</template>
 							</el-table-column>
@@ -290,6 +293,9 @@
 										</el-link> -->
 										<el-link :disabled="scope.row.type != '1'" class="mg-r-20" type="primary" @click="openExportDetail(scope.row)">
 											{{$t('View detail')}}
+										</el-link>
+										<el-link @click="exportPdf(scope.row)" type="primary">
+											{{$t('download PDF')}}
 										</el-link>
 									</div>
 								</template>
@@ -504,6 +510,13 @@
 
 				
 			},
+			exportPdf(row){
+				console.log(row, 'trwrw');
+		      let routeData = this.$router.resolve({
+		        path: "/bill?uniCode=" + row.invoice.uniCode,
+		      });
+		      window.open(routeData.href, "_blank");
+			},		
 			setOrder(item){
 								this.$apiCall('api.AccountPayment.changeCreditStatus', {id: item.id}, r => {
 					this.loading = false;

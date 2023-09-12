@@ -356,30 +356,42 @@
     <el-dialog
   title="VAT information"
   :visible.sync="dialogVisibleHide"
-  width="40%">
+  width="55%">
   <el-row>
     <el-col>
         <span class="pad-20">{{$t('The tax-inclusive price of an item is calculated based on the item price set by the seller and the applicable tax rate. You can contact the seller for more details.')}}</span>
-        <span class="pad-10">
+        <!-- <span class="pad-10">
           {{$t('VAT rate(Destination only in Germany)')}}: {{vatValue}} %
-        </span>
+        </span> -->
         <div style="padding:20px">
             <el-table
-    :data="VatTableData"
+    :data="vatList"
     border
     style="width: 100%">
+    <el-table-column
+      prop="code"
+      label="country code"
+      align="center"
+      width="120">
+    </el-table-column>
     <el-table-column
       prop="price"
       :label="$t('Excluding VAT amount')"
       align="center"
       width="180">
-    </el-table-column>
+    </el-table-column>    
     <el-table-column
       prop="VAT"
       align="center"
-      :label="$t('VAT am')"
-      width="180">
+      label="VAT amount"
+      width="110">
     </el-table-column>
+    <el-table-column
+      prop="VatPer"
+      align="center"
+      label="VAT amount"
+      width="110">
+    </el-table-column>    
     <el-table-column
       prop="Amount"
       align="center"
@@ -553,7 +565,7 @@ export default {
       saleCost: '0.00',
       vatDom: true,
       concatList: [],
-      appUserId: localStorage.getItem("c_apiShopId"),
+      vatList: [],
     }
   },
   watch: {
@@ -566,7 +578,6 @@ export default {
       deep: true
     },
     checkData(val){
-      console.log(val.attachment, 'val');
           if (val) {
               this.showSpace = val.specificationSwitch == '1' ? true : false
               // if (!this.showSpace) {
@@ -685,7 +696,6 @@ export default {
     } else {
       this.$root.$children[0].checkLogin()
     }
-
     this.proId = this.$route.params.id
     this.name = this.$route.params.name.replace('.html', '').replace(/-/g, ' ')
 
@@ -703,6 +713,18 @@ export default {
       this.$apiCall(
         "api.Product.getVatConfig", {}, (r) => {
           if (r.ErrorCode == 9999) {
+            // 将对象转换成数组
+            const arr = Object.values( r.Data.Results.vatList);
+            // 使用map()方法将对象提上一层
+            this.vatList = arr.map((item) => {
+                item.price = '0.00'
+                item.VAT = '0.00'
+                item.Amount = '0.00'
+                item.VatPer = item.value+'%'
+                item.code = item.code
+                item.value = Number(item.value)
+                return item
+            });
             this.vatValue =  Number(r.Data.Results.vatList.DE.value)
             this.vatDom = r.Data.Results.vatState== 1 ? true : false
           }
@@ -809,7 +831,6 @@ export default {
         this.qualityDisabled = true
         this.qualityNum = 0
       }
-      // console.log(this.zsSuit)
       let keyArr = Object.keys(this.suitRuleInfoClone)
       for (let i = 0, l = keyArr.length; i < l; i++) {
         if (this.suitRuleInfoClone[keyArr[i]] == code || this.suitRuleInfoClone[keyArr[i]].indexOf(code) != -1) {
@@ -938,7 +959,6 @@ export default {
     },
     getDetail () {
       this.loading = true
-      // return
       this.$apiCall(
         "api.VendorShop.detail",
         {
@@ -963,7 +983,6 @@ export default {
               }  
               
             }
-            console.log( this.defaultPropertyArr, ' this.defaultPropertyArr');
             this.defaultStocks = data.stocks
             this.name = data.name
             for (var i in data.stocks) {
@@ -998,7 +1017,6 @@ export default {
               return video
             })
             this. concatList = [...newListImg, ...newListVideo]
-            // console.log(concatList, 'this.imgList');
             if (r.Data.Results.videoUrl) {
               this.isImage = false
             }
@@ -1043,11 +1061,17 @@ export default {
               if (info[0] && info[0].propertyImage)
                 this.typeImg.push(info[0].propertyImage)
             })
-          this.VatTableData[0] = {
-          price : this.price,
-          VAT: (Number(this.price)*(this.vatValue/100)).toFixed(2),
-          Amount: (Number(this.price)*(this.vatValue/100)+ Number(this.price)).toFixed(2),
-        }
+        //   this.VatTableData[0] = {
+        //   price : this.price,
+        //   VAT: (Number(this.price)*(this.vatValue/100)).toFixed(2),
+        //   Amount: (Number(this.price)*(this.vatValue/100)+ Number(this.price)).toFixed(2),
+        // }
+        this.vatList = this.vatList.map(item=>{
+            item.price = this.price
+            item.VAT = (Number(this.price)*(item.value/100)).toFixed(2)
+            item.Amount = (Number(this.price)*(item.value/100)+ Number(this.price)).toFixed(2)
+            return item
+        })
             //  this.$nextTick(()=>{
             //   //默认先选美国第一个物流 
             //   if(this.$route.name == 'ProductDetail'){
@@ -1075,8 +1099,6 @@ export default {
             //       }  
             //   }, 500);
             // })
-          }else{
-            console.log(11111);
           }
         }
       )
@@ -1122,21 +1144,33 @@ export default {
           this.qualityNum = 0
           this.qualityDisabled = true
         }
-        this.VatTableData[0] = {
-          price : self.price,
-          VAT: (Number(self.price)*(this.vatValue/100)).toFixed(2),
-          Amount: (Number(self.price)*(this.vatValue/100)+ Number(self.price)).toFixed(2),
-        }
+        // this.VatTableData[0] = {
+        //   price : self.price,
+        //   VAT: (Number(self.price)*(this.vatValue/100)).toFixed(2),
+        //   Amount: (Number(self.price)*(this.vatValue/100)+ Number(self.price)).toFixed(2),
+        // }
+        this.vatList = this.vatList.map(item=>{
+            item.price = this.price
+            item.VAT = (Number(this.price)*(item.value/100)).toFixed(2)
+            item.Amount = (Number(this.price)*(item.value/100)+ Number(this.price)).toFixed(2)
+            return item
+        })        
       } else {
         self.qualityNum = 0
         self.price = this.saleCost
         self.activeImg = {url:self.defaultImg, type: 'img'}
         this.checkData = {}
-        this.VatTableData[0] = {
-          price : this.saleCost,
-          VAT: (Number(self.saleCost)*(this.vatValue/100)).toFixed(2),
-          Amount: (Number(self.saleCost)*(this.vatValue/100)+ Number(self.saleCost)).toFixed(2)
-        }
+        // this.VatTableData[0] = {
+        //   price : this.saleCost,
+        //   VAT: (Number(self.saleCost)*(this.vatValue/100)).toFixed(2),
+        //   Amount: (Number(self.saleCost)*(this.vatValue/100)+ Number(self.saleCost)).toFixed(2)
+        // }
+        this.vatList = this.vatList.map(item=>{
+            item.price = this.saleCost
+            item.VAT = (Number(this.saleCost)*(item.value/100)).toFixed(2)
+            item.Amount = (Number(this.saleCost)*(item.value/100)+ Number(this.price)).toFixed(2)
+            return item
+        })        
       }
 
       for (var i in option) {
@@ -1271,7 +1305,7 @@ export default {
   width: 60%;
   margin-top: 20px;
   div {
-    height: 30px;
+    min-height: 30px;
     line-height: 30px;
     border-bottom: 1px solid #c0bfbf;
     display: flex;

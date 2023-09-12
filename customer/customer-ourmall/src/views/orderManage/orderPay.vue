@@ -212,7 +212,7 @@
 									<span class="left">
 										{{$t('Tax Amount')}}（{{$store.state.country.symbol}}）:
 									</span>
-									<span class="tx-bold"> {{taxAmount ? mathTofixed(taxAmount) : '---'}}</span>
+									<span class="tx-bold"> {{taxAmount ? taxAmount : '---'}}</span>
 								</div>								
 								<div v-show="couponInfo.type == 1">
 									<span class="left">
@@ -868,27 +868,37 @@ import { arrayEach } from 'xe-utils/methods';
 				
 			},
 			changeBonusPlatform(v) {
-				// if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
-				// 	return;
-				// }else{
-				// 	if(this.platformType == 6){
-				// 		this.platformType = "";
-				// 		return;
-				// 	}
-				// 	this.platformType = 6;
-				// }
-				      this.platformType = "";
+
+		  // this.platformType = "";
       if (this.bonusStatus == "2") {
         this.switchBonus = false;
       }
         this.switchPayment = !v
+				if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
+					return;
+				}else{
+					if(this.platformType == 6){
+						this.platformType = "";
+						return;
+					}
+					this.platformType = 6;
+				}				
 			},
     changSwitchPayment(v){
       this.switchBonus = !v
-      this.platformType = "";
+      // this.platformType = "";
       if (this.bonusStatus == "2") {
         this.switchBonus = false;
       }
+		if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
+			return;
+		}else{
+			if(this.platformType == 6){
+				this.platformType = "";
+				return;
+			}
+			this.platformType = 6;
+		}			
     },			
 			changePlatform(type) {
 				if (this.bonusStatus !=1) {
