@@ -40,7 +40,8 @@
 					<div class="t-box-int">
 						<span class="text">{{$t('logistics.添加运费方案')}}:</span>
 						<span class="textM" v-if="data.form.calType== '1'">{{$t('logistics.ourmall运费计算逻辑：首重价格+(商品重量-首重)÷续重×续重价格+挂号费+附加费')}}</span>
-						<span class="textM" v-else>{{$t('logistics.云途运费计算逻辑：商品重量不超过首重的部分×首重价格÷1000+商品重量超过首重的部分×续重价格÷1000+挂号费+附加费+利润')}}</span>
+						<span class="textM" v-if="data.form.calType== '2'">{{$t('logistics.云途运费计算逻辑：商品重量不超过首重的部分×首重价格÷1000+商品重量超过首重的部分×续重价格÷1000+挂号费+附加费+利润')}}</span>
+						<span class="textM" v-else>{{$t("logistics.最终运费=（单个SKU1计算运费+(SKU1数量-1）'单个SKU1计算运费'系数+（单个SKU2计算运费+(SKU2数量-1）'单个SKU2计算运费*系数)+…")}}</span>
 					</div>	
 				</el-form-item>				
 				<el-form-item :label="$t('logistics.运费设置')">
@@ -125,6 +126,24 @@
 							    </el-input>
 							</el-col>
 						</el-row>
+						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType!= '2'">
+							<el-col :span="2">
+							  {{$t('logistics.燃油附加费率：')}}
+							</el-col>
+							<el-col :span="8">
+							  <el-input :placeholder="$t('logistics.燃油附加费率')" v-model="setting.fuelSurchargeRate">
+							    </el-input>
+							</el-col>
+						</el-row>
+						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType!= '2'">
+							<el-col :span="2">
+							  {{$t('logistics.系数：')}}
+							</el-col>
+							<el-col :span="8">
+							  <el-input :placeholder="$t('logistics.系数')" v-model="setting.numCoefficient">
+							    </el-input>
+							</el-col>
+						</el-row>												
 						<el-row class="mg-t-15">
 							<el-col :span="2">
 							  包裹侧面积范围：
@@ -258,6 +277,9 @@
         }, {
           value: '2',
           label: '云途计算模板'
+        }, {
+          value: '3',
+          label: '按数量常规计费'
         }
 
 				],
@@ -275,6 +297,8 @@
 					nextPrice:"",
 					registrationFee:"",
 					profit: "",
+					numCoefficient: '',
+					fuelSurchargeRate: '',
 					noHeavy:[]
 				}]
 			};
