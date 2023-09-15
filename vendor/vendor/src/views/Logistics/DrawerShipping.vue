@@ -126,18 +126,18 @@
 							    </el-input>
 							</el-col>
 						</el-row>
-						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType!= '2'">
+						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType != '2'">
 							<el-col :span="2">
-							  {{$t('logistics.燃油附加费率：')}}
+							  {{$t('logistics.燃油附加费率')}}：
 							</el-col>
 							<el-col :span="8">
 							  <el-input :placeholder="$t('logistics.燃油附加费率')" v-model="setting.fuelSurchargeRate">
 							    </el-input>
 							</el-col>
 						</el-row>
-						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType!= '2'">
+						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType == '3'">
 							<el-col :span="2">
-							  {{$t('logistics.系数：')}}
+							  {{$t('logistics.系数')}}:
 							</el-col>
 							<el-col :span="8">
 							  <el-input :placeholder="$t('logistics.系数')" v-model="setting.numCoefficient">
@@ -146,7 +146,7 @@
 						</el-row>												
 						<el-row class="mg-t-15">
 							<el-col :span="2">
-							  包裹侧面积范围：
+							  {{$t('logistics.包裹侧面积范围：')}}
 							</el-col>
 							<el-col :span="8">
 							  <el-input v-model="setting.lateralAreaBegin" @change="numberChangeT('lateralAreaBegin',index,setting.lateralAreaBegin)">
@@ -168,30 +168,30 @@
 						</el-row>	
 						<el-row class="mg-t-15">
 							<el-col :span="2">
-							  包裹尺寸范围：
+							  {{$t('logistics.包裹尺寸范围：')}}
 							</el-col>
 							<el-col :span="6">
 							  <el-input v-model="setting.length" >
-							      <template slot="prepend">长</template>
+							      <template slot="prepend">>{{$t('logistics.长')}}</template>
 								  <template slot="append">cm</template>
 							    </el-input>
 							</el-col>
 							<el-col :span="6" :offset="1">
 							  <el-input v-model="setting.width" >
-							      <template slot="prepend">宽</template>
+							      <template slot="prepend">>{{$t('logistics.宽')}}</template>
 							  	  <template slot="append">cm</template>
 							    </el-input>
 							</el-col>
 							<el-col :span="6" :offset="1">
 							  <el-input v-model="setting.height"  >
-							      <template slot="prepend">高</template>
+							      <template slot="prepend">>{{$t('logistics.高')}}</template>
 							  	  <template slot="append">cm</template>
 							    </el-input>
 							</el-col>
 						</el-row>	
 						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType== '2'">
 							<el-col :span="2">
-							  利润：
+							  >{{$t('logistics.利润：')}}
 							</el-col>
 							<el-col :span="8">
 							  <el-input placeholder="0.00" v-model="setting.profit">
@@ -273,13 +273,13 @@
 				logicType: '1',
 				logicList: [{
           value: '1',
-          label: 'ourmall计算模板'
+          label: this.$t('ourmall计算模板')
         }, {
           value: '2',
-          label: '云途计算模板'
+          label: this.$t('云途计算模板')
         }, {
           value: '3',
-          label: '按数量常规计费'
+          label: this.$t('按数量常规计费')
         }
 
 				],
