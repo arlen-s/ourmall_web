@@ -159,7 +159,7 @@
                       </template>
                       <el-form-item label="spu">
                             <el-input
-                              placeholder="Payment Number"
+                              :placeholder="$t('please enter')"
                               v-model="filterParams.spuLike"
                               clearable
                               @keyup.enter.native="filterItem"
@@ -168,7 +168,7 @@
                       </el-form-item>
                       <el-form-item label="goods name">
                             <el-input
-                              placeholder="Payment Number"
+                              :placeholder="$t('please enter')"
                               v-model="filterParams.nameLike"
                               clearable
                               @keyup.enter.native="filterItem"

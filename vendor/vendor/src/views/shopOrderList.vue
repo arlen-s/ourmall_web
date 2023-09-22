@@ -61,11 +61,6 @@
               tooltip-effect="dark"
               :row-key="(row) => row.id"
             >
-              <el-table-column :label="`${$t('withdraw.店铺ID')}`">
-                <template slot-scope="scope">
-                  <span>{{scope.row.customerId || '--'}}</span>
-                </template>
-              </el-table-column>
               <el-table-column :label="$t('withdraw.店长名称')">
                 <template slot-scope="scope">
                   <span>{{scope.row.customerName || '--'}}</span>

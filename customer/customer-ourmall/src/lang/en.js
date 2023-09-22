@@ -76,6 +76,7 @@ export default {
 	"reject":"reject",
   'pleaseCusName':'Customer Name',
 	"agree":"agree",
+  'please enter': 'please enter',
   "CreateDate":"application time",
   "startDate":"start",
   "endDate":"end",

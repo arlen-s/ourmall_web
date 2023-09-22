@@ -1390,6 +1390,7 @@ export default {
   "We noticed you haven't verified your email address. Go to verify now?": "Wir haben festgestellt, dass Sie Ihre E-Mail-Adresse noch nicht bestätigt haben. Jetzt bestätigen?",
   "Verify": "Verifizieren",
   "I see": "Ich sehe",
+  'please enter': 'Bitte eingeben',
   "For security reason.We need to verify your email address.": "Aus Sicherheitsgründen müssen wir Ihre E-Mail-Adresse bestätigen.",
   "Please click 'Send' to get the verification code in your inbox": "Bitte klicken Sie auf 'Senden', um den Bestätigungscode in Ihrem Posteingang zu erhalten",
   "Send To:": "Senden an:",
