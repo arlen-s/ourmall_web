@@ -157,6 +157,24 @@
 													</el-date-picker>
 												</el-form-item> -->
                       </template>
+                      <el-form-item label="spu">
+                            <el-input
+                              placeholder="Payment Number"
+                              v-model="filterParams.spuLike"
+                              clearable
+                              @keyup.enter.native="filterItem"
+                              @clear="clearFilter('spuLike')"
+                            ></el-input>
+                      </el-form-item>
+                      <el-form-item label="goods name">
+                            <el-input
+                              placeholder="Payment Number"
+                              v-model="filterParams.nameLike"
+                              clearable
+                              @keyup.enter.native="filterItem"
+                              @clear="clearFilter('nameLike')"
+                            ></el-input>
+												</el-form-item>
                       <el-form-item>
                         <el-button type="primary" @click="filterItem"
                           >{{$t('Filter')}}</el-button
@@ -2364,6 +2382,8 @@ export default {
         codeName: "",
         receiverName: "",
         sysCode: "",
+        spuLike: "",
+        spuLike: "",
       },
       filterParamsDefault: "{}",
       dialogPay: {
@@ -3517,9 +3537,6 @@ export default {
         }
       }
     },
-
-
-
     afterFn(type, item){
       if (type == "row") {
         this.afterData.dialogVisible = true
@@ -3858,6 +3875,12 @@ export default {
         case "sysCode":
           this.filterParams.sysCode = "";
           break;
+        case "sysCode":
+          this.filterParams.spuLike = "";
+          break;
+        case "sysCode":
+          this.filterParams.nameLike = "";
+          break;                    
         default:
           this.filterParams = JSON.parse(this.filterParamsDefault);
           break;
@@ -4006,6 +4029,8 @@ export default {
           orderId: this.filterParams.orderId,
           keywords: this.filterParams.codeName,
           receiverName: this.filterParams.receiverName,
+          spuLike: this.filterParams.spuLike,
+          nameLike: this.filterParams.nameLike,
         },
         params2 = {
           page: this.page,
