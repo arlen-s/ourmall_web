@@ -46,7 +46,7 @@ export const lang = {
 	'正常账单': 'normal bill',
   '异常账单':'abnormal bill',
 	'第三方订单': 'Your shop order num',
-  '仓库': '仓库',
+  '仓库': 'repository',
   '平台订单号': 'Order Number',
   '实际支付总额': 'Total Payment',
   '实际支付运费': 'Freight',

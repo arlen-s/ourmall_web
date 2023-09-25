@@ -11,7 +11,7 @@
           <el-button
             type="primary"
             @click="batchUnbundling()"          
-          >批量解绑商品</el-button>        
+          >{{$t('orders.批量解绑商品')}}</el-button>        
         <template v-if="status == 2 && (activeName == 3)">
           <el-button
             type="primary"
@@ -24,18 +24,14 @@
             :disabled="!$isRole('invoiceWaitDeliverEdit')"
           >{{$t('orders.authorize')}}</el-button>
         </template>
-                <template v-if="(status == 2 && activeName == 3) || (status == 3 && activeName == 1)">
-          <el-button
-            type="primary"
-            @click="downPdf"
-          >发票</el-button> -->
+        <template v-if="(status == 2 && activeName == 3) || (status == 3 && activeName == 1)">
           <el-dropdown style="margin:0 10px">
           <el-button type="primary">
-            发票<i class="el-icon-arrow-down el-icon--right"></i>
+            {{$t('orders.发票')}}<i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item > <span @click="downPdf()">下载</span> </el-dropdown-item>
-            <el-dropdown-item > <span @click="sendEmail()">发送邮箱</span></el-dropdown-item>
+            <el-dropdown-item > <span @click="downPdf()">{{$t('orders.下载')}}</span> </el-dropdown-item>
+            <el-dropdown-item > <span @click="sendEmail()">{{$t('orders.发送邮箱')}}</span></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         </template>
@@ -140,12 +136,7 @@
                             @keyup.enter.native="filterItem"
                             @clear="clearFilter('receiverName')"
                           ></el-input>
-                        </el-form-item>
-							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
-								<template slot-scope="scope">
-									<span>{{scope.row.warehouseName || '--'}}</span>
-								</template>
-							</el-table-column>	                        
+                        </el-form-item>	                        
                         <el-form-item :label="$t('orders.vendorName') + ':' ">
                           <el-select
                             filterable
@@ -403,7 +394,7 @@
                             <span>{{child.row.propertyValue || '--'}}</span>                           
                           </template>
                         </el-table-column>                        
-                        <el-table-column prop="vendorSku" :label="$t('供应商价格')" 
+                        <el-table-column prop="vendorSku" :label="$t('orders.供应商价格')" 
                           width='200'
                           align="left">  
                           <template slot-scope="child">
@@ -755,7 +746,7 @@
                         <span v-else>---</span>
                       </template>
                     </el-table-column>
-							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
+							<el-table-column :label="$t('orders.仓库')" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
 								<template slot-scope="scope">
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
@@ -794,7 +785,7 @@
                       </template>
                     </el-table-column>
                   </template>
-							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
+							<el-table-column :label="$t('orders.仓库')" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
 								<template slot-scope="scope">
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
@@ -861,7 +852,7 @@
                           class="mg-r-20"
                           type="primary"
                           @click="sendEmail(scope.row, '1')"
-                        >发送发票到邮箱</el-link>   
+                        >{{$t('orders.发送发票到邮箱')}}</el-link>   
                         <el-link
                           v-if="status == 4"
                           class="mg-r-20"
@@ -980,7 +971,7 @@
                             <span>{{child.row.propertyValue || '--'}}</span>                           
                           </template>
                         </el-table-column>                        
-                        <el-table-column prop="vendorSku" :label="$t('供应商价格')" 
+                        <el-table-column prop="vendorSku" :label="$t('orders.供应商价格')" 
                           width='200'
                           align="left">  
                           <template slot-scope="child">
@@ -1206,7 +1197,7 @@
                             <span>{{child.row.propertyValue || '--'}}</span>                           
                           </template>
                         </el-table-column>                        
-                        <el-table-column prop="vendorSku" :label="$t('供应商价格')" 
+                        <el-table-column prop="vendorSku" :label="$t('orders.供应商价格')" 
                           width='200'
                           align="left">  
                           <template slot-scope="child">
@@ -1577,7 +1568,7 @@
                         </span>
                       </template>
                     </el-table-column>
-							<el-table-column :label="$t('transaction.仓库')" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
+							<el-table-column :label="$t('orders.仓库')" v-if="vendorId != 148982 && vendorId != 146428&& vendorId != 144875&& vendorId != 144843&& vendorId != 143779&& vendorId != 143654&& vendorId != 74">
 								<template slot-scope="scope">
 									<span>{{scope.row.warehouseName || '--'}}</span>
 								</template>
@@ -1652,7 +1643,7 @@
                     </el-table-column>
                   </template>
                   <template v-if="status == 4 && activeName == 2">
-                    <el-table-column label="操作" width="100">
+                    <el-table-column :label="$t('orders.operate')" width="100">
                       <template slot-scope="scope">
                         <el-link
                           class="mg-r-20"
@@ -1723,32 +1714,32 @@
   </span>
 </el-dialog>
 <el-dialog
-  title="批量解绑商品"
+  :title="$t('orders.批量解绑商品')"
   :visible.sync="bathBundDialog"
   width="30%"
   :before-close="handleCloseBund">
   <div class="sina-box">
-     <el-link type="danger" :underline="false">注意：你现在操作解绑国内，有可能会影响已付款的订单，请确认操作</el-link>
+     <el-link type="danger" :underline="false">{{$t('orders.注意：你现在操作解绑国内，有可能会影响已付款的订单，请确认操作')}}</el-link>
     <p> </p>
     <div>
   <el-form :model="formInline" class="demo-form-inline">
-      <el-form-item label="下载解绑模板：">
+      <el-form-item :label="$t('orders.下载解绑模板：')">
       <!-- <el-link type="primary"  href="./file/UnbundTemp.xlsx" target="_blank">解绑模板</el-link> -->
       <!-- <el-button type="text" @click="downloadFileBuild">解绑模板</el-button> -->
       			        <p class="t1">
-         <el-link type="primary" href="./file/UnbundTemp.xlsx" target="_blank">解绑模板</el-link>
+         <el-link type="primary" href="./file/UnbundTemp.xlsx" target="_blank">{{$t('orders.解绑模板')}}</el-link>
         </p>
       </el-form-item>
-      <el-form-item label="导入解绑文档">
+      <el-form-item :label="$t('orders.导入解绑文档')">
           <el-input
             v-model="formInline.templateFile"
             type="text"
             style="width:65%"
             auto-complete="off"
-            :placeholder="$t('请上传模板文件')"
+            :placeholder="$t('orders.请上传模板文件')"
             readonly="readonly">
             <el-button slot="append" type="success" @click="uploadFileClick"
-              ><i class="el-icon-upload"></i> {{ $t('选择本地Excel文件') }}</el-button
+              ><i class="el-icon-upload"></i> {{ $t('orders.选择本地Excel文件') }}</el-button
             >
           </el-input>
       </el-form-item>
@@ -1762,7 +1753,7 @@
     </div>
   </div>
   <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="setDialog()">确 定</el-button>
+    <el-button type="primary" @click="setDialog()">{{$t('confirm')}}</el-button>
   </span>
 </el-dialog>
     <dialogQuote :quoteData="dialogQuoteInfo" @openRelate="openRelate"></dialogQuote>

@@ -123,9 +123,9 @@
 											</div>											
 									</el-image>
 								</div>
-								<div style="color:#fff; padding-top:10px">  <b> 嗨，{{this.$store.state.userInfo.username}}</b></div>
+								<div style="color:#fff; padding-top:10px">  <b>{{$t('dashboard.嗨')}} ，{{this.$store.state.userInfo.username}}</b></div>
 								<div>
-									<p  style="color:#fff; padding-top:10px">用户编号:{{this.$store.state.userInfo.id}}</p>
+									<p  style="color:#fff; padding-top:10px">{{$t('dashboard.用户编号')}}:{{this.$store.state.userInfo.id}}</p>
 								</div>
 						</el-card>
 				</el-col>

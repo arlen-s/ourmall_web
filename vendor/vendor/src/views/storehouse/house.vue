@@ -11,7 +11,7 @@
     </el-card>
     <el-row>
       <el-col class="btn-col">
-        <el-button type="primary" @click="addHouse" style="float:right">{{$t('创建仓库')}}</el-button>
+        <el-button type="primary" @click="addHouse" style="float:right">{{$t('storehouse.创建仓库')}}</el-button>
       </el-col>
     </el-row>
     <el-card class="box-card">

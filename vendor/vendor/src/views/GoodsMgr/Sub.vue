@@ -211,7 +211,7 @@
 		  </template> 
 		</el-table-column>
         <!-- 上架时间 -->
-        <el-table-column :label="`${$t('goods.创建时间')}/ ${$t('修改时间')}`" width="180">
+        <el-table-column :label="`${$t('goods.创建时间')}/ ${$t('goods.修改时间')}`" width="180">
           <template slot-scope="scope">
             <p>{{scope.row.timeCreated}}</p>
             <p>{{scope.row.timeLastGet}}</p>

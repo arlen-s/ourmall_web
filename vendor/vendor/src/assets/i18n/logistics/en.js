@@ -23,7 +23,7 @@ export const lang = {
   "云途运费计算逻辑：商品重量不超过首重的部分×首重价格÷1000+商品重量超过首重的部分×续重价格÷1000+挂号费+附加费+利润": "Yuntu freight calculation logic: the part where the weight of the product does not exceed the first weight × the price of the first weight ÷ 1000 + the part where the weight of the product exceeds the first weight × the price of the additional weight ÷ 1000 + registration fee + surcharge + profit",
   '开始设置并完善你的运费方案，以便顾客轻松选择最合适的运费方案，获得更好的购物体验。': 'Start to set up and improve your shipping plan so that customers can easily choose the most suitable shipping plan and get a better shopping experience.',
   '是否确定删除该区域方案？': 'Are you sure to delete this regional plan?',
-  "最终运费=（单个SKU1计算运费+(SKU1数量-1）'单个SKU1计算运费'系数+（单个SKU2计算运费+(SKU2数量-1）'单个SKU2计算运费*系数)+…": "Final Shipping Cost = (Individual SKU1 Calculated Shipping Cost + (SKU1 Quantity - 1) 'Individual SKU1 Calculated Shipping Cost' Factor + (Individual SKU2 Calculated Shipping Cost + (SKU2 Quantity - 1) 'Individual SKU2 Calculated Shipping Cost * Factor) +...",
+  "最终运费": "Final Shipping Cost = (Individual SKU1 Calculated Shipping Cost + (SKU1 Quantity - 1) 'Individual SKU1 Calculated Shipping Cost' Factor + (Individual SKU2 Calculated Shipping Cost + (SKU2 Quantity - 1) 'Individual SKU2 Calculated Shipping Cost * Factor) +...",
   '取消': 'Cancel',
   '编辑': 'Edit',
   "燃油附加费率":"Fuel surcharge rate",
@@ -116,4 +116,9 @@ export const lang = {
   '别名':'Another name',
   '请输入方案别名':'Please enter the alias of the scheme and show it to the webmaster. If not, the scheme name will be shown to the webmaster  ',
   '时效天数必须填写': 'The aging days must be filled in',
+  '免邮规则': 'Free shipping rules',
+  '当订单商品总价大于等于（包含）': 'When the total price of an order item is greater than or equal to (inclusive of)',
+  '免邮': 'free shipping',
+  '温馨提示：订单总金额计算仅为购物车商品总售价': 'Tips: The total amount of the order is calculated only for the total selling price of the products in the shopping cart.',
+  '确定': 'save',
 }

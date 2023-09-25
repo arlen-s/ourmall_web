@@ -83,20 +83,20 @@
       </el-card>
     </div>
     <el-dialog
-  title="免邮规则"
+  :title="$t('logistics.免邮规则')"
   :visible.sync="dialogVisibleAmount"
   @open="openAut"
   width="30%"
   :before-close="closeDialogA">
   <el-row>
     <el-col style="padding:0 20px;">
-    <p>当订单商品总价大于等于（包含）<el-input style="width:70px" @input="limitInput($event)" v-model="amounts" placeholder="0.00" ></el-input>时免邮</p>
-    <p class="tips-trip">温馨提示：订单总金额计算仅为购物车商品总售价</p>
+    <p>{{$t('logistics.当订单商品总价大于等于（包含）')}}<el-input style="width:70px" @input="limitInput($event)" v-model="amounts" placeholder="0.00" ></el-input>{{$t('logistics.免邮')}}</p>
+    <p class="tips-trip">{{$t('logistics.温馨提示：订单总金额计算仅为购物车商品总售价')}}</p>
     </el-col>
   </el-row>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="closeDialogA">取 消</el-button>
-    <el-button type="primary" @click="saveAmount">确 定</el-button>
+    <el-button @click="closeDialogA">{{$t('logistics.取消')}}</el-button>
+    <el-button type="primary" @click="saveAmount">{{$t('logistics.确定')}}</el-button>
   </span>
 </el-dialog>
   </div>  

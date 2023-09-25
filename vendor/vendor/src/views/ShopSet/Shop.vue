@@ -57,7 +57,7 @@
                   <i class="el-icon-view view" @click="goMyStore"></i>
                 </el-tooltip>
                </el-form-item>
-              <el-form-item label="当前店铺在shopify应用" style="width: 40%">
+              <el-form-item :label="$t('shop.当前店铺在shopify应用')" style="width: 40%">
                   <!-- <div class="changeLink" style="float: right;">
                       <el-link :underline="false" type="primary" @click="tip('shopify')">{{$t('shop.更换')}}</el-link>
                   </div> -->

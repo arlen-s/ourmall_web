@@ -166,4 +166,8 @@ export const lang = {
 	'请填写关联订单':'Please fill in the associated order',
 	'扣款金额不能大于客户bonus余额':'Deduction amount cannot be greater than customer bonus balance',
 	'请完善扣款明细':'Please improve the deduction details',
+  '站长外部编号': 'Webmaster external number',
+  '员工名称': 'Employee Name',
+  '是否开启二级分销商': 'Secondary Distributors',
+  '分销商佣金': "Distributor's commission"
 }

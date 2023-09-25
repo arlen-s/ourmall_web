@@ -159,4 +159,18 @@ export const lang = {
 	yes: 'Yes',
 	no: 'No',
 	orNo: 'Split or Not',
+	'批量解绑商品': 'Batch Unbundled Goods',
+  '发票': 'bill',
+  '下载': 'downloading',
+  '发送邮箱': 'Send Email',
+	'注意：你现在操作解绑国内，有可能会影响已付款的订单，请确认操作': 'Note: You are now operating to unbundle the domestic, may affect the paid orders, please confirm the operation',
+  '下载解绑模板：': 'Download the unbundled template:',
+  '解绑模板': 'Unbundling templates',
+  '导入解绑文档': 'Importing Unbinding Documents',
+  '属性值': 'attribute value',
+  '供应商价格': 'Supplier Prices',
+  '下载发票': 'Download Invoice',
+  '请上传模板文件': 'Please upload the template file',
+  '选择本地Excel文件': 'Selecting a local Excel file',
+  '发送发票到邮箱': 'Send invoice to email'
 }

@@ -37,13 +37,13 @@
             <el-col :span="12">
               <el-form-item label="SPU" required style="width: 45%;">
                 <el-input :disabled="!!this.productId && !$route.query.isCopy" v-model="form.spu"></el-input>
-                <span style="color:#ccc">商品来源：</span>
+                <span style="color:#ccc">{{$t('goods.商品来源')}}：</span>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item :label="$t('goodsEdit.商品名称')" required style="width: 90%">
                 <el-input v-model="form.name"></el-input>
-                <span style="opacity:0;">暂无</span>
+                <span style="opacity:0;">{{$t('goods.暂无')}}</span>
               </el-form-item>
             </el-col>
 
@@ -121,8 +121,8 @@
             <el-col :span="24">
               <el-form-item :label="$t('goodsEdit.库存扣减方式')" style="width: 100%;">
                   <el-radio-group v-model="form.InventoryDedType">
-                  <el-radio label="1">{{$t('不扣减')}}</el-radio>
-                  <el-radio label="2">{{$t('出库之后')}}</el-radio>
+                  <el-radio label="1">{{$t('goods.不扣减')}}</el-radio>
+                  <el-radio label="2">{{$t('goods.出库之后')}}</el-radio>
                 </el-radio-group>
               </el-form-item>            
             </el-col>        
@@ -144,7 +144,7 @@
             <el-col :span="12">
               <el-form-item :label="$t('goodsEdit.预计交付周期')" style="width: 100%;">
                 <el-input  v-model.number="form.min" style="width:70px;margin-right:5px"></el-input>
-                <span>到</span>
+                <span>-</span>
                 <el-input  v-model.number="form.max" style="width:70px;margin:0 5px"> </el-input>
                     <el-select v-model="form.deliveryTime"  style="width:70px">
                       <el-option :label="$t('goodsEdit.天')" value="day"></el-option>
@@ -251,13 +251,13 @@
                   </video>
                 </div>
               </div>
-                   <div class="el-upload__tip">只能上传video/mp4文件，且不超过20mb</div>
+                   <div class="el-upload__tip">{{$t('goods.只能上传video/mp4文件，且不超过20mb')}}</div>
             </div>
           </el-form-item>
           <el-form-item :label="$t('goodsEdit.售后质保时间')" style="width: 400px;margin-top:50px;">
             <div style="display:flex">
-                  <el-input placeholder="请选择" v-model.number="form.days" class="input-with-select" style="width:270px" ty>
-                    <el-select v-model="form.selectTime" slot="prepend" placeholder="请选择" style="width:70px">
+                  <el-input :placeholder="$t('goods.请选择')" v-model.number="form.days" class="input-with-select" style="width:270px" ty>
+                    <el-select v-model="form.selectTime" slot="prepend" :placeholder="$t('goods.请选择')" style="width:70px">
                       <el-option :label="$t('goodsEdit.天')" value="day"></el-option>
                       <el-option :label="$t('goodsEdit.月')" value="month"></el-option>
                       <el-option  :label="$t('goodsEdit.年')" value="year"></el-option>
@@ -642,7 +642,7 @@
           <el-row>
             <el-col style="padding:20px">
               <el-button type="primary" @click="handleHouse">{{$t('goodsEdit.仓库查询')}}</el-button>
-              <router-link target="_blank" :to="{path:'/storehouse/house'}"><el-button type="primary" style="margin-left:10px">添加仓库</el-button></router-link>
+              <router-link target="_blank" :to="{path:'/storehouse/house'}"><el-button type="primary" style="margin-left:10px">{{$t('goods.添加仓库')}}</el-button></router-link>
               
             </el-col>
             <el-col>
@@ -865,7 +865,7 @@
         <el-button type="primary" @click="volumeSetFn">{{$t('goodsEdit.确定')}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="dialogStorehouse.show" :width="'400px'" :title="$t('仓库信息')">
+    <el-dialog :visible.sync="dialogStorehouse.show" :width="'400px'" :title="$t('goods.仓库信息')">
       <div class="sale-box">
         <el-checkbox-group v-model="checkStoreList">
           <el-checkbox

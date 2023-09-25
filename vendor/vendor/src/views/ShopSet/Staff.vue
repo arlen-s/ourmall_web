@@ -151,8 +151,8 @@
 							<el-option v-for="item in roleList" :key="item.id" :label="item.name" :value="item.id">
 							</el-option>
 						</el-select>
-						<span class="mg-l-10">暂无角色？前往
-							<span style="color:#5c6ac4;cursor: pointer;" @click="goAddRole">添加角色</span></span>
+						<span class="mg-l-10">{{$t('shop.暂无角色？前往')}}
+							<span style="color:#5c6ac4;cursor: pointer;" @click="goAddRole">{{$t('shop.添加角色')}}</span></span>
 					</el-form-item>
 					<el-form-item :label="$t('shop.员工数据')">
 						<vue-tags-input v-model="tagIpt" :tags="form.tags" @tags-changed="tagsChange"

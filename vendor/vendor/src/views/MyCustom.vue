@@ -222,13 +222,13 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column v-if="apiUserId == 148797" :label="$t('站长外部编号')">
+              <el-table-column v-if="apiUserId == 148797" :label="$t('mycustomer.站长外部编号')">
                 <template slot-scope="scope">{{scope.row.customCode || '--'}}</template>
               </el-table-column>
-              <el-table-column :label="$t('员工名称')">
+              <el-table-column :label="$t('mycustomer.员工名称')">
                 <template slot-scope="scope">{{scope.row.inviterName || '--'}}</template>
               </el-table-column>
-              <el-table-column :label="$t('是否开启二级分销商')">
+              <el-table-column :label="$t('mycustomer.是否开启二级分销商')">
                 <template slot-scope="scope">
                   <el-switch
                   v-model="scope.row.distributionSwitch"
@@ -240,7 +240,7 @@
                 </el-switch>
                 </template>
               </el-table-column>    
-              <el-table-column label="分销商佣金">
+              <el-table-column :label="$t('mycustomer.分销商佣金')">
                     <template slot-scope="scope">
                       <span>
                         {{scope.row.commissionBalance || '--'}}
