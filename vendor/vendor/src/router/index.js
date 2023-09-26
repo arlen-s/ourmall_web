@@ -297,6 +297,15 @@ const routes = [
     component: () => import(/* webpackChunkName: 'myCustom' */ './../views/serviceTicket.vue')
   },
   {
+    path: '/PreOrderInventory',
+    name: 'PreOrderInventory',
+    meta: {
+      title: 'PreOrderInventory',
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'myCustom' */ './../views/PreOrderInventory.vue')
+  },  
+  {
     path: '/Quotation',
     name: 'myQuotation',
     meta: {

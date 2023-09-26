@@ -887,7 +887,14 @@
 						path: "/serviceTicket",
 						role: "customerView",
 						enabled: true,
-					},					
+					},	
+					{
+						id: 68,
+						text: "app.预购库存",
+						icon: "el-icon-s-order",
+						path: "/PreOrderInventory",
+						enabled: true,
+					},										
 					{
 						id: 45,
 						text: "router.storehouse",

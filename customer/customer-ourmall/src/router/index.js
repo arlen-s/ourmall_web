@@ -783,7 +783,7 @@ const routes = [
       checkLogin: true,
     },
     component: () => import(/*webpackchunkName: 'placeOrder' */ './../views/getOrder.vue')
-  },
+  },  
   {
     path: '/purchase-list',
     name: 'purchaseList',
@@ -823,6 +823,16 @@ const routes = [
       checkLogin: true,
     },
     component: () => import(/* webpackChunkName: 'transactionDetail' */ '@/views/transaction.vue')
+  },
+  {
+    path: '/PreOrderInventory',
+    name: 'PreOrderInventory',
+    meta: {
+      title: 'PreOrderInventory',
+      urlActive: '/PreOrderInventory',
+      checkLogin: true,
+    },
+    component: () => import(/*webpackchunkName: 'PreOrderInventory' */ './../views/PreOrderInventory.vue')
   },
   {
     path: '/serviceTicket',

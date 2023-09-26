@@ -164,6 +164,7 @@
 						</span>
 						<div>
 						<el-switch
+						 :disabled="switchBonus"
               @change="changSwitchPayment"
               v-model="switchPayment"
               active-color="#13ce66"
@@ -873,7 +874,10 @@ import { arrayEach } from 'xe-utils/methods';
       if (this.bonusStatus == "2") {
         this.switchBonus = false;
       }
-        this.switchPayment = !v
+        // this.switchPayment = !v
+			if ( this.switchBonus) {
+					this.switchPayment = false
+			}
 				if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
 					return;
 				}else{
@@ -885,11 +889,11 @@ import { arrayEach } from 'xe-utils/methods';
 				}				
 			},
     changSwitchPayment(v){
-      this.switchBonus = !v
+      // this.switchBonus = !v
       // this.platformType = "";
-      if (this.bonusStatus == "2") {
-        this.switchBonus = false;
-      }
+      // if (this.bonusStatus == "2") {
+      //   this.switchBonus = false;
+      // }
 		if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
 			return;
 		}else{

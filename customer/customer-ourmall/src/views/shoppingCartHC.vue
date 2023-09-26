@@ -138,6 +138,7 @@
         <div style="height:40px">
           <el-radio v-model="orderType" label="1">{{$t('Wholesale order')}}</el-radio>
           <el-radio v-model="orderType" label="2">{{$t('offline order')}}</el-radio>
+          <el-radio v-model="orderType" label="3">{{$t('pre-order item inventory')}}</el-radio>
         </div>
         <div class="address_box" v-if="orderType==1">
           <div class="title mr-l-30">{{$t('Shipping Address')}}</div>
@@ -436,6 +437,7 @@
 									{{$t('Combination payment')}}
 						</span>
             <el-switch
+            :disabled="switchBonus"
               @change="changSwitchPayment"
               v-model="switchPayment"
               active-color="#13ce66"
@@ -1105,8 +1107,11 @@ export default {
       if (this.bonusStatus == "2") {
         this.switchBonus = false;
       }
-        this.switchPayment = !v
-							if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
+        // this.switchPayment = !v
+			if ( this.switchBonus) {
+					this.switchPayment = false
+			}        
+				if(this.bonus + this.credits < this.totalAllGoodsAndFreight){
 					return;
 				}else{
 					if(this.platformType == 6){
@@ -1117,7 +1122,7 @@ export default {
 				}        
     },
     changSwitchPayment(v){
-      this.switchBonus = !v
+      // this.switchBonus = !v
       this.platformType = "";
       if (this.bonusStatus == "2") {
         this.switchBonus = false;
@@ -1185,7 +1190,7 @@ export default {
   
         }
       this.multipleSelection = val;
-      if (this.orderType == 2) {
+      if (this.orderType == 2 || this.orderType == 3) {
         this.country = this.multipleSelection[0].warehouseInfo.countryCode
         // if (this.country != 'DE') {
         //   this.vatValue = 0
@@ -1213,7 +1218,7 @@ export default {
         });
         this.getLogisticArr(stockInfo, val);
         this.subtotal = Number(this.subtotal).toFixed(2);
-        if (this.orderType == 2) {
+        if (this.orderType == 2 || this.orderType == 3) {
           this.sum = Number(this.subtotal);          
         }else{
           this.sum = Number(this.subtotal) + Number(this.freight);
@@ -1221,7 +1226,7 @@ export default {
         this.sum = Number(this.sum).toFixed(2);
       } else {
         this.subtotal = 0;
-        if (this.orderType == 2) {
+        if (this.orderType == 2 || this.orderType == 3) {
           this.sum = Number(this.subtotal);          
         }else{
           this.sum = Number(this.subtotal) + Number(this.freight);
@@ -1237,7 +1242,7 @@ export default {
       this.freight = this.logisticArr.find(
         (item) => item.id == this.logistic
       ).fee;
-        if (this.orderType == 2) {
+        if (this.orderType == 2 || this.orderType == 3) {
           this.sum = Number(this.subtotal);          
         }else{
           this.sum = Number(this.subtotal) + Number(this.freight);
@@ -1288,7 +1293,7 @@ export default {
         });
         this.getLogisticArr(stockInfo, this.multipleSelection);
         this.subtotal = Number(this.subtotal).toFixed(2);
-        if (this.orderType == 2) {
+        if (this.orderType == 2 || this.orderType == 3) {
           this.sum = Number(this.subtotal);          
         }else{
           this.sum = Number(this.subtotal) + Number(this.freight);
@@ -1296,7 +1301,7 @@ export default {
         this.sum = Number(this.sum).toFixed(2);
       } else {
         this.subtotal = 0;
-        if (this.orderType == 2) {
+        if (this.orderType == 2 || this.orderType == 3) {
           this.sum = Number(this.subtotal);          
         }else{
           this.sum = Number(this.subtotal) + Number(this.freight);

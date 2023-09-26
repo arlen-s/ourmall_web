@@ -925,6 +925,14 @@ export default {
           enabled: true,
         },
         {
+          id: 64,
+          text: "Pre-order inventory",
+          icon: "el-icon-s-finance",
+          image: "/images/sidebar/billing.png",
+          path: "/PreOrderInventory",
+          enabled: true,
+        },        
+        {
           id: 89,
           text: "Withdrawal list",
           icon: "el-icon-document",
