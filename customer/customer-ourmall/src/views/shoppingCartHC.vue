@@ -771,12 +771,7 @@ export default {
         this.$refs.multipleTable.clearSelection();
         if (val == 2) {
           this.country = ''
-        // if (this.country != 'DE') {
-        //   this.vatValue = 0
-        // }else{
-        //   this.vatValue = this.defVat
-        // }  
-             let filterVat = this.perList.filter(item=>{
+       let filterVat = this.perList.filter(item=>{
         if(item.code == this.country){
           return item
         } 
@@ -786,20 +781,18 @@ export default {
             this.freight = 0
             
         }else{
-          this.country = this.addressList.find(
+          if ( this.addressList.length >0) {
+                this.country = this.addressList.find(
             (item) => item.isDefault == "1"
           ).country;
-        // if (this.country != 'DE') {
-        //   this.vatValue = 0
-        // }else{
-        //   this.vatValue = this.defVat
-        // } 
         let filterVat = this.perList.filter(item=>{
         if(item.code == this.country){
           return item
         } 
        })
-       this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)                     
+       this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)               
+          }
+                  
 
         }
     },
@@ -1000,20 +993,18 @@ export default {
       this.$apiCall("api.MallAddress.getList", {}, (r) => {
         if (r.ErrorCode == "9999") {
           this.addressList = r.Data.Results;
-          this.country = this.addressList.find(
+          if (this.addressList.length> 0) {
+            this.country = this.addressList.find(
             (item) => item.isDefault == "1"
           ).country;
-      // if (this.country != 'DE') {
-      //   this.vatValue = 0
-      // }else{
-      //   this.vatValue = this.defVat
-      // }  
            let filterVat = this.perList.filter(item=>{
-        if(item.code == this.country){
-          return item
-        } 
-       })
+              if(item.code == this.country){
+                return item
+              } 
+            })
        this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)   
+          }
+
         this.switchHandleChange()             
         } else {
           this.$message.error(r.Message);
