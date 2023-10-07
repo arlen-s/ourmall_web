@@ -52,9 +52,10 @@ export default {
       $event.target.value = '';
     },
     downLoadExcel(){
+				let url = "/file/importGood.xlsx";
         let a = document.createElement('a') // 创建a标签
-        a.href = '../../../public/file/importGood.xlsx' // 文件路径
-        a.download = 'locationTemplate.xlsx' // 文件名称
+        a.href = url // 文件路径
+        a.download = 'good.xlsx' // 文件名称
         a.style.display = 'none' // 隐藏a标签
         document.body.appendChild(a)
           // 定时器(可选)
@@ -64,7 +65,7 @@ export default {
         setTimeout(() => {
           self.URL.revokeObjectURL(a.href) // 用来释放文件路径(可选)
         }, 200)
-      }, 66)
+        }, 66)
 
     },
     apiUpload(){
