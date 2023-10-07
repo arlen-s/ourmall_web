@@ -18,7 +18,7 @@
       </div>
       <div class="right">
         <p class="t1">
-          <span>{{$t('goods.点击下载')}}</span> <el-link type="primary" href="./file/importFreight.xlsx" target="_blank">{{$t('goods.运费导入模板')}}</el-link>
+          <span>{{$t('goods.点击下载')}}</span> <el-link type="primary"  @click="downLoadExcel()" target="_blank">{{$t('goods.运费导入模板')}}</el-link>
         </p>
         <p class="t2">
           {{$t('goods.请按规范填写表格，仅支持xlsx格式文件')}}
@@ -50,6 +50,23 @@ export default {
       this.data.file = $event.target.files[0];
       this.data.filePath = $event.target.value;
       $event.target.value = '';
+    },
+        downLoadExcel(){
+				let url = "/file/importFreight.xlsx";
+        let a = document.createElement('a') // 创建a标签
+        a.href = url // 文件路径
+        a.download = 'good.xlsx' // 文件名称
+        a.style.display = 'none' // 隐藏a标签
+        document.body.appendChild(a)
+          // 定时器(可选)
+        setTimeout(() => {
+        a.click() // 模拟点击(要加)
+        document.removeChild(a) //删除元素(要加)
+        setTimeout(() => {
+          self.URL.revokeObjectURL(a.href) // 用来释放文件路径(可选)
+        }, 200)
+        }, 66)
+
     },
     apiUpload(){
       if(this.data.file.size > 2097152){

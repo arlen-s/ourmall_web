@@ -1725,10 +1725,10 @@
   <el-form :model="formInline" class="demo-form-inline">
       <el-form-item :label="$t('orders.下载解绑模板：')">
       <!-- <el-link type="primary"  href="./file/UnbundTemp.xlsx" target="_blank">解绑模板</el-link> -->
-      <!-- <el-button type="text" @click="downloadFileBuild">解绑模板</el-button> -->
-      			        <p class="t1">
+      <el-button type="text" @click="downloadFileBuild">{{$t('orders.解绑模板')}}</el-button>
+      			        <!-- <p class="t1">
          <el-link type="primary" href="./file/UnbundTemp.xlsx" target="_blank">{{$t('orders.解绑模板')}}</el-link>
-        </p>
+        </p> -->
       </el-form-item>
       <el-form-item :label="$t('orders.导入解绑文档')">
           <el-input
