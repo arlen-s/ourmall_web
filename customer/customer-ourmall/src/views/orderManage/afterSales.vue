@@ -6,7 +6,7 @@
       :visible.sync="salesData.dialogVisible"
       width="30%"
       @open="open()"
-      :before-close="handleClose"
+      :before-close="cancel"
     >
       <div>
         <el-form ref="form" :model="form" label-width="140px">

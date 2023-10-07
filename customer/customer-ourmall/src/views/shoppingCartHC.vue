@@ -567,6 +567,7 @@ export default {
       paystatus: 0,
       isMailFree: 2,
       pickAddress: '',
+      addressTypeId: '',
       defVat: 0,
       bonusPayAmount: '',
       firstBox: true,
@@ -671,7 +672,7 @@ export default {
               sum: 0,
               Subtotal: 0,
 
-            },            
+            },
             {
               id: 12,
               image: '',
@@ -682,7 +683,7 @@ export default {
               Subtotal: 0,
 
             }
-            
+
           ]
         }, {
           id: '04',
@@ -891,23 +892,23 @@ export default {
     //     list: this.tableShopData
     //   }
     // },
-    getVat(){
+    getVat () {
       this.$apiCall(
         "api.Product.getVatConfig", {}, (r) => {
           if (r.ErrorCode == 9999) {
-             let newArr =  r.Data.Results.vatList.filter(item=>{
-                  if(item.code == this.country){
-                    return item
-                  } 
+            if (r.Data.Results.vatList != null) {
+              let newArr = r.Data.Results.vatList.filter(item => {
+                if (item.code == this.country) {
+                  return item
+                }
               })
-            this.defVat = newArr.length == 0 ? 0 : Number(newArr[0].value)
-            this.vatValue = newArr.length == 0 ? 0 : Number(newArr[0].value)              
-              console.log(newArr, 'newArr33');
-            this.perList = r.Data.Results.vatList
-            // if (this.country != 'DE') {
-            //   this.vatValue = 0
-            // }
-             
+              this.defVat = newArr.length == 0 ? 0 : Number(newArr[0].value)
+              this.vatValue = newArr.length == 0 ? 0 : Number(newArr[0].value)
+              console.log(newArr, 'newArr33')
+              this.perList = r.Data.Results.vatList
+            }
+
+
           }
         })
     },
@@ -1236,7 +1237,12 @@ export default {
         this.logistic = "";
       }
       this.pickAddress = this.multipleSelection[0]?.warehouseInfo.address
-
+      if (this.orderType == 2 || this.orderType == 3) {
+          this.addressTypeId = this.multipleSelection[0]?.warehouseInfo.id  
+      }else{
+        this.addressTypeId = ''
+      }
+      
     },
     logisticChange() {
       this.freight = this.logisticArr.find(
@@ -1465,7 +1471,7 @@ export default {
         success_url: window.location.origin + "/shoppingCart?paystatus=2",
         cancel_url: window.location.origin + "/shoppingCart?paystatus=3",
         stockList: stockInfo,
-        addressId: this.addressList.find((item) => item.isDefault == "1").id,
+        addressId: this.orderType == 2 || this.orderType == 3? '' : this.addressList.find((item) => item.isDefault == "1").id,
         shippingId: this.logistic,
         platformType: type,
         stockWarehouseList: stockWareHouse,
@@ -1577,7 +1583,7 @@ export default {
         stockList: stockInfo,
         stockWarehouseList:stockWareHouse,
         shippingId: this.logistic,
-        addressId: this.addressList.find((item) => item.isDefault == "1").id,
+        addressId: this.orderType == 2 || this.orderType == 3? '' : this.addressList.find((item) => item.isDefault == "1").id,
         platformType: 12,
         accountPayment: account,
         voucherUrl: imageUrl,
@@ -1635,7 +1641,7 @@ export default {
         stockList: stockInfo,
         stockWarehouseList:stockWareHouse,
         shippingId: this.logistic,
-        addressId: this.addressList.find((item) => item.isDefault == "1").id,
+        addressId: this.orderType == 2 || this.orderType == 3? '' : this.addressList.find((item) => item.isDefault == "1").id,
         methodId: params.methodId,
         platformType: 10,
         domain: window.location.origin + "/",
@@ -1699,7 +1705,7 @@ export default {
         stockList: stockInfo,
         stockWarehouseList:stockWareHouse,
         shippingId: this.logistic,
-        addressId: this.addressList.find((item) => item.isDefault == "1").id,
+        addressId: this.orderType == 2 || this.orderType == 3? '' : this.addressList.find((item) => item.isDefault == "1").id,
         // code: this.coupon,暂时去除
         platformType: 4,
         token,
