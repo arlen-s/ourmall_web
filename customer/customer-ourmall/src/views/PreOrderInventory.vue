@@ -45,10 +45,10 @@
                   ></el-image>
                 </template>
               </el-table-column>
-              <el-table-column prop="name" label="warehouse" width="180">
+              <el-table-column label="warehouse" width="180">
                 <template slot-scope="scope">{{scope.row.warehouse.name}}</template>
               </el-table-column>
-              <el-table-column prop="inventory" label="inventory" width="180">
+              <el-table-column label="inventory" width="180">
                 <template slot-scope="scope">{{scope.row.inventory}}</template>
               </el-table-column>
               <el-table-column prop="timeCreated" label="create time"></el-table-column>

@@ -863,7 +863,17 @@ export default {
               enabled: true,
             },
             {
-              name: this.$t("All orders"),
+              name: "Pause",
+              path: "/ordersManage/16",
+              enabled: true,
+            },
+            {
+              name: "Cancelled",
+              path: "/ordersManage/17",
+              enabled: true,
+            },            
+            {
+              name: "All orders",
               path: "/ordersManage/6",
               enabled: true,
             },

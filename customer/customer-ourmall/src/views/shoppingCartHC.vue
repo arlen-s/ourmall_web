@@ -4,9 +4,7 @@
       <div v-if="paystatus == 1">
         <div class="d-flex">
           <img src="@/assets/pay/payStatus1.png" height="30" />
-          <span class="tx-bold"
-            >{{$t('Waiting for the payment result to be returned.')}}</span
-          >
+          <span class="tx-bold">{{$t('Waiting for the payment result to be returned.')}}</span>
         </div>
         <p>{{$t('You may need to wait a little while')}}</p>
         <el-button type="primary" plain @click="goBack">{{$t('View order')}}</el-button>
@@ -28,7 +26,7 @@
         <div class="d-flex">
           <!-- <el-button type="primary" @click="orderPay('repay')"
             >Pay again</el-button
-          > -->
+          >-->
           <el-button type="primary" plain @click="goBack">{{$t('View order')}}</el-button>
         </div>
       </div>
@@ -36,104 +34,11 @@
     <div v-else class="cart">
       <!-- Header -->
       <template v-if="code && code.header && code.header.length > 0">
-        <div
-          v-for="(item, index) in code.header"
-          :key="index"
-          v-html="item"
-        ></div>
+        <div v-for="(item, index) in code.header" :key="index" v-html="item"></div>
       </template>
       <div style="position: relative; height: 120px">
-        <DHeader
-          :data="(setting && setting.header) || ''"
-          :headerMenu="headerMenu"
-        />
+        <DHeader :data="(setting && setting.header) || ''" :headerMenu="headerMenu" />
       </div>
-      <!-- <div  class="main" v-if="firstBox">
-          <div class="bold-title mr-l-30">Product Details (Please)</div>     
-          <div>
-            <s-table
-              ref="stable"
-              border
-              shadow
-              row-key="id"
-              :toolbar="{left: 'toolbar-left', right: 'toolbar-right'}"
-              :load-data="loadData"
-              :group-column="groupColumn"
-              :columns="columns"
-            >
-              <template #productInfo="{row}">
-                <div class="cellbg">
-                  <div class="orderInfo">
-                    <div class="min-width-order">发货仓库:{{row.storeHouse}}</div>
-                  </div>
-                  <div class="p-10">
-                    <div v-for="(item, index) in row.item || []" :key="index" class="d-flex">
-                       图片 
-                      <div class="image-box">
-                        <el-popover v-if="item.image" placement="right" width="300" trigger="hover">
-                          <el-image :src="item.image">
-                            <div slot="error" class="image-slot fsize32 text-muted">
-                              <i class="el-icon-picture-outline" />
-                            </div>
-                          </el-image>
-                          <el-image slot="reference" class="thumbnail" :src="item.image" lazy>
-                            <div slot="error" class="image-slot fsize32 text-muted">
-                              <i class="el-icon-picture-outline" />
-                            </div>
-                          </el-image>
-                        </el-popover>
-                        <div v-else class="image-slot fsize32 text-muted">
-                          <i class="el-icon-picture-outline" />
-                        </div>
-                      </div>
-                       右边信息 
-                      <div>
-                        <div class="copy-text-group">
-                          <div class="dis-inline">
-                            <span>{{ item.sku ? item.sku : item.platformSku || '--' }}</span>
-                          </div>
-                        </div>
-                        <p class="text-muted" :title="item.name">{{ item.name }}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </template>
-              <template #orderAmount="{row}">
-                <div class="cellbg">
-                  <div>
-                  </div>
-                </div>
-              </template>
-              <template #address="{row}">
-                <div class="cellbg">
-                  <div>
-
-                  </div>
-                </div>
-              </template>
-              <template #time="{row}">
-                <div class="cellbg">
-                </div>
-              </template>
-              <template #status="{row}">
-                <div class="cellbg">
-                </div>
-              </template>
-              <template #action="{row}">
-                <div class="cellbg">
-          <div>
-            <el-link
-              type="primary"
-              @click="applyLogistics(row.order.id, row.order.myLogisticsChannelId, row)"
-              > 运单号申请 </el-link
-            >
-          </div>
-                </div>
-              </template>
-            </s-table>  
-          </div>     
-      </div> -->
       <div class="main" style="margin-top:40px">
         <div style="height:40px">
           <el-radio v-model="orderType" label="1">{{$t('Wholesale order')}}</el-radio>
@@ -149,26 +54,21 @@
             <div>
               <swiper :options="swiperOptions">
                 <swiper-slide v-for="(item, index) in addressList" :key="index">
-                  <el-card
-                    class="card"
-                    :class="{ active: item.isDefault == '1' }"
-                  >
+                  <el-card class="card" :class="{ active: item.isDefault == '1' }">
                     <div class="main_card" @click="changeChoose(item, index)">
                       <div class="title_card">
                         <span>{{ item.firstName }}</span>
-                        <span style="margin-left: 5px">{{
+                        <span style="margin-left: 5px">
+                          {{
                           item.lastName
-                        }}</span>
+                          }}
+                        </span>
                       </div>
                       <div class="title_card">{{ item.phone }}</div>
-                      <div class="mutiple title_card">
-                        {{ item.address1 }}
-                      </div>
+                      <div class="mutiple title_card">{{ item.address1 }}</div>
                     </div>
                     <div class="footer_card">
-                      <el-button type="text" @click.native="editAddress(item)"
-                        >{{$t('Edit')}}</el-button
-                      >
+                      <el-button type="text" @click.native="editAddress(item)">{{$t('Edit')}}</el-button>
                       <el-button
                         type="text"
                         class="text-danger"
@@ -176,9 +76,9 @@
                         >{{$t('Delete')}}</el-button
                       >
                     </div>
-                    <span v-if="item.isDefault == '1'" class="default"
-                      ><i class="el-icon-circle-check"></i
-                    ></span>
+                    <span v-if="item.isDefault == '1'" class="default">
+                      <i class="el-icon-circle-check"></i>
+                    </span>
                   </el-card>
                 </swiper-slide>
                 <swiper-slide>
@@ -215,12 +115,7 @@
                 @selection-change="handleSelectionChange"
                  ref="multipleTable"
               >
-                <el-table-column
-                  type="selection"
-                  :selectable="selectable"
-                  width="55"
-                >
-                </el-table-column>
+                <el-table-column type="selection" :selectable="selectable" width="55"></el-table-column>
                 <el-table-column prop="date" :label="$t('Check All')" align="center">
                   <template slot-scope="scope">
                     <el-image
@@ -243,26 +138,24 @@
                       <div
                         class="detail_title text-blue font"
                         :title="scope.row.name"
-                      >
-                        {{ scope.row.productInfo.name }}
-                      </div>
+                      >{{ scope.row.productInfo.name }}</div>
                       <div class="font">
                         {{
-                         scope.row.stockInfo.propertyValue ?  scope.row.stockInfo.propertyValue.replace(
-                            /\|\|/g,
-                            ","
-                          ) : ''
+                        scope.row.stockInfo.propertyValue ? scope.row.stockInfo.propertyValue.replace(
+                        /\|\|/g,
+                        ","
+                        ) : ''
                         }}
                       </div>
-                      <div class="detail_title text-muted font">
-                        {{ scope.row.stockInfo.sku }}
-                      </div>
+                      <div class="detail_title text-muted font">{{ scope.row.stockInfo.sku }}</div>
                     </div>
                   </template>
                 </el-table-column>
                 <el-table-column prop="address" :label="$t('Price')" align="center">
                   <template slot-scope="scope">
-                    <div class="title">{{$store.state.country.symbol}}{{ scope.row.stockInfo.price }}</div>
+                    <div
+                      class="title"
+                    >{{$store.state.country.symbol}}{{ scope.row.stockInfo.price }}</div>
                   </template>
                 </el-table-column>
                 <el-table-column :label="$t('Quantity')" align="center">
@@ -278,9 +171,7 @@
                     <div
                       class="text-danger"
                       v-if="scope.row.stockInfo.inventory <= 0"
-                    >
-                      {{$t('out of stock')}}
-                    </div>
+                    >{{$t('out of stock')}}</div>
                     <div
                       class="text-danger"
                       v-if="
@@ -295,18 +186,16 @@
                 </el-table-column>
                 <el-table-column :label="$t('Weight')" align="center">
                   <template slot-scope="scope">
-                    <div class="title">
-                      {{ scope.row.stockInfo.weight || 0 }}g
-                    </div>
+                    <div class="title">{{ scope.row.stockInfo.weight || 0 }}g</div>
                   </template>
                 </el-table-column>
                 <el-table-column :label="$t('warehouse')" align="center">
                   <template slot-scope="scope">
-                    <div class="title">
-                      {{ scope.row.warehouseInfo? scope.row.warehouseInfo.name : '--' }}
-                    </div>
+                    <div
+                      class="title"
+                    >{{ scope.row.warehouseInfo? scope.row.warehouseInfo.name : '--' }}</div>
                   </template>
-                </el-table-column>                
+                </el-table-column>
                 <el-table-column :label="`${$t('Subtotal')}(vat)`" align="center">
                   <template slot-scope="scope">
                     <div class="title" v-if="orderType == 1">
