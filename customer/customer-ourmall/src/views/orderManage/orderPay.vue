@@ -184,7 +184,7 @@
 							<div class="other">
 								<p>{{$t('Payment method')}}:</p>
 								<div class="types" v-if="payTypes.length">
-									<div v-for="type in payTypes" :key="type.accountType" @click="changePlatform(type.accountType)" :class="{ active: platformType == type.accountType, disabled: bonusStatus == 1 && platformType == 6 && bonus > totalAllGoodsAndFreight}">
+									<div v-for="type in payTypes" :key="type.accountType" @click="changePlatform(type.accountType)" :class="{ active: platformType == type.accountType, disabled: bonusStatus == 1 && platformType == 6 && bonus + credits > totalAllGoodsAndFreight}">
 										<img :src="type.icon" alt="" width="100%"/>
 										<img v-show="platformType == type.accountType" class="active-type" src="../../assets/pay/Active.png" alt=""/>
 									</div>
@@ -359,7 +359,7 @@ import { arrayEach } from 'xe-utils/methods';
 				KTurl: '',
 				KTPayId: '',
 				KTPaySession: '',
-				credits: 0,
+				credits: 2000,
 			};
 		},
 		components: {
@@ -920,7 +920,7 @@ import { arrayEach } from 'xe-utils/methods';
 				this.$apiCall("api.Invoice.getBonus", {
 				}, (r) => {
 					if (r.ErrorCode == "9999") {
-						this.bonus = r.Data.Results.bonus ? parseFloat(Number(r.Data.Results.bonus).toFixed(2)) : 0;
+						this.bonus =  0;
           	this.bonusPayAmount = this.bonus
 						if(this.bonus > this.totalAllGoodsAndFreight){
 							this.platformType = 6;
