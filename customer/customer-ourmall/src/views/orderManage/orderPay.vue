@@ -359,7 +359,7 @@ import { arrayEach } from 'xe-utils/methods';
 				KTurl: '',
 				KTPayId: '',
 				KTPaySession: '',
-				credits: 2000,
+				credits: 0,
 			};
 		},
 		components: {
@@ -920,7 +920,7 @@ import { arrayEach } from 'xe-utils/methods';
 				this.$apiCall("api.Invoice.getBonus", {
 				}, (r) => {
 					if (r.ErrorCode == "9999") {
-						this.bonus =  0;
+						this.bonus = r.Data.Results.bonus ? parseFloat(Number(r.Data.Results.bonus).toFixed(2)) : 0;
           	this.bonusPayAmount = this.bonus
 						if(this.bonus > this.totalAllGoodsAndFreight){
 							this.platformType = 6;
@@ -936,7 +936,7 @@ import { arrayEach } from 'xe-utils/methods';
 								}
 							}
 						}
-						this.bonusStatus = r.Data.Results.bonusStatus;
+						this.bonusStatus = typeof(this.platformType) == 'string' ? 2 : r.Data.Results.bonusStatus;
 						this.credits =( Number(r.Data.Results.creditAmount) - Number(r.Data.Results.usedCreditAmount)).toFixed(2);
 					} else {}
 				})
