@@ -1020,9 +1020,9 @@ export default {
     },
     changePlatform(accountType) {
       this.platformType = accountType;
-      if (accountType == 13) {
-					this.dialogVisibleKTPay = true
-			}
+      // if (accountType == 13) {
+			// 		this.dialogVisibleKTPay = true
+			// }
     },
     confirmDiscount() {
       // api.ShopifyOrder.getCoupon
@@ -1924,7 +1924,7 @@ export default {
 }
 .orderInfo {
   padding: 10px;
-  line-height: 20px;
+  line-height: 20px; 
   position: absolute;
   left: 0;
   top: 0;
@@ -1938,7 +1938,7 @@ export default {
   line-height: 20px;
   position: absolute;
   left: -500px;
-  top: 0;
+
   right: 0;
   z-index: 1;
 }

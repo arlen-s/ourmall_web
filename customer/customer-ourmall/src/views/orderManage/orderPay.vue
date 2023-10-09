@@ -901,7 +901,7 @@ import { arrayEach } from 'xe-utils/methods';
 				this.platformType = "";
 				return;
 			}
-			this.platformType = 6;
+			// this.platformType = 6;
 		}			
     },			
 			changePlatform(type) {
@@ -912,9 +912,9 @@ import { arrayEach } from 'xe-utils/methods';
 						this.platformType = type;
 					}
 				}
-				if (type == 13) {
-					this.dialogVisibleKTPay = true
-				}
+				// if (type == 13) {
+				// 	this.dialogVisibleKTPay = true
+				// }
 			},
 			getBonus(){
 				this.$apiCall("api.Invoice.getBonus", {
