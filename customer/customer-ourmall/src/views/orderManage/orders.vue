@@ -3069,7 +3069,7 @@ export default {
           this.$elementMessage(r.Message, "error")
         }
       })
-      // this.$router.push({path:'/orderPay'})
+      this.$router.push({path:'/orderPay'})
       // return
       //打开支付弹层
       if (this.dialogPay.isShow) {
