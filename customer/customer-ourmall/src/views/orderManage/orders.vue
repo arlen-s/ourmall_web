@@ -898,6 +898,13 @@
                       <el-link
                         class="mg-r-20"
                         type="primary"
+                        @click="repayFn(scope.row)"
+                      >
+                        Repay
+                      </el-link>                      
+                      <el-link
+                        class="mg-r-20"
+                        type="primary"
                         @click="handleCancel(scope.row)"
                       >Cancel</el-link>
                     </div>
