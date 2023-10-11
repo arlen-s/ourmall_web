@@ -26,6 +26,12 @@
                     </div>
                   </div>
                 </el-form-item>
+                <el-form-item label="绑定商品图片:"  label-width="150px" v-if="item.associatedProduct">
+                  <el-image
+                  style="width: 100px; height: 100px"
+                  :src="item.associatedProduct.imgUrl"
+                  fit="fit"></el-image>
+                </el-form-item>                  
                 <el-form-item :label="$t('quotation.商品名称')" label-width="150px">
                   <span v-if="item.name">{{ item.name }}</span>
                   <span v-else>---</span>
@@ -83,7 +89,7 @@
                       v-else
                     ></el-image>
                   </div>
-                </el-form-item>
+                </el-form-item>              
                 <el-form-item :label="$t('quotation.回复价格')" label-width="150px" required v-show="!$route.query.variableId">                  
                   <el-input-number                   
                     :min="0"
@@ -239,6 +245,9 @@ export default {
                 this.item = e;
               }
             });
+            if ( this.item.associatedProductId) {
+              this.dialogProductList.variableId = 24
+            }
           } else {
             this.$message({ message: r.Message, type: "error" });
           }
@@ -299,7 +308,8 @@ export default {
            productId:this.form.id,
            remark:this.form.remark,
            vendorSku: this.form.vendorSku,
-           price: this.form.price
+           price: this.form.price,
+           associatedProductId: this.item.associatedProductId,
         },r=>{
             this.loading = false;
             if(r.ErrorCode == 9999){

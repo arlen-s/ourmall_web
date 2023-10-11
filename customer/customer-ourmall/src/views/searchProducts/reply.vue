@@ -102,7 +102,13 @@
 						</el-upload>
 						<div>{{$t('You can only upload 5 pictures')}}</div>
 					</el-form-item>
-					<el-form-item :label="$t('Product Title')" prop="title">
+					<el-form-item label="link Picture:" v-if="publishForm.linkImg">
+						<el-image
+						style="width: 100px; height: 100px"
+						:src="publishForm.linkImg"
+						fit="fit"></el-image>
+					</el-form-item>
+					<el-form-item label="Product Title:" prop="title">
 						<el-input size="small" v-model="publishForm.title"></el-input>
 					</el-form-item>
 					<el-row>
@@ -168,7 +174,9 @@ export default {
 				priceFrom: '',
 				priceTo: '',
 				link: '',
-				description: ''
+				description: '',
+				linkImg: this.$route.query.imgUrl,
+				id: this.$route.query.productId
 			},
 			publishRules: {
 				imgUrl: [
@@ -188,14 +196,28 @@ export default {
 			base64: '',
 			ext: '',
 			file: null,
-			index: 0
+			index: 0,
+			urlParams:'',
 		}
 	},
 	created () {
+		this.urlParams = this.$route.query 
+		console.log( JSON.stringify(this.urlParams) === '{}', 'this.urlParams');
+		if (JSON.stringify(this.urlParams) === '{}') {
+				this.publishVisible = false
+		}else{
+			this.publishVisible = true
+		}
 	},
 	mounted() {
 		this.getItems()
 	},
+
+watch:{
+  $route(to,from){
+    console.log(to.path);
+  }
+},
 	methods: {
 		detailClick (row) {
 			this.$router.push({ path: '/search-product/d', query: {id: row.id} })
@@ -257,7 +279,8 @@ export default {
 				priceFrom: '',
 				priceTo: '',
 				link: '',
-				description: ''
+				description: '',
+				id: ''
 			}
 			this.$refs.upload.clearFiles()
 			this.$refs['ruleForm'].resetFields();
@@ -283,7 +306,8 @@ export default {
 				minPrice: this.publishForm.priceFrom,
 				maxPrice: this.publishForm.priceTo,
 				description: this.publishForm.description,
-				imgUrlJson: imgArr
+				imgUrlJson: imgArr,
+				associatedProductId: this.publishForm.id
 			}
 			this.$apiCall('api.OfferProduct.addByCustomer', {
 				...params

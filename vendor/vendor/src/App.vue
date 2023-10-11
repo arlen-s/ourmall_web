@@ -894,7 +894,14 @@
 						icon: "el-icon-s-order",
 						path: "/PreOrderInventory",
 						enabled: true,
-					},										
+					},	
+					{
+						id: 69,
+						text: "app.绑定商品",
+						icon: "el-icon-s-order",
+						path: "/buildShop",
+						enabled: true,
+					},															
 					{
 						id: 45,
 						text: "router.storehouse",

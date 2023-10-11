@@ -52,6 +52,13 @@
                 <template slot-scope="scope">{{scope.row.inventory}}</template>
               </el-table-column>
               <el-table-column prop="timeCreated" label="create time"></el-table-column>
+              <el-table-column label="Opera">
+                  <template scope="scope">
+                      <el-link type="primary" @click="handleLinkShop(scope.row)">
+                        add related products
+                      </el-link>
+                  </template>
+              </el-table-column>
             </el-table>
           </el-card>
         </el-col>
@@ -104,7 +111,7 @@ export default {
   //方法集合
   methods: {
     changeSku () {
-this.getData()
+      this.getData()
     },
     getData () {
       this.loading = true
@@ -127,6 +134,15 @@ this.getData()
       this.page = val
       this.getData()
     },
+    handleLinkShop(row){
+      this.$router.push({
+        path: "/search-reply",
+        query: {
+            productId: row.productId,
+            imgUrl: row.stock.propertyImage,            
+        }
+      })
+    }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created () {

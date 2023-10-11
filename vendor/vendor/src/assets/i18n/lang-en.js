@@ -49,6 +49,7 @@ export const lang = {
     '折扣管理':'Discount',
     '售后工单': "serviceTicket",
     '预购库存': "Pre-order stock",
+    '绑定商品': "Bound goods",
     '财务管理':'Finance',
     "汇率管理":"Exchange rate management",
 		'收款方式':'Payment',
