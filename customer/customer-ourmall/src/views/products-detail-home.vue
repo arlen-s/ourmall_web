@@ -162,6 +162,12 @@
           </div>
               </div>-->
               <!-- 1.9新增tags -->
+              <div v-if="c_apiShopId ==121323" style="
+    text-align: right;
+    padding-right: 12%;
+    font-size: 18px;
+    color: red;
+">Processing Time (From receipt of payment): 3-4 days</div>
               <ul class="tags">
                 <li v-for="tag in $store.state.configJson.detailPage.tags" :key="tag.text">
                   <span class="tx-danger">*</span>
@@ -566,6 +572,7 @@ export default {
       vatDom: true,
       concatList: [],
       vatList: [],
+      c_apiShopId: JSON.parse(localStorage.getItem('c_apiShopId'))
     }
   },
   watch: {
