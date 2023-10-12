@@ -1789,6 +1789,8 @@ import filterOrder from "./filterOrder.vue"
 import orderFail from './orderFail.vue'
 import dialogSplit from "./dialogSplit.vue"
 import FileSaver from 'file-saver';
+import axios from 'axios';
+
 export default {
   data () {
     return {
@@ -2111,8 +2113,28 @@ export default {
       return '';
     },    
      downloadFileBuild(){
-       const excelPath = '/file/importGood.xlsx';
-       FileSaver.saveAs(excelPath);
+      //  const excelPath = '/file/importGood.xlsx';
+      //  FileSaver.saveAs(excelPath);
+      // const excelPath = '/file/importGood.xlsx';
+      // const downloadLink = document.createElement('a');
+      // downloadLink.href = `${excelPath}`;
+      // downloadLink.download = 'my-excel-file.xlsx';
+      // downloadLink.click();
+     const excelUrl = '/file/UnbundTemp.xlsx';
+
+      fetch(excelUrl)
+        .then((response) => response.blob())
+        .then((excelData) => {
+          // 保存 Excel 文件
+          const excelFile = new File([excelData], 'my-excel-file.xlsx', {
+            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          });
+
+          FileSaver.saveAs(excelFile);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     uploadFileClick(){
       document.getElementById('uploadFile').click()

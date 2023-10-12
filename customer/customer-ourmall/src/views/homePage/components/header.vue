@@ -911,6 +911,7 @@ box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   max-width: 1440px;
   margin: 0 auto;
   // padding-left: calc(234px + 1%);
+  margin-top: 30px;
 }
 .banner-box a {
   font-size: 18px;
