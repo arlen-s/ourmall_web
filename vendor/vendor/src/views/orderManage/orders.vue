@@ -1788,6 +1788,7 @@ import orderCnt from "./dialogOrderCnt.vue"
 import filterOrder from "./filterOrder.vue"
 import orderFail from './orderFail.vue'
 import dialogSplit from "./dialogSplit.vue"
+import FileSaver from 'file-saver';
 export default {
   data () {
     return {
@@ -1799,6 +1800,11 @@ export default {
       },
       formInline: {
         templateFile: '',
+      },
+      afterData:{
+        dialogVisible:false,  
+        shopifyAccountId: "",
+        orderId: ''
       },
       isExpansion: false,
       bathBundDialog: false,
@@ -2104,23 +2110,9 @@ export default {
       }
       return '';
     },    
-    downloadFileBuild(){
-      console.log(3333);
-				let url = "/newFile/ordeExecl.xlsx";
-        let a = document.createElement('a') // 创建a标签
-        a.href = url // 文件路径
-        a.download = '解绑模板.xlsx' // 文件名称
-        a.style.display = 'none' // 隐藏a标签
-        document.body.appendChild(a)
-          // 定时器(可选)
-        setTimeout(() => {
-        a.click() // 模拟点击(要加)
-        document.removeChild(a) //删除元素(要加)
-        setTimeout(() => {
-          self.URL.revokeObjectURL(a.href) // 用来释放文件路径(可选)
-        }, 200)
-        }, 66)
-
+     downloadFileBuild(){
+       const excelPath = '/file/importGood.xlsx';
+       FileSaver.saveAs(excelPath);
     },
     uploadFileClick(){
       document.getElementById('uploadFile').click()
