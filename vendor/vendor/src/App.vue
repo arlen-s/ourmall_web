@@ -1013,6 +1013,10 @@
 								name: "app.店铺销量列表",
 								path: "/shopOrderList",
 								enabled: true,
+							}	,{
+								name: "app.客户明细",
+								path: "/CustomerDetails",
+								enabled: true,
 							}							
 						]
 					},

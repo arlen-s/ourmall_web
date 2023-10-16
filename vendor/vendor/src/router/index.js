@@ -757,7 +757,18 @@ const routes = [
       checkLogin: true,
     },
     component: () => import(/* webpackChunkName: 'transactionDetail' */ '@/views/shopOrderList.vue')
-  },    
+  },  
+  {
+    path: '/CustomerDetails',
+    name: 'CustomerDetails',
+    meta: {
+      title: '客户明细',
+      urlActive: '/CustomerDetails',
+      roleWrite:"payRecordEdit",
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'transactionDetail' */ '@/views/CustomerDetails.vue')
+  },      
   {
       path: '/ordersManage/:status/:active',
       name: 'ordersManagement',

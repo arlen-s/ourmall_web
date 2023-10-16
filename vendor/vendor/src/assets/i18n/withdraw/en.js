@@ -32,4 +32,7 @@ export const lang = {
 	'销售总金额':'Total sales',
 	'店铺邮箱':'Store Email',
 	'详情':'detail',
+	'客户明细': 'Customer Details',
+	'上传物流单号时间': 'Time to upload logistics number',
+	'发货物流票数': 'Shipment of logistics tickets',
 }
