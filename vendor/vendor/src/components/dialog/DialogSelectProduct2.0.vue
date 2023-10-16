@@ -46,8 +46,10 @@
             <span class="mg-l-5">{{$t('storeSetting.刷新')}}</span>  
           </div>
         </div>
-        {{data.variableId}}
         <el-divider></el-divider>
+        
+      <div>
+      </div>
         <el-table v-if="(data.item && data.item.length)&& data.variableId == null" :data="data.item" stripe height="300px" ref="productTable"> 
         <el-table-column :label="''" width="60"> 
           <template slot-scope="scope">
@@ -89,6 +91,7 @@
           </template> 
         </el-table-column>  
       </el-table>
+    
       <div v-else-if="(data.item && data.item.length)&& data.variableId">
 			<el-table class="no-hover" stripe :data="data.item" style="width: 100%" height="300px">
 				<el-table-column  type="expand">
@@ -271,13 +274,13 @@ export default {
             this.productItem = e
           }});
          if(this.data.type=='1'){
-            this.$parent.addShopForm.productId = this.productItem.id;
+            this.$parent.addShopForm.mainProductId = this.productItem.id;
             this.$parent.addShopForm.imgUrl = this.productItem.imgUrl;
-            this.$parent.addShopForm.sku = this.tableRadio;
             this.$parent.addShopForm = {...this.$parent.addShopForm}
           }else{
-            this.$parent.addShopForm.mainProductId = this.productItem.id;
+            this.$parent.addShopForm.productId = this.productItem.id;
             this.$parent.addShopForm.imgUrlBuild = this.productItem.imgUrl;
+            this.$parent.addShopForm.sku = this.tableRadio;
           this.$parent.setting = {...this.$parent.setting}
           }
           this.closeDialog();
@@ -313,12 +316,7 @@ export default {
     }, 
     closeDialog(){
       this.page = 1;
-      if(this.$route.name=='quotationGoods'){
-        this.$router.push({query: {id:this.$route.query.id,variableId: this.data.variableId}});
-      }else{
-        this.$router.push({query: {cid:this.$route.query.cid,variableId: this.data.variableId}});
-      }
-      this.data.item = {};
+      // this.data.item = {};
       this.productData = '';
       this.productItem = {};
       this.tableRadio = '';

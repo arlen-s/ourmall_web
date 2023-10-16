@@ -127,4 +127,5 @@ export const lang = {
 	'回复时间': 'Reply time',
 	'描述':'Description',
 	'客户邮箱':'Customers email',
+	'添加被绑定商品':"Add Bound Products",
 }

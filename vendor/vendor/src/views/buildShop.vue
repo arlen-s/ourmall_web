@@ -37,23 +37,11 @@
               <el-table-column prop="customerName" :label="$t('transaction.绑定SKU')">
                 <template slot-scope="scope">
                   <div>
-                    <b>{{ scope.row.mainProduct.sku }}</b>
+                    <b>{{ scope.row.stock.sku }}</b>
                   </div>
                 </template>
               </el-table-column>
               <el-table-column :label="$t('transaction.绑定SKU图片')">
-                <template slot-scope="scope">
-                  <el-image
-                    style="width: 100px; height: 100px"
-                    :src="scope.row.mainProduct.imgUrl"
-                    fit="fit"
-                  ></el-image>
-                </template>
-              </el-table-column>
-              <el-table-column :label="$t('transaction.被绑定SKU')">
-                <template slot-scope="scope">{{scope.row.stock.sku}}</template>
-              </el-table-column>
-              <el-table-column :label="$t('transaction.被绑定SKU图片')">
                 <template slot-scope="scope">
                   <el-image
                     style="width: 100px; height: 100px"
@@ -62,11 +50,23 @@
                   ></el-image>
                 </template>
               </el-table-column>
+              <el-table-column :label="$t('transaction.被绑定SKU')">
+                <template slot-scope="scope">{{scope.row.mainProduct.sku}}</template>
+              </el-table-column>
+              <el-table-column :label="$t('transaction.被绑定SKU图片')">
+                <template slot-scope="scope">
+                  <el-image
+                    style="width: 100px; height: 100px"
+                    :src="scope.row.mainProduct.imgUrl"
+                    fit="fit"
+                  ></el-image>
+                </template>
+              </el-table-column>
               <el-table-column :label="$t('mycustomer.operate')" width="230">
                 <template slot-scope="scope">
                   <div>
                     <el-popconfirm
-                      title="`Are you sure you want to delete it?`"
+                      title="Are you sure you want to delete it?"
                       :key="scope.row.id"
                       confirm-button-text="Confirm"
                       cancel-button-text="Cancel"
@@ -131,7 +131,7 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item :label="$t('quotation.添加商品')" label-width="150px" required>
+          <el-form-item :label="$t('quotation.添加被绑定商品')" label-width="150px" required>
             <div class="d-flex">
               <el-link type="primary" @click="openSelect('1')">{{$t('quotation.选择商品')}}</el-link>
             </div>
@@ -152,7 +152,7 @@
               <el-link type="primary" @click="openSelect('2')">{{$t('quotation.选择商品')}}</el-link>
             </div>
           </el-form-item>
-          <el-form-item :label="$t('quotation.绑定商品图片')" label-width="150px">
+          <el-form-item :label="$t('quotation.绑定商品图片')" label-width="150px" required>
             <div class="upload">
               <i class="el-icon-plus" v-if="!addShopForm.imgUrlBuild"></i>
               <el-image
@@ -265,13 +265,12 @@ export default {
     changePageSize (val) {
       this.rowsPerPage = val
       localStorage.setItem("myCustomRowsPerPage", val)
-      console.log(3525)
       this.getItem()
     },
     filterGetItem () {
       this.selectArr.forEach((c) => {
         if (c.customerName == this.addShopForm.name)
-          this.addShopForm.customerId = c.id
+          this.addShopForm.customerId = c.customerId
       })
     },
     close () {
@@ -318,6 +317,7 @@ export default {
             e.statusIpt = e.status == '1'
             return e
           })
+          console.log(tempArr, 'tempArr');
           tempArr.forEach(item1 => {
             if (item1.stocks && item1.stocks.length) {
               item1.stocks.forEach(obj => {
