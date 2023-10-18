@@ -24,6 +24,7 @@ export const lang = {
   '商品中文名':'Product Chinese name',
   '库存扣减方式':'Inventory deduction method',
   '仓库必须填写': 'warehouse must be filled',
+  '商品价格系数是否生效': 'Whether the commodity price factor is in effect',
   '是否为组合':'Is combination',
   '商品是否免邮': 'Is the product free shipping:',
   '不扣减': 'No deduction',

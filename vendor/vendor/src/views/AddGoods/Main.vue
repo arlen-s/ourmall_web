@@ -984,7 +984,7 @@ export default {
         days: '',
         deliveryTime: 'day',
         InventoryDedType: '1',
-        isRateEffect: this.productId? 1 : 2,
+        isRateEffect: 2,
         min: '',
         max: '',
         name: '',
@@ -1221,6 +1221,7 @@ export default {
 
   mounted () {
     this.productId = this.$route.query.id
+    this.form.isRateEffect = this.productId? 2 : 1
     this.getHouseInfo()
     this.getCategroy()
     this.getCustomerList()
