@@ -118,14 +118,19 @@
               </el-form-item>
             
             </el-col>            
-            <el-col :span="24">
+            <el-col :span="12">
               <el-form-item :label="$t('goodsEdit.库存扣减方式')" style="width: 100%;">
                   <el-radio-group v-model="form.InventoryDedType">
                   <el-radio label="1">{{$t('goods.不扣减')}}</el-radio>
                   <el-radio label="2">{{$t('goods.出库之后')}}</el-radio>
                 </el-radio-group>
               </el-form-item>            
-            </el-col>        
+            </el-col>     
+            <el-col :span="12">
+              <el-form-item :label="$t('goodsEdit.商品价格系数是否生效')" style="width: 100%;">
+                <el-switch v-model="form.isRateEffect"></el-switch>
+              </el-form-item>         
+            </el-col>                    
             <el-col :span="24">
               <el-form-item :label="$t('goods.设定SPU价格')" style="width: 100%;">
                 <template>
@@ -979,6 +984,7 @@ export default {
         days: '',
         deliveryTime: 'day',
         InventoryDedType: '1',
+        isRateEffect: this.productId? 1 : 2,
         min: '',
         max: '',
         name: '',
@@ -1987,6 +1993,7 @@ Visiblemovie(val) {
         isMailFree: this.form.isMailFree ? '1' : '2',
         categoryId: this.categoryId,
         spu: this.form.spu,
+        isRateEffect: this.form.isRateEffect,
         productType: this.form.stockSingle[0].productType,
         description: this.form.description,
         customCode: this.form.customCode,
