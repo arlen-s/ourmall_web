@@ -984,7 +984,7 @@ export default {
         days: '',
         deliveryTime: 'day',
         InventoryDedType: '1',
-        isRateEffect: 2,
+        isRateEffect: false,
         min: '',
         max: '',
         name: '',
@@ -1221,7 +1221,7 @@ export default {
 
   mounted () {
     this.productId = this.$route.query.id
-    this.form.isRateEffect = this.productId? 2 : 1
+    this.form.isRateEffect = this.productId? false : true
     this.getHouseInfo()
     this.getCategroy()
     this.getCustomerList()
@@ -1994,7 +1994,7 @@ Visiblemovie(val) {
         isMailFree: this.form.isMailFree ? '1' : '2',
         categoryId: this.categoryId,
         spu: this.form.spu,
-        isRateEffect: this.form.isRateEffect,
+        isRateEffect: this.form.isRateEffect ? '1' : '2',
         productType: this.form.stockSingle[0].productType,
         description: this.form.description,
         customCode: this.form.customCode,
