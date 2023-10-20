@@ -721,9 +721,8 @@ export default {
         "api.Product.getVatConfig", {}, (r) => {
           if (r.ErrorCode == 9999) {
             // 将对象转换成数组
-            const arr = Object.values( r.Data.Results.vatList);
-            // 使用map()方法将对象提上一层
-            this.vatList = arr.map((item) => {
+            if (r.Data.Results.vatList.length> 0) {
+            this.vatList = r.Data.Results.vatList.map((item) => {
                 item.price = '0.00'
                 item.VAT = '0.00'
                 item.Amount = '0.00'
@@ -732,8 +731,10 @@ export default {
                 item.value = Number(item.value)
                 return item
             });
-            this.vatValue =  Number(r.Data.Results.vatList.DE.value)
+            // this.vatValue =  Number(r.Data.Results.vatList.DE.value)
             this.vatDom = r.Data.Results.vatState== 1 ? true : false
+            }
+
           }
         }
       )
