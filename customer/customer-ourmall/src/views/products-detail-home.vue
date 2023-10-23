@@ -146,7 +146,7 @@
                       <el-option
                         v-for="item in shippingFees"
                         :key="item.name"
-                        :label="`${item.name}  ${$store.state.country.symbol}${item.fee}  received within ${item.agingDaysBegin || 0} ~ ${item.agingDaysEnd || 0} days`"
+                        :label="`${item.nameDisplay? item.nameDisplay : item.name}  ${$store.state.country.symbol}${item.fee}  received within ${item.agingDaysBegin || 0} ~ ${item.agingDaysEnd || 0} days`"
                         :value="item.name"
                       ></el-option>
                     </el-select>

@@ -260,7 +260,7 @@
                 <el-option
                   v-for="item in logisticArr"
                   :key="item.id"
-                  :label="item.name"
+                  :label="item.nameDisplay? item.nameDisplay : item.name"
                   :value="item.id"
                 >
                 </el-option>
