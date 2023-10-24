@@ -129,7 +129,8 @@
 						},
 					},
 				},
-				activeName:"1"
+				activeName:"1",
+				vendorId: localStorage.getItem('vendorId'),
 			}
 		},
 		components: {
@@ -140,8 +141,8 @@
 				this.activeName = "1";
 			},
 			copy(){
-				let routeData = this.$router.resolve({name: 'AddGoods', query: {id: this.detailData.variableId,isCopy:1}});
-				window.open(routeData.href, '_blank');
+				// let routeData = this.$router.resolve({name: 'AddGoods', query: {id: this.detailData.variableId,isCopy:1}});
+				// window.open(routeData.href, '_blank');
 				// this.$showLoading();
 				// this.$apiCall("api.ShopifyOrder.getCustomerProductDetail", {
 				// 	variableId: this.detailData.variableId,
@@ -155,6 +156,14 @@
 				// 	}
 				// 	this.$hideLoading();
 				// })
+			if (  this.vendorId != '148982'&& this.vendorId != '146428'&& this.vendorId != '144875'&& this.vendorId != '144843'&& this.vendorId != '143779'&& this.vendorId != '143654'&& this.vendorId != '74') {
+      this.$router.push({name: 'AddGoods2', query: {id: this.detailData.variableId}})
+							let routeData = this.$router.resolve({name: 'AddGoods2', query: {id: this.detailData.variableId,isCopy:1}});
+							window.open(routeData.href, '_blank');
+      }else{
+						let routeData = this.$router.resolve({name: 'AddGoods', query: {id: this.detailData.variableId,isCopy:1}});
+						window.open(routeData.href, '_blank');
+      }
 			},
 		}
 	}
