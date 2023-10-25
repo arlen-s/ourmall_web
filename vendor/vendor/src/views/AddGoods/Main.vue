@@ -1391,6 +1391,7 @@ Visiblemovie(val) {
         this.SkuId = id
       } else {
         this.drawerStorePropsData.form = row
+         this.drawerStorePropsData.isMulti = false
       }
       console.log(this.drawerStorePropsData, 'this.drawerStorePropsData');
     },
