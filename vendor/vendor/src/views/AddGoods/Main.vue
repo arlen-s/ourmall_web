@@ -578,7 +578,7 @@
                     <el-table-column width="150">
                       <template slot="header">
                         <!-- <span class="tx-danger">*</span> -->
-                        <span>{{$t('goodsEdit.成本')}} {{$store.state.country.symbol}}</span>
+                        <span>{{$t('goodsEdit.成本价')}} {{$store.state.country.symbol}}</span>
                         <!-- <span
                           @click="volumeSet(2)"
                           style="color: #5c6ac4;margin-left: 5px;font-weight: normal;cursor: pointer;"
@@ -971,13 +971,15 @@ export default {
         sku: '',
         productName: '',
         childArr: [
-        ]
+        ],
+        id: 0,
       }],
       multiStorehouse: [{
         sku: '',
         productName: '',
         childArr: [
-        ]
+        ],
+        id: 0
       }],
       form: { //填写数据
         selectTime: 'day',
@@ -1215,7 +1217,6 @@ export default {
       } else {
         this.tableData = this.multiStorehouse
       }
-      console.log(this.tableData, 'this.tableData')
     }
   },
 
@@ -1615,7 +1616,8 @@ Visiblemovie(val) {
                   let objSt = {
                      productName: item.productName,
                      sku: item.sku,
-                      childArr:[]
+                      childArr:[],
+                     id: item.id
  
                   }
                   return objSt
@@ -2146,11 +2148,11 @@ console.log(this.specifications, 'this.specifications');
         this.form.stockMulti[this.index].propertyImage = v.propertyImageOriginal
         for (let i = 0; i < this.tableData.length; i++) {
           if (this.SkuId == this.tableData[i].id) {
-                   this.tableData[i] = {
-          productName: this.form.stockMulti[i].productName,
-          sku: this.form.stockMulti[i].sku,
-          childArr: this.tableData[i].childArr.length > 0 ? this.tableData[i].childArr : []
-        }
+              this.tableData[i] = {
+                  productName: this.form.stockMulti[i].productName,
+                  sku: this.form.stockMulti[i].sku,
+                  childArr: this.tableData[i].childArr.length > 0 ? this.tableData[i].childArr : []
+                }
           }
           
         }
