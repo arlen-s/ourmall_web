@@ -215,7 +215,7 @@
                     <div class="pro_box">
                       <div class="pro_img" style="height:194px">
                     <el-image
-                      lazy
+                      
                       style="position: absolute; width: 100%;cursor: pointer;
                       height: 100%;"
                       :fit="'contain'"
