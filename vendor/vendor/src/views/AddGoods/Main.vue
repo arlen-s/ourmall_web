@@ -1221,6 +1221,7 @@ export default {
 
   mounted () {
     this.productId = this.$route.query.id
+   let copy =  this.$route.query.isCopy
     this.form.isRateEffect = this.productId? false : true
     this.getHouseInfo()
     this.getCategroy()
@@ -1234,7 +1235,7 @@ export default {
       this.drawerStorePropsData.form = JSON.parse(JSON.stringify(defaultForm))
       this.drawerStorePropsData.isEdit = ''
     } else {
-      this.drawerStorePropsData.isEdit = this.productId
+      this.drawerStorePropsData.isEdit = copy? '' : this.productId
     }
   },
   beforeDestroy () {
@@ -1734,7 +1735,7 @@ Visiblemovie(val) {
                 inventory: e.inventory || undefined,
                 price: e.price || undefined,
                 propertyValue: e.propertyValue.split('||'),
-                propertyImage: e.propertyImageOriginal || '',
+                propertyImage: e.propertyImageOriginal? e.propertyImageOriginal : e.propertyImage|| '',
                 sku: e.sku,
                 weight: e.weight ? e.weight : undefined,
                 error: false,
@@ -1756,7 +1757,7 @@ Visiblemovie(val) {
                 attachment: e.attachment  || [],
                 specificationSwitch: e.specificationSwitch  || '1',
                 productWidth: e.productWidth || 0.00,
-                propertyImageOriginal: e.propertyImageOriginal || '',
+                propertyImageOriginal: e.propertyImageOriginal? e.propertyImageOriginal : e.propertyImage|| '' || '',
               }
             })
 console.log(this.form.propertyNames, 'this.form.propertyNames');
