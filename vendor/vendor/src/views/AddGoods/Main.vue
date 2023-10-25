@@ -1589,6 +1589,7 @@ Visiblemovie(val) {
               this.$set(item, "id", item.id)
             })
           }
+          if (data.skuWarehouse) {
           for (let a = 0; a < data.skuWarehouse.length; a++) {
             for (let i = 0; i < data.skuWarehouse[a].childArr.length; i++) {
               for (let j = 0; j < this.storehouse.length; j++) {
@@ -1600,10 +1601,12 @@ Visiblemovie(val) {
                 }
               }
             }
+          }            
           }
+
           setTimeout(() => {
             if (data.stocks.length > 1) {
-              if (data.skuWarehouse.length>0) {
+              if  (data.skuWarehouse && data.skuWarehouse.length>0) {
                 this.multiStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse))
                 this.tableData = this.multiStorehouse
               }else{
@@ -1619,7 +1622,7 @@ Visiblemovie(val) {
               }
 
             } else {
-              if (data.skuWarehouse.length > 0) {
+              if (data.skuWarehouse && data.skuWarehouse.length > 0) {
                 this.singleStorehouse = JSON.parse(JSON.stringify(data.skuWarehouse))
               this.tableData = this.singleStorehouse  
               }else{
@@ -1648,6 +1651,7 @@ Visiblemovie(val) {
           this.form.min = data.estimatedLeadTimeMinValue
           this.form.max = data.estimatedLeadTimeMaxValue
           this.form.spu = data.sku //spu
+          
           if (data.categoryId) { //商品类目
             if (this.selectCategroyArr.length) {
               try {
@@ -1755,9 +1759,10 @@ Visiblemovie(val) {
                 propertyImageOriginal: e.propertyImageOriginal || '',
               }
             })
-
+console.log(this.form.propertyNames, 'this.form.propertyNames');
+console.log(this.specifications, 'this.specifications');
             tArr.forEach((e, i) => {
-              if (this.form.propertyNames[i].label.toLowerCase() == this.specifications.toLowerCase()) {
+              if (this.form.propertyNames[i].label.toLowerCase() == (this.specifications&&this.specifications.toLowerCase())) {
                 [...new Set(e)].forEach(t => {
                   let imgItem = specArray.find((item) => item.propertyValue.indexOf(t) > -1)
                   this.form.propertyNames[i].tags.push({
@@ -1800,6 +1805,7 @@ Visiblemovie(val) {
           })
         }
       })
+      console.log(this.form, 'this.form');
     },
     testCategroyPath () { //验证商品类目是否可行
       if (this.categroyPath[0]) {

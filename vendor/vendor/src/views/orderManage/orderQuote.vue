@@ -128,8 +128,13 @@
 				this.items = items || [];
 			},
 			goto(){
-				let routeData = this.$router.resolve({name: 'AddGoods'});
-				window.open(routeData.href, '_blank');
+							if (  this.vendorId != '148982'&& this.vendorId != '146428'&& this.vendorId != '144875'&& this.vendorId != '144843'&& this.vendorId != '143779'&& this.vendorId != '143654'&& this.vendorId != '74') {
+								let routeData = this.$router.resolve({name: 'AddGoods2'});
+								window.open(routeData.href, '_blank');
+							}else{
+								let routeData = this.$router.resolve({name: 'AddGoods'});
+								window.open(routeData.href, '_blank');
+							}
 			},
 			openRelate(item){
 				this.$showLoading();
