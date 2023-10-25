@@ -2141,7 +2141,8 @@ console.log(this.specifications, 'this.specifications');
       })
     },
     callBackProps (v,specification) { //编辑规格
-
+console.log(this.tableData, '1111');
+console.log(this.SkuId, '3333');
     // this.specFlag = specification
       if (this.drawerStorePropsData.isMulti) {
         this.form.stockMulti[this.index] = v
@@ -2151,7 +2152,8 @@ console.log(this.specifications, 'this.specifications');
               this.tableData[i] = {
                   productName: this.form.stockMulti[i].productName,
                   sku: this.form.stockMulti[i].sku,
-                  childArr: this.tableData[i].childArr.length > 0 ? this.tableData[i].childArr : []
+                  childArr: this.tableData[i].childArr.length > 0 ? this.tableData[i].childArr : [],
+                  id: this.tableData[i].id
                 }
           }
           
