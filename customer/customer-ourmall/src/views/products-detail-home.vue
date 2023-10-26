@@ -1024,7 +1024,7 @@ export default {
               }
               return video
             })
-            this. concatList = [...newListImg, ...newListVideo]
+            this. concatList = [ ...newListVideo,...newListImg]
             if (r.Data.Results.videoUrl) {
               this.isImage = false
             }

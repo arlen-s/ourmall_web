@@ -134,7 +134,7 @@
 									 	v-if="item.line"
 										:style="{color: setting.wordColor}"
 										style="margin-left: 15px;"
-										:href="item.line"
+										:href="`https://${item.line}`"
 										target="_blank"
 										rel="nofollow"
 									>
