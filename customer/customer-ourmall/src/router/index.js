@@ -911,9 +911,16 @@ const routes = [
         "https://app.fforder.com",
         "https://www.7dropshipping.com",
         'https://www.dasuche.com',
+        'https://lstdrop.myourmall.com',
+        'https://lstdrop.myourmall.com'
       ]
       if(hostList.includes(location.origin)){
-        return '/home'
+        if (location.origin == 'https://lstdrop.myourmall.com') {
+          return '/products-market'
+        }else{
+          return '/home'
+        }
+        
       }
       if(hostArr[0].toLowerCase() == 'app'){
         return '/home';
