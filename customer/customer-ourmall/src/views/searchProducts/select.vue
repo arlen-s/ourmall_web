@@ -19,7 +19,7 @@
 						<el-select v-model="filterParams.status">
 							<el-option value="0" :label="$t('All')"></el-option>
 							<el-option value="1" :label="$t('Penging')"></el-option>
-							<el-option value="2" :label="$('Completed')"></el-option>
+							<el-option value="2" :label="$t('Completed')"></el-option>
 							<el-option value="9" :label="$t('Failed')"></el-option>
 						</el-select>
 					</el-form-item>
