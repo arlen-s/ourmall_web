@@ -101,7 +101,7 @@
 		<el-divider></el-divider>
 		<div slot="footer" class="dialog-footer">
 			<el-button @click="detailData.isShow = false">{{$t('orders.cancel')}}</el-button>
-			<el-button type="primary" @click="copy()">{{$t('orders.复制商品')}}</el-button>
+			<!-- <el-button type="primary" @click="copy()">{{$t('orders.复制商品')}}</el-button> -->
 		</div>
 	</el-dialog>
 </template>
