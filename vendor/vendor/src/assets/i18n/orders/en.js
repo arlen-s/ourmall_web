@@ -95,6 +95,7 @@ export const lang = {
 	'已添加到无法采购':'Added to unavailable for purchase',
 	'已取消':'Cancelled',
   '知道了': 'I Know',
+  '注意：shopify商品下架会导致复制的商品图片丢失！': 'NOTE: shopify product take downs will result in the loss of copied product images!',
 	'产品图片': 'Product Images',
 	'SKU编号/数量/名称': 'SKU number/quantity/name',
 	'产品数量': 'quantity',
