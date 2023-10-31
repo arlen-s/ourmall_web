@@ -504,7 +504,7 @@
                     <el-table-column label="SKU" width="180">
                       <template slot="header" slot-scope>
                         <span style="color: #F56C6C">*</span> SKU 
-                        <el-link type="primary" v-if="this.productId.length== 0"  :underline="false" @click="bathSku()">批量修改</el-link>
+                        <el-link type="primary" v-if="$route.query.isCopy"  :underline="false" @click="bathSku()">{{$t('goodsEdit.批量修改')}}</el-link>
                       </template>
                       <template slot-scope="scope">
                         <!-- <el-input
@@ -542,14 +542,14 @@
                       <template slot="header" slot-scope>
                         <span style="color: #F56C6C">*</span>
                         {{$t('goodsEdit.商品中文名')}}
-                        <el-link type="primary" :underline="false" @click="bathShopName()">批量修改</el-link>
+                        <el-link type="primary" :underline="false" @click="bathShopName()">{{$t('goodsEdit.批量修改')}}</el-link>
                       </template>
                       <template slot-scope="scope">{{scope.row.productName || '---'}}</template>
                     </el-table-column>
                     <el-table-column align="center" :label="$t('goodsEdit.是否为组合')">
                       <template slot-scope="scope">
-                        <span v-if="scope.row.isCombination == 2">非组合</span>
-                        <span v-else>组合</span>
+                        <span v-if="scope.row.isCombination == 2">{{$t('goodsEdit.非组合')}}</span>
+                        <span v-else>{{$t('goodsEdit.组合')}}</span>
                       </template>
                     </el-table-column>
                     <!-- <el-table-column align="center" :label="$t('goodsEdit.属性')">
@@ -581,7 +581,7 @@
                       <template slot="header">
                         <!-- <span class="tx-danger">*</span> -->
                         <span>{{$t('goodsEdit.成本价')}} {{$store.state.country.symbol}}
-                           <el-link type="primary" :underline="false" @click="bathPrice()">批量修改</el-link>
+                           <el-link type="primary" :underline="false" @click="bathPrice()">{{$t('goodsEdit.批量修改')}}</el-link>
                         </span>
                         <!-- <span
                           @click="volumeSet(2)"
@@ -604,7 +604,7 @@
                       <template slot="header">
                         <!-- <span class="tx-danger">*</span> -->
                         <span>{{$t('goodsEdit.重量')}}(G)
-                           <el-link type="primary" :underline="false" @click="bathWeight()">批量修改</el-link>
+                           <el-link type="primary" :underline="false" @click="bathWeight()">{{$t('goodsEdit.批量修改')}}</el-link>
                         </span>
                         <!-- <span
                           @click="volumeSet(3)"
@@ -754,7 +754,7 @@
                     <div class="flex-D">
                     <span class="tx-danger">*</span>
                     <span class="pd-5">{{ `${$t('goodsEdit.售价')} (${$store.state.country.symbol})`}}</span>
-                    <el-link type="primary" :underline="false" @click="batThreePrice()">批量修改</el-link>
+                    <el-link type="primary" :underline="false" @click="batThreePrice()">{{$t('goodsEdit.批量修改')}}</el-link>
                     </div>
                   </template>
                 </el-table-column>
@@ -762,7 +762,7 @@
                      <template slot="header">
                       <div class="flex-D">
                           <span class="pd-5">{{ `${$t('goodsEdit.成本价')}(${$store.state.country.symbol})`}}</span>
-                         <el-link type="primary" :underline="false" @click="batThreeCostPrice()">批量修改</el-link>
+                         <el-link type="primary" :underline="false" @click="batThreeCostPrice()">{{$t('goodsEdit.批量修改')}}</el-link>
                       </div>                   
                      </template>
                 </el-table-column>
@@ -771,7 +771,7 @@
                      <template slot="header">
                       <div class="flex-D">
                           <span class="pd-5">{{ $t('goodsEdit.库存')}}</span>
-                         <el-link type="primary" :underline="false" @click="batThreeStock()">批量修改</el-link>
+                         <el-link type="primary" :underline="false" @click="batThreeStock()">{{$t('goodsEdit.批量修改')}}</el-link>
                       </div>
                      </template>                  
                 </el-table-column>
@@ -1333,11 +1333,11 @@ export default {
       })
     },
     bathSku(){
-        this.$prompt('请输入SKU', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(this.$t('goodsEdit.请输入SKU'), this.$t('goodsEdit.提示'), {
+          confirmButtonText: this.$t('goodsEdit.确定'),
+          cancelButtonText: this.$t('goodsEdit.取消'),
           inputPattern: /\S/,
-          inputErrorMessage: '请输入内容'
+          inputErrorMessage: this.$t('goodsEdit.请输入内容')
         }).then(({ value }) => {
           this.form.stockMulti = this.form.stockMulti.map(item=>{
             item.sku = value
@@ -1346,16 +1346,16 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消修改'
+            message: this.$t('goodsEdit.取消修改')
           });       
         });
     },
     bathShopName(){
-        this.$prompt('请输入商品名称', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(this.$t('goodsEdit.请输入商品名称'), this.$t('goodsEdit.提示'), {
+          confirmButtonText: this.$t('goodsEdit.确定'),
+          cancelButtonText: this.$t('goodsEdit.取消'),
           inputPattern: /\S/,
-          inputErrorMessage: '请输入内容'
+          inputErrorMessage: this.$t('goodsEdit.请输入内容')
         }).then(({ value }) => {
           this.form.stockMulti = this.form.stockMulti.map(item=>{
             item.productName = value
@@ -1365,18 +1365,18 @@ export default {
           console.log(52525);
           this.$message({
             type: 'info',
-            message: '取消修改'
+            message: this.$t('goodsEdit.取消修改')
           });       
         });
 
     },
 
     bathPrice(){
-        this.$prompt('请输入价格', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(this.$t('goodsEdit.请输入价格'), this.$t('goodsEdit.提示'), {
+          confirmButtonText: this.$t('goodsEdit.确定'),
+          cancelButtonText: this.$t('goodsEdit.取消'),
           inputPattern: /\S/,
-          inputErrorMessage: '请输入内容'
+          inputErrorMessage: this.$t('goodsEdit.请输入内容')
         }).then(({ value }) => {
           this.form.stockMulti = this.form.stockMulti.map(item=>{
             item.cost = value
@@ -1385,16 +1385,16 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消修改'
+            message: this.$t('goodsEdit.取消修改')
           });       
         }); 
     },
     bathWeight(){
-        this.$prompt('请输入重量', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(this.$t('goodsEdit.请输入重量'), this.$t('goodsEdit.提示'), {
+          confirmButtonText: this.$t('goodsEdit.确定'),
+          cancelButtonText: this.$t('goodsEdit.取消'),
           inputPattern:  /^\d+$/,
-          inputErrorMessage: '请输入数字'
+          inputErrorMessage: this.$t('goodsEdit.请输入数字')
         }).then(({ value }) => {
           this.form.stockMulti = this.form.stockMulti.map(item=>{
             item.weight = value
@@ -1403,7 +1403,7 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消修改'
+            message: this.$t('goodsEdit.取消修改')
           });       
         });
     },
@@ -1429,9 +1429,9 @@ export default {
         });      
     },
     batThreeCostPrice(){
-        this.$prompt('请输入成本价', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(this.$t('goodsEdit.请输入成本价'), this.$t('goodsEdit.提示'), {
+          confirmButtonText: this.$t('goodsEdit.确定'),
+          cancelButtonText: this.$t('goodsEdit.取消'),
           inputPattern:  /^\d+$/,
           inputErrorMessage: '请输入数字'
         }).then(({ value }) => {
@@ -1445,16 +1445,16 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消修改'
+            message: this.$t('goodsEdit.取消修改')
           });       
         }); 
     },
     batThreeStock(){
-        this.$prompt('请输入库存', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$prompt(this.$t('goodsEdit.请输入库存'), this.$t('goodsEdit.提示'), {
+          confirmButtonText: this.$t('goodsEdit.确定'),
+          cancelButtonText: this.$t('goodsEdit.取消'),
           inputPattern:  /^\d+$/,
-          inputErrorMessage: '请输入数字'
+          inputErrorMessage: this.$t('goodsEdit.请输入数字')
         }).then(({ value }) => {
           this.tableData = this.tableData.map((item) => {
             item.childArr = item.childArr.map((child) => {
@@ -1466,7 +1466,7 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消修改'
+            message: this.$t('goodsEdit.取消修改')
           });       
         }); 
     },
@@ -1483,13 +1483,10 @@ export default {
 },
 videoHandleChange(file, fileList) {
   //限制条件可以通过file判断，比如视频格式
-  console.log(file, "file");
-  console.log(fileList, "fileList");
   this.$apiCall("api.Comment.uploadAttach", {
 						"@file": file.raw,
 					}, res => {
      //拿到返回的路径
-     console.log(11111, res);
     this.$message.success("上传成功");
     //回显接口
     // getEventpath(path).then(res => {
