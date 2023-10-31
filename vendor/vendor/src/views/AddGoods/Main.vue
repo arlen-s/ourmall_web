@@ -503,7 +503,8 @@
                     </el-table-column>
                     <el-table-column label="SKU" width="180">
                       <template slot="header" slot-scope>
-                        <span style="color: #F56C6C">*</span> SKU
+                        <span style="color: #F56C6C">*</span> SKU 
+                        <el-link type="primary" v-if="this.productId.length== 0"  :underline="false" @click="bathSku()">批量修改</el-link>
                       </template>
                       <template slot-scope="scope">
                         <!-- <el-input
@@ -541,6 +542,7 @@
                       <template slot="header" slot-scope>
                         <span style="color: #F56C6C">*</span>
                         {{$t('goodsEdit.商品中文名')}}
+                        <el-link type="primary" :underline="false" @click="bathShopName()">批量修改</el-link>
                       </template>
                       <template slot-scope="scope">{{scope.row.productName || '---'}}</template>
                     </el-table-column>
@@ -578,7 +580,9 @@
                     <el-table-column width="150">
                       <template slot="header">
                         <!-- <span class="tx-danger">*</span> -->
-                        <span>{{$t('goodsEdit.成本价')}} {{$store.state.country.symbol}}</span>
+                        <span>{{$t('goodsEdit.成本价')}} {{$store.state.country.symbol}}
+                           <el-link type="primary" :underline="false" @click="bathPrice()">批量修改</el-link>
+                        </span>
                         <!-- <span
                           @click="volumeSet(2)"
                           style="color: #5c6ac4;margin-left: 5px;font-weight: normal;cursor: pointer;"
@@ -599,7 +603,9 @@
                     <el-table-column width="150">
                       <template slot="header">
                         <!-- <span class="tx-danger">*</span> -->
-                        <span>{{$t('goodsEdit.重量')}}(G)</span>
+                        <span>{{$t('goodsEdit.重量')}}(G)
+                           <el-link type="primary" :underline="false" @click="bathWeight()">批量修改</el-link>
+                        </span>
                         <!-- <span
                           @click="volumeSet(3)"
                           style="color: #5c6ac4;margin-left: 5px;font-weight: normal;cursor: pointer;"
@@ -745,13 +751,30 @@
                 <el-table-column align="center" width="180" :label="$t('goodsEdit.国家')"></el-table-column>
                 <el-table-column align="center" width="180">
                   <template slot="header">
+                    <div class="flex-D">
                     <span class="tx-danger">*</span>
-                    <span>{{ `${$t('goodsEdit.售价')} (${$store.state.country.symbol})`}}</span>
+                    <span class="pd-5">{{ `${$t('goodsEdit.售价')} (${$store.state.country.symbol})`}}</span>
+                    <el-link type="primary" :underline="false" @click="batThreePrice()">批量修改</el-link>
+                    </div>
                   </template>
                 </el-table-column>
-                <el-table-column align="center" :label="`${$t('goodsEdit.成本价')}(${$store.state.country.symbol})`" width="180"></el-table-column>
+                <el-table-column align="center" :label="`${$t('goodsEdit.成本价')}(${$store.state.country.symbol})`" width="180">
+                     <template slot="header">
+                      <div class="flex-D">
+                          <span class="pd-5">{{ `${$t('goodsEdit.成本价')}(${$store.state.country.symbol})`}}</span>
+                         <el-link type="primary" :underline="false" @click="batThreeCostPrice()">批量修改</el-link>
+                      </div>                   
+                     </template>
+                </el-table-column>
                 <el-table-column align="center" :label="$t('goodsEdit.条形码')" width="180"></el-table-column>
-                <el-table-column align="center" :label="$t('goodsEdit.库存')" width="180"></el-table-column>
+                <el-table-column align="center" :label="$t('goodsEdit.库存')" width="180">
+                     <template slot="header">
+                      <div class="flex-D">
+                          <span class="pd-5">{{ $t('goodsEdit.库存')}}</span>
+                         <el-link type="primary" :underline="false" @click="batThreeStock()">批量修改</el-link>
+                      </div>
+                     </template>                  
+                </el-table-column>
               </el-table>
             </el-col>
           </el-row>
@@ -1309,7 +1332,145 @@ export default {
         }
       })
     },
-beforeUploadVideo(file){
+    bathSku(){
+        this.$prompt('请输入SKU', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /\S/,
+          inputErrorMessage: '请输入内容'
+        }).then(({ value }) => {
+          this.form.stockMulti = this.form.stockMulti.map(item=>{
+            item.sku = value
+            return item
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消修改'
+          });       
+        });
+    },
+    bathShopName(){
+        this.$prompt('请输入商品名称', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /\S/,
+          inputErrorMessage: '请输入内容'
+        }).then(({ value }) => {
+          this.form.stockMulti = this.form.stockMulti.map(item=>{
+            item.productName = value
+            return item
+          })
+        }).catch(() => {
+          console.log(52525);
+          this.$message({
+            type: 'info',
+            message: '取消修改'
+          });       
+        });
+
+    },
+
+    bathPrice(){
+        this.$prompt('请输入价格', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /\S/,
+          inputErrorMessage: '请输入内容'
+        }).then(({ value }) => {
+          this.form.stockMulti = this.form.stockMulti.map(item=>{
+            item.cost = value
+            return item
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消修改'
+          });       
+        }); 
+    },
+    bathWeight(){
+        this.$prompt('请输入重量', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern:  /^\d+$/,
+          inputErrorMessage: '请输入数字'
+        }).then(({ value }) => {
+          this.form.stockMulti = this.form.stockMulti.map(item=>{
+            item.weight = value
+            return item
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消修改'
+          });       
+        });
+    },
+    batThreePrice(){
+        this.$prompt('请输入价格', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /\S/,
+          inputErrorMessage: '请输入内容'
+        }).then(({ value }) => {
+          this.tableData = this.tableData.map((item) => {
+            item.childArr = item.childArr.map((child) => {
+              child.price = value;
+              return child;
+            });
+            return item;
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消修改'
+          });       
+        });      
+    },
+    batThreeCostPrice(){
+        this.$prompt('请输入成本价', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern:  /^\d+$/,
+          inputErrorMessage: '请输入数字'
+        }).then(({ value }) => {
+          this.tableData = this.tableData.map((item) => {
+            item.childArr = item.childArr.map((child) => {
+              child.cost = value;
+              return child;
+            });
+            return item;
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消修改'
+          });       
+        }); 
+    },
+    batThreeStock(){
+        this.$prompt('请输入库存', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern:  /^\d+$/,
+          inputErrorMessage: '请输入数字'
+        }).then(({ value }) => {
+          this.tableData = this.tableData.map((item) => {
+            item.childArr = item.childArr.map((child) => {
+              child.inventory = value;
+              return child;
+            });
+            return item;
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消修改'
+          });       
+        }); 
+    },
+    beforeUploadVideo(file){
       var fileSize = file.size / 1024 / 1024 < 20;
         if (['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb', 'video/mov'].indexOf(file.type) == -1) {
             this.$message.error("请上传正确的视频格式");
@@ -2798,7 +2959,13 @@ console.log(this.SkuId, '3333');
     font-size: 12px;
   }
 }
-
+.flex-D{
+  display: flex;
+  align-items: center;
+}
+.pd-5{
+  padding-right: 5px;
+}
 .table-action {
   display: flex;
   justify-content: space-between;

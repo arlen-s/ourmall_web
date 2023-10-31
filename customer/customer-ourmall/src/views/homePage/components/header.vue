@@ -12,11 +12,11 @@
           height: data.logoWidth ? `${data.logoWidth}px` : `60px`,
           maxWidth: '300px',
           maxHeight: '80px'
-        }" style="cursor: pointer" @click="goto('home')"></h1>
-        <h1 v-else-if="this.$store.state.shopInfo.shopName" class="logo-name tx-ellipsis1" style="cursor: pointer" @click="goto('home')">
+        }" style="cursor: pointer" @click="goHome('home')"></h1>
+        <h1 v-else-if="this.$store.state.shopInfo.shopName" class="logo-name tx-ellipsis1" style="cursor: pointer" @click="goHome('home')">
           {{ this.$store.state.shopInfo.shopName }}
         </h1>
-        <h1 v-else :style="{ backgroundImage: `url(${defaultLogo})` }" style="cursor: pointer" @click="goto('home')"></h1>
+        <h1 v-else :style="{ backgroundImage: `url(${defaultLogo})` }" style="cursor: pointer" @click="goHome('home')"></h1>
       </div>
 
       <div v-if="data.isVisibleSearch" class="search-box">
@@ -415,9 +415,21 @@ export default {
         }
       }
     },
+    goHome(){
+      if (location.origin == 'https://lstdrop.myourmall.com') {
+          this.$router.push({
+          name: 'productsMarketHome',
+        });
+      }else{
+          this.$router.push({
+          name: 'home',
+        });
+      }
+    },
     goto (name) {
       this.isHome = true
       if (this.$store.state.userInfo) {
+
         this.$router.push({
           name: name,
         });
