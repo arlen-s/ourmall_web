@@ -13,6 +13,7 @@ export default {
   	localStorage.removeItem("c_apiUserToken");
     localStorage.removeItem("c_apiUserId");
     localStorage.removeItem("c_ourMallUserInfo");
+    localStorage.removeItem("c_wantVisitPath");
     document.title = this.$route.meta.title;
     this.$showLoading();
     this.$apiCall(
