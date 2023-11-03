@@ -1813,7 +1813,7 @@ export default {
     },
     openCustomer(link){
       console.log(link, '333');
-      window.open(link, '_blank')
+      window.open(link, '_blank', 'my-window')
     },
     unable (i) {
       this.$confirm(this.$t('orders.确定将该商品无法采购?'), 'Tips', {
