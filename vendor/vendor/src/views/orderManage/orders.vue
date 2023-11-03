@@ -438,263 +438,14 @@
                   </el-table-column>                                 
                   <el-table-column :label="$t('orders.third')" width="120">
                     <template slot-scope="scope">
-                      <!-- <el-popover
-                        width="1000"
-                        trigger="hover"
-                        placement="top-start"
-                        :ref="'popover' + scope.row.codeName"
-                      >
-                        <div class="items">
-                          <div
-                            v-for="(item,i) in scope.row.items"
-                            :key="scope.row.orderId + scope.row.codeName + i"
-                            class="d-flex mg-b-15"
-                          >
-                            <img :src="item.imgUrl" width="80" height="80" />
-                            <div class="mg-l-10">
-                              <p style="width: 600px;" class="mg-b-10">
-                                <span v-if="!item.vendorProductId">{{item.name}}</span>
-                                <el-link
-                                  v-else
-                                  type="primary"
-                                  :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${$store.state.userInfo.shop.id}.myourmall.com/item/${item.vendorProductId}/${item.vendorProductName}.html`"
-                                  target="_blank"
-                                >{{item.vendorProductName}}</el-link>
-                              </p>
-                              <p class="mg-b-10">
-                                <template v-if="item.isManage == 2">
-                                  <span style="width: 500px;display: inline-block;color: #F56C6C;">
-                                    SKU:
-                                    {{item.vendorSku + 'Unable to purchase'}}
-                                  </span>
-                                </template>
-                                <template v-else>
-                                  <template v-if="item.status != 1">
-                                    <span
-                                      style="width: 500px;display: inline-block;color: #F56C6C;"
-                                    >
-                                      SKU:
-                                      {{item.vendorSku ? `${item.vendorSku} Products Off shelf` : 'null Please make an offer'}}
-                                    </span>
-                                  </template>
-                                  <template v-else>
-                                    <span style="width: 500px;display: inline-block;">
-                                      SKU:
-                                      {{item.vendorSku || 'null Please make an offer'}}
-                                    </span>
-                                  </template>
-                                </template>
-                                <span
-                                  style="width: 200px;display: inline-block;"
-                                >Weight：{{item.vendorProductWeight || '---'}} g</span>
-                              </p>
-                              <p>
-                                <span
-                                  style="width: 200px;display: inline-block;"
-                                >Shop price：{{scope.row.currency}} {{Number(item.price).toFixed(2)}}</span>
-                                <span style="width: 300px;display: inline-block;">
-                                  Supply unit price：
-                                  <span v-if="item.vendorSku">
-                                    <template
-                                      v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
-                                    >
-                                      <span>{{$store.state.country.symbol}}{{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
-                                      <span style="color: red; text-decoration:line-through;">
-                                        <span
-                                          style="color: #606266;"
-                                        >{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</span>
-                                      </span>
-                                    </template>
-                                    <template v-else>{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</template>
-                                  </span>
-                                  <span style="color: #F56C6C;" v-else>Please make an offer</span>
-                                </span>
-                                <span style="width: 50px;display: inline-block;text-align: left;">
-                                  *
-                                  {{item.quantity}}
-                                </span>
-                                <span style="width: 100px;display: inline-block;text-align: right;">
-                                  <template
-                                    v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
-                                  >
-                                    <span>{{$store.state.country.symbol}} {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
-                                    <span style="color: red; text-decoration:line-through;">
-                                      <span
-                                        style="color: #606266;"
-                                      >{{$store.state.country.symbol}} {{Number(item.amount).toFixed(2)}}</span>
-                                    </span>
-                                  </template>
-                                  <template
-                                    v-else
-                                  >{{$store.state.country.symbol}} {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
-                                </span>
-                                <span
-                                  v-if="item.isManage == 2"
-                                  style="width: 200px;display: inline-block;text-align: right;color: red;"
-                                >{{$t("orders.该商品已被剔除")}}</span>
-                              </p>
-                            </div>
-                            <div
-                              class="d-flex"
-                              style="flex: 1;justify-content: flex-end;margin-right:5px"
-                              v-if="status == 2 && activeName == 1"
-                            >
-                              <el-link
-                                type="primary"
-                                v-if="item.isManage != 2 && !item.vendorPrice"
-                                :disabled="!$isRole($route.meta.roleWrite)"
-                                @click="unable(item)"
-                              >{{$t('orders.tabBar5')}}</el-link>
-                            </div>
-                          </div>
-                        </div>
-                        <div slot="reference" class="name-wrapper">
-                          <span>{{scope.row.codeName}}</span>
-                        </div>
-                      </el-popover> -->
                       <span>{{scope.row.codeName}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column :label="$t('orders.orderID')" width="150">
                     <template slot-scope="scope">
-                      <!-- <el-popover
-                        width="1000"
-                        trigger="hover"
-                        placement="top-start"
-                        :ref="'popover' + scope.row.orderId"
-                      >
-                        <div class="items">
-                          <div
-                            v-for="(item,i) in scope.row.items"
-                            :key="scope.row.orderId + scope.row.codeName + i"
-                            class="d-flex mg-b-15"
-                          >
-                            <img :src="item.imgUrl" width="80" height="80" />
-                            <div class="mg-l-10">
-                              <p style="width: 600px;" class="mg-b-10">
-                                <span v-if="!item.vendorProductId">{{item.name}}</span>
-                                <el-link
-                                  v-else
-                                  type="primary"
-                                  :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${$store.state.userInfo.shop.id}.myourmall.com/item/${item.vendorProductId}/${item.vendorProductName}.html`"
-                                  target="_blank"
-                                >{{item.vendorProductName}}</el-link>
-                              </p>
-                              <p class="mg-b-10">
-                                <template v-if="item.isManage == 2">
-                                  <span style="width: 500px;display: inline-block;color: #F56C6C;">
-                                    SKU:
-                                    {{item.vendorSku + 'Unable to purchase'}}
-                                  </span>
-                                </template>
-                                <template v-else>
-                                  <template v-if="item.status != 1">
-                                    <span
-                                      style="width: 500px;display: inline-block;color: #F56C6C;"
-                                    >
-                                      SKU:
-                                      {{item.vendorSku ? `${item.vendorSku} Products Off shelf` : 'null Please make an offer'}}
-                                    </span>
-                                  </template>
-                                  <template v-else>
-                                    <span style="width: 500px;display: inline-block;">
-                                      SKU:
-                                      {{item.vendorSku || 'null Please make an offer'}}
-                                    </span>
-                                  </template>
-                                </template>
-                                <span
-                                  style="width: 200px;display: inline-block;"
-                                >Weight：{{item.vendorProductWeight || '---'}} g</span>
-                              </p>
-                              <p>
-                                <span
-                                  style="width: 200px;display: inline-block;"
-                                >Shop price：{{scope.row.currency}} {{Number(item.price).toFixed(2)}}</span>
-                                <span style="width: 300px;display: inline-block;">
-                                  Supply unit price：
-                                  <span v-if="item.vendorSku">
-                                    <template
-                                      v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
-                                    >
-                                      <span>{{$store.state.country.symbol}} {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
-                                      <span style="color: red; text-decoration:line-through;">
-                                        <span
-                                          style="color: #606266;"
-                                        >{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</span>
-                                      </span>
-                                    </template>
-                                    <template v-else>{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</template>
-                                  </span>
-                                  <span style="color: #F56C6C;" v-else>Please make an offer</span>
-                                </span>
-                                <span style="width: 50px;display: inline-block;text-align: left;">
-                                  *
-                                  {{item.quantity}}
-                                </span>
-                                <span style="width: 100px;display: inline-block;text-align: right;">
-                                  <template
-                                    v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
-                                  >
-                                    <span>{{$store.state.country.symbol}} {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
-                                    <span style="color: red; text-decoration:line-through;">
-                                      <span
-                                        style="color: #606266;"
-                                      >{{$store.state.country.symbol}} {{Number(item.amount).toFixed(2)}}</span>
-                                    </span>
-                                  </template>
-                                  <template
-                                    v-else
-                                  >{{$store.state.country.symbol}} {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
-                                </span>
-                                <span
-                                  v-if="item.isManage == 2"
-                                  style="width: 200px;display: inline-block;text-align: right;color: red;"
-                                >{{$t("orders.该商品已被剔除")}}</span>
-                              </p>
-                            </div>
-                            <div
-                              class="d-flex"
-                              style="flex: 1;justify-content: flex-end;margin-right:5px"
-                              v-if="status == 2 && activeName == 1"
-                            >
-                              <el-link
-                                type="primary"
-                                v-if="item.isManage != 2 && !item.vendorPrice"
-                                :disabled="!$isRole($route.meta.roleWrite)"
-                                @click="unable(item)"
-                              >{{$t('orders.tabBar5')}}</el-link>
-                            </div>
-                          </div>
-                        </div>
-                        <div slot="reference" class="name-wrapper">
-                          <span>{{scope.row.orderId || '---'}}</span>
-                          <template
-                            v-if="!(status == 2 && (activeName == 2 || activeName == 1)) && scope.row.isSplit == 1"
-                          >
-                            <img
-                              v-if="$i18n.locale == 'zh'"
-                              style="margin-left: 10px;"
-                              src="../../../public/images/split.png"
-                            />
-                            <img
-                              v-else
-                              style="margin-left: 10px;"
-                              src="../../../public/images/split2.png"
-                            />
-                          </template>
-                        </div>
-                      </el-popover> -->
                        <span>{{scope.row.orderId || '---'}}</span>
                     </template>
-                  </el-table-column>
-                  <!-- <template v-if="!(status == 2 && (activeName == 2 || activeName == 1))">
-								<el-table-column :label="$t('orders.orNo')" width="100">
-									<template slot-scope="scope">
-										<div>{{ scope.row.isSplit == 1 ? $t('orders.yes') : $t('orders.no') }}</div>
-									</template>
-								</el-table-column>
-                  </template>-->              
+                  </el-table-column>           
                   <el-table-column :label="$t('orders.vendorName')" width="150">
                     <template slot-scope="scope">
                       <div>{{ scope.row.customer ? scope.row.customer.name : '---' }}</div>
@@ -1257,263 +1008,14 @@
                   </el-table-column>                                
                   <el-table-column :label="$t('orders.third')" width="120">
                     <template slot-scope="scope">
-                      <!-- <el-popover
-                        width="1000"
-                        trigger="hover"
-                        placement="top-start"
-                        :ref="'popover' + scope.row.codeName"
-                      >
-                        <div class="items">
-                          <div
-                            v-for="(item,i) in scope.row.items"
-                            :key="scope.row.orderId + scope.row.codeName + i"
-                            class="d-flex mg-b-15"
-                          >
-                            <img :src="item.imgUrl" width="80" height="80" />
-                            <div class="mg-l-10">
-                              <p style="width: 600px;" class="mg-b-10">
-                                <span v-if="!item.vendorProductId">{{item.name}}</span>
-                                <el-link
-                                  v-else
-                                  type="primary"
-                                  :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${$store.state.userInfo.shop.id}.myourmall.com/item/${item.vendorProductId}/${item.vendorProductName}.html`"
-                                  target="_blank"
-                                >{{item.vendorProductName}}</el-link>
-                              </p>
-                              <p class="mg-b-10">
-                                <template v-if="item.isManage == 2">
-                                  <span style="width: 500px;display: inline-block;color: #F56C6C;">
-                                    SKU:
-                                    {{item.vendorSku + 'Unable to purchase'}}
-                                  </span>
-                                </template>
-                                <template v-else>
-                                  <template v-if="item.status != 1">
-                                    <span
-                                      style="width: 500px;display: inline-block;color: #F56C6C;"
-                                    >
-                                      SKU:
-                                      {{item.vendorSku ? `${item.vendorSku} Products Off shelf` : 'null Please make an offer'}}
-                                    </span>
-                                  </template>
-                                  <template v-else>
-                                    <span style="width: 500px;display: inline-block;">
-                                      SKU:
-                                      {{item.vendorSku || 'null Please make an offer'}}
-                                    </span>
-                                  </template>
-                                </template>
-                                <span
-                                  style="width: 200px;display: inline-block;"
-                                >Weight：{{item.vendorProductWeight || '---'}} g</span>
-                              </p>
-                              <p>
-                                <span
-                                  style="width: 200px;display: inline-block;"
-                                >Shop price：{{scope.row.currency}} {{Number(item.price).toFixed(2)}}</span>
-                                <span style="width: 300px;display: inline-block;">
-                                  Supply unit price：
-                                  <span v-if="item.vendorSku">
-                                    <template
-                                      v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
-                                    >
-                                      <span>{{$store.state.country.shopCurrency}} {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
-                                      <span style="color: red; text-decoration:line-through;">
-                                        <span
-                                          style="color: #606266;"
-                                        >{{$store.state.country.shopCurrency}} {{Number(item.vendorPrice).toFixed(2)}}</span>
-                                      </span>
-                                    </template>
-                                    <template v-else>{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</template>
-                                  </span>
-                                  <span style="color: #F56C6C;" v-else>Please make an offer</span>
-                                </span>
-                                <span style="width: 50px;display: inline-block;text-align: left;">
-                                  *
-                                  {{item.quantity}}
-                                </span>
-                                <span style="width: 100px;display: inline-block;text-align: right;">
-                                  <template
-                                    v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
-                                  >
-                                    <span>{{$store.state.country.shopCurrency}} {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
-                                    <span style="color: red; text-decoration:line-through;">
-                                      <span
-                                        style="color: #606266;"
-                                      > {{$store.state.country.shopCurrency}} {{Number(item.amount).toFixed(2)}}</span>
-                                    </span>
-                                  </template>
-                                  <template
-                                    v-else
-                                  >{{$store.state.country.shopCurrency}} {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
-                                </span>
-                                <span
-                                  v-if="item.isManage == 2"
-                                  style="width: 200px;display: inline-block;text-align: right;color: red;"
-                                >{{$t("orders.该商品已被剔除")}}</span>
-                              </p>
-                            </div>
-                            <div
-                              class="d-flex"
-                              style="flex: 1;justify-content: flex-end;margin-right:5px"
-                              v-if="status == 2 && activeName == 1"
-                            >
-                              <el-link
-                                type="primary"
-                                v-if="item.isManage != 2 && !item.vendorPrice"
-                                :disabled="!$isRole($route.meta.roleWrite)"
-                                @click="unable(item)"
-                              >{{$t('orders.tabBar5')}}</el-link>
-                            </div>
-                          </div>
-                        </div>
-                        <div slot="reference" class="name-wrapper">
-                          <span>{{scope.row.codeName}}</span>
-                        </div>
-                      </el-popover> -->
                       <span>{{scope.row.codeName}}</span>
                     </template>
                   </el-table-column>
                   <el-table-column :label="$t('orders.orderID')" width="150">
                     <template slot-scope="scope">
-                      <!-- <el-popover
-                        width="1000"
-                        trigger="hover"
-                        placement="top-start"
-                        :ref="'popover' + scope.row.orderId"
-                      >
-                        <div class="items">
-                          <div
-                            v-for="(item,i) in scope.row.items"
-                            :key="scope.row.orderId + scope.row.codeName + i"
-                            class="d-flex mg-b-15"
-                          >
-                            <img :src="item.imgUrl" width="80" height="80" />
-                            <div class="mg-l-10">
-                              <p style="width: 600px;" class="mg-b-10">
-                                <span v-if="!item.vendorProductId">{{item.name}}</span>
-                                <el-link
-                                  v-else
-                                  type="primary"
-                                  :href="`//${host.indexOf('sandbox') > -1 ? 'sandboxshop' : 'shop'}${$store.state.userInfo.shop.id}.myourmall.com/item/${item.vendorProductId}/${item.vendorProductName}.html`"
-                                  target="_blank"
-                                >{{item.vendorProductName}}</el-link>
-                              </p>
-                              <p class="mg-b-10">
-                                <template v-if="item.isManage == 2">
-                                  <span style="width: 500px;display: inline-block;color: #F56C6C;">
-                                    SKU:
-                                    {{item.vendorSku + 'Unable to purchase'}}
-                                  </span>
-                                </template>
-                                <template v-else>
-                                  <template v-if="item.status != 1">
-                                    <span
-                                      style="width: 500px;display: inline-block;color: #F56C6C;"
-                                    >
-                                      SKU:
-                                      {{item.vendorSku ? `${item.vendorSku} Products Off shelf` : 'null Please make an offer'}}
-                                    </span>
-                                  </template>
-                                  <template v-else>
-                                    <span style="width: 500px;display: inline-block;">
-                                      SKU:
-                                      {{item.vendorSku || 'null Please make an offer'}}
-                                    </span>
-                                  </template>
-                                </template>
-                                <span
-                                  style="width: 200px;display: inline-block;"
-                                >Weight：{{item.vendorProductWeight || '---'}} g</span>
-                              </p>
-                              <p>
-                                <span
-                                  style="width: 200px;display: inline-block;"
-                                >Shop price：{{scope.row.currency}} {{Number(item.price).toFixed(2)}}</span>
-                                <span style="width: 300px;display: inline-block;">
-                                  Supply unit price：
-                                  <span v-if="item.vendorSku">
-                                    <template
-                                      v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
-                                    >
-                                      <span>{{$store.state.country.shopCurrency}} {{Number((item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount) / item.quantity).toFixed(2)}}&nbsp;</span>
-                                      <span style="color: red; text-decoration:line-through;">
-                                        <span
-                                          style="color: #606266;"
-                                        >{{$store.state.country.shopCurrency}} {{Number(item.vendorPrice).toFixed(2)}}</span>
-                                      </span>
-                                    </template>
-                                    <template v-else>{{$store.state.country.symbol}} {{Number(item.vendorPrice).toFixed(2)}}</template>
-                                  </span>
-                                  <span style="color: #F56C6C;" v-else>Please make an offer</span>
-                                </span>
-                                <span style="width: 50px;display: inline-block;text-align: left;">
-                                  *
-                                  {{item.quantity}}
-                                </span>
-                                <span style="width: 100px;display: inline-block;text-align: right;">
-                                  <template
-                                    v-if="(scope.row.discountType == 1 || scope.row.discountType == 2) && item.isManage != 2"
-                                  >
-                                    <span>{{$store.state.country.shopCurrency}} {{Number(item.amount - item.amount / scope.row.productAmount * scope.row.couponAmount).toFixed(2)}}&nbsp;</span>
-                                    <span style="color: red; text-decoration:line-through;">
-                                      <span
-                                        style="color: #606266;"
-                                      >{{$store.state.country.shopCurrency}} {{Number(item.amount).toFixed(2)}}</span>
-                                    </span>
-                                  </template>
-                                  <template
-                                    v-else
-                                  >{{$store.state.country.shopCurrency}} {{Number(item.quantity * item.vendorPrice).toFixed(2)}}</template>
-                                </span>
-                                <span
-                                  v-if="item.isManage == 2"
-                                  style="width: 200px;display: inline-block;text-align: right;color: red;"
-                                >{{$t("orders.该商品已被剔除")}}</span>
-                              </p>
-                            </div>
-                            <div
-                              class="d-flex"
-                              style="flex: 1;justify-content: flex-end;margin-right:5px"
-                              v-if="status == 2 && activeName == 1"
-                            >
-                              <el-link
-                                type="primary"
-                                v-if="item.isManage != 2 && !item.vendorPrice"
-                                :disabled="!$isRole($route.meta.roleWrite)"
-                                @click="unable(item)"
-                              >{{$t('orders.tabBar5')}}</el-link>
-                            </div>
-                          </div>
-                        </div>
-                        <div slot="reference" class="name-wrapper">
-                          <span>{{scope.row.orderId || '---'}}</span>
-                          <template
-                            v-if="!(status == 2 && (activeName == 2 || activeName == 1)) && scope.row.isSplit == 1"
-                          >
-                            <img
-                              v-if="$i18n.locale == 'zh'"
-                              style="margin-left: 10px;"
-                              src="../../../public/images/split.png"
-                            />
-                            <img
-                              v-else
-                              style="margin-left: 10px;"
-                              src="../../../public/images/split2.png"
-                            />
-                          </template>
-                        </div>
-                      </el-popover> -->
                       <span>{{scope.row.orderId || '---'}}</span>
                     </template>
                   </el-table-column>
-                  <!-- <template v-if="!(status == 2 && (activeName == 2 || activeName == 1))">
-								<el-table-column :label="$t('orders.orNo')" width="100">
-									<template slot-scope="scope">
-										<div>{{ scope.row.isSplit == 1 ? $t('orders.yes') : $t('orders.no') }}</div>
-									</template>
-								</el-table-column>
-                  </template>-->
                   <el-table-column :label="$t('orders.vendorName')" width="150">
                     <template slot-scope="scope">
                       <div>{{ scope.row.customer ? scope.row.customer.name : '---'}}</div>
@@ -1660,6 +1162,18 @@
                         <div>{{ scope.row.remark || '---'}}</div>
                       </template>
                     </el-table-column>
+                  </template>
+                  <template v-if="status == 311">
+                       <el-table-column :label="$t('orders.operate')" width="150" fixed="right">
+                      <template slot-scope="scope">
+                        <el-link
+                          class="mg-r-20"
+                          type="primary"
+                          @click="openCustomer(scope.row.customerUrl)"
+                        >{{$t('orders.登录商城')}}</el-link>
+                      </template>
+                    </el-table-column>
+
                   </template>
                 </el-table>
               </template>
@@ -2296,6 +1810,10 @@ export default {
           this.$elementMessage(r.Message, 'error')
         }
       })
+    },
+    openCustomer(link){
+      console.log(link, '333');
+      window.open(link, '_blank')
     },
     unable (i) {
       this.$confirm(this.$t('orders.确定将该商品无法采购?'), 'Tips', {
