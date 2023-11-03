@@ -38,7 +38,7 @@ export default {
           JSON.stringify(r.Data.Results)
         );
         this.$store.commit("setUserInfo", r.Data.Results);
-        this.$router.push({ name: "dashboard" });
+        this.$router.push({ path: "/ordersManage/2" });
       } else {
         this.$hideLoading();
         this.$elementMessage(r.Message, 'error');

@@ -1170,7 +1170,7 @@
                           class="mg-r-20"
                           type="primary"
                           @click="openCustomer(scope.row.customerUrl)"
-                        >{{$t('orders.登录商城')}}</el-link>
+                        >{{$t('orders.分销点付款')}}</el-link>
                       </template>
                     </el-table-column>
 

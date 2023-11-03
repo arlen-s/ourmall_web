@@ -99,7 +99,7 @@ export const lang = {
 	'产品图片': 'Product Images',
 	'SKU编号/数量/名称': 'SKU number/quantity/name',
 	'产品数量': 'quantity',
-  '登录商城': 'Login Mall',
+  '分销点付款': '分销点付款',
 	'客户售价': 'price',
   '该收货地址未设置物流方式': 'The receiving address has no logistics method set',
   '该订单低于最低可发货重量': 'The order is below the minimum deliverable weight',
