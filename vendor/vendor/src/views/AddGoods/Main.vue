@@ -1843,7 +1843,7 @@ Visiblemovie(val) {
           this.form.width = data.width || undefined //宽
           this.form.height = data.height || undefined //高
           this.form.vwCoefficient = data.vwCoefficient //体积重
-          this.form.productType = data.productTypes || [] //商品属性
+          this.form.productType = data.productTypes? data.productTypes : [] //商品属性
           this.form.description = data.description.web // 商品描述
           this.form.customCode = data.customCode //海关编号
           //图片

@@ -160,7 +160,7 @@
             </el-col>
         </el-row> -->
         <el-form-item :label="$t('goodsEdit.商品属性')">
-          <el-checkbox-group v-model="dataMAG.form.productType">
+          <el-checkbox-group v-model="arrTa">
             <el-checkbox
               v-for="type in productTypeArr"
               :key="type.value"
@@ -297,6 +297,7 @@ export default {
         imgUrl: '',
         productType: [],
       },
+      arrTa: [],
       radioVolume: '',
       customVolume: '',
       amiVolume: '',
