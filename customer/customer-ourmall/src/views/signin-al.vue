@@ -16,7 +16,8 @@ export default {
     localStorage.removeItem("c_wantVisitPath");
     document.title = this.$route.meta.title;
     this.$showLoading();
-    this.$apiCall(
+    setTimeout(() => {
+          this.$apiCall(
     "api.User.adminLogin",
     {
       id: this.$route.query.id,
@@ -46,6 +47,8 @@ export default {
       }
     }
   );
+    }, 300);
+
   },
   methods: {
   }
