@@ -35,7 +35,7 @@
               ref="gridTable"
               tooltip-effect="dark"
             >
-             <el-table-column prop="customer" label="sku" width="180"></el-table-column>
+             <el-table-column prop="customer" label="customer" width="180"></el-table-column>
               <el-table-column prop="sku" label="sku" width="180"></el-table-column>
               <el-table-column  label="img" width="180">
                 <template slot-scope="scope">
