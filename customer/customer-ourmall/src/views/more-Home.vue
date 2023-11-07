@@ -170,7 +170,7 @@
                   <p
                     v-show="item.estimatedLeadTimeType"
                   >{{$t('about')}}: {{item.estimatedLeadTimeMinValue}}-{{item.estimatedLeadTimeMaxValue}}{{getType(item.estimatedLeadTimeType)}}</p>
-                  <p>Kostenloser Versand</p>
+                  <p v-show="item.isMailFree == 1">Kostenloser Versand</p>
                   <!-- <div class="imports">
                         <span>Imports:
                            <span style="color:#525FB0">{{ item.imports }}</span>
