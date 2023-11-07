@@ -35,6 +35,7 @@
               ref="gridTable"
               tooltip-effect="dark"
             >
+             <el-table-column prop="customer" label="sku" width="180"></el-table-column>
               <el-table-column prop="sku" label="sku" width="180"></el-table-column>
               <el-table-column  label="img" width="180">
                 <template slot-scope="scope">
@@ -123,6 +124,8 @@ export default {
         if (r.ErrorCode == 9999) {
           console.log(r, '222')
           this.tableData = r.Data.Results
+          this.total = r.Data.Pagination.totalCount
+          this.rowsPerPage = Number(r.Data.Pagination.totalPage)
         }
       })
     },

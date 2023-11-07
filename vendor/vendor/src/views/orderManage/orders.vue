@@ -308,6 +308,7 @@
                   height="500"
                   @selection-change="handleSelectionChange"
                   :row-key="(row) => row.id"
+                  rowsPerPage
                 >
                   <el-table-column type="selection" width="55" :reserve-selection="true"></el-table-column>
                   <el-table-column type="expand" width="25" >
@@ -635,6 +636,7 @@
                   height="500"
                   @selection-change="handleSelectionChange"
                   :row-key="(row) => row.id"
+                  rowsPerPage
                 >
                   <!-- :selectable="selectable()" -->
                   <el-table-column type="selection" width="55" :reserve-selection="true"></el-table-column>
@@ -862,6 +864,7 @@
                   @selection-change="handleSelectionChange"
                   tooltip-effect="dark"
                   :row-key="(row) => row.id"
+                  rowsPerPage
                 >
                   <el-table-column type="selection" width="55" :reserve-selection="true"></el-table-column>
                   <el-table-column type="expand" width="25" >

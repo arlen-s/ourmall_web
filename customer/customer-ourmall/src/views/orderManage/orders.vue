@@ -247,6 +247,7 @@
                 tooltip-effect="dark"
                 @selection-change="handleSelectionChange"
                 :row-key="(row) => row.id"
+                default-expand-all
               >
                 <el-table-column
                   type="selection"
@@ -656,6 +657,7 @@
                 tooltip-effect="dark"
                 @selection-change="handleSelectionChange"
                 :row-key="(row) => row.id"
+                default-expand-all
               >
                 <el-table-column
                   type="selection"
@@ -933,6 +935,7 @@
                 tooltip-effect="dark"
                 @selection-change="handleSelectionChange"
                 :row-key="(row) => row.id"
+                default-expand-all
               >
                 <el-table-column
                   type="selection"
@@ -1942,7 +1945,7 @@ export default {
         orderId: ''
       },
       dialogVisibleHouse: false,
-      isExpansion: false,
+      isExpansion: true,
       vendorId: localStorage.getItem('vendorId'),
       // v1.6.0 异常订单新增参数 Start
       details: {},
