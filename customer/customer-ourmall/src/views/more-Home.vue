@@ -9,7 +9,7 @@
     </div>
     <div>
       <div class="contentpanel box" v-loading="allLoading">
-        <!-- <div class="pagetitle" ref="pageHeader" style="padding-right:0">
+        <div class="pagetitle" ref="pageHeader" style="padding-right:0;margin-top:30px">
           <div style="width:100%" class="d-flex">
             <el-select style="width:264px;margin-right:-1px" v-model="categoryId" slot="append" placeholder="IN ALL CATEGORIES">
               <el-option label="IN ALL CATEGORIES" value=""></el-option>
@@ -21,7 +21,7 @@
               SEARCH
             </div>
           </div>
-        </div>-->
+        </div>
         <!-- 面包屑 -->
         <div class="pagetitle">
           <el-breadcrumb separator-class="el-icon-arrow-right">
