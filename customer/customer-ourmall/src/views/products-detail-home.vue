@@ -167,7 +167,7 @@
     padding-right: 12%;
     font-size: 18px;
     color: red;
-">Processing Time (From receipt of payment): 3-4 days</div>
+">Processing Time (From receipt of payment): 2-3 days</div>
               <ul class="tags">
                 <li v-for="tag in $store.state.configJson.detailPage.tags" :key="tag.text">
                   <span class="tx-danger">*</span>
