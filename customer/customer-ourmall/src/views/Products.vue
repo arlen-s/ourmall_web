@@ -11,8 +11,8 @@
         </div>
       </div>
       <div class="right">
-        <el-button :disabled="!!(updateTime && (updateTime > now))" type="primary" size="medium" :loading="updateProductLoading" @click="updateProducts">
-					<span v-if="updateTime && (updateTime > now)" class=" mg-r-10">
+        <el-button type="primary" size="medium" :loading="updateProductLoading" @click="updateProducts">
+					<span  class=" mg-r-10">
 						({{formatminute(updateTime - now)}})
 					</span>
 					{{$t('Update Product')}}
