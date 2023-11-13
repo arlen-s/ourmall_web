@@ -13,7 +13,6 @@
       <div class="right">
         <el-button type="primary" size="medium" :loading="updateProductLoading" @click="updateProducts">
 					<span  class=" mg-r-10">
-						({{formatminute(updateTime - now)}})
 					</span>
 					{{$t('Update Product')}}
 				</el-button>
