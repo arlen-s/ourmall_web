@@ -1102,10 +1102,11 @@
                           <span v-if="scope.row.shippingMethodArr">
                             <span
                               v-if="scope.row.itemAmount"
-                            >{{scope.row.shippingMethodArr.length && scope.row.shippingMethodArr[0] ? (Number(scope.row.shippingMethodArr[0].fee) + Number(scope.row.itemAmount)).toFixed(2) : '---'}}</span>
+                            >{{ scope.row.payAmount?scope.row.payAmount : scope.row.shippingMethodArr.length && scope.row.shippingMethodArr[0] ? (Number(scope.row.shippingMethodArr[0].fee) + Number(scope.row.itemAmount)).toFixed(2) : '---'}}</span>
+
                             <span
                               v-else
-                            >{{scope.row.shippingMethodArr.length && scope.row.shippingMethodArr[0] ? Number(scope.row.shippingMethodArr[0].fee) : '---'}}</span>
+                            >{{scope.row.payAmount? scope.row.payAmount: scope.row.shippingMethodArr.length && scope.row.shippingMethodArr[0] ? Number(scope.row.shippingMethodArr[0].fee) : '---'}}</span>
                           </span>
                           <span
                             v-else
