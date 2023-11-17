@@ -1326,7 +1326,7 @@ export default {
         shopifyAccountId: "",
         orderId: ''
       },
-      isExpansion: false,
+      isExpansion: true,
       bathBundDialog: false,
       batchNum: 0,
       offlineNum: 0,
