@@ -1330,9 +1330,9 @@ export default {
       bathBundDialog: false,
       batchNum: 0,
       offlineNum: 0,
-      vipOrderReserveDay: this.$root.$children[0].vipNowData.orderReserveDay,
+      vipOrderReserveDay: this.$root.$children[0].vipNowData.orderReserveDay, 
       isVipUp: false,
-      loading: false,
+      loading: false,                                                            
        vendorId: localStorage.getItem('vendorId'),
       filterDialog: {
         isShowDialog: false,

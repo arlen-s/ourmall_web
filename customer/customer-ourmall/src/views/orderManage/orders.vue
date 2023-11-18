@@ -614,6 +614,17 @@
                       >
                         {{$t('Pay')}}
                       </el-link>
+                     <el-link
+                        v-if="
+                          status == 2 && activeName == 1
+                            
+                        "
+                        class="mg-r-20"
+                        type="primary"
+                        @click="handleSplit( scope.row)"
+                      >
+                        {{$t('Split orders')}}
+                      </el-link>
                       <el-link
                         v-if="status == 4"
                         class="mg-r-20"
@@ -1910,8 +1921,8 @@
       </div>
     </el-dialog>
     <add-tracking-dialog :dialog="addTrackingDialog" v-if="addTrackingDialog.visible"></add-tracking-dialog>
-
     <dialogSales :salesData="afterData" @callBackSale="changeTr"></dialogSales>
+    <TFOrder :tranData="rowData"/>
   </div>
 </template>
 
@@ -1924,6 +1935,7 @@ import checkStock from "@/components/checkout/dialogCheckStock"
 import orderCnt from "./dialogOrderCnt.vue"
 import AddTrackingDialog from "./addTrackingDialog.vue"
 import dialogSales from './afterSales.vue'
+import TFOrder from './splitOrder.vue'
 export default {
   data () {
     return {
@@ -1935,6 +1947,12 @@ export default {
         items: [],
         max: "",
         min: "",
+      },
+      rowData:{
+            visible: false,
+            customerId: '',
+            accountId: '',
+            parentOrderId: '',
       },
       formHouse: {
         type: []
@@ -2166,6 +2184,7 @@ export default {
     orderCnt,
     AddTrackingDialog,
     dialogSales,
+    TFOrder,
   },
   watch: {
     $route (to, from) {
@@ -2340,6 +2359,16 @@ export default {
           })
         }
       })
+    },
+    handleSplit(row){
+      console.log(row,'222');
+      this.rowData = {
+        visible: true,
+        customerId: row.customerId,
+        accountId: row.shopifyAccountId,
+        parentOrderId: row.orderId,
+      }
+
     },
     ImportCancel () {
       this.createVisible = false
