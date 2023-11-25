@@ -175,7 +175,8 @@
 				this.$apiCall("api.ShopifyOrder.setSkuRelation", {
 					customerSku: this.dialogRelateInfo.item.variableId,
 					customerId: this.dialogRelateInfo.item.customerId,
-					vendorSku: sku,
+					vendorSku: sku.sku,
+					warehouseId: sku.Hid
 				}, (r) => {
 					if (r.ErrorCode == "9999") {
 						this.$elementMessage(this.$t('orders.success'), "success");

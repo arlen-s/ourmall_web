@@ -14,6 +14,17 @@
 						@clear="clearFilter('name')"></el-input>
 				<el-button type="primary" @click="filterItem">{{$t('orders.filter')}}</el-button>
 			</div>
+			<div  class="d-flex" style="margin-bottom: 20px;">
+					<!-- <span>仓库</span> -->
+					<el-select v-model="warehouse" placeholder="请选择仓库">
+						<el-option
+							v-for="item in warehouseList"
+							:key="item.id"
+							:label="item.name"
+							:value="item.id">
+						</el-option>
+					</el-select>
+			</div>
 			<el-table class="no-hover" stripe :data="list" style="width: 100%">
 				<el-table-column  type="expand">
 			　　　　<template slot-scope="scope">
@@ -93,9 +104,11 @@
 				items:[],
 				list:[],
 				sku:"",
+				warehouse: '',
 				spu:"",
 				name:"",
-				dealRelation: 1
+				dealRelation: 1,
+				warehouseList: []
 			}
 		},
 		methods: {
@@ -123,6 +136,22 @@
 				this.items = this.relateData.items;
 				this.list = this.relateData.list;
 				$(".el-dialog__body").scrollTop(0);
+				this.getHouseList()
+			},
+			getHouseList(){
+      this.$apiCall("api.Warehouse.finds", {}, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.warehouseList = r.Data.Results
+          if (r.Data.Results.length == 0) {
+            this.$message.error('There is no warehouse, please go to add！')
+          }
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })
 			},
 			toPage(val) {
 				this.page = val;
@@ -165,7 +194,12 @@
 				}
 				// let item = this.items.filter(item=>{ return item.id == this.tableRadio})
 				let sku = this.tableRadio.split("||");
-				this.$emit("relateFn",sku[0])
+				let transData = {
+					sku: sku[0],
+					Hid:this.warehouse
+				}
+				console.log(transData, 'transData');
+				this.$emit("relateFn",transData)
 			},
 			clickChange(e,item){
 			}

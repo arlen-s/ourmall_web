@@ -616,7 +616,7 @@
                       </el-link>
                      <el-link
                         v-if="
-                          status == 2 && activeName == 1
+                          status == 2 && activeName == 1&& scope.row.isFirstOrder
                             
                         "
                         class="mg-r-20"
@@ -1922,7 +1922,7 @@
     </el-dialog>
     <add-tracking-dialog :dialog="addTrackingDialog" v-if="addTrackingDialog.visible"></add-tracking-dialog>
     <dialogSales :salesData="afterData" @callBackSale="changeTr"></dialogSales>
-    <TFOrder :tranData="rowData"/>
+    <TFOrder :tranData="rowData" @success="success"/>
   </div>
 </template>
 
@@ -2369,6 +2369,10 @@ export default {
         parentOrderId: row.orderId,
       }
 
+    },
+    success(){
+    this.rowData.visible = false
+    this.getItem()
     },
     ImportCancel () {
       this.createVisible = false
