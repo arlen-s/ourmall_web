@@ -1168,6 +1168,11 @@
                     <el-table-column :label="$t('orders.operate')" width="150" >
                       <template slot-scope="scope">
                         <div v-if="scope.row.isFirstOrder==1"> <el-link type="primary"  @click="handleSplit(scope.row)">拆分订单</el-link></div>
+                          <el-link
+                          class="mg-r-20"
+                          type="primary"
+                          @click="openCustomer(scope.row.customerUrl)"
+                        >{{$t('orders.分销点付款')}}</el-link>
                       </template>
                     </el-table-column>                  
                 </el-table>
