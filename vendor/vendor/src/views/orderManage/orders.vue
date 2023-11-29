@@ -45,14 +45,14 @@
         <template v-if="!(status == 2 && activeName == 2)">
           <el-button type="primary" @click="exportOrder">{{$t('orders.导出订单')}}</el-button>
         </template>
-        <template v-if="status == 311">
+        <!-- <template v-if="status == 311">
           <el-button
             type="primary"
             @click="splitOrder"
             :disabled="!$isRole('invoiceWaitPayEdit')"
           >{{$t('orders.拆分订单')}}</el-button>
 
-        </template>
+        </template> -->
         <template v-if="status== 15">
           <el-button
             type="primary"
@@ -1165,14 +1165,9 @@
                       </template>
                     </el-table-column>
                   </template>
-                  <template v-if="status == 311">
-                       <el-table-column :label="$t('orders.operate')" width="150" fixed="right">
+                    <el-table-column :label="$t('orders.operate')" width="150" >
                       <template slot-scope="scope">
-                        <el-link
-                          class="mg-r-20"
-                          type="primary"
-                          @click="openCustomer(scope.row.customerUrl)"
-                        >{{$t('orders.分销点付款')}}</el-link>
+                        <div v-if="scope.row.isFirstOrder==1"> <el-link type="primary"  @click="handleSplit(scope.row)">拆分订单</el-link></div>
                       </template>
                     </el-table-column>                  
                 </el-table>
