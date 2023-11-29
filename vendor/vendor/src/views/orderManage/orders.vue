@@ -308,7 +308,6 @@
                   height="500"
                   @selection-change="handleSelectionChange"
                   :row-key="(row) => row.id"
-                  rowsPerPage
                 >
                   <el-table-column type="selection" width="55" :reserve-selection="true"></el-table-column>
                   <el-table-column type="expand" width="25" >
@@ -636,7 +635,6 @@
                   height="500"
                   @selection-change="handleSelectionChange"
                   :row-key="(row) => row.id"
-                  rowsPerPage
                 >
                   <!-- :selectable="selectable()" -->
                   <el-table-column type="selection" width="55" :reserve-selection="true"></el-table-column>
@@ -864,7 +862,6 @@
                   @selection-change="handleSelectionChange"
                   tooltip-effect="dark"
                   :row-key="(row) => row.id"
-                  rowsPerPage
                 >
                   <el-table-column type="selection" width="55" :reserve-selection="true"></el-table-column>
                   <el-table-column type="expand" width="25" >
@@ -1016,6 +1013,7 @@
                   </el-table-column>
                   <el-table-column :label="$t('orders.orderID')" width="150">
                     <template slot-scope="scope">
+
                       <span>{{scope.row.orderId || '---'}}</span>
                     </template>
                   </el-table-column>
@@ -1176,9 +1174,7 @@
                           @click="openCustomer(scope.row.customerUrl)"
                         >{{$t('orders.分销点付款')}}</el-link>
                       </template>
-                    </el-table-column>
-
-                  </template>
+                    </el-table-column>                  
                 </el-table>
               </template>
             </template>
@@ -1274,6 +1270,36 @@
     <el-button type="primary" @click="setDialog()">{{$t('confirm')}}</el-button>
   </span>
 </el-dialog>
+  <el-dialog
+  title="解除拆分订单"
+  :visible.sync="rowData.visible"
+  width="40%"
+  @open="openSP()"
+  :before-close="handleCloseSP">
+  <div>
+ <el-table
+    :data="tableDataSP"
+    border
+     @selection-change="handleSelectionChangeSP"
+    style="width: 100%">
+        <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column
+      prop="childOrderId"
+       :label="$t('Order Number')"
+      width="180">
+    </el-table-column>
+    <el-table-column :label="$t('Created Time')" prop="timeCreated">      
+    </el-table-column>
+  </el-table>
+  </div>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="handleCloseSP">{{$t('取消')}}</el-button>
+    <el-button type="primary" @click="saveSP">{{$t('确定')}}</el-button>
+  </span>
+</el-dialog>
     <dialogQuote :quoteData="dialogQuoteInfo" @openRelate="openRelate"></dialogQuote>
     <dialogRelate :relateData="dialogRelateInfo" @relateFn="relateFn"></dialogRelate>
     <dialogImport :importData="dialoImportInfo" @submitUpload="submitUpload"></dialogImport>
@@ -1318,8 +1344,16 @@ export default {
           type: ''
       
       },
+       tableDataSP: [],
+ multipleSelectionSP: [],
       formInline: {
         templateFile: '',
+      },
+      rowData: {
+        visible: false,
+        customerId: '',
+        accountId: '',
+        parentOrderId: '',
       },
       afterData:{
         dialogVisible:false,  
@@ -1585,6 +1619,24 @@ export default {
       })
       this.dialogSplitInfo.items = this.checkItems
     },
+    handleSplit(row){
+      this.rowData = {
+        visible: true,
+        customerId: row.customerId,
+        accountId: row.shopifyAccountId,
+        parentOrderId: row.orderId,
+      }
+
+    },
+    success(){
+      this.rowData = {
+        visible: false,
+        customerId: '',
+        accountId: '',
+        parentOrderId: '',
+      }
+      this.getItem()
+    },
     batchUnbundling(){
         this.bathBundDialog = true
     },
@@ -1592,6 +1644,46 @@ export default {
       this.bathBundDialog = false
        this.formInline.templateFile = ''
     },
+    handleCloseSP(){
+      this.success()
+    },
+    handleSelectionChangeSP(val) {
+        this.multipleSelectionSP = val;
+      },
+      saveSP(){
+        if ( !this.multipleSelectionSP.length ) {
+          this.$elementMessage(this.$t("Please select an order first"), "error");
+          return
+        }
+          this.$apiCall("api.OrderMerge.cancelMerge", {cancelList: this.multipleSelectionSP.map(item=>{return item.id})}, (r) => {
+          if (r.ErrorCode == 9999) {
+              this.success()
+              } else {
+                this.$message({
+                  message: r.Message,
+                  type: "error"
+                })
+            }
+        })
+},
+    openSP(){
+              let params = {
+        accountId: this.rowData.accountId,
+        parentOrderId: this.rowData.parentOrderId,
+        customerId: this.rowData.customerId,
+      }
+            this.$apiCall("api.OrderMerge.getList", params, (r) => {
+        if (r.ErrorCode == 9999) {
+        this.tableDataSP = r.Data.Results
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })   
+    },
+
     /** 表格展开与关闭 */
     toggleRowExpansion(){
       if(this.items.length){
@@ -2819,11 +2911,17 @@ export default {
 .sina-box{
   padding-left: 20px;
 }
+::v-deep.el-table__body-wrapper{
+  height: 458px !important;
+}
 </style>
 <style>
 .el-popover .items {
   /* max-height: 62vh; */
   max-height: 300px;
   overflow: auto;
+}
+.el-table__body-wrapper{
+  height: 458px !important;
 }
 </style>

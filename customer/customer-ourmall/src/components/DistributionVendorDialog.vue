@@ -54,8 +54,8 @@
                 <el-radio
                   :label="item.id"
                   border
-                  v-for="(item, i) in dialogAllocated.vendors"
-                  :key="i"
+                  v-for="item in dialogAllocated.vendors"
+                  :key="item.id"
                 >
                   <div class="radio-wrapper">
                     <div class="name">
@@ -294,7 +294,7 @@
                 class="other-table"
               >
                 <el-table-column label="" align="center" width="50">
-                  <template slot="header">
+                  <template slot="header" >
                     <el-checkbox
                       style="margin: 0"
                       v-model="dialogAllocated.allChecked"

@@ -616,7 +616,7 @@
                       </el-link>
                      <el-link
                         v-if="
-                          status == 2 && activeName == 1&& scope.row.isFirstOrder
+                          status == 2 && activeName == 1&& scope.row.isFirstOrder==1
                             
                         "
                         class="mg-r-20"
@@ -1922,7 +1922,37 @@
     </el-dialog>
     <add-tracking-dialog :dialog="addTrackingDialog" v-if="addTrackingDialog.visible"></add-tracking-dialog>
     <dialogSales :salesData="afterData" @callBackSale="changeTr"></dialogSales>
-    <TFOrder :tranData="rowData" @success="success"/>
+    <!-- <TFOrder :tranData="rowData"  @success="success"/> -->
+      <el-dialog
+  title="解除拆分订单"
+  :visible.sync="rowData.visible"
+  width="40%"
+  @open="openSP()"
+  :before-close="handleCloseSP">
+  <div>
+ <el-table
+    :data="tableDataSP"
+    border
+     @selection-change="handleSelectionChangeSP"
+    style="width: 100%">
+        <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column
+      prop="childOrderId"
+       :label="$t('Order Number')"
+      width="180">
+    </el-table-column>
+    <el-table-column :label="$t('Created Time')" prop="timeCreated">      
+    </el-table-column>
+  </el-table>
+  </div>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="handleCloseSP">{{$t('取消')}}</el-button>
+    <el-button type="primary" @click="saveSP">{{$t('确定')}}</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
 
@@ -1935,7 +1965,7 @@ import checkStock from "@/components/checkout/dialogCheckStock"
 import orderCnt from "./dialogOrderCnt.vue"
 import AddTrackingDialog from "./addTrackingDialog.vue"
 import dialogSales from './afterSales.vue'
-import TFOrder from './splitOrder.vue'
+// import TFOrder from './splitOrder.vue'
 export default {
   data () {
     return {
@@ -1948,6 +1978,8 @@ export default {
         max: "",
         min: "",
       },
+      tableDataSP: [],
+      multipleSelectionSP: [],
       rowData:{
             visible: false,
             customerId: '',
@@ -2184,7 +2216,7 @@ export default {
     orderCnt,
     AddTrackingDialog,
     dialogSales,
-    TFOrder,
+    // TFOrder,
   },
   watch: {
     $route (to, from) {
@@ -2273,6 +2305,45 @@ export default {
       this.dialogLogistic.min = row.shippingMethodArr.min
       this.dialogLogistic.isShow = true
     },
+    handleCloseSP(){
+      this.success()
+    },
+    handleSelectionChangeSP(val) {
+        this.multipleSelectionSP = val;
+      },
+      saveSP(){
+        if ( !this.multipleSelectionSP.length ) {
+          this.$elementMessage(this.$t("Please select an order first"), "error");
+          return
+        }               
+        this.$apiCall("api.OrderMerge.cancelMerge", {cancelList: this.multipleSelectionSP.map(item=>{return item.id})}, (r) => {
+        if (r.ErrorCode == 9999) {
+            this.success()
+                    } else {
+                      this.$message({
+                        message: r.Message,
+                        type: "error"
+                      })
+                  }
+      })
+    },
+    openSP(){
+              let params = {
+        accountId: this.rowData.accountId,
+        parentOrderId: this.rowData.parentOrderId,
+        customerId: this.rowData.customerId,
+      }
+            this.$apiCall("api.OrderMerge.getList", params, (r) => {
+        if (r.ErrorCode == 9999) {
+        this.tableDataSP = r.Data.Results
+        } else {
+          this.$message({
+            message: r.Message,
+            type: "error"
+          })
+        }
+      })   
+    },        
     deleteOrder (i, data) {
       let ids = []
       data.items.forEach((e) => {
@@ -2336,6 +2407,7 @@ export default {
         if (r.ErrorCode == 9999) {
           this.$message.success('Binding succeeded!')
           this.dialogVisibleHouse = false
+           this.checkIds = []
           this.formHouse.type = []
         } else {
           this.$message({
@@ -2370,8 +2442,13 @@ export default {
       }
 
     },
-    success(){
-    this.rowData.visible = false
+  success(){
+      this.rowData = {
+        visible: false,
+        customerId: '',
+        accountId: '',
+        parentOrderId: '',
+      }
     this.getItem()
     },
     ImportCancel () {
