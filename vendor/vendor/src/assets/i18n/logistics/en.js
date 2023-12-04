@@ -19,7 +19,7 @@ export const lang = {
   "请选择": "please choose",
   "运费方案": "Shipping plan",
   "添加运费方案": "Add a shipping plan",
-  "ourmall运费计算逻辑": "Ourmall freight calculation logic: (first weight price + (commodity weight - first weight) ÷ additional weight × additional weight price + registration fee + additional fee)÷Freight factor ÷ profit",
+  "ourmall运费计算逻辑":  "ourmall shipping calculation logic: (first weight price + (item weight - first weight) ÷ renewal weight x renewal price x (1 + fuel surcharge rate) + registered fee + surcharge) ÷ shipping factor ÷ profit",
   "云途运费计算逻辑": "Yuntu freight calculation logic: (the part where the weight of the product does not exceed the first weight × the price of the first weight ÷ 1000 + the part where the weight of the product exceeds the first weight × the price of the additional weight ÷ 1000 + registration fee + surcharge)÷Freight factor ÷ profit",
   '开始设置并完善你的运费方案，以便顾客轻松选择最合适的运费方案，获得更好的购物体验。': 'Start to set up and improve your shipping plan so that customers can easily choose the most suitable shipping plan and get a better shopping experience.',
   '是否确定删除该区域方案？': 'Are you sure to delete this regional plan?',
