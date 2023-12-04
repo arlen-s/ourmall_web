@@ -25,7 +25,7 @@
 						</el-option>
 					</el-select>
 			</div>
-			<el-table class="no-hover" stripe :data="list" style="width: 100%">
+			<el-table class="no-hover" stripe :data="list" style="width: 100%"  height="350">
 				<el-table-column  type="expand">
 			　　　　<template slot-scope="scope">
 			　　　　　　<el-table stripe :show-header="false" :data="scope.row.stocks" style="width: 100%">

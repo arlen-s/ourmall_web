@@ -601,7 +601,7 @@ export default {
         costTo: this.filterData.costTo,
         productType: this.filterData.productType,
         stockSku: this.filterData.sku,
-        sku: this.filterData.spu,
+        spu: this.filterData.spu,
       }, r => {
         this.loading = false
         if (r.ErrorCode == 9999) {
