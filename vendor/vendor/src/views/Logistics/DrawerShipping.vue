@@ -39,8 +39,8 @@
 					</div>
 					<div class="t-box-int">
 						<span class="text">{{$t('logistics.添加运费方案')}}:</span>
-						<span class="textM" v-if="data.form.calType== '1'">{{$t('logistics.ourmall运费计算逻辑：首重价格+(商品重量-首重)÷续重×续重价格+挂号费+附加费')}}</span>
-						<span class="textM" v-else-if="data.form.calType== '2'">{{$t('logistics.云途运费计算逻辑：商品重量不超过首重的部分×首重价格÷1000+商品重量超过首重的部分×续重价格÷1000+挂号费+附加费+利润')}}</span>
+						<span class="textM" v-if="data.form.calType== '1'">{{$t('logistics.ourmall运费计算逻辑')}}</span>
+						<span class="textM" v-else-if="data.form.calType== '2'">{{$t('logistics.云途运费计算逻辑')}}</span>
 						<span class="textM" v-else>{{$t("logistics.最终运费")}}</span>
 					</div>	
 				</el-form-item>				
@@ -135,7 +135,7 @@
 							    </el-input>
 							</el-col>
 						</el-row>
-						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType == '3'">
+						<el-row class="mg-t-15 mg-b-15">
 							<el-col :span="2">
 							  {{$t('logistics.系数')}}:
 							</el-col>
@@ -189,9 +189,9 @@
 							    </el-input>
 							</el-col>
 						</el-row>	
-						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType== '2'">
+						<el-row class="mg-t-15 mg-b-15" v-if="data.form.calType== '2' || data.form.calType== '1'">
 							<el-col :span="2">
-							  >{{$t('logistics.利润：')}}
+							  {{$t('logistics.利润：')}}
 							</el-col>
 							<el-col :span="8">
 							  <el-input placeholder="0.00" v-model="setting.profit">
