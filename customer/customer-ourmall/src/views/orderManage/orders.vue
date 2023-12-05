@@ -644,6 +644,11 @@
                         type="primary"
                         @click="handleCancel(scope.row)"
                       >Cancel</el-link>
+                      <el-link
+                        class="mg-r-20"
+                        type="primary"
+                        @click="handlePause(scope.row)"
+                      >Pause</el-link>                      
                     </div>
                   </template>
                 </el-table-column>
@@ -920,6 +925,11 @@
                         type="primary"
                         @click="handleCancel(scope.row)"
                       >Cancel</el-link>
+                                            <el-link
+                        class="mg-r-20"
+                        type="primary"
+                        @click="handlePause(scope.row)"
+                      >Pause</el-link>       
                     </div>
                   </template>
                 </el-table-column>
@@ -931,6 +941,11 @@
                         type="primary"
                         @click="handleCancel(scope.row)"
                       >Cancel</el-link>
+                                            <el-link
+                        class="mg-r-20"
+                        type="primary"
+                        @click="handlePause(scope.row)"
+                      >Pause</el-link>       
                     </div>
                   </template>
                 </el-table-column>
@@ -3337,6 +3352,23 @@ export default {
       this.$apiCall("api.ShopifyOrder.orderStatusChange", {
         orderId: row.orderId,
         type: 2,
+      }, (r) => {
+        if (r.ErrorCode == "9999") {
+          if (r.Message == 'SUCCESS') {
+            this.getItem()
+
+          } else {
+            this.$message.error(r.Message)
+          }
+        } else {
+          this.$elementMessage(r.Message, "error")
+        }
+      })
+    },
+        handlePause (row) {
+      this.$apiCall("api.ShopifyOrder.orderStatusChange", {
+        orderId: row.orderId,
+        type: 1,
       }, (r) => {
         if (r.ErrorCode == "9999") {
           if (r.Message == 'SUCCESS') {

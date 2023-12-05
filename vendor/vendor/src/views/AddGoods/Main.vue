@@ -126,11 +126,11 @@
                 </el-radio-group>
               </el-form-item>            
             </el-col>     
-            <el-col :span="12">
+            <!-- <el-col :span="12">
               <el-form-item :label="$t('goodsEdit.商品价格系数是否生效')" style="width: 100%;">
                 <el-switch v-model="form.isRateEffect"></el-switch>
               </el-form-item>         
-            </el-col>                    
+            </el-col>                     -->
             <el-col :span="24">
               <el-form-item :label="$t('goods.设定SPU价格')" style="width: 100%;">
                 <template>
@@ -2162,7 +2162,6 @@ console.log(this.specifications, 'this.specifications');
         isMailFree: this.form.isMailFree ? '1' : '2',
         categoryId: this.categoryId,
         spu: this.form.spu,
-        isRateEffect: this.form.isRateEffect ? '1' : '2',
         productType: this.form.stockSingle[0].productType,
         description: this.form.description,
         customCode: this.form.customCode,

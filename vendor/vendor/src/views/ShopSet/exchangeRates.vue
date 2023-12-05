@@ -17,10 +17,13 @@
             <el-row :gutter="20">
               <el-col :span="24">
                  <el-alert
-    :title="$t('shop.商品价格=填写价格×商品系数÷汇率，结果保留2位小数')"
     type="warning"
      :closable="false"
     >
+    <div slot="title">
+      <p>{{$t('shop.客户端商品价格=商品价格×商品系数÷汇率，结果保留2位小数')}}</p>
+      <p>{{$t('shop.客户端物流价格=物流价格÷汇率，结果保留2位小数')}}</p>
+    </div>
   </el-alert>
   <p style="margin-bottom:10px"></p>
                   <el-form ref="form" :model="form" label-width="80px">
