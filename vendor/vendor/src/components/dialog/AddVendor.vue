@@ -370,6 +370,7 @@ export default {
         wangwang: this.addVendorDialog.wangwang,
         whatsapp: this.addVendorDialog.whatsapp,
         customCode: this.addVendorDialog.customCode,
+        brokerage: this.addVendorDialog.brokerage,
       };
       if (this.addVendorDialog.id) {
         params.relationshipId = this.addVendorDialog.id;

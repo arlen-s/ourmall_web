@@ -432,7 +432,7 @@ export default {
 
     },
     deleteVat(index, rows){
-        rows.splice(index, 1);
+        this.formData.vatData.splice(index, 1);
     },
     collectSuccess () {
       this.collectGoodsData.isShow = false
