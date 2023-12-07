@@ -19,7 +19,7 @@
 			<el-row :gutter="15" class="mg-b-20">
 				<el-col :span="24" class="mg-b-30 mg-t-10">
 					<el-card>
-						<el-table stripe :data="items" style="width: 100%">
+						<el-table stripe :data="items" style="width: 100%"  max-height="450">
 							<el-table-column :label="$t('orders.productinfo')">
 								<template slot-scope="scope">
 									<div class="d-flex">
