@@ -2032,12 +2032,12 @@ export default {
       let ids = this.dialogMarkShipped.item.items.map(item => { return { id: item.id, isManage: item.isManage } })
 
       for (let i = 0; i < ids.length; i++) {
-        if (ids[i].isManage == 1) {
+        // if (ids[i].isManage == 1) {
           paramsList.push(ids[i])
           await this.saveMarkShippedItem(ids[i].id).then((res) => {
             resList.push(res)
           })
-        }
+        // }
       }
       if (resList.length == paramsList.length) {
         this.$elementMessage(this.$t('orders.success'), "success")
