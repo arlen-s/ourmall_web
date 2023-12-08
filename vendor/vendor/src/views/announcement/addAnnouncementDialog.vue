@@ -169,7 +169,7 @@ export default {
           this.$apiCall('api.SiteMessage.addMsg', params, (r) => {
             if (r.ErrorCode == 9999) {
               this.tableData = r.Data.Results
-              this.$elementMessage('success')
+              this.$message.success("success");
               this.$emit('closeDialog', false)
 
             }

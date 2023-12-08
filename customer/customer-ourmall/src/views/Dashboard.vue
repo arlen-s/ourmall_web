@@ -1128,7 +1128,7 @@
           <span class="content-box" v-html="noticeInfo.content"></span>
           <div class="end-cls">
             <p>{{noticeInfo.timeCreated}}</p>
-            <p>bcn团队</p>
+            <p>供应商团队</p>
           </div>
         </div> 
         <div class="footer">
@@ -1339,6 +1339,14 @@ export default {
     this.getAdvList()
     this.invitedList()
   },
+    watch: {
+    noticeIndex(newIndex, oldIndex) {
+      // 监听 index 的变化
+      this.noticeInfo =  this.annDataList[this.noticeIndex]||{}
+      console.log(`index 发生了变化，新的值为：${newIndex}`);
+      console.log(`旧的值为：${oldIndex}`);
+    },
+  },
   components: {},
   computed: {
     ActiveCategoryName() {
@@ -1346,9 +1354,10 @@ export default {
         this.categorysList.length && this.categorysList[this.activeIndex].name
       );
     },
-        noticeInfo(){
-      return  this.annDataList[this.noticeIndex]||{}
-    }
+    //     noticeInfo(){
+    //       console.log(3333);
+    //   return  this.annDataList[this.noticeIndex]||{}
+    // }
   },
   methods: {
     check2(e) {
