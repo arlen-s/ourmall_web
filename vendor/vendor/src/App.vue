@@ -901,7 +901,15 @@
 						icon: "el-icon-s-order",
 						path: "/buildShop",
 						enabled: true,
-					},															
+					},		
+        {
+          id: 29,
+          text: "app.公告管理",
+          icon: "el-icon-bell",
+          role: "Announcement",
+          path: "/announcement",
+          enabled: true,
+        },																		
 					{
 						id: 45,
 						text: "router.storehouse",

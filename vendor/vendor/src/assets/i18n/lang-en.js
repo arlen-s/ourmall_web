@@ -45,6 +45,7 @@ export const lang = {
     '在线商店':'Online store',
     '票类设置':'Ticket settings',
     '自定义代码':'Custom code',
+    '公告管理': 'announcement management',
     '自定义页面': 'Custom page',
     '折扣管理':'Discount',
     '售后工单': "serviceTicket",
@@ -205,4 +206,5 @@ export const lang = {
 	menuSetting: require('./menuSetting/en').lang,
 	storehouse: require('./storehouse/en').lang,
 	withdraw: require('./withdraw/en').lang,
+  announcement: require("./announcement/en").lang,
 }

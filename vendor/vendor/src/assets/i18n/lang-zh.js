@@ -45,6 +45,7 @@ export const lang = {
 		'店铺装修':'店铺装修',
 		'在线商店':'在线商店',
 		'自定义代码':'自定义代码',
+		'公告管理': '公告管理',
 		'折扣管理':'折扣管理',
 		'自定义页面':'自定义页面',
     '售后工单': "售后工单",
@@ -206,4 +207,5 @@ export const lang = {
 	menuSetting: require('./menuSetting/zh').lang,
 	storehouse: require('./storehouse/zh').lang,
 	withdraw: require('./withdraw/zh').lang,
+  announcement: require("./announcement/zh").lang,
 }

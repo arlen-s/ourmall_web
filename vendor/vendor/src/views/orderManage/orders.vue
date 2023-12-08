@@ -2029,11 +2029,13 @@ export default {
       this.dialogMarkShipped.loading = true
       let paramsList = []
       let resList = []
+      console.log(464646464,this.dialogMarkShipped.item);
       let ids = this.dialogMarkShipped.item.items.map(item => { return { id: item.id, isManage: item.isManage } })
 
       for (let i = 0; i < ids.length; i++) {
         // if (ids[i].isManage == 1) {
           paramsList.push(ids[i])
+          
           await this.saveMarkShippedItem(ids[i].id).then((res) => {
             resList.push(res)
           })

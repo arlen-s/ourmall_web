@@ -1,5 +1,14 @@
 <template>
   <div class="contentpanel dashboard-page">
+                  <div class="adv-box"> 
+          <span class="adv-word">Anúncio/Announcment</span>
+          <img src="../assets/images/store-design/trumpet-warite.png" alt="">
+          <div class="scroll-box">
+            <div class="scroll-content" @click="showAnnDialog">
+                <span class="box-temp">{{noticeInfo.title}}</span> 
+            </div>
+        </div>
+        </div>
     <div class="pagetitle">
       <div class="left">
         <div class="title">
@@ -9,7 +18,7 @@
       </div>
       <div class="right"></div>
     </div>
-    <template v-show="!card2Loading">
+    <template v-if="!card2Loading">
       <!-- <div
         v-show="noneData >= 1 && !Number(dashBoardData.allPurchaseCnt)"
         class="pagebody"
@@ -21,7 +30,7 @@
             </template>
             <template v-else>
               <img src="./../../public/images/new-alert.png"/>
-            </template>
+            </template>     
           </router-link>
         </div>
       </div> -->
@@ -1106,6 +1115,28 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+        <el-dialog
+    :visible.sync="AnnouncementVisible"
+     width="50%"
+     center
+     :title="noticeInfo.title"
+     class="bg-box"
+     :show-close="false"
+     >
+    <div class="ann-box">
+       <div class="ann-content">
+          <span class="content-box" v-html="noticeInfo.content">{{noticeInfo.content}}</span>
+          <div class="end-cls">
+            <p>{{noticeInfo.timeCreated}}</p>
+            <p>bcn团队</p>
+          </div>
+        </div> 
+        <div class="footer">
+            <el-button type="primary" :disabled="noticeIndex >=annDataList.length-1" @click="next">开启下一封</el-button>  
+        </div>
+    </div>
+    
+    </el-dialog>
   </div>
 </template>
 
@@ -1124,6 +1155,11 @@ export default {
           value: '2',
           label: this.$t('线下')
         }],
+        noticeInfo: {
+          title: '',
+          content: ''
+        },
+      AnnouncementVisible: false,
       dynamicValidateForm:{
           drawType: '1',
           amount: '',
@@ -1157,12 +1193,15 @@ export default {
       vendorItems: [],
       items: [],
       totalCount: 0,
+       noticeIndex:0,
       brokerage: JSON.parse(localStorage.getItem('c_ourMallUserInfo')).commissionBalance || '0.0000',
       items2: [],
       iList: [],
       invoiceInfo: "",
       shareTitle: "",
       shareDesc: "",
+      announcementData: {},
+      annDataList: [],
       sendInvoiceOpen: false,
       activeShareName: "shareWeixin",
       showDownloadInvoice: false,
@@ -1238,6 +1277,7 @@ export default {
     } else {
       this.tips = false;
     }
+    this.getAnnouncement()
   },
   mounted() {
     if (
@@ -1306,6 +1346,9 @@ export default {
         this.categorysList.length && this.categorysList[this.activeIndex].name
       );
     },
+        noticeInfo(){
+      return  this.annDataList[this.noticeIndex]||{}
+    }
   },
   methods: {
     check2(e) {
@@ -1374,6 +1417,24 @@ export default {
       this.$refs[formName].resetFields()
       this.visibleTX = false
 
+    },
+    getAnnouncement(){
+      let params = {}
+      this.$apiCall('api.SiteMessage.finds', params, (r) => {
+        if (r.ErrorCode == 9999) {
+          this.annDataList = r.Data.Results.filter((item)=>{
+            return item.isShow == '1'
+          });
+          this.noticeInfo = this.annDataList[0] || {}
+          console.log(this.annDataList, 'this.annDataList');
+        }
+      })
+    },    
+    showAnnDialog(){
+   this.AnnouncementVisible = true
+    },
+        next(){
+      this.noticeIndex++;
     },
     handWithdraw(){
       this.visibleTX = true
@@ -2189,6 +2250,96 @@ export default {
       font-size: 12px;
     }
   }
+}
+.adv-word{
+  font-weight: 600;
+  font-size: 20px;
+  color: #fff;
+  margin-right: 10px;
+}
+.bg-box  ::v-deep .el-dialog{
+    height: 800px;
+    background: url('../assets/images/store-design/notice-main.png') no-repeat;
+    background-size: 100% 100%;
+}
+.bg-box  ::v-deep .el-dialog__header{
+  padding-top: 30px;
+}
+.ann-content{
+  height: 400px;
+  // background: #000;
+  padding: 0px 160px;
+  font-size: 12px;
+  position: relative;
+}
+.end-cls{
+  position: absolute;
+  bottom: 0;
+  right: 160px;
+}
+.ann-box .footer{
+    height: 200px;
+    width: 100%;
+    text-align: center;
+    line-height: 150px;
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    margin-left: -50%;
+}
+.content-box{
+      overflow-y: scroll;
+    height: 350px;
+    display: block;
+}
+.content-box ::v-deep img{
+  max-height: 100%;
+    max-width: 100%;
+}
+.adv-box{
+  display: flex;
+  padding-left: 20px;
+  line-height: 48px;
+  flex: 1;
+  background: #dde0fa;
+  img{
+    height: 30px;
+    margin-top: 9px;
+    margin-right: 5px;
+  }
+}
+.adv-word{
+  font-weight: 600;
+  font-size: 20px;
+  color: #fff;
+  margin-right: 10px;
+}
+.scroll-box{
+  flex: 1;
+    width: 480px;
+  height: 48px;
+  line-height: 48px;
+  /* background: #a5b4fc; */
+  color: #fff;
+  overflow: hidden;
+}
+
+.scroll-content {
+  white-space: nowrap;
+  width: max-content;
+  animation: myMove 30s linear infinite; // 重点，定义动画
+}
+.scroll-content:hover {
+  animation-play-state: paused;
+  cursor: pointer;
+}
+.box-temp {
+  
+  font-size: 20px;
+}
+.box-temp ::v-deep img{
+  height: 20px;
+  margin-top: 14px;
 }
 .commodity-tab-wrapper {
   .store-name {
