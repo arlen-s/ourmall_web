@@ -112,7 +112,7 @@
     <el-dialog
   :title="$t('goods.vat税设置')"
   :visible.sync="showVatDialog"
-  width="30%">
+  width="40%">
   <span class="fnn"> <i>{{$t('是否开启vat税')}}</i> <el-switch
   v-model="vatFlag"
   active-color="#13ce66"
@@ -126,7 +126,7 @@
       :data="formData.vatData"
       border
       class="catTable"
-      style="width: 70%;margin-left:15%">
+      style="width: 95%;margin-left:2.5%">
       <el-table-column
         prop="name"
         :label="$t('goods.国家')"
@@ -146,18 +146,38 @@
               <el-input v-model="scope.row.code" ></el-input>
           </el-form-item>          
         </template>        
-      </el-table-column>      
+      </el-table-column>   
+      <el-table-column
+        prop="type"
+        :label="$t('orders.类型')"
+        align="center">
+        <template slot-scope="scope">
+          <el-form-item :prop="'vatData.' + scope.$index + '.name'" :rules="formData.rules.type">
+              <el-select v-model="scope.row.type" :placeholder="$t('orders.请选择类型')">
+                <el-option
+                  :label="$t('orders.只计算商品价格')"
+                  :value="1">
+                </el-option>
+                <el-option
+                  :label="$t('orders.计算商品价格和运费')"
+                  :value="2">
+                </el-option>                
+              </el-select>
+          </el-form-item>          
+        </template>        
+      </el-table-column>            
       <el-table-column
         prop="vat"
         :label="`${$t('goods.vat税')}(%)`"
-        align="center">
+        align="center"       
+        >
         <template slot-scope="scope">
           <el-form-item :prop="'vatData.' + scope.$index + '.name'" :rules="formData.rules.value">
               <el-input type="number" v-model="scope.row.value" ></el-input>
           </el-form-item>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('操作')">
+      <el-table-column :label="$t('操作')"  width="70">
         <template slot-scope="scope">
             <el-link type="danger" @click="deleteVat(scope.$index, vatData)">{{$t('删除')}}</el-link>
         </template>        
@@ -230,6 +250,11 @@ export default {
               message: this.$t('goods.请输入国家code'),
               tirgger: ['blur', 'change']
             },
+            type: {
+              required: true,
+              message: this.$t('orders.请选择类型'),
+              tirgger: [ 'change']
+            },            
             value: {
               required: true,
               message: this.$t('goods.请输入vat税'),
@@ -389,7 +414,14 @@ export default {
         if (r.ErrorCode == 9999) {     
           console.log(r, 'r.Data.Results');   
           let  vatList = r.Data.Results.vatList           
-          this.formData.vatData = Object.keys(vatList).map(item => vatList[item])
+          this.formData.vatData = vatList.map(item => {
+            if (!item.type) {
+              item.type = 1
+            }else{
+              item.type = Number(item.type) 
+            }
+            return item
+          })
           this.vatFlag = r.Data.Results.vatState == 1 ? true : false
         } else {
           this.$message({

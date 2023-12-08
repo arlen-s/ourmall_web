@@ -1125,7 +1125,7 @@
      >
     <div class="ann-box">
        <div class="ann-content">
-          <span class="content-box" v-html="noticeInfo.content">{{noticeInfo.content}}</span>
+          <span class="content-box" v-html="noticeInfo.content"></span>
           <div class="end-cls">
             <p>{{noticeInfo.timeCreated}}</p>
             <p>bcn团队</p>
