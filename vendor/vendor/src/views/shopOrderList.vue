@@ -7,7 +7,9 @@
           <h2>{{ $t("withdraw.店铺销量统计") }}</h2>
         </div>
       </div>
-      <div class="right"></div>
+      <div class="right">
+        <el-button type="primary" @click="exportOrder">{{$t('quotation.导出')}}</el-button>
+      </div>
     </div>
     <div class="pagebody" v-loading="loading">
       <el-row :gutter="15" class="mg-b-20">
@@ -59,7 +61,6 @@
               ref="gridTable"
               :data="items"
               tooltip-effect="dark"
-              :row-key="(row) => row.id"
             >
               <el-table-column :label="$t('withdraw.店长名称')">
                 <template slot-scope="scope">
@@ -161,6 +162,34 @@ placement: 'bottom-end',
           }
         }
       )
+    },
+  exportOrder () {
+      this.$showLoading()
+      if ($("#ifilePro").length == 0) {
+        $("body").append(
+          '<iframe id="ifilePro" style="display:none"></iframe>'
+        )
+      }
+      let openDownload = url => {
+        document.getElementById("ifilePro").src = url
+      }
+      this.$apiCall('api.AccountPayment.findByVendorGroupDate', {
+        timeCreatedFrom: this.timer ? this.timer[0] : '',
+        timeCreatedTo: this.timer ? this.timer[1] : '',
+        customerId: this.filterParams.accountIds,
+        isExport: 1
+      }, r => {
+        if (r.ErrorCode == "9999") {
+          this.$elementMessage(this.$t('orders.success'), 'success')
+          openDownload(r.Data.Results)
+        } else {
+          this.$elementMessage(r.Message, 'error')
+          if (r.ErrorCode == "1002" || r.ErrorCode == "1003") {
+            this.$userFailure(this)
+          }
+        }
+        this.$hideLoading()
+      })
     },
     toPage (val) {
       if (val != this.$route.query.page)
