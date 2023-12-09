@@ -42,7 +42,7 @@
               </span>
               <!-- <span style="display:block">Register/login</span> -->
               <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item class="d-flex" >
+              <el-dropdown-item class="d-flex" v-if="TUserInfo">
                   <i class="mg-r-15 el-icon-user-solid" aria-hidden="true"></i>                  
                   {{ JSON.parse(TUserInfo).email}}
                 </el-dropdown-item>
