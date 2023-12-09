@@ -177,7 +177,7 @@
           </el-form-item>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('操作')"  width="70">
+      <el-table-column :label="$t('操作')"  width="70" align="center" >
         <template slot-scope="scope">
             <el-link type="danger" @click="deleteVat(scope.$index, vatData)">{{$t('删除')}}</el-link>
         </template>        
