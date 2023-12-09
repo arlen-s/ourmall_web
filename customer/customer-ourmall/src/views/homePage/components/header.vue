@@ -42,6 +42,10 @@
               </span>
               <!-- <span style="display:block">Register/login</span> -->
               <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item class="d-flex" >
+                  <i class="mg-r-15 el-icon-user-solid" aria-hidden="true"></i>                  
+                  {{ JSON.parse(TUserInfo).email}}
+                </el-dropdown-item>
                 <el-dropdown-item v-if="$store.state.userInfo" class="align-items-endd-flex" style="width: 160px" command="dashboard">
                   <i class="mg-r-15 fa fa-user-o" aria-hidden="true"></i>
                   {{$t('My Profile')}}
@@ -305,6 +309,7 @@ export default {
           "level": 1
         }
       ],
+      TUserInfo: localStorage.getItem('c_ourMallUserInfo'),
       isHome: true,
       vendorId: localStorage.getItem('vendorId'),   //150488慧仓
       // isValidationCW: JSON.parse(localStorage.getItem('isValidationCW')),
