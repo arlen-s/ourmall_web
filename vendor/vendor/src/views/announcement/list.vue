@@ -50,7 +50,7 @@
         <el-table-column prop="timeCreated" :label="$t('announcement.创建时间')" align="center"></el-table-column>
         <el-table-column prop="address" :label="$t('announcement.操作')"  align="center">
           <template slot-scope="scope">
-            <el-link type="primary" @click="handleAdd('edit', scope.row)">{{$t('announcement.创建时间')}}</el-link>
+            <el-link type="primary" @click="handleAdd('edit', scope.row)">{{$t('announcement.编辑')}}</el-link>
             <span class="place"></span>
             <el-link type="danger" @click="delMsg(scope.row)">{{$t('announcement.删除')}}</el-link>
             <br />

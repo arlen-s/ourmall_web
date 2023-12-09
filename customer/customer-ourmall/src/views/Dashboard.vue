@@ -1132,6 +1132,7 @@
           </div>
         </div> 
         <div class="footer">
+            <el-button type="primary" v-show="noticeIndex != 0" @click="beforePage">上一封</el-button>
             <el-button type="primary" :disabled="noticeIndex >=annDataList.length-1" @click="next">开启下一封</el-button>  
         </div>
     </div>
@@ -1343,8 +1344,6 @@ export default {
     noticeIndex(newIndex, oldIndex) {
       // 监听 index 的变化
       this.noticeInfo =  this.annDataList[this.noticeIndex]||{}
-      console.log(`index 发生了变化，新的值为：${newIndex}`);
-      console.log(`旧的值为：${oldIndex}`);
     },
   },
   components: {},
@@ -1442,8 +1441,11 @@ export default {
     showAnnDialog(){
    this.AnnouncementVisible = true
     },
-        next(){
+    next(){
       this.noticeIndex++;
+    },
+    beforePage(){
+      this.noticeIndex--;
     },
     handWithdraw(){
       this.visibleTX = true
