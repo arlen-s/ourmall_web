@@ -3552,8 +3552,11 @@ export default {
             },
             (r) => {
               if (r.ErrorCode == "9999") {
-                this.$elementMessage("Successfully", "success")
+                this.$elementMessage("Successfully", "success")                
                 this.getItem()
+              this.$router.push({
+                name: "SearchProductsReply",
+              });
               } else {
                 this.$elementMessage(r.Message, "error")
               }
