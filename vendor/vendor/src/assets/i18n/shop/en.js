@@ -15,6 +15,8 @@ export const lang = {
     '汇率设置':'Exchange Rate Settings',
     '财务邮箱':'financial email',
     "汇率":"exchange rate",
+    '启用': 'start',
+    '停用': 'stop',
     "系数":"Commodity factor",
     '客户端物流价格=物流价格÷汇率，结果保留2位小数': 'Client logistics price = logistics price ÷ exchange rate, the result is kept to 2 decimal places',
     "客户端商品价格=商品价格×商品系数÷汇率，结果保留2位小数": "Client commodity price = commodity price ×commodity coefficient ÷ exchange rate, the result is kept to 2 decimal places",

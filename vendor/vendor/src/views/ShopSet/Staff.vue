@@ -92,11 +92,14 @@
 											@click="addStaff(scope.row)">{{$t('shop.编辑')}}</el-link>
 										<el-link class="mg-l-20" type="primary" @click="openAuth(scope.row)">
 											{{$t("invoice.token")}}</el-link>
+										<el-link type="danger" class="mg-l-20" 
+											@click="delItem(scope.row)">{{$t('shop.删除')}}</el-link>
+										<el-link type="primary" v-if="scope.row.status == 2" class="mg-l-20" 
+											@click="changeOpen(scope.row, '1')">{{$t('shop.启用')}}</el-link>
+										<el-link type="danger" v-if="scope.row.status ==1" class="mg-l-20" 
+											@click="changeOpen(scope.row, '2')">{{$t('shop.停用')}}</el-link>																																	
 									</div>
-									<div>
-										<!-- <el-link :disabled="!$isRole($route.meta.roleWrite)" type="danger"
-											@click="delItem(scope.row)">{{$t('shop.删除')}}</el-link> -->
-									</div>
+
 								</template>
 							</el-table-column>
 						</el-table>
@@ -342,16 +345,6 @@
 					this.addStaffVis = false;
 			},
 			delItem(item) {
-				// let id = '';
-				// if(item){
-				//   id = item.id
-				// }else{
-				//   let arr = [];
-				//   this.multipleSelection.forEach(e=>{
-				//      arr.push(e.id);
-				//      id = arr.join(',') 
-				//   })
-				// }
 				this.$confirm(this.$t('shop.确定删除该员工吗?'), "Tips", {
 						confirmButtonText: this.$t('shop.确定'),
 						cancelButtonText: this.$t('shop.取消'),
@@ -379,6 +372,26 @@
 					.catch(() => {
 						return false
 					});
+			},
+			changeOpen(row, type){
+						this.$apiCall('api.SubUser.changeByUser', {
+								status: type,
+								ids: row.id
+							},
+							(r) => {
+								if (r.ErrorCode == 9999) {
+									this.$message({
+										message: 'success',
+										type: "success"
+									})
+									this.getItem();
+								} else {
+									this.$message({
+										message: r.Message,
+										type: "error"
+									});
+								}
+							})
 			},
 			allChange() {
 				this.items.forEach(item => {

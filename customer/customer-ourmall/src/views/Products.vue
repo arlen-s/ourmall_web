@@ -157,11 +157,17 @@
                       <span class=" tx-danger">{{$t('Delete')}}</span>
                     </el-dropdown-item>
                     <el-dropdown-item
-                      style=" width: 80px; text-align: center;"
+                      style="  text-align: center;"
                       @click.native="checkPice(item)"
                     >
                       <el-link type="primary">{{$t('price check')}}</el-link>
-                    </el-dropdown-item>                    
+                    </el-dropdown-item> 
+                    <el-dropdown-item
+                      style=" width: 80px; text-align: center;"
+                      @click.native="publishSet(item)"
+                    >
+                      <el-link type="primary">{{$t('publish')}}</el-link>
+                    </el-dropdown-item>                                        
                   </el-dropdown-menu>
                 </el-dropdown>
                 <a
@@ -461,6 +467,26 @@ export default {
           },
         });
       }
+    },
+    publishSet(obj){
+			let params = {
+				url: obj.adminUrl,
+				name: obj.name,
+				minPrice: obj.minShopPrice,
+				maxPrice: obj.maxShopPrice,
+				description: obj.description,
+				imgUrlJson: obj.imgsJson,
+				bundlingShopifyId: obj.id,
+        bundlingAccountId: obj.shopifyId,
+			}
+			this.$apiCall('api.OfferProduct.addByCustomer', {
+				...params
+			}, (r) => {
+				if (r.ErrorCode == 9999) {
+
+					this.$message.success('publish Success!')
+				}
+			})
     },
     filterGetItem() {
       //筛选

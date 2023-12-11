@@ -901,7 +901,14 @@
 						icon: "el-icon-s-order",
 						path: "/buildShop",
 						enabled: true,
-					},		
+					},	
+					{
+						id: 70,
+						text: "app.第三方平台商品绑定商品",
+						icon: "el-icon-s-order",
+						path: "/ThreeBuildShop",
+						enabled: true,
+					},							
         {
           id: 29,
           text: "app.公告管理",

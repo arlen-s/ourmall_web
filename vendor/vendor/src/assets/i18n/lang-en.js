@@ -53,6 +53,7 @@ export const lang = {
     '绑定商品': "Bound goods",
     '客户明细': 'Customer Details',
     '财务管理':'Finance',
+    '第三方平台商品绑定商品': 'Third-party platform products are bound to products',
     "汇率管理":"Exchange rate management",
 		'收款方式':'Payment',
 		'店铺销量列表':'Store Sales List',

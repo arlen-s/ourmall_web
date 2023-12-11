@@ -313,6 +313,15 @@ const routes = [
       checkLogin: true,
     },
     component: () => import(/* webpackChunkName: 'myCustom' */ './../views/buildShop.vue')
+  }, 
+  {
+    path: '/ThreeBuildShop',
+    name: 'ThreeBuildShop',
+    meta: {
+      title: 'ThreeBuildShop',
+      checkLogin: true,
+    },
+    component: () => import(/* webpackChunkName: 'myCustom' */ './../views/ThreeBuildShop.vue')
   },  
   {
     path: "/announcement",
