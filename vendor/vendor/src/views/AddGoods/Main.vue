@@ -1307,7 +1307,7 @@ export default {
     },
     handleWatchPrice(cost, index,parentI){
       let newPrice = (Number(cost)  * Number(this.exchangeRatio) /Number(this.exchangeRate)).toFixed(2)
-      this.tableData[parentI].childArr[index].price = newPrice
+      this.tableData[parentI].childArr[index].price = Math.ceil(newPrice * 100) / 100;
     },
     handleCombination (row) {
       if (row.isCombination == 1) {
@@ -1458,7 +1458,8 @@ export default {
           this.tableData = this.tableData.map((item) => {
             item.childArr = item.childArr.map((child) => {
               child.cost =  value;
-              child.price = (Number(value)  * Number(this.exchangeRatio) /Number(this.exchangeRate)).toFixed(2)
+              let cTim = (Number(value)  * Number(this.exchangeRatio) /Number(this.exchangeRate))
+              child.price = Math.ceil(cTim * 100) / 100;
               return child;
             });
             return item;
