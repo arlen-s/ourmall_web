@@ -19,7 +19,7 @@ export const lang = {
     '停用': 'stop',
     "系数":"Commodity factor",
     '客户端物流价格=物流价格÷汇率，结果保留2位小数': 'Client logistics price = logistics price ÷ exchange rate, the result is kept to 2 decimal places',
-    "客户端商品价格=商品价格×商品系数÷汇率，结果保留2位小数": "Client commodity price = commodity price ×commodity coefficient ÷ exchange rate, the result is kept to 2 decimal places",
+    "售价=成本价×商品系数÷汇率，结果保留2位小数": "Selling price = cost price × commodity coefficient ÷ exchange rate, with the result retained to 2 decimals",
     "请输入有效数值":"Please enter a valid value",
     '请输入财务邮箱':'please enter the financial email',
     '用于存在费用争议时联系的邮箱，请务必填':'please be sure to fill in the email address used to contact you in case of a fee dispute.',
