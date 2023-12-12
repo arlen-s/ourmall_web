@@ -31,6 +31,7 @@ export const lang = {
 	'购买内容：': 'Purchased Contents: ',
 	'支付方式：': 'Payment method: ',
 	订单金额: 'Order amount',
+	'创建时间': 'create time',
 	'销售数量':'sales volume',
 	'销售总金额':'Total sales',
 	'店铺邮箱':'Store Email',

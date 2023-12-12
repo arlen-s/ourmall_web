@@ -78,21 +78,26 @@
                   <span>{{scope.row.totalAmount}}</span>
                 </template>
               </el-table-column>
-                            <el-table-column :label="$t('withdraw.历史总佣金')">
+              <el-table-column :label="$t('withdraw.历史总佣金')">
                 <template slot-scope="scope">
                   <span>{{scope.row.totalHistoricalCommission}}</span>
                 </template>
               </el-table-column>
-                            <el-table-column :label="$t('withdraw.当前未提现佣金')">
+               <el-table-column :label="$t('withdraw.当前未提现佣金')">
                 <template slot-scope="scope">
                   <span>{{scope.row.commissionBalance}}</span>
                 </template>
               </el-table-column>
-                            <el-table-column :label="$t('withdraw.历史已提现佣金')">
+              <el-table-column :label="$t('withdraw.历史已提现佣金')">
                 <template slot-scope="scope">
                   <span>{{scope.row.totalHistoricalWithdrawnCommission}}</span>
                 </template>
               </el-table-column>
+              <el-table-column :label="$t('withdraw.创建时间')">
+                <template slot-scope="scope">
+                  <span>{{scope.row.timeCreated}}</span>
+                </template>
+              </el-table-column>              
             </el-table>
             <el-row v-if="items.length" :gutter="20" style="margin-top:10px">
               <el-col :span="24" class="d-flex justify-content-center">

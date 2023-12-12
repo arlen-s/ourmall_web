@@ -706,14 +706,15 @@
                         </template>
                       </el-table-column>
                       <el-table-column align="center" :label="$t('goodsEdit.成本价')" width="180">
-                        <template slot-scope="scope">
+                        <template slot-scope="child">
                           <el-input-number
                             size="mini"
                             :min="0"
                             :controls="false"
                             :precision="2"
                             style="width: 120px;"
-                            v-model="scope.row.cost"
+                            @change="handleWatchPrice(child.row.cost, child.$index, scope.$index)"
+                            v-model="child.row.cost"
                           ></el-input-number>
                         </template>
                       </el-table-column>
@@ -1143,6 +1144,8 @@ export default {
       },
       stocksLoading: false,
       videoUrls: [],
+      exchangeRate: '',
+      exchangeRatio: '',
     }
   },
   components: {
@@ -1250,6 +1253,7 @@ export default {
     this.getHouseInfo()
     this.getCategroy()
     this.getCustomerList()
+    this.getRea()
     window.addEventListener('storage', this.runGetCategroy)
     this.$nextTick(() => {
       this.$root.$children[0].$refs.mainScroll.wrap.scrollTop = 0
@@ -1301,6 +1305,10 @@ export default {
         return 'property-td'
       }
     },
+    handleWatchPrice(cost, index,parentI){
+      let newPrice = (Number(cost)  * Number(this.exchangeRatio) /Number(this.exchangeRate)).toFixed(2)
+      this.tableData[parentI].childArr[index].price = newPrice
+    },
     handleCombination (row) {
       if (row.isCombination == 1) {
         row.isCombination = 2
@@ -1308,6 +1316,18 @@ export default {
         row.isCombination = 1
       }
 
+    },
+        getRea(){
+        this.$apiCall("api.User.getUserConfig", {
+        }, (r) => {
+          if (r.ErrorCode == "9999") {
+            //  this.$elementMessage(r.Message, "success");
+             this.exchangeRate = r.Data.Results.exchangeRate
+             this.exchangeRatio = r.Data.Results.productCoefficient
+          } else {
+            this.$elementMessage(r.Message, "error");
+          }
+        })      
     },
     getHouseInfo () {
       let params = {
@@ -1437,7 +1457,8 @@ export default {
         }).then(({ value }) => {
           this.tableData = this.tableData.map((item) => {
             item.childArr = item.childArr.map((child) => {
-              child.cost = value;
+              child.cost =  value;
+              child.price = (Number(value)  * Number(this.exchangeRatio) /Number(this.exchangeRate)).toFixed(2)
               return child;
             });
             return item;

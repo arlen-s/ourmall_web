@@ -143,6 +143,13 @@
 							  <el-input :placeholder="$t('logistics.系数')" v-model="setting.numCoefficient">
 							    </el-input>
 							</el-col>
+								<el-col :span="2" style="text-align:center">
+							  {{$t('logistics.汇率')}}:
+							</el-col>
+							<el-col :span="4">
+							  <el-input :placeholder="$t('logistics.汇率')" v-model="setting.exchangeRate">
+							    </el-input>
+							</el-col>
 						</el-row>												
 						<el-row class="mg-t-15">
 							<el-col :span="2">
@@ -298,6 +305,7 @@
 					registrationFee:"",
 					profit: "",
 					numCoefficient: '',
+					exchangeRate: '',
 					fuelSurchargeRate: '',
 					noHeavy:[]
 				}]
@@ -334,6 +342,8 @@
 						nextPrice:"",
 						registrationFee:"",
 						profit: "",
+						numCoefficient: '',
+						exchangeRate: '',
 						noHeavy:[]
 					}];
 					// this.freightObj.registrationFee = "";
@@ -358,6 +368,8 @@
 					lateralAreaBegin: '',
 					lateralAreaEnd: '',							
 					nextPrice:"",
+					numCoefficient: '',
+					exchangeRate: '',
 					noHeavy:[]
 				})
 			},

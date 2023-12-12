@@ -26,6 +26,7 @@ export const lang = {
   "最终运费": "(Individual SKU1 calculated shipping cost + (SKU1 quantity - 1) x Individual SKU1 calculated shipping cost x factor) + (Individual SKU2 calculated shipping cost + (SKU2 quantity - 1) x Individual SKU2 calculated shipping cost x factor) +...",
   '取消': 'Cancel',
   '编辑': 'Edit',
+  '汇率': 'exchange rates',
   "燃油附加费率":"Fuel surcharge rate",
   "包裹侧面积范围：":"Wrap side area range:",
   "包裹尺寸范围：":"Package size range:",

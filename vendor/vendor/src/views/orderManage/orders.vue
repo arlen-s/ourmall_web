@@ -2805,11 +2805,16 @@ export default {
         status = 311
       } else if (this.status == 15) { //查询页面
         status = 15
+      } else if (this.status == 16) { //暂停页面
+        status = 16
+      } else if (this.status == 17) { //取消页面
+        status = 17
       } else {
         let item = this.tabList.filter(item => {
           return item.name == this.activeName
         })
-        status = item[0].id
+        console.log(item, 'item');
+        status = item.length> 0? item[0].id : ''
         if (this.status == 2) { //付款
           if (this.activeName == 2) {
             status = 3

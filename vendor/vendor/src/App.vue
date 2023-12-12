@@ -776,6 +776,16 @@
 								role: 'invoiceDeliverView',
 								enabled: true,
 							},
+            {
+              name: "app.Pause",
+              path: "/ordersManage/16/1",
+              enabled: true,
+            },
+            {
+              name: "app.Cancelled",
+              path: "/ordersManage/17/1",
+              enabled: true,
+            }, 							
 							{
 								name: "app.Abnormal",
 								path: "/ordersManage/4",

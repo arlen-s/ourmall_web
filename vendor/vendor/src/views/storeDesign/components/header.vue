@@ -186,7 +186,7 @@ export default {
     > ul{
       display: flex;
       align-items: center;
-      justify-content: end;
+      justify-content: flex-end;
       > li{
         margin-right: 45px;
         > a{
