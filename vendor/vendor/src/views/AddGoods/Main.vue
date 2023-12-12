@@ -1306,7 +1306,7 @@ export default {
       }
     },
     handleWatchPrice(cost, index,parentI){
-      let newPrice = (Number(cost)  * Number(this.exchangeRatio) /Number(this.exchangeRate)).toFixed(2)
+      let newPrice = (Number(cost)  * Number(this.exchangeRatio) /Number(this.exchangeRate))
       this.tableData[parentI].childArr[index].price = Math.ceil(newPrice * 100) / 100;
     },
     handleCombination (row) {
