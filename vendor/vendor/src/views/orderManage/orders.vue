@@ -1692,7 +1692,7 @@ export default {
       }
     },
     toggleRowExpansionAll(data, isExpansion) {
-      console.log(data, 'datas');
+      // console.log(data, 'datas');
       data.forEach((item) => {
         this.$refs.gridTable.toggleRowExpansion(item, isExpansion);
         if (item.items !== undefined && item.items !== null) {
@@ -2845,6 +2845,8 @@ export default {
           this.total = Number(r.Data.Pagination.totalCount)
           this.totalPage = Number(r.Data.Pagination.totalPage)
           this.$getTableHeight(this)
+        this.isExpansion = true
+        this.toggleRowExpansionAll(this.items, true);
           if (!s) this.$root.$children[0].$refs.mainScroll.wrap.scrollTop = 0
         } else {
           this.$message({
