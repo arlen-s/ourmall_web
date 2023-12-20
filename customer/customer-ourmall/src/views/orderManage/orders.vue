@@ -1530,7 +1530,7 @@
                 </el-table-column>
                 <el-table-column v-if="status == 16" label="Operate" width="150">
                   <template slot-scope="scope">
-                    <el-link type="primary" @click="changeAor(scope.row)">resumption</el-link>
+                    <el-link type="primary" @click="changeAor(scope.row)">recover</el-link>
                   </template>
                 </el-table-column>
                 <template v-if="status == 1">

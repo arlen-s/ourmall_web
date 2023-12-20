@@ -90,6 +90,8 @@ export const lang = {
 	'订单编号处若填写同一编号为同一订单':'If the order number field is filled with the same number, it means the same order ',
 	'提交':'Submit',
 	'取消':'Cancel',
+  'recover':'recover',
+  '拆分订单':'Split orders',
 	'上传文件不能大于2MB':'Upload file cannot be larger than 2MB',
 	'确定将该商品无法采购?':'Make sure that the product cannot be purchased?',
 	'已添加到无法采购':'Added to unavailable for purchase',
