@@ -144,29 +144,29 @@
                     {{$t('All Action')}}<i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item v-if="item.adminUrl" style=" width: 80px; text-align: center;">
+                    <el-dropdown-item v-if="item.adminUrl" style=" width: 80px; text-align: left;">
                       <a
                         :href="item.adminUrl"
                         target="_blank"
                       >{{$t('Edit')}}</a>
                     </el-dropdown-item>
                     <el-dropdown-item
-                      style=" width: 80px; text-align: center;"
+                      style=" width: 80px; text-align: left;"
                       @click.native="delP(item)"
                     >
                       <span class=" tx-danger">{{$t('Delete')}}</span>
                     </el-dropdown-item>
                     <el-dropdown-item
-                      style="  text-align: center;"
+                      style=" width: auto; text-align: left;"
                       @click.native="checkPice(item)"
                     >
                       <el-link type="primary">{{$t('price check')}}</el-link>
-                    </el-dropdown-item> 
+                    </el-dropdown-item>   
                     <el-dropdown-item
-                      style=" width: 80px; text-align: center;"
-                      @click.native="publishSet(item)"
+                      style=" width: auto; text-align: left;"
+                      @click.native="handleShop(item)"
                     >
-                      <el-link type="primary">{{$t('publish')}}</el-link>
+                      <el-link type="primary">{{$t('add related products')}}</el-link>
                     </el-dropdown-item>                                        
                   </el-dropdown-menu>
                 </el-dropdown>
