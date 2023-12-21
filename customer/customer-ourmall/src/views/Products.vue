@@ -271,15 +271,108 @@
     </el-row>
     <el-backtop class="goto-top" target=".main-scroll  .el-scrollbar__wrap" :right="20" :bottom="120">
 		</el-backtop>
+    		<!-- 搜品新增 -->
+		<el-dialog
+			title="Search product"
+			:visible.sync="publishVisible"
+			:close-on-click-modal="false"
+			width="800px"
+			:before-close="publishClose">
+			<div class="publish">
+				<el-form :model="publishForm" :rules="publishRules" ref="ruleForm" label-width="180px" class="demo-ruleForm">
+					<el-form-item label="Picture:" prop="imgUrl">
+						<el-input v-model="publishForm.imgUrl" style="display:none"></el-input>
+						<el-upload
+							action=""
+							ref="upload"
+							list-type="picture-card"
+							:limit="5"
+							:before-upload="onBeforeUpload"
+							:http-request="Upload"
+							:on-remove="handleRemove">
+							<i class="el-icon-plus"></i>
+						</el-upload>
+						<div>{{$t('You can only upload 5 pictures')}}</div>
+					</el-form-item>
+					<el-form-item label="link Picture:" v-if="publishForm.linkImg">
+						<el-image
+						style="width: 100px; height: 100px"
+						:src="publishForm.linkImg"
+						fit="fit"></el-image>
+					</el-form-item>
+					<el-form-item label="Product Title:" prop="title">
+						<el-input size="small" v-model="publishForm.title"></el-input>
+					</el-form-item>
+					<el-row>
+						<el-col :span="6">
+							<el-form-item label="Price Range:" prop="priceFrom">
+								<el-input v-model="publishForm.priceFrom" type="number" style="width: 100px" size="small"></el-input>
+							</el-form-item>
+						</el-col>
+						<el-col :span="17">
+							<el-form-item label="——" prop="priceTo">
+								<el-input v-model="publishForm.priceTo" type="number" style="width: 100px" size="small"></el-input>
+								<span style="color: #ccc">
+									 {{$store.state.country.symbol}}  *{{$t('Price units default to')}} {{$store.state.country.shopCurrency}}
+								</span>
+							</el-form-item>
+						</el-col>
+					</el-row>
+					<el-form-item label="Product Links:">
+						<el-input size="small" v-model="publishForm.link"></el-input>
+					</el-form-item>
+					<el-form-item label="Product Description:">
+						<el-input type="textarea" size="small" :rows="4" v-model="publishForm.description"></el-input>
+					</el-form-item>
+				</el-form>
+			</div>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="publishClose">{{$t('Cancel')}}</el-button>
+				<el-button type="primary" @click="publish">{{$t('Publish')}}</el-button>
+			</span>
+		</el-dialog>
   </div>
 </template>
 
 <script>
 export default {
   data() {
+    		let validatePrice = (rule, value, callback) => {
+			if (!value) {
+				return callback(new Error('Please enter price'))
+			} else {
+				callback()
+			}
+		}
     return {
       loading: false,
       tableHeight: 800,
+			publishVisible: false,
+      publishForm: {
+				imgUrl: '',
+				title: '',
+				priceFrom: '',
+				priceTo: '',
+				link: '',
+				description: '',
+				linkImg: this.$route.query.imgUrl,
+				id: this.$route.query.productId
+			},
+      tempShopItem: {},
+			publishRules: {
+				imgUrl: [
+					{ required: true, message: this.$t('Please upload pictures')},
+				],
+				title: [
+					{ required: true, message: this.$t('Please enter title')},
+				],
+				priceFrom: [
+					{ required: true, message: this.$t('Please enter price'), trigger: 'blur'},
+				],
+				priceTo: [
+					{ validator: validatePrice, trigger: 'blur'},
+				]
+			},
       reSizeTime: 0,
       pageSizes: [12, 24, 48],
       page: this.$route.query.page ? Number(this.$route.query.page) : 1,
@@ -296,6 +389,12 @@ export default {
         priceTo: undefined,
         accountId: "",
       },
+      fileList: [],
+			base64: '',
+			ext: '',
+			file: null,
+			index: 0,
+			urlParams:'',
       filterParamsDefault: "{}",
       selectLoading: false,
       selectArr: [],
@@ -368,6 +467,110 @@ export default {
         })
         .catch(() => {});
     },
+    publishClose() {
+			this.publishForm = {
+				imgUrl: '',
+				title: '',
+				priceFrom: '',
+				priceTo: '',
+				link: '',
+				description: '',
+				id: ''
+			}
+			this.$refs.upload.clearFiles()
+			this.$refs['ruleForm'].resetFields();
+			this.publishVisible = false
+		},
+    publish() {
+			let pass = false
+			this.$refs['ruleForm'].validate((valid) => {
+				console.log(valid)
+				if (valid) {
+					pass = true
+				}
+			});
+			if (!pass) { return ; }
+
+			let imgArr = []
+			this.fileList.forEach((item) => {
+				imgArr.push(item.imgUrl)
+			})
+			let params = {
+				url: this.publishForm.link,
+				name: this.publishForm.title,
+				minPrice: this.publishForm.priceFrom,
+				maxPrice: this.publishForm.priceTo,
+				description: this.publishForm.description,
+				imgUrlJson: imgArr,
+				bundlingAccountId: this.tempShopItem.accountId,
+        bundlingShopifyId: this.tempShopItem.shopifyId
+			}
+			this.$apiCall('api.OfferProduct.addByCustomer', {
+				...params
+			}, (r) => {
+				if (r.ErrorCode == 9999) {
+					this.publishForm = {
+						title: '',
+						priceFrom: '',
+						priceTo: '',
+						link: '',
+						description: '',
+						imgUrl: ''
+					}
+					this.$refs.upload.clearFiles();
+					this.$refs['ruleForm'].resetFields();
+					this.fileList = []
+					// this.getItems()
+					this.$message.success('publish Success!')
+					this.publishVisible = false
+				}
+			})
+		},
+    		onBeforeUpload(file) {
+			var _this = this
+			this.file = file
+			this.index = file.uid
+		},
+		Upload () {
+			let file = this.file
+			const uploadFile = (file) => {
+				return new Promise(function (resolve, reject) {
+					let reader = new FileReader();
+					reader.readAsDataURL(file);
+					reader.onload = function(e) {
+						// 图片base64化
+						resolve(this.result)
+					}
+				})
+			}
+			uploadFile(file).then((file) => {
+				let newUrl = file;
+				let extArr = newUrl.match(/data:image\/(.*);base64,.*/);
+				this.ext = extArr[1]
+				this.base64 = newUrl.split("base64,").pop()
+				this.$apiCall('api.User.uploadImgBase64', {
+					imgUrlBase64: this.base64,
+					ext: this.ext
+				}, (res) => {
+					if (res.ErrorCode == 9999) {
+						this.fileList.push({ index: this.index, imgUrl: res.Data.Results.imgUrl })
+						this.publishForm.imgUrl = res.Data.Results.imgUrl
+						this.index++
+					}
+				})
+			})
+		},
+		handleRemove(file) {
+			// 删除图片
+			this.fileList.forEach((item,index) => {
+				if (item.index == file.uid) {
+					this.fileList.splice(index, 1)
+				}
+			})
+			if (this.fileList.length == 0) {
+				this.publishForm.imgUrl = ''
+			}
+		},
     remoteMethodStores(query) {
       //获取筛选店铺名
       this.selectArr2 = [];
@@ -413,6 +616,10 @@ export default {
           this.$message({ message: r.Message, type: "error" });
         }
       });
+    },
+    handleShop(item){
+        this.publishVisible = true
+        this.tempShopItem = item
     },
     getItem(s) {
       this.loading = true;

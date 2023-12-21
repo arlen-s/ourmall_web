@@ -31,7 +31,16 @@
                   style="width: 100px; height: 100px"
                   :src="item.associatedProduct.imgUrl"
                   fit="fit"></el-image>
-                </el-form-item>                  
+                </el-form-item>    
+                <el-form-item label="要绑定的第三方平台商品图片:"  label-width="150px" v-if="item.customerProduct">
+                  <el-image
+                  style="width: 100px; height: 100px"
+                  :src="item.customerProduct.imgsJson? item.customerProduct.imgsJson[0]: ''"
+                  fit="fit"></el-image>
+                </el-form-item>   
+                <el-form-item label="要绑定的第三方平台商品名称:"  label-width="150px" v-if="item.customerProduct">
+                    <span>{{ Object.keys(item.customerProduct).length != 0 ?item.customerProduct.name : '' }}</span>
+                </el-form-item>                                                  
                 <el-form-item :label="$t('quotation.商品名称')" label-width="150px">
                   <span v-if="item.name">{{ item.name }}</span>
                   <span v-else>---</span>
@@ -215,8 +224,7 @@ export default {
               })
             }
             this.dialogProductList.item.push(item1)
-          })           
-            console.log( this.dialogProductList.item, ' this.dialogProductList.item =');
+          })  
             }else{
               this.$message({ message: r.Message, type: "error" });
             }

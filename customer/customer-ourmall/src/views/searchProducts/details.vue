@@ -25,6 +25,15 @@
 					<el-form-item label="Product Title:" prop="title">
 						{{ publishDetail.name }}
 					</el-form-item>
+						<el-form-item label="The name of the third-party platform's product to be linked:" prop="title">
+						{{ Object.keys(customerProduct).length != 0 ?customerProduct.name : '' }}
+					</el-form-item>
+					<el-form-item label="The image of the third-party platform's product to be linked:" prop="picture" v-if=" Object.keys(customerProduct).length != 0">
+  <el-image
+      style="width: 100px; height: 100px"
+      :src="customerProduct.imgsJson? customerProduct.imgsJson[0]: ''"
+      fit="cover"></el-image>
+					</el-form-item>					
 					<el-form-item label="Price:" prop="priceFrom">
 						$ {{ publishDetail.minPrice }} - {{ publishDetail.maxPrice }}
 					</el-form-item>
@@ -72,7 +81,7 @@ export default {
 		return {
 			host: window.location.origin,
 			publishDetail: {},
-			vendorId: localStorage.getItem('vendorId'),
+			customerProduct: {}
 		}
 	},
 	mounted () {
@@ -88,6 +97,7 @@ export default {
 			}, (r) => {
 				if (r.ErrorCode == 9999) {
 					this.publishDetail = r.Data.Results
+					this.customerProduct = r.Data.Results.customerProduct
 				}
 			})
 		}

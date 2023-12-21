@@ -345,7 +345,7 @@ export default {
         if (r.ErrorCode == 9999){
           //处理数据
           this.items = r.Data.Results.map(item => {
-            item.imgUrlArr = item.imgUrlJson;
+            item.imgUrlArr = item.imgUrlJson == '[]'? []: item.imgUrlJson;
             if(item.vendorProduct )
             item.vendorProduct.imgUrlArr = JSON.parse(item.vendorProduct.imgUrlJson)
             return item
