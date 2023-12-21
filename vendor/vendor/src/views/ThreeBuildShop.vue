@@ -51,13 +51,13 @@
                 </template>
               </el-table-column>
               <el-table-column :label="$t('transaction.被绑定SKU')">
-                <template slot-scope="scope">{{scope.row.mainProduct.sku}}</template>
+                <template slot-scope="scope">{{ scope.row.mainProduct ?scope.row.mainProduct.name : '' }}</template>
               </el-table-column>
               <el-table-column :label="$t('transaction.被绑定SKU图片')">
                 <template slot-scope="scope">
                   <el-image
                     style="width: 100px; height: 100px"
-                    :src="scope.row.mainProduct.imgUrl"
+                    :src="scope.row.mainProduct.imgsJson? scope.row.mainProduct.imgsJson[0]: ''"
                     fit="fit"
                   ></el-image>
                 </template>
