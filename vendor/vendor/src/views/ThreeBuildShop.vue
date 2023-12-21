@@ -8,11 +8,11 @@
         </div>
       </div>
       <div class="right">
-        <el-button type="primary" size="medium" @click="open()">
+        <!-- <el-button type="primary" size="medium" @click="open()">
           {{
           $t("transaction.绑定新商品")
           }}
-        </el-button>
+        </el-button> -->
       </div>
     </div>
     <div class="pagebody" v-loading="loading">
@@ -278,7 +278,7 @@ export default {
     },
     cancel (row) {
       this.$apiCall(
-        "api.VendorShopProductBundling.delBunding",
+        "api.ShopifyProductBundling.delBunding",
         {
           id: row.id,
         },
