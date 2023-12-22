@@ -79,6 +79,7 @@ export const lang = {
   payStatus:'付款状态',
   status1:'待发起付款',
   status2:'待完成付款',
+  status3: '待报价',
   '创建订单':'创建订单',
   '重新报价':'重新报价',
   '选择仓库':'选择仓库',

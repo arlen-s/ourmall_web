@@ -58,6 +58,7 @@ export const lang = {
 		'收款方式':'Payment',
 		'Pause': 'Pause',
 		'Cancelled': 'Cancelled',
+    '未付款订单': 'Unpaid orders',
 		'店铺销量列表':'Store Sales List',
 		'交易明细':'Transaction',
     '提现列表':'Withdrawal list',

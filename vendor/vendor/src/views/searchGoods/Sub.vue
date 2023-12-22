@@ -165,6 +165,16 @@
             <b>${{scope.row.minPrice}}-{{scope.row.maxPrice}}</b>
           </template>  
         </el-table-column>
+        <el-table-column :label="$t('quotation.订单号')">
+          <template slot-scope="scope">
+            <span>{{scope.row.orderId}}</span>
+          </template>  
+        </el-table-column>   
+        <el-table-column :label="$t('quotation.平台')">
+          <template slot-scope="scope">
+            <span>{{scope.row.platform? scope.row.platform ==1? 'Shopify' : 'WooCommerce' : ''}}</span>
+          </template>  
+        </el-table-column>             
         <!-- 回复价格 -->
         <el-table-column :label="$t('quotation.回复价格')"   v-if="$route.name == 'SGFinish'||$route.name == 'SGSearch'">
           <template slot-scope="scope">

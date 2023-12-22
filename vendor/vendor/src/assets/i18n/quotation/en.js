@@ -30,6 +30,8 @@ export const lang = {
 	'提交商品': 'Submit a product',
 	'报价详情': 'Quote Details',
 	'名称': 'name ',
+	'订单号': 'Order No.',
+	'平台': 'platform',
 	'图片': 'Image',
 	'客户SKU': 'Customer SKU',
 	'属性': 'causality',

@@ -1146,6 +1146,21 @@
                       </template>
                     </el-table-column>
                   </template>
+                  <template v-if="status == 355">
+                    <el-table-column :label="$t('orders.payStatus')" width="250">
+                      <template slot-scope="scope">
+                        <div v-if="scope.row.status == 3">
+                          <span>{{$t('orders.status1')}}</span>
+                        </div>
+                        <div v-else-if="scope.row.status == 11">
+                          <span>{{$t('orders.status2')}}</span>
+                        </div>                       
+                        <div v-else>
+                           <span>{{statusArr[scope.row.status] ? statusArr[scope.row.status].text : '---'}}</span>
+                        </div>
+                      </template>
+                    </el-table-column>
+                  </template>                  
                   <template v-if="status == 4 && activeName == 2">
                     <el-table-column :label="$t('orders.operate')" width="100">
                       <template slot-scope="scope">
@@ -2502,6 +2517,8 @@ export default {
         status = ""
       } else if (this.status == 311) { //查询页面
         status = 311
+      } else if (this.status == 355) { //未付款页面
+        status = '2,3,11,15'
       }  else if (this.status == 15) { //查询页面
         status = 15
       } else {
@@ -2538,6 +2555,7 @@ export default {
       }
     },
     filterOrderFun(param){
+      console.log(param, 'param');
       // this.page = 1
         this.$apiCall("api.ShopifyOrder.findByVendor",
           param
@@ -2823,7 +2841,9 @@ export default {
         params = Object.assign(params1, params2)
       } else if (this.status == 311) { //查询页面
         status = 311
-      } else if (this.status == 15) { //查询页面
+      } else if (this.status == 355) { //查询页面
+        status = '2,3,11,15'
+      }  else if (this.status == 15) { //查询页面
         status = 15
       } else if (this.status == 16) { //暂停页面
         status = 16

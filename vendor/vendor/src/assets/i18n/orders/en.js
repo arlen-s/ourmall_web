@@ -76,6 +76,7 @@ export const lang = {
 	payStatus:'Payment status',
 	status1:'Waiting to initiate payment',
 	status2:'Waiting for payment to be completed',
+  status3: 'Pending offer',
 	'创建订单':'Create Order',
 	'重新报价':'Again quotation',
   '批量关联仓库': 'Bulk associated warehouse',

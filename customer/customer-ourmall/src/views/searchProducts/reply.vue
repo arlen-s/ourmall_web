@@ -53,6 +53,12 @@
 						</template>
 					</el-table-column>
 					<el-table-column :label="$t('Product link')" prop="url"></el-table-column>
+					<el-table-column :label="$t('Order No.')" prop="orderId"></el-table-column>	
+					<el-table-column :label="$t('Order No.')" prop="orderId">
+								<template slot-scope="scope">
+										<span>{{scope.row.platform? scope.row.platform ==1? 'Shopify' : 'WooCommerce' : ''}}</span>
+								</template>	
+					</el-table-column>							
 					<el-table-column :label="$t('Description')" prop="description"></el-table-column>
 					<el-table-column :label="$t('Creation date')">
 						<template slot-scope="scope">
