@@ -941,7 +941,15 @@ export default {
           image: "/images/sidebar/billing.png",
           path: "/PreOrderInventory",
           enabled: true,
-        },        
+        }, 
+        {
+          id: 74,
+          text: "Third Bound Goods",
+          icon: "el-icon-document",
+          image: "/images/sidebar/order.png",
+          path: "/ThreeBuildShop",
+          enabled: true,
+        },                
         {
           id: 89,
           text: "Withdrawal list",

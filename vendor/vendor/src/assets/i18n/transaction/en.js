@@ -23,6 +23,7 @@ export const lang = {
 	all: 'All',
 	operate: 'Operate',
 	detailView: 'View detail',
+  店铺名称: 'shop name',
 	code:"code",
 	exportTitle:'Detail export records',
 	cancel: 'Cancel',

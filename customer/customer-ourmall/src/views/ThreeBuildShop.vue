@@ -4,7 +4,7 @@
       <div class="left">
         <div class="title">
           <i class="el-icon-s-el-icon-s-goods"></i>
-          <h2>{{ $t("transaction.绑定商品列表") }}</h2>
+          <h2>Bound Product List</h2>
         </div>
       </div>
       <div class="right">
@@ -27,23 +27,16 @@
               height="650"
               ref="gridTable"
             >
-              <el-table-column prop="customerName" :label="$t('transaction.客户邮箱')">
-                <template slot-scope="scope">
-                  <div>
-                    <b>{{ scope.row.customer }}</b>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column prop="accountName" :label="$t('transaction.店铺名称')">
+              <el-table-column prop="accountName" label="Shop Name">
               </el-table-column>              
-              <el-table-column prop="customerName" :label="$t('transaction.绑定SKU')">
+              <el-table-column prop="customerName" label="Binding SKUs">
                 <template slot-scope="scope">
                   <div>
                     <b>{{ scope.row.stock.sku }}</b>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('transaction.绑定SKU图片')">
+              <el-table-column label="$Binding SKU images">
                 <template slot-scope="scope">
                   <el-image
                     style="width: 100px; height: 100px"
@@ -52,10 +45,10 @@
                   ></el-image>
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('transaction.被绑定SKU')">
+              <el-table-column label="Bound SKU">
                 <template slot-scope="scope">{{ scope.row.mainProduct ?scope.row.mainProduct.name : '' }}</template>
               </el-table-column>
-              <el-table-column :label="$t('transaction.被绑定SKU图片')">
+              <el-table-column label="Bound SKU Images">
                 <template slot-scope="scope">
                   <el-image
                     style="width: 100px; height: 100px"
@@ -64,7 +57,7 @@
                   ></el-image>
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('mycustomer.operate')" width="230">
+              <el-table-column label="operate" width="230">
                 <template slot-scope="scope">
                   <div>
                     <el-popconfirm
@@ -78,7 +71,7 @@
                         type="danger"
                         slot="reference"
                         style="margin-left:5px"
-                      >{{$t('transaction.删除')}}</el-link>
+                      >cancel</el-link>
                     </el-popconfirm>
                   </div>
                 </template>
@@ -105,7 +98,7 @@
       </el-row>
     </div>
     <el-dialog
-      :title="$t('transaction.新增绑定商品')"
+      title="transaction.New Bound Products"
       :visible.sync="dialogVisibleAdd"
       @open="open()"
       width="30%"
@@ -113,13 +106,13 @@
     >
       <div>
         <el-form :label-position="'left'" ref="replyForm" class="mg-t-20">
-          <el-form-item :label="$t('quotation.客户选择')" label-width="150px" required>
+          <el-form-item label="$Customer Choice" label-width="150px" required>
             <el-select
               filterable
               remote
               :remote-method="remoteMethodCustom"
               :loading="selectLoading"
-              :placeholder="$t('myinvoice.pleaseCusName')"
+              placeholder="please enter CusName"
               clearable
               v-model="addShopForm.name"
               @change="filterGetItem()"
@@ -133,12 +126,12 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item :label="$t('quotation.添加被绑定商品')" label-width="150px" required>
+          <el-form-item label="Add Bound Products" label-width="150px" required>
             <div class="d-flex">
-              <el-link type="primary" @click="openSelect('1')">{{$t('quotation.选择商品')}}</el-link>
+              <el-link type="primary" @click="openSelect('1')">Select a product</el-link>
             </div>
           </el-form-item>
-          <el-form-item :label="$t('quotation.商品图片')" label-width="150px" required>
+          <el-form-item label="quotation.Product Images" label-width="150px" required>
             <div class="upload">
               <i class="el-icon-plus" v-if="!addShopForm.imgUrl"></i>
               <el-image
@@ -149,12 +142,12 @@
               ></el-image>
             </div>
           </el-form-item>
-          <el-form-item :label="$t('quotation.添加绑定商品')" label-width="150px" required>
+          <el-form-item label="quotation.Add Bound Products" label-width="150px" required>
             <div class="d-flex">
-              <el-link type="primary" @click="openSelect('2')">{{$t('quotation.选择商品')}}</el-link>
+              <el-link type="primary" @click="openSelect('2')">Select a product</el-link>
             </div>
           </el-form-item>
-          <el-form-item :label="$t('quotation.绑定商品图片')" label-width="150px" required>
+          <el-form-item label="Binding Product Images" label-width="150px" required>
             <div class="upload">
               <i class="el-icon-plus" v-if="!addShopForm.imgUrlBuild"></i>
               <el-image
@@ -169,8 +162,8 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <div class="mg-t-20">
-          <el-button @click="handleClose">{{$t('quotation.取消')}}</el-button>
-          <el-button type="primary" @click="quote">{{$t('quotation.确定')}}</el-button>
+          <el-button @click="handleClose">cancel</el-button>
+          <el-button type="primary" @click="quote">save</el-button>
         </div>
       </span>
     </el-dialog>
@@ -344,15 +337,15 @@ export default {
     },
     quote () {
       if (!this.addShopForm.customerId) {
-        this.$message({ message: this.$t('transaction.请选择客户'), type: "error" })
+        this.$message({ message: 'Please select a client', type: "error" })
         return
       }
       if (!this.addShopForm.mainProductId) {
-        this.$message({ message: this.$t('transaction.请选择商品'), type: "error" })
+        this.$message({ message: 'Please select a product', type: "error" })
         return
       }
       if (!this.addShopForm.productId) {
-        this.$message({ message: this.$t('transaction.请选择商品'), type: "error" })
+        this.$message({ message: 'Please select a product', type: "error" })
         return
       }
       this.$apiCall(

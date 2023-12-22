@@ -53,8 +53,15 @@
 						</template>
 					</el-table-column>
 					<el-table-column :label="$t('Product link')" prop="url"></el-table-column>
+					<el-table-column :label="$t('productType')" >
+									<template slot-scope="scope">
+											<span v-if="scope.row.productType">
+													{{getValue(scope.row.productType)}}
+											</span>
+									</template>
+						</el-table-column>	
 					<el-table-column :label="$t('Order No.')" prop="orderId"></el-table-column>	
-					<el-table-column :label="$t('Order No.')" prop="orderId">
+					<el-table-column :label="$t('platform')" prop="orderId">
 								<template slot-scope="scope">
 										<span>{{scope.row.platform? scope.row.platform ==1? 'Shopify' : 'WooCommerce' : ''}}</span>
 								</template>	
@@ -117,6 +124,14 @@
 					<el-form-item label="Product Title:" prop="title">
 						<el-input size="small" v-model="publishForm.title"></el-input>
 					</el-form-item>
+					<el-form-item label="Product Type:">
+						   <el-radio-group v-model="publishForm.productType">
+									<el-radio :label="1">card</el-radio>
+									<el-radio :label="2">package logo</el-radio>
+									<el-radio :label="3">product logo</el-radio>
+									<el-radio :label="4">other features</el-radio>
+  							</el-radio-group>
+					</el-form-item>
 					<el-row>
 						<el-col :span="6">
 							<el-form-item :label="$t('Price Range')" prop="priceFrom">
@@ -166,6 +181,27 @@ export default {
 				createdFrom: '',
 				createdTo: ''
 			},
+			productList: [
+						{
+							id: 1,
+							value: 'card',
+						},
+						
+						{
+							id: 2,
+							value: 'package logo',
+						},
+						
+						{
+							id: 3,
+							value: 'product logo',
+						},
+						
+						{
+							id: 4,
+							value: 'other features',
+						}
+			],
 			dateArr: [],
 			pagination: {
 				currentPage: 1,
@@ -180,6 +216,7 @@ export default {
 				priceFrom: '',
 				priceTo: '',
 				link: '',
+				productType: '',
 				description: '',
 				linkImg: this.$route.query.imgUrl,
 				id: this.$route.query.productId
@@ -231,6 +268,14 @@ watch:{
 		addClick () {
 			// 新增搜品
 			this.publishVisible = true
+		},
+		getValue(type){
+				let tempVal = this.productList.filter(item=>{
+					if (item.id == type) {
+							return item
+					}
+				})
+				return tempVal[0].value
 		},
 		dateChange (val) {
 			if (val) {
@@ -286,7 +331,8 @@ watch:{
 				priceTo: '',
 				link: '',
 				description: '',
-				id: ''
+				id: '',
+				productType: '',
 			}
 			this.$refs.upload.clearFiles()
 			this.$refs['ruleForm'].resetFields();
@@ -313,7 +359,8 @@ watch:{
 				maxPrice: this.publishForm.priceTo,
 				description: this.publishForm.description,
 				imgUrlJson: imgArr,
-				associatedProductId: this.publishForm.id
+				associatedProductId: this.publishForm.id,
+				productType: this.publishForm.productType
 			}
 			this.$apiCall('api.OfferProduct.addByCustomer', {
 				...params
@@ -325,7 +372,8 @@ watch:{
 						priceTo: '',
 						link: '',
 						description: '',
-						imgUrl: ''
+						imgUrl: '',
+						productType: '',
 					}
 					this.$refs.upload.clearFiles();
 					this.$refs['ruleForm'].resetFields();

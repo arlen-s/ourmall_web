@@ -21,6 +21,7 @@ export const lang = {
   tradeAmount:'交易金额',
   accountPayee:'收款账户',
   all: '全部',
+  店铺名称: '店铺名称',
   operate: '操作',
   detailView: '查看明细',
   code: '单号',

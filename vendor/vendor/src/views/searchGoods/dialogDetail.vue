@@ -23,6 +23,20 @@
                         <span v-if="data.data.name">{{ data.data.name }}</span>
                         <span v-else>---</span>
                     </el-form-item>
+                    <el-form-item :label="$t('quotation.订单号')+':'" label-width="150px">
+                        <span v-if="data.data.orderId">{{ data.data.orderId }}</span>
+                        <span v-else>---</span>
+                    </el-form-item>
+                    <el-form-item :label="$t('quotation.类型')+':'" label-width="150px">
+                        <span v-if="data.data.productType">
+													{{getValue(data.data.productType)}}
+											</span>
+                        <span v-else>---</span>
+                    </el-form-item>
+                    <el-form-item :label="$t('quotation.平台')+':'" label-width="150px">
+                        <span>{{data.data.platform? data.data.platform ==1? 'Shopify' : 'WooCommerce' : ''}}</span>
+                        
+                    </el-form-item>                                        
                     <el-form-item :label="$t('quotation.价格')+':'" label-width="150px">
                         <span v-if="data.data.minPrice&&data.data.maxPrice">${{ data.data.minPrice }}-{{ data.data.maxPrice }}</span>   
                         <span v-else>---</span>   
@@ -86,11 +100,38 @@ export default {
     props: ['data'],
     data() {
         return {
-
+			productList: [
+						{
+							id: 1,
+							value: 'card',
+						},
+						
+						{
+							id: 2,
+							value: 'package logo',
+						},
+						
+						{
+							id: 3,
+							value: 'product logo',
+						},
+						
+						{
+							id: 4,
+							value: 'other features',
+						}
+			],
         };
     },
     methods: {
-
+		getValue(type){
+				let tempVal = this.productList.filter(item=>{
+					if (item.id == type) {
+							return item
+					}
+				})
+				return tempVal[0].value
+		},
     },
     components: {
 

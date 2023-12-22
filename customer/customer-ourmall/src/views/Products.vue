@@ -303,6 +303,14 @@
 					<el-form-item label="Product Title:" prop="title">
 						<el-input size="small" v-model="publishForm.title"></el-input>
 					</el-form-item>
+					<el-form-item label="Product Type:">
+						   <el-radio-group v-model="publishForm.productType">
+									<el-radio :label="1">card</el-radio>
+									<el-radio :label="2">package logo</el-radio>
+									<el-radio :label="3">product logo</el-radio>
+									<el-radio :label="4">other features</el-radio>
+  							</el-radio-group>
+					</el-form-item>
 					<el-row>
 						<el-col :span="6">
 							<el-form-item label="Price Range:" prop="priceFrom">
@@ -355,6 +363,7 @@ export default {
 				priceTo: '',
 				link: '',
 				description: '',
+        productType: '',
 				linkImg: this.$route.query.imgUrl,
 				id: this.$route.query.productId
 			},
@@ -475,7 +484,8 @@ export default {
 				priceTo: '',
 				link: '',
 				description: '',
-				id: ''
+				id: '',
+        productType: '',
 			}
 			this.$refs.upload.clearFiles()
 			this.$refs['ruleForm'].resetFields();
@@ -502,6 +512,7 @@ export default {
 				maxPrice: this.publishForm.priceTo,
 				description: this.publishForm.description,
 				imgUrlJson: imgArr,
+        productType: this.publishForm.productType,
 				bundlingAccountId: this.tempShopItem.accountId,
         bundlingShopifyId: this.tempShopItem.shopifyId
 			}
@@ -514,6 +525,7 @@ export default {
 						priceFrom: '',
 						priceTo: '',
 						link: '',
+            productType: '',
 						description: '',
 						imgUrl: ''
 					}

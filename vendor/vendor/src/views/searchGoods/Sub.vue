@@ -169,7 +169,15 @@
           <template slot-scope="scope">
             <span>{{scope.row.orderId}}</span>
           </template>  
-        </el-table-column>   
+        </el-table-column> 
+        <el-table-column :label="$t('quotation.类型')">
+          <template slot-scope="scope">
+              <span v-if="scope.row.productType">
+                  {{getValue(scope.row.productType)}}
+              </span>
+                <span v-else>---</span>
+          </template>  
+        </el-table-column>           
         <el-table-column :label="$t('quotation.平台')">
           <template slot-scope="scope">
             <span>{{scope.row.platform? scope.row.platform ==1? 'Shopify' : 'WooCommerce' : ''}}</span>
@@ -259,7 +267,28 @@ export default {
       dialogDetail:{
         isShow:false,
         data:{}
-      }
+      },
+      			productList: [
+						{
+							id: 1,
+							value: 'card',
+						},
+						
+						{
+							id: 2,
+							value: 'package logo',
+						},
+						
+						{
+							id: 3,
+							value: 'product logo',
+						},
+						
+						{
+							id: 4,
+							value: 'other features',
+						}
+			],
     }  
   },
   components:{
@@ -314,6 +343,14 @@ export default {
    assignAll(){
      this.assign('All')
    },
+   		getValue(type){
+				let tempVal = this.productList.filter(item=>{
+					if (item.id == type) {
+							return item
+					}
+				})
+				return tempVal[0].value
+		},
    dateChange() {
         if (this.filterData.date.length > 1) {
             this.filterData.dateFrom = this.$moment(

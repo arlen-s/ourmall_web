@@ -35,6 +35,7 @@ export const lang = {
 	'图片': 'Image',
 	'客户SKU': 'Customer SKU',
 	'属性': 'causality',
+  '类型':'type',
 	'报价': 'quote',
 	'报价($)': 'quote($)',
 	'未报价': 'unquoted',
