@@ -225,6 +225,9 @@
               <el-table-column v-if="apiUserId == 148797" :label="$t('mycustomer.站长外部编号')">
                 <template slot-scope="scope">{{scope.row.customCode || '--'}}</template>
               </el-table-column>
+              <el-table-column :label="$t('mycustomer.手机号')">
+                <template slot-scope="scope">{{scope.row.customerPhone || '--'}}</template>
+              </el-table-column>              
               <el-table-column :label="$t('mycustomer.员工名称')">
                 <template slot-scope="scope">{{scope.row.inviterName || '--'}}</template>
               </el-table-column>

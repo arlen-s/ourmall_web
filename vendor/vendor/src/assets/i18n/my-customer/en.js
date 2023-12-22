@@ -18,6 +18,7 @@ export const lang = {
 	operate: 'Operate',
 	modify: 'Modify',
 	delete: 'Delete',
+  '手机号': 'mobile number',
   '售后工单': "After-sales work order",
 	orderImport: 'Import Shopify CSV order file',
 	storeInvite: 'invite authorized Shopify store',

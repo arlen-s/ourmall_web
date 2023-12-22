@@ -18,6 +18,7 @@ export const lang = {
   operate: '操作',
   modify: '编辑',
   delete: '删除',
+  '手机号': '手机号',
   orderImport: '导入Shopify表格订单文件',
   storeInvite: '邀请授权更多店铺',
   customersInvite: '邀请客户授权Shopify店铺',
