@@ -46,7 +46,7 @@
                   <span v-else>---</span>
                 </el-form-item>
                 <el-form-item :label="$t('quotation.类型')" label-width="150px">
-                        <span v-if="itemproductType">
+                        <span v-if="item.productType">
 													{{getValue(item.productType)}}
 											</span>
                   <span v-else>---</span>
