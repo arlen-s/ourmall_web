@@ -45,11 +45,17 @@
                   <span v-if="item.name">{{ item.name }}</span>
                   <span v-else>---</span>
                 </el-form-item>
-                <el-form-item :label="$t('quotation.价格')" label-width="150px">
-                  <span v-if="item.minPrice && item.maxPrice"
-                    >${{ item.minPrice }}-{{ item.maxPrice }}</span
-                  >
+                <el-form-item :label="$t('quotation.类型')" label-width="150px">
+                        <span v-if="item.productType">
+													{{getValue(item.productType)}}
+											</span>
                   <span v-else>---</span>
+                </el-form-item>                
+                <el-form-item :label="$t('quotation.价格')" label-width="150px">
+                    <span v-if="item.productType">
+													{{getValue(item.productType)}}
+											</span>
+                        <span v-else>---</span>
                 </el-form-item>
                 <el-form-item :label="$t('quotation.商品链接')" label-width="150px">
                   <span v-if="item.url">{{ item.url }}</span>
@@ -179,6 +185,27 @@ export default {
         items: [],
         variableId: this.$route.query.variableId,
       },
+      			productList: [
+						{
+							id: 1,
+							value: 'card',
+						},
+						
+						{
+							id: 2,
+							value: 'package logo',
+						},
+						
+						{
+							id: 3,
+							value: 'product logo',
+						},
+						
+						{
+							id: 4,
+							value: 'other features',
+						}
+			],
       loading: false,
       item: {},
       form: {
@@ -234,6 +261,14 @@ export default {
       this.getProduct();
       this.dialogProductList.isShow = true;
     },
+    		getValue(type){
+				let tempVal = this.productList.filter(item=>{
+					if (item.id == type) {
+							return item
+					}
+				})
+				return tempVal[0].value
+		},
     getItems() {
       this.loading = true;
       this.$apiCall(
