@@ -46,16 +46,16 @@
                   <span v-else>---</span>
                 </el-form-item>
                 <el-form-item :label="$t('quotation.类型')" label-width="150px">
-                        <span v-if="item.productType">
+                        <span v-if="itemproductType">
 													{{getValue(item.productType)}}
 											</span>
                   <span v-else>---</span>
                 </el-form-item>                
                 <el-form-item :label="$t('quotation.价格')" label-width="150px">
-                    <span v-if="item.productType">
-													{{getValue(item.productType)}}
-											</span>
-                        <span v-else>---</span>
+                  <span v-if="item.minPrice && item.maxPrice"
+                    >${{ item.minPrice }}-{{ item.maxPrice }}</span
+                  >
+                  <span v-else>---</span>
                 </el-form-item>
                 <el-form-item :label="$t('quotation.商品链接')" label-width="150px">
                   <span v-if="item.url">{{ item.url }}</span>
