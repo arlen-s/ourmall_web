@@ -155,13 +155,7 @@
                       @click.native="delP(item)"
                     >
                       <span class=" tx-danger">{{$t('Delete')}}</span>
-                    </el-dropdown-item>
-                    <el-dropdown-item
-                      style=" width: auto; text-align: left;"
-                      @click.native="checkPice(item)"
-                    >
-                      <el-link type="primary">{{$t('price check')}}</el-link>
-                    </el-dropdown-item>   
+                    </el-dropdown-item> 
                     <el-dropdown-item
                       style=" width: auto; text-align: left;"
                       @click.native="handleShop(item)"

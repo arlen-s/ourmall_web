@@ -66,7 +66,7 @@
 										<span>{{scope.row.platform? scope.row.platform ==1? 'Shopify' : 'WooCommerce' : ''}}</span>
 								</template>	
 					</el-table-column>							
-					<el-table-column :label="$t('Description')" prop="description"></el-table-column>
+					<el-table-column :label="$t('Description')" prop="description" show-overflow-tooltip></el-table-column>
 					<el-table-column :label="$t('Creation date')">
 						<template slot-scope="scope">
 							{{moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}
