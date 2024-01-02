@@ -67,6 +67,19 @@
 							</span>
 						</template>
 					</el-table-column>
+					<el-table-column :label="$t('productType')" >
+									<template slot-scope="scope">
+											<span v-if="scope.row.productType">
+													{{getValue(scope.row.productType)}}
+											</span>
+									</template>
+						</el-table-column>	
+					<el-table-column :label="$t('Order No.')" prop="orderId"></el-table-column>	
+					<el-table-column :label="$t('platform')" prop="orderId">
+								<template slot-scope="scope">
+										<span>{{scope.row.platform? scope.row.platform ==1? 'Shopify' : 'WooCommerce' : '--'}}</span>
+								</template>	
+					</el-table-column>						
 					<el-table-column :label="$t('Reply link')" v-if="activeName == '2'">
 						<template slot-scope="scope">
 							<a target="_blank" v-if="scope.row.vendorProduct" :href="`${host}/item/${scope.row.vendorProduct.id}/${scope.row.vendorProduct.name.replace(/\s+/g, '-').replace(/[^\w]/g,'_')}.html`">
@@ -139,6 +152,27 @@ export default {
 				pageSize: 20,
 				totalCount: 0
 			},
+						productList: [
+						{
+							id: 1,
+							value: 'card',
+						},
+						
+						{
+							id: 2,
+							value: 'package logo',
+						},
+						
+						{
+							id: 3,
+							value: 'product logo',
+						},
+						
+						{
+							id: 4,
+							value: 'other features',
+						}
+			],
 			items: [],
 			publishDetail: {},
 			detailVisible: false,
@@ -175,6 +209,14 @@ export default {
 			this.dateArr = []
 			this.getItems()
 		},
+		getValue(type){
+				let tempVal = this.productList.filter(item=>{
+					if (item.id == type) {
+							return item
+					}
+				})
+				return tempVal[0].value
+		},		
 		getItems() {
 			this.tableLoading = true
 			this.$apiCall('api.OfferProduct.findByCustomer', {

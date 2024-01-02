@@ -78,6 +78,19 @@
 							<span v-else>--</span>
 						</template>
 					</el-table-column>
+					<el-table-column :label="$t('productType')" >
+									<template slot-scope="scope">
+											<span v-if="scope.row.productType">
+													{{getValue(scope.row.productType)}}
+											</span>
+									</template>
+						</el-table-column>	
+					<el-table-column :label="$t('Order No.')" prop="orderId"></el-table-column>	
+					<el-table-column :label="$t('platform')" prop="orderId">
+								<template slot-scope="scope">
+										<span>{{scope.row.platform? scope.row.platform ==1? 'Shopify' : 'WooCommerce' : '--'}}</span>
+								</template>	
+					</el-table-column>						
 					<el-table-column :label="$t('Creation date')">
 						<template slot-scope="scope">
 						{{moment.unix(scope.row.timeCreated).format("YYYY-MM-DD HH:mm:ss")}}
@@ -142,6 +155,27 @@ export default {
 				pageSize: 10,
 				totalCount: 0
 			},
+			productList: [
+					{
+						id: 1,
+						value: 'card',
+					},
+					
+					{
+						id: 2,
+						value: 'package logo',
+					},
+					
+					{
+						id: 3,
+						value: 'product logo',
+					},
+					
+					{
+						id: 4,
+						value: 'other features',
+					}
+		],
 			items: []
 		}
 	},
@@ -191,6 +225,14 @@ export default {
 				this.filterParams.createdTo = ''
 			}
 		},
+		getValue(type){
+				let tempVal = this.productList.filter(item=>{
+					if (item.id == type) {
+							return item
+					}
+				})
+				return tempVal[0].value
+		},		
 		handleCurrentChange (val) {
 			this.pagination.currentPage = val
 			this.getItems()

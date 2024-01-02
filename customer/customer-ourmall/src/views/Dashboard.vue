@@ -56,7 +56,7 @@
                             <!-- <img class="walletIcon" src="../../public/images/qianbao.png" alt=""> -->
                           </div>
                           <div class="grid-bottom">
-                            <h2 class="tx-primary">{{$t('brokerage')}}({{$store.state.country.symbol}}): {{brokerage || '0.00'}}</h2>
+                            <h2 class="tx-primary">{{$t('comission')}}({{$store.state.country.symbol}}): {{comission || '0.00'}}</h2>
                              <el-button type="primary" @click="handWithdraw()">{{$t('withdraw')}}</el-button>
                           </div>
                         </div>                  
@@ -1090,7 +1090,6 @@
             v-model="dynamicValidateForm.amount"
             style="width: 250px"
             oninput="value=value.replace(/[^\d.]/g,'')">
-            <el-button slot="append">￥</el-button>
           </el-input>
         </el-form-item>
 
