@@ -114,7 +114,7 @@ export const lang = {
   '请填写在线商品链接':'Please fill in the online commodity link.',
   // '请填写在线商品链接':'Please fill in the online commodity link. You can add one commodity link in a row in batches, and add a maximum of 10 commodities at a time  ',
   '每次添加最多10个':'Add a maximum of 10 commodities at a time',
-  '目前支持速卖通和亚马逊的商品采集':'Currently support aliExpress and Amazon commodity collection',
+  '目前支持亚马逊的商品采集':"Currently supports Amazon's product collection",
   '采集成功':'Collected successfully',
   '不扣减': 'non-deductible',
   '出库之后': 'out of stock',

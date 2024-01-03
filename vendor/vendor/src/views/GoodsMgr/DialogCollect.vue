@@ -29,7 +29,7 @@
 	  	<el-input :placeholder="$t('goods.请填写在线商品链接')" @change="addUrls()" type="textarea" resize="none" :autosize="{ minRows: 5, maxRows: 10}" size="small" v-model="urls"></el-input>
 	  </div>
 	  <div class="">
-	  	{{$t('goods.目前支持速卖通和亚马逊的商品采集')}}
+	  	{{$t('goods.目前支持亚马逊的商品采集')}}
 	  </div>
 	</div>
     <el-divider></el-divider>
