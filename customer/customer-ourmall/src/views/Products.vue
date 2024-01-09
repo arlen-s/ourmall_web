@@ -158,6 +158,12 @@
                     </el-dropdown-item> 
                     <el-dropdown-item
                       style=" width: auto; text-align: left;"
+                      @click.native="checkPice(item)"
+                    >
+                      <el-link type="primary">{{$t('price check')}}</el-link>
+                    </el-dropdown-item>                      
+                    <el-dropdown-item
+                      style=" width: auto; text-align: left;"
                       @click.native="handleShop(item)"
                     >
                       <el-link type="primary">{{$t('add related products')}}</el-link>
