@@ -89,11 +89,11 @@
 				})
 				let id = item.id;
 				let name = item.name;
-				 this.$router.push({ path: "/categories", query: {
-          id: id,
-          name: name,
-        }});
-				// window.open(`/category/${id}/${name.replace(/\s+/g,"-")}.html`, this.setting.target)
+				//  this.$router.push({ path: "/categories", query: {
+        //   id: id,
+        //   name: name,
+        // }});
+				window.open(`/category/${id}/${name.replace(/\s+/g,"-")}.html`, this.setting.target)
 			},
 		}
 	}
