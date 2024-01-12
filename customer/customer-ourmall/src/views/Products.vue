@@ -624,6 +624,9 @@ export default {
         this.selectLoading = false;
         if (r.ErrorCode == 9999) {
           this.$message({ message: r.Message, type: "success" });
+                this.$router.push({
+                name: "SearchProductsReply",
+          });
         } else {
           this.$message({ message: r.Message, type: "error" });
         }
