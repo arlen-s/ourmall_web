@@ -400,6 +400,9 @@
                   </div>
                 </template>
               </el-table-column>
+              <el-table-column :label="$t('mycustomer.注册时间')" prop="timeCreated">
+
+              </el-table-column>
               <el-table-column
                 :label="`${$t('mycustomer.总信用额度')}/${$t('mycustomer.剩余信用额度')}`"
                 align="center"

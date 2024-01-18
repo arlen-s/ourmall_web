@@ -67,6 +67,7 @@ export const lang = {
 	"一键邀请提示": "After the customer completes the setup, you can see all the orders that can be quoted and delivered from the customer's store.",
 	'已付款金额：': 'Total paid:',
 	'订阅有效至：': 'Valid to:',
+  '注册时间': 'regTime',
 	'总信用额度': 'total credit limit',
   '剩余信用额度': 'remaining credit limit',
 	'订单付款流水': 'Order payment detail',
