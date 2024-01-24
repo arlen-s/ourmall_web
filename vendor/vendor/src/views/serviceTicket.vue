@@ -149,7 +149,7 @@
       :before-close="handleClose"
     >
       <el-form ref="form" :model="formMay" label-width="80px">
-        <el-form-item :label="$t('transaction.退款金额')" v-if="OStatus == 2">
+        <el-form-item :label="$t('transaction.退款金额')" v-if="orderType == 1 && OStatus == 2">
           <el-input v-model="formMay.ORefundAmount" type="number"></el-input>
         </el-form-item>
         <el-form-item :label="$t('transaction.备注')">
@@ -183,6 +183,7 @@ export default {
         type: '',
         orderId: '',
       },
+      orderType: 1,
       formMay: {
         ORefundAmount: '',
         ORemark: '',
@@ -313,6 +314,7 @@ export default {
       this.dialogVisible = true
       this.OStatus = num
       this.orderId = row.id
+      this.orderType = row.type
 
     }
   },
