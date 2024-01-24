@@ -188,7 +188,6 @@ export default {
   //方法集合
   methods: {
     getBill(){
-      console.log(object);
 				this.$apiCall("api.BillInfo.getList", {
 				}, r => {
 					if(r.ErrorCode == "9999") {
