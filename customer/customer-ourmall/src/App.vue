@@ -1239,6 +1239,7 @@ export default {
         if (r.ErrorCode == 9999) {
           this.shopName = r.Data.Results.name;
           sessionStorage.setItem('filingNumber', r.Data.Results.referenceNumber)
+          sessionStorage.setItem('companyLogo', r.Data.Results.logo)
         }
       });
     },

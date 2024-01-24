@@ -195,7 +195,7 @@ export default {
               this.form = {
                 companyName:r.Data.Results[0].companyName,
                 address:r.Data.Results[0].companyAddress,
-                imgUrl:r.Data.Results[0].logo,
+                imgUrl: sessionStorage.getItem('companyLogo'),
                 id:r.Data.Results[0].id
                 
               }
