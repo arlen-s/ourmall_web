@@ -165,7 +165,7 @@ export default {
       form: {
         companyName: '',
         address: '',
-        imgUrl: '',
+        imgUrl: sessionStorage.getItem('companyLogo'),
         id: ''
       }        
     };
@@ -188,6 +188,7 @@ export default {
   //方法集合
   methods: {
     getBill(){
+      console.log(object);
 				this.$apiCall("api.BillInfo.getList", {
 				}, r => {
 					if(r.ErrorCode == "9999") {
@@ -195,7 +196,6 @@ export default {
               this.form = {
                 companyName:r.Data.Results[0].companyName,
                 address:r.Data.Results[0].companyAddress,
-                imgUrl: sessionStorage.getItem('companyLogo'),
                 id:r.Data.Results[0].id
                 
               }
