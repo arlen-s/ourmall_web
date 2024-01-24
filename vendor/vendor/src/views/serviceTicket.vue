@@ -278,7 +278,7 @@ export default {
     },
     getType (row) {
       let fim = this.questionList.filter(item => {
-        return item.id == row.type
+        return item.id == row.reasonType
       })
       return fim[0].label
     },
