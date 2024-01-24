@@ -10,7 +10,7 @@
       <div>
         <el-form ref="addCategoryForm" label-width="130px">
           <el-form-item :label="$t('category.类目名称')" required>
-            <el-input :placeholder="$t('category.请输入类目名称')" style="width: 500px;" v-model.trim="data.name"></el-input>
+            <el-input :placeholder="$t('category.请输入类目名称')" style="width: 500px;" v-model="data.name"></el-input>
           </el-form-item>
           <el-form-item :label="$t('category.上级类目')">
             <el-cascader
