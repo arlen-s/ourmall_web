@@ -644,6 +644,7 @@ export default {
       multipleSelection: [],
       vatValue: 0, 
       perList:[],
+      vatObj: []
     };
   },
   watch: {
@@ -658,6 +659,7 @@ export default {
         
         this.multipleSelection = []
         this.sum = 0
+        this.freight = 0
         this.logistic = ''
         this.$refs.multipleTable.clearSelection();
         if (val == 2) {
@@ -670,7 +672,7 @@ export default {
        this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)          
             this.sum =0
             this.freight = 0
-            
+            this.vatObj = filterVat     
         }else{
           if ( this.addressList.length >0) {
                 this.country = this.addressList.find(
@@ -681,9 +683,11 @@ export default {
               return item
             } 
           })
-          this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)               
+          this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)    
+          this.vatObj = filterVat              
         }                
       }
+      this.initGetCartInfo()
     },
     sum: {
       deep: true,
@@ -765,15 +769,6 @@ export default {
         }
       });
     },
-    //     handleSelectionChange (val) {
-    //   this.multipleSelection = val
-    // },
-    // async loadData (parameter) { //获取商品列表
-
-    //   return {
-    //     list: this.tableShopData
-    //   }
-    // },
     getVat () {
       this.$apiCall(
         "api.Product.getVatConfig", {}, (r) => {
@@ -786,7 +781,7 @@ export default {
               })
               this.defVat = newArr.length == 0 ? 0 : Number(newArr[0].value)
               this.vatValue = newArr.length == 0 ? 0 : Number(newArr[0].value)
-              console.log(newArr, 'newArr33')
+              this.vatObj = newArr   
               this.perList = r.Data.Results.vatList
             }
 
@@ -892,6 +887,7 @@ export default {
               } 
             })
        this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)   
+       this.vatObj = filterVat
           }
 
         this.switchHandleChange()             
@@ -905,17 +901,14 @@ export default {
       this.addressList.forEach((item) => {
         item.isDefault = "2";
       });
+      console.log(item, 'item');
      let filterVat = this.perList.filter(item=>{
         if(item.code == item.country){
           return item
         } 
        })
        this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value) 
-      // if (item.country != 'DE') {
-      //   this.vatValue = 0
-      // }else{
-      //   this.vatValue = this.defVat
-      // }
+       this.vatObj = filterVat
       item.isDefault = "1";
       this.$apiCall("api.MallAddress.change", { ...item }, (r) => {
         if (r.ErrorCode == "9999") {
@@ -1066,33 +1059,43 @@ export default {
                         return  false
                     }
                   }
-
           }
-  
         }
       this.multipleSelection = val;
       if (this.orderType == 2 || this.orderType == 3) {
-        this.country = this.multipleSelection[0].warehouseInfo.countryCode
-        // if (this.country != 'DE') {
-        //   this.vatValue = 0
-        // }else{
-        //   this.vatValue = this.defVat
-        // }
-       let filterVat = this.perList.filter(item=>{
-        if(item.code == this.country){
-          return item
-        } 
-       })
-       this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)          
-      }      
+        if (this.multipleSelection.length > 0) {
+          this.country =  this.multipleSelection[0].warehouseInfo.countryCode
+          let filterVat = this.perList.filter(item=>{
+            if(item.code == this.country){
+              return item
+            } 
+          })
+          this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)        
+          this.freight = 0  
+          this.vatObj = filterVat         
+        }
 
+      }  
+        console.log(this.vatObj, 'his.vatObj');    
       if (val.length) {
+        
         this.multipleSelection.forEach((item) => {
-          this.subtotal += Number(
-            item.stockInfo.price * item.stockInfo.chooseInventory
-          )+Number(
-            item.stockInfo.price * item.stockInfo.chooseInventory*(this.vatValue/100)
-          );
+          if (this.vatObj.length >0 ) {
+                if (this.vatObj[0].type == 1) {
+                  this.subtotal += Number(
+                      item.stockInfo.price * item.stockInfo.chooseInventory
+                    )+Number(
+                      item.stockInfo.price * item.stockInfo.chooseInventory*(this.vatValue/100)
+                    );
+                }else{
+                    this.subtotal += Number(
+                      (item.stockInfo.price * item.stockInfo.chooseInventory)  + this.freight
+                    )*Number(
+                      1 +(this.vatValue/100)
+                    );
+                }
+          }
+
           //   运费逻辑
           stockInfo[item.stockInfo.id] = item.stockInfo.chooseInventory;
           //   运费逻辑
@@ -1125,15 +1128,45 @@ export default {
       
     },
     logisticChange() {
+      this.subtotal = 0
       this.freight = this.logisticArr.find(
         (item) => item.id == this.logistic
       ).fee;
+      if(this.multipleSelection.length >0){
+        this.multipleSelection.forEach((item) => {
+          if (this.vatObj.length >0 ) {
+                if (this.vatObj[0].type == 1) {
+                  this.subtotal += Number(
+                      item.stockInfo.price * item.stockInfo.chooseInventory
+                    )+Number(
+                      item.stockInfo.price * item.stockInfo.chooseInventory*(this.vatValue/100)
+                    );
+                }else{
+                  let leftNum = (
+                      ( Number(item.stockInfo.price) * Number(item.stockInfo.chooseInventory))  + Number(this.freight)
+                    )
+                  let rightNum = 
+                      1 +(this.vatValue/100)                    
+                    this.subtotal +=   Number(leftNum) * Number(rightNum);
+                }
+          }
+        }); 
+      }
         if (this.orderType == 2 || this.orderType == 3) {
-          this.sum = Number(this.subtotal);          
+          this.sum = Number(this.subtotal);      
+          this.sum = Number(this.sum).toFixed(2);    
         }else{
-          this.sum = Number(this.subtotal) + Number(this.freight);
-        }      
-      this.sum = Number(this.sum).toFixed(2);
+          if (this.vatObj.length >0 ) {
+                if (this.vatObj[0].type == 1) {
+                  this.sum = Number(this.subtotal) + Number(this.freight);
+                   this.sum = Number(this.sum).toFixed(2);
+                }else{
+                  this.sum = Number(this.subtotal).toFixed(2);       
+                 }
+              }
+          
+        }   
+                  
     },
     getLogisticArr(stockInfo, val) {
       console.log(val, 'stockInfo');
@@ -1168,29 +1201,56 @@ export default {
       if (this.multipleSelection.length) {
         this.multipleSelection.forEach((item) => {
           item.quantity = val
-          this.subtotal += Number(
-            item.stockInfo.price * item.stockInfo.chooseInventory
-          )+Number(
-            item.stockInfo.price * item.stockInfo.chooseInventory*(this.vatValue/100)
-          );
+          if (this.vatObj.length >0 ) {
+                if (this.vatObj[0].type == 1) {
+                   this.subtotal += Number(
+                      item.stockInfo.price * item.stockInfo.chooseInventory
+                    )+Number(
+                      item.stockInfo.price * item.stockInfo.chooseInventory*(this.vatValue/100)
+                    );
+                }else{
+                  let leftNum = (
+                      ( Number(item.stockInfo.price) * Number(item.stockInfo.chooseInventory))  + Number(this.freight)
+                    )
+                  let rightNum = 
+                      1 +(this.vatValue/100)    
+                    this.subtotal +=   Number(leftNum) * Number(rightNum);      
+                    console.log(this.subtotal, 'this.subtotal7997');           
+                }
+              }
+
           //   运费逻辑
           stockInfo[item.stockInfo.id] = item.stockInfo.chooseInventory;
-          //   运费逻辑
         });
         this.getLogisticArr(stockInfo, this.multipleSelection);
-        this.subtotal = Number(this.subtotal).toFixed(2);
+          // console.log(this.subtotal, 'this.subtotalss46');
         if (this.orderType == 2 || this.orderType == 3) {
-          this.sum = Number(this.subtotal);          
+          this.sum = Number(this.subtotal).toFixed(2);          
         }else{
-          this.sum = Number(this.subtotal) + Number(this.freight);
+          if (this.vatObj.length >0 ) {
+                if (this.vatObj[0].type == 1) {
+                  this.sum = Number(this.subtotal) + Number(this.freight);
+                   this.sum = Number(this.sum).toFixed(2);
+                }else{
+                  console.log(this.subtotal, 'this.subtotal1246');
+                  this.sum = Number(this.subtotal).toFixed(2);       
+                 }
+              }
+        
         }          
-        this.sum = Number(this.sum).toFixed(2);
       } else {
         this.subtotal = 0;
         if (this.orderType == 2 || this.orderType == 3) {
           this.sum = Number(this.subtotal);          
         }else{
-          this.sum = Number(this.subtotal) + Number(this.freight);
+          if (this.vatObj.length >0 ) {
+                if (this.vatObj[0].type == 1) {
+                  this.sum = Number(this.subtotal) + Number(this.freight);
+                   this.sum = Number(this.sum).toFixed(2);
+                }else{
+                  this.sum = Number(this.subtotal).toFixed(2);       
+                 }
+              }
         }          
         this.sum = Number(this.sum).toFixed(2);
         this.logisticArr = [];
