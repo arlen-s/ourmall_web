@@ -657,6 +657,8 @@ export default {
     orderType(val){      
         
         this.multipleSelection = []
+        this.sum = 0
+        this.logistic = ''
         this.$refs.multipleTable.clearSelection();
         if (val == 2) {
           this.country = ''
@@ -674,16 +676,14 @@ export default {
                 this.country = this.addressList.find(
             (item) => item.isDefault == "1"
           ).country;
-        let filterVat = this.perList.filter(item=>{
-        if(item.code == this.country){
-          return item
-        } 
-       })
-       this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)               
-          }
-                  
-
-        }
+            let filterVat = this.perList.filter(item=>{
+            if(item.code == this.country){
+              return item
+            } 
+          })
+          this.vatValue = filterVat.length == 0 ? 0 : Number(filterVat[0].value)               
+        }                
+      }
     },
     sum: {
       deep: true,
