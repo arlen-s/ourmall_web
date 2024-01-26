@@ -276,7 +276,7 @@
             <div>
               <span
                 >{{$t('Subtotal')}}（{{$store.state.country.symbol}}）:
-                <span class="font_bold">{{ subtotal }}</span></span
+                <span class="font_bold">{{  Math.ceil(subtotal * 100) / 100 }}</span></span
               >
               <span style="margin-left: 20px"
                 >{{$t('Freight（')}}{{$store.state.country.symbol}}）:
@@ -1101,21 +1101,21 @@ export default {
           //   运费逻辑
         });
         this.getLogisticArr(stockInfo, val);
-        this.subtotal = Number(this.subtotal).toFixed(2);
+        this.subtotal = Math.ceil(this.subtotal * 100) / 100;
         if (this.orderType == 2 || this.orderType == 3) {
-          this.sum = Number(this.subtotal);          
+          this.sum = Math.ceil(this.subtotal * 100) / 100          
         }else{
           this.sum = Number(this.subtotal) + Number(this.freight);
         }        
-        this.sum = Number(this.sum).toFixed(2);
+        this.sum =  Math.ceil(this.sum * 100) / 100;
       } else {
         this.subtotal = 0;
         if (this.orderType == 2 || this.orderType == 3) {
-          this.sum = Number(this.subtotal);          
+          this.sum = Math.ceil(this.subtotal * 100) / 100          
         }else{
           this.sum = Number(this.subtotal) + Number(this.freight);
         }
-        this.sum = Number(this.sum).toFixed(2);
+        this.sum =  Math.ceil(this.sum * 100) / 100;
         this.logisticArr = [];
         this.logistic = "";
       }
@@ -1152,16 +1152,19 @@ export default {
           }
         }); 
       }
-        if (this.orderType == 2 || this.orderType == 3) {
+      console.log(this.subtotal, 'this.subtotal333');
+        if (this.orderType == 2 || this.orderType == 3) {                                                                                   
+
           this.sum = Number(this.subtotal);      
-          this.sum = Number(this.sum).toFixed(2);    
+          this.sum =  Math.ceil(this.sum * 100) / 100;    
         }else{
           if (this.vatObj.length >0 ) {
                 if (this.vatObj[0].type == 1) {
                   this.sum = Number(this.subtotal) + Number(this.freight);
-                   this.sum = Number(this.sum).toFixed(2);
+                   this.sum = Math.ceil(this.sum * 100) / 100;
                 }else{
-                  this.sum = Number(this.subtotal).toFixed(2);       
+                  
+                  this.sum = Math.ceil(this.subtotal * 100) / 100;     
                  }
               }
           
@@ -1225,15 +1228,15 @@ export default {
         this.getLogisticArr(stockInfo, this.multipleSelection);
           // console.log(this.subtotal, 'this.subtotalss46');
         if (this.orderType == 2 || this.orderType == 3) {
-          this.sum = Number(this.subtotal).toFixed(2);          
+          this.sum = Math.ceil(this.subtotal * 100) / 100;          
         }else{
           if (this.vatObj.length >0 ) {
                 if (this.vatObj[0].type == 1) {
                   this.sum = Number(this.subtotal) + Number(this.freight);
-                   this.sum = Number(this.sum).toFixed(2);
+                   this.sum = Math.ceil(this.sum * 100) / 100;
                 }else{
                   console.log(this.subtotal, 'this.subtotal1246');
-                  this.sum = Number(this.subtotal).toFixed(2);       
+                  this.sum = Math.ceil(this.subtotal * 100) / 100;      
                  }
               }
         
@@ -1241,18 +1244,18 @@ export default {
       } else {
         this.subtotal = 0;
         if (this.orderType == 2 || this.orderType == 3) {
-          this.sum = Number(this.subtotal);          
+          this.sum =  Math.ceil(this.subtotal * 100) / 100
         }else{
           if (this.vatObj.length >0 ) {
                 if (this.vatObj[0].type == 1) {
                   this.sum = Number(this.subtotal) + Number(this.freight);
-                   this.sum = Number(this.sum).toFixed(2);
+                   this.sum = Math.ceil(this.sum * 100) / 100;
                 }else{
-                  this.sum = Number(this.subtotal).toFixed(2);       
+                  this.sum = Math.ceil(this.subtotal * 100) / 100;
                  }
               }
         }          
-        this.sum = Number(this.sum).toFixed(2);
+        this.sum = Math.ceil(this.sum * 100) / 100;
         this.logisticArr = [];
         this.logistic = "";
       }
