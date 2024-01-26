@@ -276,7 +276,7 @@
             <div>
               <span
                 >{{$t('Subtotal')}}（{{$store.state.country.symbol}}）:
-                <span class="font_bold">{{  getZw((Math.ceil(subtotal * 100) / 100) - (freight*multipleSelection.length)) }}</span></span
+                <span class="font_bold">{{  getZw((Math.ceil(subtotal * 100) / 100) - (freight*arrLength)) }}</span></span
               >
               <span style="margin-left: 20px"
                 >{{$t('Freight（')}}{{$store.state.country.symbol}}）:
@@ -644,7 +644,8 @@ export default {
       multipleSelection: [],
       vatValue: 0, 
       perList:[],
-      vatObj: []
+      vatObj: [],
+      arrLength: 0,
     };
   },
   watch: {
@@ -1066,6 +1067,7 @@ export default {
           }
         }
       this.multipleSelection = val;
+      this.arrLength = val.length;
       if (this.orderType == 2 || this.orderType == 3) {
         if (this.multipleSelection.length > 0) {
           this.country =  this.multipleSelection[0].warehouseInfo.countryCode
