@@ -901,7 +901,6 @@ export default {
       this.addressList.forEach((item) => {
         item.isDefault = "2";
       });
-      console.log(item, 'item');
      let filterVat = this.perList.filter(item=>{
         if(item.code == item.country){
           return item
@@ -1034,6 +1033,7 @@ export default {
     handleSelectionChange(val) {
       let stockInfo = {};
       this.subtotal = 0;
+      this.sum = 0;
       if (val.length> 0) {
           for (let b = 0; b < val.length; b++) {
               if (val[b].warehouseInfo.id != val[0].warehouseInfo.id) {
@@ -1088,12 +1088,18 @@ export default {
                       item.stockInfo.price * item.stockInfo.chooseInventory*(this.vatValue/100)
                     );
                 }else{
-                    this.subtotal += Number(
-                      (item.stockInfo.price * item.stockInfo.chooseInventory)  + this.freight
-                    )*Number(
-                      1 +(this.vatValue/100)
-                    );
+                  let leftNum = (
+                      ( Number(item.stockInfo.price) * Number(item.stockInfo.chooseInventory))  + Number(this.freight)
+                    )
+                  let rightNum = 
+                      1 +(this.vatValue/100)                    
+                    this.subtotal +=   Number(leftNum) * Number(rightNum);
+                    console.log( this.subtotal, ' this.subtotal1094');
                 }
+          }else{
+            this.subtotal += Number(
+                      (item.stockInfo.price * item.stockInfo.chooseInventory)  + this.freight
+                    )*1           
           }
 
           //   运费逻辑
@@ -1102,20 +1108,25 @@ export default {
         });
         this.getLogisticArr(stockInfo, val);
         this.subtotal = Math.ceil(this.subtotal * 100) / 100;
+        console.log(this.subtotal, 'this.subtotal1111');
         if (this.orderType == 2 || this.orderType == 3) {
           this.sum = Math.ceil(this.subtotal * 100) / 100          
         }else{
-          this.sum = Number(this.subtotal) + Number(this.freight);
+          // console.log(115,);
+          // this.sum = Number(this.subtotal) + Number(this.freight);
+          this.sum =  Math.ceil(this.subtotal * 100) / 100;
         }        
-        this.sum =  Math.ceil(this.sum * 100) / 100;
+        // this.sum =  Math.ceil(this.sum * 100) / 100;
       } else {
         this.subtotal = 0;
-        if (this.orderType == 2 || this.orderType == 3) {
-          this.sum = Math.ceil(this.subtotal * 100) / 100          
-        }else{
-          this.sum = Number(this.subtotal) + Number(this.freight);
-        }
-        this.sum =  Math.ceil(this.sum * 100) / 100;
+        // if (this.orderType == 2 || this.orderType == 3) {
+        //   this.sum = Math.ceil(this.subtotal * 100) / 100          
+        // }else{
+        //   this.sum = Number(this.subtotal) + Number(this.freight);
+        // }
+        // this.sum =  Math.ceil(this.sum * 100) / 100;
+        this.sum = 0
+        this.freight = 0;
         this.logisticArr = [];
         this.logistic = "";
       }
@@ -1149,6 +1160,11 @@ export default {
                       1 +(this.vatValue/100)                    
                     this.subtotal +=   Number(leftNum) * Number(rightNum);
                 }
+          }else{
+            let leftNum = (
+                      ( Number(item.stockInfo.price) * Number(item.stockInfo.chooseInventory))  + Number(this.freight)
+                    )                 
+                    this.subtotal +=   Number(leftNum) * 1;            
           }
         }); 
       }
@@ -1162,10 +1178,11 @@ export default {
                 if (this.vatObj[0].type == 1) {
                   this.sum = Number(this.subtotal) + Number(this.freight);
                    this.sum = Math.ceil(this.sum * 100) / 100;
-                }else{
-                  
+                }else{                  
                   this.sum = Math.ceil(this.subtotal * 100) / 100;     
                  }
+              }else{
+                this.sum = Math.ceil(this.subtotal * 100) / 100;  
               }
           
         }   
@@ -1217,9 +1234,13 @@ export default {
                     )
                   let rightNum = 
                       1 +(this.vatValue/100)    
-                    this.subtotal +=   Number(leftNum) * Number(rightNum);      
-                    console.log(this.subtotal, 'this.subtotal7997');           
+                    this.subtotal +=   Number(leftNum) * Number(rightNum);              
                 }
+              }else{
+                let leftNum = (
+                      ( Number(item.stockInfo.price) * Number(item.stockInfo.chooseInventory))  + Number(this.freight)
+                    ) 
+                    this.subtotal +=   Number(leftNum) * 1;  
               }
 
           //   运费逻辑
@@ -1235,9 +1256,10 @@ export default {
                   this.sum = Number(this.subtotal) + Number(this.freight);
                    this.sum = Math.ceil(this.sum * 100) / 100;
                 }else{
-                  console.log(this.subtotal, 'this.subtotal1246');
                   this.sum = Math.ceil(this.subtotal * 100) / 100;      
                  }
+              }else{
+                this.sum = Math.ceil(this.subtotal * 100) / 100;      
               }
         
         }          
@@ -1253,6 +1275,8 @@ export default {
                 }else{
                   this.sum = Math.ceil(this.subtotal * 100) / 100;
                  }
+              }else{
+                this.sum = Math.ceil(this.subtotal * 100) / 100;      
               }
         }          
         this.sum = Math.ceil(this.sum * 100) / 100;
