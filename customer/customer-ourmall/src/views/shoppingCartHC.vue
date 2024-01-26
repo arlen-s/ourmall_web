@@ -276,7 +276,7 @@
             <div>
               <span
                 >{{$t('Subtotal')}}（{{$store.state.country.symbol}}）:
-                <span class="font_bold">{{  Math.ceil(subtotal * 100) / 100 }}</span></span
+                <span class="font_bold">{{  getZw((Math.ceil(subtotal * 100) / 100) - (freight*multipleSelection.length)) }}</span></span
               >
               <span style="margin-left: 20px"
                 >{{$t('Freight（')}}{{$store.state.country.symbol}}）:
@@ -1029,6 +1029,10 @@ export default {
       } else {
         return true;
       }
+    },
+    getZw(val){
+      let hePrice =  Math.ceil(val* 100) / 100
+      return hePrice
     },
     handleSelectionChange(val) {
       let stockInfo = {};
