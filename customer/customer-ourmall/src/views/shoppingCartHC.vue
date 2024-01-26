@@ -276,7 +276,7 @@
             <div>
               <span
                 >{{$t('Subtotal')}}（{{$store.state.country.symbol}}）:
-                <span class="font_bold">{{  getZw((Math.ceil(subtotal * 100) / 100) - (freight*arrLength)) }}</span></span
+                <span class="font_bold">{{  Math.ceil(subtotal * 100) / 100 }}</span></span
               >
               <span style="margin-left: 20px"
                 >{{$t('Freight（')}}{{$store.state.country.symbol}}）:
