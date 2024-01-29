@@ -1033,10 +1033,16 @@ export default {
       }
     },
     getZw(val){
-      console.log(this.multipleSelection.length, 'this.multipleSelection');
-      let hePrice =  val - (this.multipleSelection.length * this.freight) 
+      console.log(this.sum, '10634456465');
+      console.log(val == this.sum, 'vla');
+      if (val == this.sum) {
+        let hePrice =  val - (this.multipleSelection.length * this.freight) 
       let transNum = Math.ceil(hePrice * 100) / 100 
-      return  transNum 
+      return  transNum   
+      }else{
+        return val
+      }
+      
     },
     handleSelectionChange(val) {
       let stockInfo = {};
