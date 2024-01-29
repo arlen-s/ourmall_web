@@ -274,9 +274,10 @@
             </div>
             <div v-else></div>
             <div>
+              
               <span
-                >{{$t('Subtotal')}}（{{$store.state.country.symbol}}）:
-                <span class="font_bold">{{  Math.ceil(subtotal * 100) / 100 }}</span></span
+                >{{$t('Subtotal')}}（{{$store.state.country.symbol}}）:                                                                
+                <span class="font_bold">{{  getZw(Math.ceil(subtotal * 100) / 100)  }}</span></span
               >
               <span style="margin-left: 20px"
                 >{{$t('Freight（')}}{{$store.state.country.symbol}}）:
@@ -1032,8 +1033,10 @@ export default {
       }
     },
     getZw(val){
-      let hePrice =  Math.ceil(val* 100) / 100
-      return hePrice
+      console.log(this.multipleSelection.length, 'this.multipleSelection');
+      let hePrice =  val - (this.multipleSelection.length * this.freight) 
+      let transNum = Math.ceil(hePrice * 100) / 100 
+      return  transNum 
     },
     handleSelectionChange(val) {
       let stockInfo = {};

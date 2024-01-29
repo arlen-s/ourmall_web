@@ -72,24 +72,24 @@
               height="650"
               ref="gridTable"
             >
-              <el-table-column prop="customerName" :label="$t('工单号')">
+              <el-table-column :label="$t('工单号')">
                 <template slot-scope="scope">
                   <div>
                     <b>{{ scope.row.orderNumber }}</b>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="customerName" :label="$t('订单编号')">
+              <el-table-column  :label="$t('订单编号')">
                 <template slot-scope="scope">
                   <div>
                     <b>{{ scope.row.orderId }}</b>
                   </div>
                 </template>
               </el-table-column>
-              <!-- <el-table-column :label="$t('客户名称')">
-                <template slot-scope="scope">{{scope.row.customCode || '--'}}</template>
+             <el-table-column :label="$t('客户名称')">
+                <template slot-scope="scope">{{scope.row.customerName || '--'}}</template>
               </el-table-column>
-              <el-table-column :label="$t('店铺')">
+              <!--  <el-table-column :label="$t('店铺')">
                 <template slot-scope="scope"></template>
               </el-table-column>-->
               <el-table-column :label="$t('交易类型')">
