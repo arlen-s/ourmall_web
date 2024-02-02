@@ -704,7 +704,6 @@ export default {
           this.disableSwitchBonus = false;
         }
         this.switchPayment = false
-        console.log(this.switchBonus, 'this.switchBonus');
       },
     },
   },
@@ -796,7 +795,6 @@ export default {
 					this.dialogVisibleKTPay = false
 			},
 			continuePay(){
-        // console.log(JSON.parse(r.Data.Results[0].extra).code, 'a11414585');
 				if (this.KTType == 'qr payment') {
             this.platformType = 14 
              this.orderPay()
@@ -1090,8 +1088,7 @@ export default {
           this.vatObj = filterVat         
         }
 
-      }  
-        console.log(this.vatObj, 'his.vatObj');    
+      }   
       if (val.length) {
         
         this.multipleSelection.forEach((item) => {
@@ -1109,7 +1106,6 @@ export default {
                   let rightNum = 
                       1 +(this.vatValue/100)                    
                     this.subtotal +=   Number(leftNum) * Number(rightNum);
-                    console.log( this.subtotal, ' this.subtotal1094');
                 }
           }else{
             this.subtotal += Number(
@@ -1123,11 +1119,9 @@ export default {
         });
         this.getLogisticArr(stockInfo, val);
         this.subtotal = Math.ceil(this.subtotal * 100) / 100;
-        console.log(this.subtotal, 'this.subtotal1111');
         if (this.orderType == 2 || this.orderType == 3) {
           this.sum = Math.ceil(this.subtotal * 100) / 100          
         }else{
-          // console.log(115,);
           // this.sum = Number(this.subtotal) + Number(this.freight);
           this.sum =  Math.ceil(this.subtotal * 100) / 100;
         }        
@@ -1183,7 +1177,6 @@ export default {
           }
         }); 
       }
-      console.log(this.subtotal, 'this.subtotal333');
         if (this.orderType == 2 || this.orderType == 3) {                                                                                   
 
           this.sum = Number(this.subtotal);      
@@ -1204,7 +1197,6 @@ export default {
                   
     },
     getLogisticArr(stockInfo, val) {
-      console.log(val, 'stockInfo');
       let params = {
         country: this.country,
         stockList: stockInfo,
@@ -1262,7 +1254,6 @@ export default {
           stockInfo[item.stockInfo.id] = item.stockInfo.chooseInventory;
         });
         this.getLogisticArr(stockInfo, this.multipleSelection);
-          // console.log(this.subtotal, 'this.subtotalss46');
         if (this.orderType == 2 || this.orderType == 3) {
           this.sum = Math.ceil(this.subtotal * 100) / 100;          
         }else{
@@ -1331,7 +1322,6 @@ export default {
         return;
       }
       if (this.orderType == 1 && this.isMailFree == 2) {
-        console.log(this.isMailFree, '352352352');
               if (this.logistic == "") {
         this.$message.error("Please choose the logistics channel");
         return;
