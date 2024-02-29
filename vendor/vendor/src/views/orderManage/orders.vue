@@ -1348,7 +1348,7 @@ import orderCnt from "./dialogOrderCnt.vue"
 import filterOrder from "./filterOrder.vue"
 import orderFail from './orderFail.vue'
 import dialogSplit from "./dialogSplit.vue"
-import FileSaver from 'file-saver';
+// import FileSaver from 'file-saver';
 import axios from 'axios';
 
 export default {
@@ -1775,7 +1775,7 @@ export default {
             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
           });
 
-          FileSaver.saveAs(excelFile);
+          // FileSaver.saveAs(excelFile);
         })
         .catch((error) => {
           console.log(error);

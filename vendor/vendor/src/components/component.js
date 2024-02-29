@@ -69,7 +69,7 @@ export const userFailure = (t) => {
   localStorage.removeItem('userInfo');
   ApiCall('api.User.logout',{},r=>{});
   setTimeout(() => {
-    window.location.href = 'https://supplier.ourmall.com/';  
+    window.location.href = 'https://supplier.bcndropshippingelite.com/';  
   }, 300);
   
 };

@@ -62,15 +62,15 @@ jQuery($ => {
 	var protocol = 'https:' == document.location.protocol ? 'https' : 'http';
 	$("body").on("click",".btn-isReg", function() {
 		var newWin = window.open("/blank.html", "isRegPage");
-		newWin.location.href = protocol + "://" + (window.location.host.toLowerCase().indexOf('sandbox') >= 0 ? 'sandboxsupplier.' : 'supplier.') + 'ourmall.com?isReg=2'
+		newWin.location.href = protocol + "://" + (window.location.host.toLowerCase().indexOf('sandbox') >= 0 ? 'sandboxsupplier.' : 'supplier.') + 'bcndropshippingelite.com?isReg=2'
 	});
 	$("body").on("click",".btn-isLog", function() {
 		var newWin = window.open("/blank.html", "isLogPage");
-		newWin.location.href = protocol + "://" + (window.location.host.toLowerCase().indexOf('sandbox') >= 0 ? 'sandboxsupplier.' : 'supplier.') + 'ourmall.com?isReg=1'
+		newWin.location.href = protocol + "://" + (window.location.host.toLowerCase().indexOf('sandbox') >= 0 ? 'sandboxsupplier.' : 'supplier.') + 'bcndropshippingelite.com?isReg=1'
 	});
 	$("body").on("click",".btn-isOpen", function() {
 		var newWin = window.open("/blank.html", "isOpenPage");
-		newWin.location.href = protocol + "://" + (window.location.host.toLowerCase().indexOf('sandbox') >= 0 ? 'sandboxsupplier.' : 'supplier.') + 'ourmall.com?isOpen=1'
+		newWin.location.href = protocol + "://" + (window.location.host.toLowerCase().indexOf('sandbox') >= 0 ? 'sandboxsupplier.' : 'supplier.') + 'bcndropshippingelite.com?isOpen=1'
 	});
 	
 });
