@@ -140,9 +140,9 @@ export default {
           let data = r.Data.Results;
           this.name = data.name;
           this.mainUrl = data.url;
-          this.oldUrl = this.subDomain = window.location.host.indexOf("sandbox") >= 0 ? `sandbox${data.name}.myourmall.com`:`${data.name}.myourmall.com`;
+          this.oldUrl = this.subDomain = window.location.host.indexOf("sandbox") >= 0 ? `sandbox${data.name}.bcndropshippingelite.com`:`${data.name}.bcndropshippingelite.com`;
           if(this.subDomain){
-             this.subDomain = window.location.host.indexOf("sandbox") >= 0 ? `sandbox${data.subDomain}.myourmall.com`:`${data.subDomain}.myourmall.com`;
+             this.subDomain = window.location.host.indexOf("sandbox") >= 0 ? `sandbox${data.subDomain}.bcndropshippingelite.com`:`${data.subDomain}.bcndropshippingelite.com`;
           }else{
              this.subDomain = this.oldUrl;
           }

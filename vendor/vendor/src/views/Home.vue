@@ -53,7 +53,7 @@
                     <div><i class="el-icon-s-shop"></i></div>
                     <div>
                       <div class="shop-r1">{{ item.name }}</div>
-                      <div class="shop-r2">{{item.countryName? `[${item.countryName}]` : ''}} {{ item.name }}.myourmall.com</div>
+                      <div class="shop-r2">{{item.countryName? `[${item.countryName}]` : ''}} {{ item.name }}.bcndropshippingelite.com</div>
                     </div>
                   </div>
                   <div><i class="el-icon-arrow-right"></i></div>
@@ -973,10 +973,10 @@ export default {
       let reg2 = /^sandbox/;
       // alert(`Results=${JSON.stringify(Results)}`)
       //登录后跳转页面
-      let admin = ".myourmall.com";
+      let admin = ".bcndropshippingelite.com";
       let commonAdmin = this.$store.state.userInfo.shop?.url;
       if (this.$root.$children[0].baseUrl != "/admin") {
-        admin = ".myourmall.com/admin";
+        admin = ".bcndropshippingelite.com/admin";
         commonAdmin = `${commonAdmin}/admin`;
       }
       //todo1 如果有仪表盘的路径

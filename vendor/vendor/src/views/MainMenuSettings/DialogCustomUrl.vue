@@ -34,7 +34,7 @@ export default {
           this.$set(this.data.item, 'url', this.data.ipt)
           this.data.isShow = false;
         }else{
-          this.data.msg = 'Url格式错误.请填写完整。 （例：https://www.myourmall.com）';
+          this.data.msg = 'Url格式错误.请填写完整。 （例：https://www.bcndropshippingelite.com）';
         }
       }else{
         this.data.msg = 'Url不能为空';

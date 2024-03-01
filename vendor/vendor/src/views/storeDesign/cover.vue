@@ -79,7 +79,7 @@
 			},
 			goToMyStore() {
 				window.open(
-					`//${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.name}.myourmall.com`
+					`//${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.name}.bcndropshippingelite.com`
 					)
 			},
 			goSetting() {

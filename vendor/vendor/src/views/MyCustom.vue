@@ -1318,7 +1318,7 @@ export default {
       this.dialogInvite = JSON.parse(this.dialogInviteDefault)
       this.dialogInvite.isShow = true
       this.dialogInvite.words = this.$store.state.userInfo.inviteWords
-      this.dialogInvite.inviteUrl = `${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.subDomain}.myourmall.com/`
+      this.dialogInvite.inviteUrl = `${location.host.indexOf('sandbox') > -1 ? 'sandbox' : ''}${this.$store.state.userInfo.shop.subDomain}.bcndropshippingelite.com/`
       this.dialogInvite.qrcode = item.qrcodeBase64
     },
     clearFilter () {

@@ -641,9 +641,9 @@
 				let reg2 = /^sandbox/;
 				// alert(`Results=${JSON.stringify(Results)}`)
 				//登录后跳转页面
-				let admin = ".myourmall.com";
+				let admin = ".bcndropshippingelite.com";
 				if(this.$root.$children[0].baseUrl != '/admin'){
-					admin = ".myourmall.com/admin"
+					admin = ".bcndropshippingelite.com/admin"
 				}
 				if (localStorage.getItem('wantVisitPathSu')) {
 					if (reg.test(window.location.host)) {
