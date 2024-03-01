@@ -200,6 +200,7 @@ export default {
   mounted(){
     console.log(this.$isRole('shopEdit'))
     this.getVonders();
+    console.log(33);
   },
   created(){
     if(localStorage.getItem('apiSubUserId')){
